@@ -71,17 +71,29 @@
     </div>
   </nav>
 
-  <!-- Mobile Menu -->
+  <!-- Mobile Full-Screen Menu -->
   <div class="nav__mobile" id="mobile-menu" role="dialog" aria-label="Mobile navigation" aria-modal="true">
-    <ul class="nav__mobile-links" role="list">
-      <li><a href="#home"         class="nav__mobile-link" data-mobile-nav-link>Home</a></li>
-      <li><a href="#services"     class="nav__mobile-link" data-mobile-nav-link>Services</a></li>
-      <li><a href="#about"        class="nav__mobile-link" data-mobile-nav-link>About</a></li>
-      <li><a href="#why-artafic"  class="nav__mobile-link" data-mobile-nav-link>Why ARTAFIC</a></li>
-      <li><a href="#before-after" class="nav__mobile-link" data-mobile-nav-link>Before &amp; After</a></li>
-      <li><a href="#faq"          class="nav__mobile-link" data-mobile-nav-link>FAQ</a></li>
-    </ul>
-    <a href="#booking" class="btn btn--primary" style="width:100%; justify-content:center;" data-mobile-nav-link>Book a Meeting</a>
+    <div class="nav__mobile-header">
+      <a href="#home" class="nav__logo" aria-label="ARTAFIC — Home" data-mobile-nav-link>
+        <img src="assets/images/logo.png" alt="ARTAFIC" class="nav__logo-image">
+      </a>
+      <button class="nav__mobile-close" id="mobile-menu-close" aria-label="Close navigation menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="nav__mobile-body">
+      <ul class="nav__mobile-links" role="list">
+        <li><a href="#home"         class="nav__mobile-link" data-mobile-nav-link>Home</a></li>
+        <li><a href="#services"     class="nav__mobile-link" data-mobile-nav-link>Services</a></li>
+        <li><a href="#about"        class="nav__mobile-link" data-mobile-nav-link>About</a></li>
+        <li><a href="#why-artafic"  class="nav__mobile-link" data-mobile-nav-link>Why ARTAFIC</a></li>
+        <li><a href="#before-after" class="nav__mobile-link" data-mobile-nav-link>Before &amp; After</a></li>
+        <li><a href="#faq"          class="nav__mobile-link" data-mobile-nav-link>FAQ</a></li>
+      </ul>
+      <div class="nav__mobile-actions">
+        <a href="#booking" class="btn btn--primary btn--lg" style="width:100%; justify-content:center;" data-mobile-nav-link>Book a Meeting</a>
+      </div>
+    </div>
   </div>
 </header>
 

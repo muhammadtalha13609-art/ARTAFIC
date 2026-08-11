@@ -78,6 +78,11 @@ function formatTime() {
     document.body.style.overflow = '';
   }
 
+  const closeBtn = $('#mobile-menu-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeMenu);
+  }
+
   hamburger.addEventListener('click', () => {
     isOpen ? closeMenu() : openMenu();
   });
