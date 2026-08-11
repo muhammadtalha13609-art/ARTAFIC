@@ -361,6 +361,28 @@ function formatTime() {
       return;
     }
 
+    // Input Sanitization (XSS Defense)
+    function sanitize(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#x27;');
+    }
+
+    const sanitizedData = {
+      name: sanitize($('#field-name').value),
+      business: sanitize($('#field-business').value),
+      email: sanitize($('#field-email').value),
+      phone: sanitize($('#field-phone').value),
+      service: sanitize($('#field-service').value),
+      description: sanitize($('#field-description').value),
+      date: sanitize($('#field-date').value),
+      time: sanitize($('#field-time').value),
+      url: $('#field-url') ? sanitize($('#field-url').value) : ''
+    };
+
     // Success
     const submitBtn = $('#form-submit-btn');
     submitBtn.disabled = true;
