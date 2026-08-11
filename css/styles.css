@@ -3549,26 +3549,70 @@ html, body {
     gap: 1.25rem !important;
   }
 
-  /* Before / After Slider */
+  /* Before / After Slider Touch Performance */
   .before-after__container,
   .slider-container {
     width: 100% !important;
     max-width: 100% !important;
     border-radius: 12px !important;
+    touch-action: pan-y !important;
   }
 
-  /* FAQ Section */
+  .slider-handle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    background: transparent;
+  }
+
+  /* FAQ Section - Stable Header */
   .faq__grid,
   .faq-container {
-    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
     width: 100% !important;
+  }
+
+  .faq__sidebar {
+    position: static !important;
+    top: auto !important;
+    width: 100% !important;
+    margin-bottom: 0 !important;
   }
 
   .faq-item {
     width: 100% !important;
   }
 
-  /* Meeting Booking Form */
+  /* Meeting Booking Form - Clean 1-Column Stacking */
+  .booking__grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+    width: 100% !important;
+  }
+
+  .booking__info {
+    width: 100% !important;
+    margin-bottom: 0 !important;
+  }
+
+  .booking__form-area {
+    width: 100% !important;
+    margin-top: 0 !important;
+  }
+
+  .booking__form-card {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 1.25rem 1rem !important;
+  }
+
   .booking__form-container,
   #booking-form {
     width: 100% !important;
@@ -3576,6 +3620,7 @@ html, body {
   }
 
   .form-row {
+    display: flex !important;
     flex-direction: column !important;
     gap: 1.25rem !important;
   }
@@ -3590,6 +3635,7 @@ html, body {
     width: 100% !important;
     font-size: 1rem !important;
     min-height: 48px !important;
+    box-sizing: border-box !important;
   }
 
   /* Chatbot Floating Widget */

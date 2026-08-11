@@ -159,7 +159,7 @@ function formatTime() {
 
 
 /* ────────────────────────────────────────────────────────────
-   05. BEFORE / AFTER SLIDER
+   05. BEFORE / AFTER SLIDER — HIGH PERFORMANCE TOUCH TRACKING
    ──────────────────────────────────────────────────────────── */
 (function initSlider() {
   const container = $('#slider-container');
@@ -171,79 +171,80 @@ function formatTime() {
 
   let isDragging = false;
   let currentPercent = 50;
+  let cachedRect = null;
+  let rAFId = null;
 
-  function setPosition(percent) {
-    currentPercent = clamp(percent, 2, 98);
+  function updateBounds() {
+    cachedRect = container.getBoundingClientRect();
+  }
+
+  function renderPosition(percent) {
+    currentPercent = clamp(percent, 0, 100);
     const pct = currentPercent + '%';
     before.style.clipPath = `inset(0 ${100 - currentPercent}% 0 0)`;
     divider.style.left = pct;
     handle.style.left = pct;
   }
 
-  function getPercent(clientX) {
-    const rect = container.getBoundingClientRect();
-    return ((clientX - rect.left) / rect.width) * 100;
+  function updatePositionFromClientX(clientX) {
+    if (!cachedRect) updateBounds();
+    const percent = ((clientX - cachedRect.left) / cachedRect.width) * 100;
+    renderPosition(percent);
   }
 
-  // Pointer events (unified mouse + touch)
   function onPointerDown(e) {
     isDragging = true;
+    updateBounds();
     handle.classList.add('is-dragging');
-    container.setPointerCapture(e.pointerId);
-    e.preventDefault();
+    if (e.pointerId !== undefined && container.setPointerCapture) {
+      try { container.setPointerCapture(e.pointerId); } catch(err) {}
+    }
+    updatePositionFromClientX(e.clientX);
   }
 
   function onPointerMove(e) {
     if (!isDragging) return;
-    setPosition(getPercent(e.clientX));
+    const clientX = e.clientX;
+    if (rAFId) cancelAnimationFrame(rAFId);
+    rAFId = requestAnimationFrame(() => {
+      updatePositionFromClientX(clientX);
+    });
   }
 
-  function onPointerUp() {
+  function onPointerUp(e) {
     isDragging = false;
     handle.classList.remove('is-dragging');
+    if (e && e.pointerId !== undefined && container.releasePointerCapture) {
+      try { container.releasePointerCapture(e.pointerId); } catch(err) {}
+    }
   }
 
   container.addEventListener('pointerdown', onPointerDown);
-  container.addEventListener('pointermove', onPointerMove);
+  container.addEventListener('pointermove', onPointerMove, { passive: true });
   container.addEventListener('pointerup', onPointerUp);
   container.addEventListener('pointercancel', onPointerUp);
+
+  window.addEventListener('resize', updateBounds, { passive: true });
 
   // Keyboard accessibility
   container.addEventListener('keydown', (e) => {
     const step = e.shiftKey ? 10 : 2;
     if (e.key === 'ArrowLeft') {
       e.preventDefault();
-      setPosition(currentPercent - step);
+      renderPosition(currentPercent - step);
     } else if (e.key === 'ArrowRight') {
       e.preventDefault();
-      setPosition(currentPercent + step);
+      renderPosition(currentPercent + step);
     }
   });
 
-  // Touch fallback for older browsers
-  container.addEventListener('touchstart', (e) => {
-    isDragging = true;
-    handle.classList.add('is-dragging');
-  }, { passive: true });
-
-  container.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    const touch = e.touches[0];
-    setPosition(getPercent(touch.clientX));
-  }, { passive: true });
-
-  container.addEventListener('touchend', () => {
-    isDragging = false;
-    handle.classList.remove('is-dragging');
-  });
-
   // Init at 50%
-  setPosition(50);
+  renderPosition(50);
 })();
 
 
 /* ────────────────────────────────────────────────────────────
-   06. FAQ ACCORDION
+   06. FAQ ACCORDION — CONTENT-AWARE ACCORDION EXPANSION
    ──────────────────────────────────────────────────────────── */
 (function initAccordion() {
   const accordion = $('#faq-accordion');
@@ -262,13 +263,22 @@ function formatTime() {
       items.forEach(i => {
         if (i !== item) {
           i.classList.remove('is-open');
-          i.querySelector('.faq-item__trigger').setAttribute('aria-expanded', 'false');
+          const otherTrigger = i.querySelector('.faq-item__trigger');
+          const otherBody = i.querySelector('.faq-item__body');
+          if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+          if (otherBody) otherBody.style.maxHeight = '0px';
         }
       });
 
       // Toggle current
       item.classList.toggle('is-open', !isOpen);
       trigger.setAttribute('aria-expanded', String(!isOpen));
+
+      if (!isOpen && body) {
+        body.style.maxHeight = body.scrollHeight + 'px';
+      } else if (body) {
+        body.style.maxHeight = '0px';
+      }
     });
 
     // Keyboard support
