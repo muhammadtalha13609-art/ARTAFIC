@@ -7,23 +7,37 @@
    01. CUSTOM PROPERTIES (Design Tokens)
    ──────────────────────────────────────────────────────────── */
 :root {
-  /* Colors */
-  --color-bg: #FAFAFA;
-  --color-bg-alt: #F4F5F6;
-  --color-surface: #FFFFFF;
-  --color-teal: #14B8A6;
-  --color-teal-dark: #0D9488;
-  --color-teal-darker: #0A7A6E;
-  --color-teal-light: #E6FAF8;
-  --color-teal-mid: #CCFAF4;
-  --color-charcoal: #111827;
-  --color-text: #1F2937;
-  --color-text-body: #374151;
-  --color-text-muted: #6B7280;
-  --color-text-subtle: #9CA3AF;
-  --color-border: #E5E7EB;
-  --color-border-light: #F3F4F6;
-  --color-border-dark: #D1D5DB;
+  /* Colors — ARTAFIC Brand System */
+  --color-primary: #14B8A6;         /* Electric Teal — Main brand accent, CTAs, active states */
+  --color-teal: #14B8A6;            /* Primary Accent */
+  --color-primary-dark: #0F766E;    /* Deep Teal — Hover states, darker accents */
+  --color-teal-dark: #0F766E;
+  --color-teal-darker: #0F766E;
+  --color-primary-light: #CCFBF1;   /* Soft Teal — Subtle backgrounds, badges */
+  --color-teal-light: #CCFBF1;
+  --color-teal-mid: #CCFBF1;
+
+  --color-bg: #FFFFFF;              /* Pure White — Main page background */
+  --color-bg-alt: #F0FDFA;          /* Soft Mint — Alternating sections, subtle highlights */
+  --color-surface: #F8FAFC;         /* Off White — Cards, forms, UI surfaces */
+
+  --color-charcoal: #111827;        /* Deep Charcoal — Headlines and important text */
+  --color-text: #111827;            /* Main Text */
+  --color-text-body: #475569;       /* Secondary Text — Slate */
+  --color-text-muted: #64748B;      /* Muted Text — Muted Slate */
+  --color-text-subtle: #64748B;
+
+  --color-border: #E2E8F0;          /* Light Slate — Cards, inputs, dividers */
+  --color-border-light: #F1F5F9;
+  --color-border-dark: #CBD5E1;
+
+  --color-dark-section: #0B1120;    /* Charcoal — Dark feature sections */
+  --color-dark-surface: #111827;    /* Dark Slate — Cards inside dark sections */
+  --color-white-on-dark: #FFFFFF;   /* White on Dark */
+
+  --color-success: #16A34A;         /* Green — Success states */
+  --color-error: #DC2626;           /* Red — Form errors */
+  --color-warning: #D97706;         /* Amber — Warnings */
 
   /* Typography */
   --font-heading: 'Montserrat', sans-serif;
