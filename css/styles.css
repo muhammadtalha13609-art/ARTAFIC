@@ -1757,7 +1757,7 @@ input, textarea, select {
   }
 
   .timeline__step-group {
-    margin-bottom: 140px;
+    margin-bottom: 60px;
   }
 
   .timeline__step-group--left,
@@ -3389,7 +3389,32 @@ html, body {
   }
 
   .section {
-    padding: 3.5rem 0 !important;
+    padding: 2.5rem 0 !important;
+  }
+
+  .marquee-section {
+    padding: 2.25rem 0 1.25rem 0 !important;
+  }
+
+  .value-strip {
+    padding: 1.25rem 0 !important;
+  }
+
+  .process {
+    height: 420vh !important;
+  }
+
+  /* Dark Feature Section (#about) - Eliminate Oversized Empty Space */
+  .about-me-section {
+    min-height: auto !important;
+    padding: 2.5rem 1.25rem !important;
+  }
+
+  .corner-img-top-left,
+  .corner-img-bottom-left,
+  .corner-img-top-right,
+  .corner-img-bottom-right {
+    display: none !important;
   }
 
   /* Navigation Header */
@@ -3543,18 +3568,7 @@ html, body {
     font-size: 0.95rem !important;
   }
 
-  /* Dark Feature Section (#about) - Eliminate Oversized Empty Space */
-  .about-me-section {
-    min-height: auto !important;
-    padding: 3.5rem 1.25rem !important;
-  }
 
-  .corner-img-top-left,
-  .corner-img-bottom-left,
-  .corner-img-top-right,
-  .corner-img-bottom-right {
-    display: none !important;
-  }
 
   /* Services Grid */
   .services__grid,
