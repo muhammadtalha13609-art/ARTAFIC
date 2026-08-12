@@ -3849,7 +3849,7 @@ select:focus-visible {
 .services-stroke-intro {
   position: relative;
   width: 100%;
-  min-height: 520px;
+  min-height: 640px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3857,19 +3857,20 @@ select:focus-visible {
 
 @media (min-width: 768px) {
   .services-stroke-intro {
-    min-height: 620px;
+    min-height: 820px;
   }
 }
 
 .services-stroke-overlay-text {
   position: absolute;
   z-index: 10;
-  top: 50%;
+  top: 36%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 90%;
-  max-width: 800px;
+  max-width: 900px;
   pointer-events: none;
+  text-align: center;
 }
 
 .services-svg-path-wrap {
@@ -3881,13 +3882,14 @@ select:focus-visible {
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .services-svg-element {
-  width: 100%;
-  height: 100%;
+  width: 105%;
+  height: 105%;
   object-fit: cover;
+  transform: scale(1.15);
   pointer-events: none;
 }
 
