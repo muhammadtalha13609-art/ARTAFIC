@@ -3835,83 +3835,115 @@ select:focus-visible {
 }
 
 /* ============================================================
-   31. UNIFIED SERVICES STROKE FOLLOW SCROLL SECTION
+   31. FULL-SCREEN STICKY SCROLL PIN SERVICES SECTION
    ============================================================ */
-.services-stroke-section {
+.services-pin-section {
   position: relative;
   width: 100%;
-  padding: 4rem 1.5rem 4rem;
+  height: 250vh; /* Track height for pinning */
   background-color: var(--color-surface);
-  overflow: hidden;
-  border-bottom: 1px solid var(--color-border);
 }
 
-.services-stroke-intro {
-  position: relative;
+.services-sticky-viewport {
+  position: sticky;
+  top: 0;
   width: 100%;
-  min-height: 640px;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-@media (min-width: 768px) {
-  .services-stroke-intro {
-    min-height: 820px;
-  }
-}
-
-.services-stroke-overlay-text {
-  position: absolute;
-  z-index: 10;
-  top: 36%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 900px;
-  pointer-events: none;
-  text-align: center;
-}
-
-.services-svg-path-wrap {
+.services-intro-layer {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   display: flex;
-  justify-content: center;
   align-items: center;
-  opacity: 0.9;
+  justify-content: center;
+  z-index: 5;
+  will-change: opacity;
 }
 
-.services-svg-element {
-  width: 105%;
-  height: 105%;
-  object-fit: cover;
-  transform: scale(1.15);
+.services-overlay-text {
+  position: absolute;
+  z-index: 20;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 900px;
+  text-align: center;
   pointer-events: none;
 }
 
-/* Endpoint Services Card Box */
+.services-hero-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: clamp(3.75rem, 8.5vw, 7.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--color-charcoal);
+  margin: 0;
+}
+
+.services-svg-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  overflow: visible;
+}
+
+.services-svg-element {
+  width: 100%;
+  height: 100%;
+  max-width: 1100px;
+  max-height: 85vh;
+  object-fit: contain;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Endpoint Services Card Layer */
+.services-endpoint-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  transform: translate3d(0, 100vh, 0);
+  opacity: 0;
+  pointer-events: auto;
+  padding: 1.5rem;
+  will-change: transform, opacity;
+}
+
 .services-endpoint-card {
   position: relative;
-  z-index: 10;
+  width: 100%;
+  max-width: 1150px;
   background: linear-gradient(135deg, #14B8A6 0%, #0F766E 100%);
   border-radius: 2rem;
-  padding: 3.5rem 2rem;
+  padding: 3rem 2rem;
   color: #FFFFFF;
   box-shadow: 0 20px 50px rgba(20, 184, 166, 0.25);
-  margin-top: -4rem;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
-  will-change: transform, opacity;
 }
 
 @media (min-width: 768px) {
   .services-endpoint-card {
     border-radius: 2.5rem;
-    padding: 4.5rem 3.5rem;
-    margin-top: -6rem;
+    padding: 4rem 3.5rem;
   }
 }
 

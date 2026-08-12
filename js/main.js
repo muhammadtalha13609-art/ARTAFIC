@@ -1620,44 +1620,53 @@ function formatTime() {
 })();
 
 /* ------------------------------------------------------------
-   16. SERVICES SVG STROKE FOLLOW SCROLL & ENDPOINT CARD ANIMATION
+   16. SERVICES FULL-SCREEN STICKY SCROLL PIN ANIMATION
    ------------------------------------------------------------ */
 (function initServicesStrokeFollowScroll() {
-  const container = document.getElementById('services');
+  const section = document.getElementById('services');
   const path = document.getElementById('services-scroll-path');
-  const endpointCard = document.getElementById('services-endpoint-card');
+  const endpointLayer = document.getElementById('services-endpoint-layer');
+  const introLayer = document.getElementById('services-intro-layer');
 
-  if (!container || !path) return;
+  if (!section || !path || !endpointLayer) return;
 
   const pathLength = path.getTotalLength();
   path.style.strokeDasharray = `${pathLength} ${pathLength}`;
   path.style.strokeDashoffset = `${pathLength}`;
 
-  function updateStrokeAndCard() {
-    const rect = container.getBoundingClientRect();
+  function updateScrollProgress() {
+    const rect = section.getBoundingClientRect();
+    const sectionHeight = section.offsetHeight;
     const windowHeight = window.innerHeight;
-    
-    // Calculate scroll progress between 0 and 1 as section moves through viewport
-    const totalDist = rect.height;
-    const currentDist = windowHeight - rect.top;
-    const progress = Math.max(0, Math.min(1, currentDist / (totalDist + windowHeight * 0.5)));
 
-    // Draw stroke along path
-    const drawLength = pathLength * Math.min(1, progress * 1.2);
+    // Calculate progress (0 to 1) as user scrolls through the 250vh sticky section track
+    const totalScrollable = sectionHeight - windowHeight;
+    if (totalScrollable <= 0) return;
+
+    const currentScroll = -rect.top;
+    const progress = Math.max(0, Math.min(1, currentScroll / totalScrollable));
+
+    // 1. Draw SVG stroke from progress 0 to 0.55
+    const strokeProgress = Math.min(1, progress / 0.55);
+    const drawLength = pathLength * strokeProgress;
     path.style.strokeDashoffset = `${pathLength - drawLength}`;
 
-    // Translate endpoint card up smoothly as scroll reaches the end of the stroke
-    if (endpointCard) {
-      const cardTranslateProgress = Math.max(0, Math.min(1, (progress - 0.25) / 0.75));
-      const translateY = (1 - cardTranslateProgress) * 120; // 120px to 0px
-      const opacity = Math.min(1, cardTranslateProgress * 1.5);
+    // 2. Translate endpoint card layer up from progress 0.35 to 0.85
+    const cardProgress = Math.max(0, Math.min(1, (progress - 0.35) / 0.5));
+    const translateY = (1 - cardProgress) * 100; // 100vh down to 0vh
+    const opacity = Math.min(1, cardProgress * 1.5);
 
-      endpointCard.style.transform = `translate3d(0, ${translateY.toFixed(2)}px, 0)`;
-      endpointCard.style.opacity = String(opacity.toFixed(2));
+    endpointLayer.style.transform = `translate3d(0, ${translateY.toFixed(2)}vh, 0)`;
+    endpointLayer.style.opacity = String(opacity.toFixed(2));
+
+    // 3. Fade intro text/stroke as card covers screen
+    if (introLayer) {
+      const fadeIntroProgress = Math.max(0, (progress - 0.5) / 0.3);
+      introLayer.style.opacity = String((1 - fadeIntroProgress).toFixed(2));
     }
   }
 
-  window.addEventListener('scroll', updateStrokeAndCard, { passive: true });
-  window.addEventListener('resize', updateStrokeAndCard, { passive: true });
-  updateStrokeAndCard();
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+  window.addEventListener('resize', updateScrollProgress, { passive: true });
+  updateScrollProgress();
 })();
