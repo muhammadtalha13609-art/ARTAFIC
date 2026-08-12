@@ -3315,7 +3315,7 @@ input, textarea, select {
    ------------------------------------------------------------ */
 .marquee-section {
   background-color: #0C0C0C;
-  padding: 6rem 0 2.5rem 0;
+  padding: 0 0 2.5rem 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -3393,7 +3393,7 @@ html, body {
   }
 
   .marquee-section {
-    padding: 2.25rem 0 1.25rem 0 !important;
+    padding: 0 0 1.25rem 0 !important;
   }
 
   .value-strip {
