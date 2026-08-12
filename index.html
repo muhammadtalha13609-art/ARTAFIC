@@ -772,6 +772,133 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════════
+     BOOKING / GET IN TOUCH FORM
+═══════════════════════════════════════════════════════════ -->
+<section class="booking section section--alt" id="booking" aria-labelledby="booking-title">
+  <div class="container">
+    <div class="booking__grid">
+
+      <div class="booking__info" data-reveal>
+        <p class="section-label">Get In Touch</p>
+        <h2 class="section-title" id="booking-title">Let's Talk About Your Project.</h2>
+        <p class="section-subtitle">
+          Tell us what you're looking for and we'll reach out to discuss how we can help.
+        </p>
+
+        <div class="booking__info-points">
+          <div class="booking__info-point">
+            <div class="booking__info-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <p class="booking__info-text-title">Quick response</p>
+              <p class="booking__info-text-desc">We review every inquiry and respond promptly.</p>
+            </div>
+          </div>
+          <div class="booking__info-point">
+            <div class="booking__info-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div>
+              <p class="booking__info-text-title">Friendly conversation</p>
+              <p class="booking__info-text-desc">Simple, direct discussion focused on understanding your goals.</p>
+            </div>
+          </div>
+          <div class="booking__info-point">
+            <div class="booking__info-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <p class="booking__info-text-title">Clear next steps</p>
+              <p class="booking__info-text-desc">Clear guidance on scope, approach, and how working with ARTAFIC looks.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking__form-area" data-reveal data-reveal-delay="2">
+        <div class="booking__form-card">
+
+          <!-- Success State -->
+          <div class="booking__success" id="booking-success" role="alert" aria-live="polite">
+            <div class="booking__success-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3 class="booking__success-title">Message Received</h3>
+            <p class="booking__success-text">Thank you for getting in touch. We'll review your details and respond shortly.</p>
+          </div>
+
+          <!-- Form -->
+          <form id="booking-form" novalidate aria-label="Contact form">
+
+            <div class="form-group">
+              <label class="form-label" for="field-name">Name <span aria-hidden="true" style="color:#EF4444">*</span></label>
+              <input class="form-input" type="text" id="field-name" name="name" placeholder="Your name" required autocomplete="name" />
+              <span class="form-error" id="error-name" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Please enter your name.
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="field-email">Email <span aria-hidden="true" style="color:#EF4444">*</span></label>
+              <input class="form-input" type="email" id="field-email" name="email" placeholder="Your email" required autocomplete="email" />
+              <span class="form-error" id="error-email" role="alert">Please enter a valid email address.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="field-service">What do you need? <span aria-hidden="true" style="color:#EF4444">*</span></label>
+              <select class="form-select" id="field-service" name="service" required>
+                <option value="">Select an option…</option>
+                <option value="web-development">Web Development</option>
+                <option value="logo-design">Logo Design</option>
+                <option value="both">Both</option>
+                <option value="not-sure">Not sure yet</option>
+              </select>
+              <span class="form-error" id="error-service" role="alert">Please select an option.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="field-description">
+                Tell us a little about your project
+                <span class="form-label--optional">(optional)</span>
+              </label>
+              <textarea class="form-textarea" id="field-description" name="description" placeholder="Tell us briefly what you're looking for..." rows="4"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--primary form-submit" id="form-submit-btn">
+              GET IN TOUCH
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════ -->
+<footer class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="container">
+    <div class="footer__grid">
+
+      <div class="footer__brand">
+        <div class="footer__brand-logo">
+          ARTAFIC
+          <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--color-teal); margin-bottom:1px;" aria-hidden="true"></span>
+        </div>
+        <p class="footer__brand-desc">Professional digital experiences built around your business and your customers.</p>
+        <a href="#booking" class="footer__brand-cta">
+          Have a project in mind?
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+
       <div class="footer__col">
         <p class="footer__col-title">Navigation</p>
         <ul class="footer__links" role="list">
