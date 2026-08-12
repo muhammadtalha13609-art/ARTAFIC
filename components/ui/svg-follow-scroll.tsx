@@ -7,43 +7,66 @@ const Skiper19 = () => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
+    offset: ["start start", "end end"]
   });
+
+  const translateY = useTransform(scrollYProgress, [0.4, 0.95], ["180vh", "0vh"]);
 
   return (
     <section
       ref={ref}
-      className="mx-auto flex h-[350vh] w-screen flex-col items-center overflow-hidden bg-[#0A0A0A] px-4 text-[#FFFFFF]"
+      className="mx-auto flex h-[350vh] w-screen flex-col items-center overflow-hidden bg-[#0A0A0A] px-4 text-[#FFFFFF] relative"
     >
-      <div className="mt-32 relative flex w-fit flex-col items-center justify-center gap-5 text-center">
-        <p className="text-sm font-semibold tracking-widest text-[#14B8A6] uppercase">WHAT WE BUILD</p>
-        <h1 className="font-serif relative z-10 text-6xl font-medium tracking-tight lg:text-8xl">
-          Our Services <br /> Built for Impact
+      <div className="sticky top-20 flex w-full flex-col items-center justify-center gap-5 text-center pt-12">
+        <h1 className="font-serif relative z-10 text-6xl font-medium tracking-tight lg:text-9xl">
+          OUR SERVICES <br />
+          <span className="text-[#14B8A6]">Follow The Stroke</span>
         </h1>
-        <p className="relative z-10 max-w-2xl text-xl font-medium text-slate-400">
-          Scroll down to follow the path leading into our core capabilities
+        <p className="relative z-10 max-w-2xl text-xl font-medium text-slate-300">
+          Scroll down to watch the stroke draw along the path and reveal our services box below
         </p>
 
         <LinePath
-          className="absolute -right-[40%] top-0 z-0"
+          className="absolute -right-[20%] top-0 z-0 opacity-80"
           scrollYProgress={scrollYProgress}
         />
       </div>
 
-      <div className="rounded-4xl w-full translate-y-[180vh] bg-[#14B8A6] pb-16 text-[#0A0A0A]">
-        <h1 className="mt-12 text-center text-[12vw] font-bold leading-[0.9] tracking-tighter lg:text-[10vw]">
+      <motion.div
+        style={{ translateY }}
+        className="rounded-4xl w-full max-w-6xl bg-[#14B8A6] p-8 md:p-16 text-[#0A0A0A] shadow-2xl relative z-20 mt-[120vh]"
+      >
+        <h1 className="text-center text-[10vw] font-black leading-[0.9] tracking-tighter lg:text-[8vw] uppercase mb-12">
           ARTAFIC SERVICES
         </h1>
-        <div className="mt-16 flex w-full flex-col items-center justify-center gap-12 px-8 font-medium lg:flex-row lg:justify-around">
-          <div className="flex flex-col items-center text-center max-w-sm">
-            <h3 className="text-2xl font-bold mb-2">WEB DEVELOPMENT</h3>
-            <p className="text-sm text-teal-950">Custom, high-performing responsive websites engineered for conversions.</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-[#0A0A0A]">
+          <div className="bg-white/90 backdrop-blur p-8 rounded-3xl shadow-lg border border-teal-200">
+            <span className="text-xs font-bold tracking-widest text-teal-800 uppercase">SERVICE 01</span>
+            <h3 className="text-3xl font-bold mt-2 mb-4">Web Development</h3>
+            <p className="text-slate-700 leading-relaxed mb-6">
+              Professional, custom, responsive websites built around your business goals and customers. Fast, mobile-optimized, and built to convert.
+            </p>
+            <ul className="space-y-2 text-sm font-semibold text-slate-800">
+              <li>✓ Custom responsive design</li>
+              <li>✓ High-speed mobile performance</li>
+              <li>✓ Clean search-friendly structure</li>
+            </ul>
           </div>
-          <div className="flex flex-col items-center text-center max-w-sm">
-            <h3 className="text-2xl font-bold mb-2">LOGO BUILDING</h3>
-            <p className="text-sm text-teal-950">Distinctive, modern visual identity and branding that inspires trust.</p>
+
+          <div class="bg-white/90 backdrop-blur p-8 rounded-3xl shadow-lg border border-teal-200">
+            <span className="text-xs font-bold tracking-widest text-teal-800 uppercase">SERVICE 02</span>
+            <h3 className="text-3xl font-bold mt-2 mb-4">Logo Building</h3>
+            <p className="text-slate-700 leading-relaxed mb-6">
+              Professional logo design for businesses that need a stronger, clearer visual identity that builds immediate trust with customers.
+            </p>
+            <ul className="space-y-2 text-sm font-semibold text-slate-800">
+              <li>✓ Vector & print-ready assets</li>
+              <li>✓ Modern brand color system</li>
+              <li>✓ Distinctive visual mark</li>
+            </ul>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
@@ -57,7 +80,7 @@ const LinePath = ({
   className: string;
   scrollYProgress: any;
 }) => {
-  const pathLength = useTransform(scrollYProgress, [0, 1], [0.5, 1]);
+  const pathLength = useTransform(scrollYProgress, [0, 0.85], [0.1, 1]);
 
   return (
     <svg

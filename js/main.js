@@ -1620,11 +1620,12 @@ function formatTime() {
 })();
 
 /* ------------------------------------------------------------
-   16. SERVICES SVG STROKE FOLLOW SCROLL ANIMATION
+   16. SERVICES SVG STROKE FOLLOW SCROLL & ENDPOINT CARD ANIMATION
    ------------------------------------------------------------ */
 (function initServicesStrokeFollowScroll() {
-  const container = document.getElementById('services-scroll-section');
+  const container = document.getElementById('services');
   const path = document.getElementById('services-scroll-path');
+  const endpointCard = document.getElementById('services-endpoint-card');
 
   if (!container || !path) return;
 
@@ -1632,20 +1633,31 @@ function formatTime() {
   path.style.strokeDasharray = `${pathLength} ${pathLength}`;
   path.style.strokeDashoffset = `${pathLength}`;
 
-  function updateStroke() {
+  function updateStrokeAndCard() {
     const rect = container.getBoundingClientRect();
     const windowHeight = window.innerHeight;
     
     // Calculate scroll progress between 0 and 1 as section moves through viewport
-    const totalDist = rect.height + windowHeight;
+    const totalDist = rect.height;
     const currentDist = windowHeight - rect.top;
-    const progress = Math.max(0, Math.min(1, currentDist / totalDist));
+    const progress = Math.max(0, Math.min(1, currentDist / (totalDist + windowHeight * 0.5)));
 
-    const drawLength = pathLength * progress;
+    // Draw stroke along path
+    const drawLength = pathLength * Math.min(1, progress * 1.2);
     path.style.strokeDashoffset = `${pathLength - drawLength}`;
+
+    // Translate endpoint card up smoothly as scroll reaches the end of the stroke
+    if (endpointCard) {
+      const cardTranslateProgress = Math.max(0, Math.min(1, (progress - 0.25) / 0.75));
+      const translateY = (1 - cardTranslateProgress) * 120; // 120px to 0px
+      const opacity = Math.min(1, cardTranslateProgress * 1.5);
+
+      endpointCard.style.transform = `translate3d(0, ${translateY.toFixed(2)}px, 0)`;
+      endpointCard.style.opacity = String(opacity.toFixed(2));
+    }
   }
 
-  window.addEventListener('scroll', updateStroke, { passive: true });
-  window.addEventListener('resize', updateStroke, { passive: true });
-  updateStroke();
+  window.addEventListener('scroll', updateStrokeAndCard, { passive: true });
+  window.addEventListener('resize', updateStrokeAndCard, { passive: true });
+  updateStrokeAndCard();
 })();
