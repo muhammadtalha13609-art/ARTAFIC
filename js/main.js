@@ -300,22 +300,10 @@ function formatTime() {
   const successEl = $('#booking-success');
   if (!form) return;
 
-  // Set min date to today
-  const dateInput = $('#field-date');
-  if (dateInput) {
-    const today = new Date().toISOString().split('T')[0];
-    dateInput.setAttribute('min', today);
-  }
-
   const fields = [
-    { id: 'field-name',        errorId: 'error-name',        validate: v => v.trim().length >= 2 },
-    { id: 'field-business',    errorId: 'error-business',    validate: v => v.trim().length >= 2 },
-    { id: 'field-email',       errorId: 'error-email',       validate: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) },
-    { id: 'field-phone',       errorId: 'error-phone',       validate: v => v.trim().length >= 6 },
-    { id: 'field-service',     errorId: 'error-service',     validate: v => v !== '' },
-    { id: 'field-description', errorId: 'error-description', validate: v => v.trim().length >= 10 },
-    { id: 'field-date',        errorId: 'error-date',        validate: v => v !== '' },
-    { id: 'field-time',        errorId: 'error-time',        validate: v => v !== '' },
+    { id: 'field-name',    errorId: 'error-name',    validate: v => v.trim().length >= 2 },
+    { id: 'field-email',   errorId: 'error-email',   validate: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) },
+    { id: 'field-service', errorId: 'error-service', validate: v => v !== '' }
   ];
 
   function setError(fieldId, errorId, hasError) {
@@ -388,14 +376,9 @@ function formatTime() {
 
     const sanitizedData = {
       name: sanitize($('#field-name').value),
-      business: sanitize($('#field-business').value),
       email: sanitize($('#field-email').value),
-      phone: sanitize($('#field-phone').value),
       service: sanitize($('#field-service').value),
-      description: sanitize($('#field-description').value),
-      date: sanitize($('#field-date').value),
-      time: sanitize($('#field-time').value),
-      url: $('#field-url') ? sanitize($('#field-url').value) : ''
+      description: $('#field-description') ? sanitize($('#field-description').value) : ''
     };
 
     // Success
