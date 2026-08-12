@@ -442,11 +442,11 @@ function formatTime() {
       cta: true
     },
     cost: {
-      text: 'Project pricing is based on scope, requirements, complexity, and your business goals. We don\'t publish fixed packages because no two projects are the same.\n\nThe right approach is a conversation — book a meeting and we can discuss your project and provide a proper estimate.',
+      text: 'Project pricing is based on scope, requirements, complexity, and your business goals. We don\'t publish fixed packages because no two projects are the same.\n\nThe right approach is a conversation — get in touch and we can discuss your project and provide a proper estimate.',
       cta: true
     },
     timeline: {
-      text: 'Timeline depends on the scope and complexity of your project. Every project is different.\n\nThe most accurate way to get a timeline is to book a meeting so we can understand your specific requirements and give you a realistic estimate based on what the work actually involves.',
+      text: 'Timeline depends on the scope and complexity of your project. Every project is different.\n\nThe most accurate way to get a timeline is to get in touch so we can understand your specific requirements and give you a realistic estimate based on what the work actually involves.',
       cta: true
     },
     redesign: {
@@ -454,7 +454,7 @@ function formatTime() {
       cta: true
     },
     booking: {
-      text: 'Booking a meeting is straightforward — scroll down to the "Book a Meeting" section on this page, or click the "Book a Meeting" button in the navigation.\n\nFill in the form with your details and we\'ll review your request and reach out to confirm the meeting.',
+      text: 'Getting in touch is simple — scroll down to the "Get In Touch" section on this page, or click the "Get In Touch" button in the navigation.\n\nFill in the simple form with your details and we\'ll review your inquiry and reach out promptly.',
       cta: true
     }
   };
@@ -478,12 +478,12 @@ function formatTime() {
     if (lower.includes('redesign') || lower.includes('existing') || lower.includes('current')) {
       return faqAnswers.redesign;
     }
-    if (lower.includes('book') || lower.includes('meeting') || lower.includes('contact') || lower.includes('start')) {
+    if (lower.includes('book') || lower.includes('meeting') || lower.includes('contact') || lower.includes('touch') || lower.includes('start')) {
       return faqAnswers.booking;
     }
 
     return {
-      text: 'That\'s a great question. To give you the most accurate information for your specific situation, the best next step is to book a meeting with us directly. We\'ll be able to address your question in full during that conversation.',
+      text: 'That\'s a great question. To give you the most accurate information for your specific situation, the best next step is to get in touch with us directly. We\'ll be happy to address your question in full.',
       cta: true
     };
   }
@@ -521,7 +521,7 @@ function formatTime() {
       const cta = document.createElement('a');
       cta.className = 'chat-message__cta';
       cta.href = '#booking';
-      cta.innerHTML = `Book a Meeting
+      cta.innerHTML = `Get In Touch
         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       `;
       cta.addEventListener('click', () => {
