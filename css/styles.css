@@ -3475,48 +3475,72 @@ html, body {
     margin-top: 2rem !important;
   }
 
-  /* Hero Section */
+  /* Compact Mobile Hero - High Conversion & Immediate Offer Clarity */
   .aether-hero {
-    min-height: 100svh !important;
-    padding: 5rem 1rem 3rem !important;
+    min-height: clamp(580px, 85vh, 720px) !important;
+    padding: 4.5rem 1rem 2rem !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
   }
 
-  .aether-hero__container {
+  .aether-hero__canvas {
+    max-height: 35vh !important;
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+  }
+
+  .aether-hero__content {
     width: 100% !important;
     max-width: 100% !important;
     padding: 0 !important;
   }
 
+  .aether-hero__badge {
+    margin-bottom: 0.75rem !important;
+  }
+
   .aether-hero__title {
-    font-size: clamp(2.1rem, 9vw, 3.4rem) !important;
+    font-size: clamp(2rem, 8.5vw, 3rem) !important;
     line-height: 1.15 !important;
     letter-spacing: -0.02em !important;
     max-width: 100% !important;
-    margin-bottom: 1.25rem !important;
+    margin-bottom: 0.85rem !important;
   }
 
   .aether-hero__subtitle {
-    font-size: 1.05rem !important;
-    line-height: 1.6 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.55 !important;
     max-width: 100% !important;
-    margin-bottom: 2rem !important;
-    padding: 0 0.5rem !important;
+    margin-bottom: 1.25rem !important;
+    padding: 0 !important;
   }
 
+  .aether-hero__actions,
   .aether-hero__cta-group {
     flex-direction: column !important;
     width: 100% !important;
-    gap: 0.85rem !important;
+    gap: 0.75rem !important;
   }
 
   .aether-hero__btn {
     width: 100% !important;
     justify-content: center !important;
-    min-height: 50px !important;
-    font-size: 1rem !important;
+    min-height: 48px !important;
+    font-size: 0.95rem !important;
+  }
+
+  /* Dark Feature Section (#about) - Eliminate Oversized Empty Space */
+  .about-me-section {
+    min-height: auto !important;
+    padding: 3.5rem 1.25rem !important;
+  }
+
+  .corner-img-top-left,
+  .corner-img-bottom-left,
+  .corner-img-top-right,
+  .corner-img-bottom-right {
+    display: none !important;
   }
 
   /* Services Grid */
@@ -3660,6 +3684,30 @@ html, body {
     grid-template-columns: 1fr !important;
     gap: 2rem !important;
     text-align: left !important;
+  }
+}
+
+/* ============================================================
+   29. ACCESSIBILITY HARDENING & REDUCED MOTION SUPPORT
+   ============================================================ */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-teal) !important;
+  outline-offset: 2px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal="left-far"],
+  [data-reveal="right-far"],
+  .about-animated-text,
+  .magnetic-wrapper {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
 
