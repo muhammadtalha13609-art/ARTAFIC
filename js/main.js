@@ -1489,7 +1489,7 @@ function formatTime() {
 })();
 
 /* ------------------------------------------------------------
-   15. SVG PATH MARQUEE ANIMATION (Smooth Flow along SVG Path)
+   15. SVG PATH MARQUEE ANIMATION (Pixel-Perfect Path & Scroll Velocity Drive)
    ------------------------------------------------------------ */
 (function initSvgPathMarquee() {
   const container = document.getElementById('svg-path-marquee');
@@ -1514,7 +1514,7 @@ function formatTime() {
     "https://cdn.cosmos.so/cd346bce-f415-4ea7-8060-99c5f7c1741a?format=jpeg"
   ];
 
-  // Render DOM nodes
+  // Render DOM nodes inside itemsLayer
   const nodes = imgs.map((src, i) => {
     const el = document.createElement('div');
     el.className = 'svg-marquee-item';
@@ -1525,31 +1525,83 @@ function formatTime() {
 
   const totalLength = path.getTotalLength();
   let baseProgress = 0;
+  let scrollVelocity = 0;
+  let lastScrollY = window.scrollY;
+  let isHovered = false;
 
   function updatePositions() {
-    const rect = container.getBoundingClientRect();
-    const scrollOffset = (window.innerHeight - rect.top) * 0.05;
+    const containerWidth = itemsLayer.clientWidth || 1040;
+    const containerHeight = itemsLayer.clientHeight || 570;
     const count = imgs.length;
 
     nodes.forEach((node, i) => {
-      let progress = ((i / count) * 100 + baseProgress + scrollOffset) % 100;
+      let progress = ((i / count) * 100 + baseProgress) % 100;
       if (progress < 0) progress += 100;
 
+      // Get exact point along path (viewBox dimensions 1040 x 570)
       const point = path.getPointAtLength((progress / 100) * totalLength);
-      const xPercent = (point.x / 1040) * 100;
-      const yPercent = (point.y / 570) * 100;
 
-      node.style.transform = `translate3d(${xPercent}%, ${yPercent}%, 0) translate(-50%, -50%)`;
+      // Convert SVG viewBox coordinates to container pixel bounds
+      const pixelX = (point.x / 1040) * containerWidth;
+      const pixelY = (point.y / 570) * containerHeight;
+
+      // Dynamic z-index based on vertical path position for depth
+      const zIndex = Math.round(point.y);
+
+      node.style.transform = `translate3d(${pixelX.toFixed(2)}px, ${pixelY.toFixed(2)}px, 0) translate(-50%, -50%)`;
+      node.style.zIndex = String(zIndex);
     });
   }
+
+  // Track page scroll speed and direction to drive path marquee motion
+  window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    const delta = currentScrollY - lastScrollY;
+    scrollVelocity += delta * 0.025;
+    lastScrollY = currentScrollY;
+    updatePositions();
+  }, { passive: true });
+
+  // Hover slowdown
+  container.addEventListener('mouseenter', () => { isHovered = true; });
+  container.addEventListener('mouseleave', () => { isHovered = false; });
+
+  // Drag interaction along path
+  let isDragging = false;
+  let startX = 0;
+
+  itemsLayer.addEventListener('pointerdown', (e) => {
+    isDragging = true;
+    startX = e.clientX;
+    itemsLayer.style.cursor = 'grabbing';
+  });
+
+  window.addEventListener('pointermove', (e) => {
+    if (!isDragging) return;
+    const deltaX = e.clientX - startX;
+    startX = e.clientX;
+    baseProgress += (deltaX / (itemsLayer.clientWidth || 1000)) * 40;
+    updatePositions();
+  });
+
+  window.addEventListener('pointerup', () => {
+    isDragging = false;
+    itemsLayer.style.cursor = 'grab';
+  });
+
+  window.addEventListener('resize', updatePositions);
 
   let isVisible = false;
   let animId = null;
 
   function animate() {
-    if (!isVisible) return;
-    baseProgress += 0.04;
-    updatePositions();
+    if (isVisible) {
+      // Continuous base speed + scroll velocity decay
+      const speed = isHovered ? 0.015 : 0.045;
+      scrollVelocity *= 0.90; // Smooth damping
+      baseProgress += speed + scrollVelocity;
+      updatePositions();
+    }
     animId = requestAnimationFrame(animate);
   }
 
@@ -1558,13 +1610,11 @@ function formatTime() {
       isVisible = entry.isIntersecting;
       if (isVisible && !animId) {
         animId = requestAnimationFrame(animate);
-      } else if (!isVisible && animId) {
-        cancelAnimationFrame(animId);
-        animId = null;
       }
     });
   }, { rootMargin: '200px 0px' });
 
   observer.observe(container);
-  window.addEventListener('scroll', updatePositions, { passive: true });
+  updatePositions();
+  animId = requestAnimationFrame(animate);
 })();
