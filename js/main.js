@@ -27,26 +27,43 @@ function formatTime() {
   const nav = $('#nav');
   if (!nav) return;
 
-  let lastScrollY = 0;
-  let ticking = false;
+  const darkSections = $$('#home, #marquee, #about');
 
-  function onScroll() {
-    lastScrollY = window.scrollY;
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        if (lastScrollY > 20) {
-          nav.classList.add('is-scrolled');
-        } else {
-          nav.classList.remove('is-scrolled');
-        }
-        ticking = false;
-      });
-      ticking = true;
+  function updateNavState() {
+    const scrollY = window.scrollY;
+    
+    if (scrollY > 20) {
+      nav.classList.add('is-scrolled');
+    } else {
+      nav.classList.remove('is-scrolled');
+    }
+
+    // Check if navbar overlaps any dark section
+    const navBounds = nav.getBoundingClientRect();
+    const navCenterY = navBounds.top + navBounds.height / 2;
+    
+    let isOverDark = false;
+    for (const sec of darkSections) {
+      const rect = sec.getBoundingClientRect();
+      if (navCenterY >= rect.top && navCenterY <= rect.bottom) {
+        isOverDark = true;
+        break;
+      }
+    }
+
+    if (isOverDark) {
+      nav.classList.add('nav--on-dark');
+    } else {
+      nav.classList.remove('nav--on-dark');
     }
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll(); // run on load
+  window.addEventListener('scroll', () => {
+    requestAnimationFrame(updateNavState);
+  }, { passive: true });
+
+  window.addEventListener('resize', updateNavState, { passive: true });
+  updateNavState();
 })();
 
 

@@ -1050,23 +1050,28 @@ input, textarea, select {
   }
 }
 
-/* ── Navigation Overrides (Transparent on Dark Hero) ── */
-.nav:not(.is-scrolled) .nav__logo-image {
-  /* The uploaded logo has dark text which is invisible on the dark hero.
-     This filter turns the black text (and teal accents) pure white. */
-  filter: brightness(0) invert(1);
+/* ── Navigation Overrides (Pure White Logo on Dark Backgrounds) ── */
+.nav:not(.is-scrolled) .nav__logo-image,
+.nav.nav--on-dark .nav__logo-image,
+.nav__mobile-header .nav__logo-image,
+.footer__logo-image {
+  filter: brightness(0) invert(1) !important;
+  transition: filter var(--duration-base) var(--ease-out);
 }
 
-.nav:not(.is-scrolled) .nav__link {
-  color: rgba(255,255,255,0.65);
+.nav:not(.is-scrolled) .nav__link,
+.nav.nav--on-dark .nav__link {
+  color: rgba(255,255,255,0.75);
 }
 
-.nav:not(.is-scrolled) .nav__link::before {
-  background-color: rgba(255,255,255,0.1);
+.nav:not(.is-scrolled) .nav__link::before,
+.nav.nav--on-dark .nav__link::before {
+  background-color: rgba(255,255,255,0.15);
 }
 
-.nav:not(.is-scrolled) .nav__link:hover {
-  color: #fff;
+.nav:not(.is-scrolled) .nav__link:hover,
+.nav.nav--on-dark .nav__link:hover {
+  color: #ffffff;
 }
 
 /* ────────────────────────────────────────────────────────────
