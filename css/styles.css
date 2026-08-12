@@ -882,21 +882,24 @@ input, textarea, select {
 }
 
 .aether-hero__badge span {
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  color: #e5e7eb;
-  letter-spacing: 0.01em;
+  color: var(--color-teal, #14B8A6);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .aether-hero__title {
-  font-size: clamp(2.5rem, 6.5vw, 5.5rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(to bottom, #ffffff, #9ca3af);
+  font-size: clamp(2.4rem, 5.2vw, 4.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  max-width: 780px;
+  margin: 0 auto 1.25rem;
+  background: linear-gradient(180deg, #FFFFFF 0%, #D1D5DB 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  line-height: 1.1;
+  background-clip: text;
+  line-height: 1.15;
 }
 
 .aether-hero__accent {
@@ -907,11 +910,12 @@ input, textarea, select {
 }
 
 .aether-hero__subtitle {
-  max-width: 42rem;
-  margin: 0 auto 2.5rem;
-  font-size: 1.125rem;
-  color: #9ca3af;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  font-size: 1.05rem;
+  color: #9CA3AF;
   line-height: 1.6;
+  font-weight: 400;
 }
 
 .aether-hero__actions {
@@ -926,34 +930,39 @@ input, textarea, select {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 1rem 2rem;
-  background: #ffffff;
-  color: #000000;
+  padding: 0.9rem 2.2rem;
+  background: var(--color-teal, #14B8A6);
+  color: #FFFFFF;
   font-weight: 600;
-  border-radius: 0.5rem;
+  border-radius: 9999px;
   text-decoration: none;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 8px 25px rgba(20, 184, 166, 0.3);
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
   font-family: var(--font-heading, sans-serif);
 }
 
 .aether-hero__btn:hover {
-  background: #e5e7eb;
+  background: var(--color-teal-dark, #0D9488);
   transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(20, 184, 166, 0.4);
 }
 
 .aether-hero__btn--secondary {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+  color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  font-weight: 500;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  box-shadow: none;
 }
 
 .aether-hero__btn--secondary:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.14);
   border-color: rgba(255, 255, 255, 0.35);
-  color: #ffffff;
+  color: #FFFFFF;
+  transform: translateY(-2px);
 }
 
 /* ── Subtitle ── */
@@ -3501,11 +3510,12 @@ html, body {
   }
 
   .aether-hero__title {
-    font-size: clamp(2rem, 8.5vw, 3rem) !important;
-    line-height: 1.15 !important;
+    font-size: clamp(1.85rem, 7.5vw, 2.75rem) !important;
+    font-weight: 600 !important;
+    line-height: 1.18 !important;
     letter-spacing: -0.02em !important;
     max-width: 100% !important;
-    margin-bottom: 0.85rem !important;
+    margin-bottom: 0.75rem !important;
   }
 
   .aether-hero__subtitle {
