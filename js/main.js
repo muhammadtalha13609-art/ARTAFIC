@@ -1618,3 +1618,34 @@ function formatTime() {
   updatePositions();
   animId = requestAnimationFrame(animate);
 })();
+
+/* ------------------------------------------------------------
+   16. SERVICES SVG STROKE FOLLOW SCROLL ANIMATION
+   ------------------------------------------------------------ */
+(function initServicesStrokeFollowScroll() {
+  const container = document.getElementById('services-scroll-section');
+  const path = document.getElementById('services-scroll-path');
+
+  if (!container || !path) return;
+
+  const pathLength = path.getTotalLength();
+  path.style.strokeDasharray = `${pathLength} ${pathLength}`;
+  path.style.strokeDashoffset = `${pathLength}`;
+
+  function updateStroke() {
+    const rect = container.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    // Calculate scroll progress between 0 and 1 as section moves through viewport
+    const totalDist = rect.height + windowHeight;
+    const currentDist = windowHeight - rect.top;
+    const progress = Math.max(0, Math.min(1, currentDist / totalDist));
+
+    const drawLength = pathLength * progress;
+    path.style.strokeDashoffset = `${pathLength - drawLength}`;
+  }
+
+  window.addEventListener('scroll', updateStroke, { passive: true });
+  window.addEventListener('resize', updateStroke, { passive: true });
+  updateStroke();
+})();
