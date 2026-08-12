@@ -10,7 +10,9 @@ const Skiper19 = () => {
     offset: ["start start", "end end"]
   });
 
-  const translateY = useTransform(scrollYProgress, [0.4, 0.95], ["180vh", "0vh"]);
+  // Synchronized transform so stroke tip touches the top edge of the card
+  const translateY = useTransform(scrollYProgress, [0.2, 0.95], ["100vh", "0vh"]);
+  const cardOpacity = useTransform(scrollYProgress, [0.2, 0.95], [0, 1]);
 
   return (
     <section
@@ -25,15 +27,16 @@ const Skiper19 = () => {
         </div>
 
         <LinePath
-          className="absolute inset-0 w-full h-full z-10 pointer-events-none opacity-90 scale-110"
+          className="absolute inset-0 w-full h-full z-10 pointer-events-none opacity-90"
           scrollYProgress={scrollYProgress}
         />
       </div>
 
       <motion.div
-        style={{ translateY }}
-        className="rounded-4xl w-full max-w-6xl bg-[#1F3A4B] p-8 md:p-16 text-[#FAFDEE] shadow-2xl relative z-30 mt-[100vh]"
+        style={{ translateY, opacity: cardOpacity }}
+        className="rounded-4xl w-full max-w-6xl bg-[#1F3A4B] p-8 md:p-16 text-[#FAFDEE] shadow-2xl relative z-30 -mt-[40vh]"
       >
+        <div className="w-12 h-1.5 bg-[#C2F84F] mx-auto rounded-full mb-8" />
         <h1 className="text-center text-[10vw] font-black leading-[0.9] tracking-tighter lg:text-[8vw] uppercase mb-12">
           ARTAFIC SERVICES
         </h1>
@@ -78,13 +81,13 @@ const LinePath = ({
   className: string;
   scrollYProgress: any;
 }) => {
-  const pathLength = useTransform(scrollYProgress, [0, 0.85], [0.1, 1]);
+  const pathLength = useTransform(scrollYProgress, [0, 0.95], [0.05, 1]);
 
   return (
     <svg
       width="1278"
-      height="2319"
-      viewBox="0 0 1278 2319"
+      height="2670"
+      viewBox="0 0 1278 2670"
       fill="none"
       overflow="visible"
       xmlns="http://www.w3.org/2000/svg"

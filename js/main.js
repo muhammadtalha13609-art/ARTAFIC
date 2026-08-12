@@ -1646,22 +1646,22 @@ function formatTime() {
     const currentScroll = -rect.top;
     const progress = Math.max(0, Math.min(1, currentScroll / totalScrollable));
 
-    // 1. Draw SVG stroke from progress 0 to 0.55
-    const strokeProgress = Math.min(1, progress / 0.55);
+    // 1. Synchronized stroke drawing (completes at progress = 0.7)
+    const strokeProgress = Math.min(1, progress / 0.7);
     const drawLength = pathLength * strokeProgress;
     path.style.strokeDashoffset = `${pathLength - drawLength}`;
 
-    // 2. Translate endpoint card layer up from progress 0.35 to 0.85
-    const cardProgress = Math.max(0, Math.min(1, (progress - 0.35) / 0.5));
+    // 2. Synchronized card slide up (arrives at progress = 0.7, matching stroke tip)
+    const cardProgress = Math.max(0, Math.min(1, (progress - 0.15) / 0.55));
     const translateY = (1 - cardProgress) * 100; // 100vh down to 0vh
     const opacity = Math.min(1, cardProgress * 1.5);
 
     endpointLayer.style.transform = `translate3d(0, ${translateY.toFixed(2)}vh, 0)`;
     endpointLayer.style.opacity = String(opacity.toFixed(2));
 
-    // 3. Fade intro text/stroke as card covers screen
+    // 3. Fade intro text as card reaches top
     if (introLayer) {
-      const fadeIntroProgress = Math.max(0, (progress - 0.5) / 0.3);
+      const fadeIntroProgress = Math.max(0, (progress - 0.45) / 0.35);
       introLayer.style.opacity = String((1 - fadeIntroProgress).toFixed(2));
     }
   }

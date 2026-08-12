@@ -3912,7 +3912,14 @@ select:focus-visible {
   pointer-events: none;
 }
 
-/* Endpoint Services Card Layer */
+.stroke-landing-notch {
+  width: 48px;
+  height: 6px;
+  background-color: #CCFBF1;
+  border-radius: 9999px;
+  margin: 0 auto 1.25rem;
+  box-shadow: 0 0 15px rgba(204, 251, 241, 0.8);
+}
 .services-endpoint-layer {
   position: absolute;
   inset: 0;
