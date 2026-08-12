@@ -1487,3 +1487,84 @@ function formatTime() {
   init();
   animate();
 })();
+
+/* ------------------------------------------------------------
+   15. SVG PATH MARQUEE ANIMATION (Smooth Flow along SVG Path)
+   ------------------------------------------------------------ */
+(function initSvgPathMarquee() {
+  const container = document.getElementById('svg-path-marquee');
+  const path = document.getElementById('marquee-svg-path');
+  const itemsLayer = document.getElementById('svg-marquee-items');
+
+  if (!container || !path || !itemsLayer) return;
+
+  const imgs = [
+    "https://cdn.cosmos.so/b9909337-7a53-48bc-9672-33fbd0f040a1?format=jpeg",
+    "https://cdn.cosmos.so/ecdc9dd7-2862-4c28-abb1-dcc0947390f3?format=jpeg",
+    "https://cdn.cosmos.so/79de41ec-baa4-4ac0-a9a4-c090005ca640?format=jpeg",
+    "https://cdn.cosmos.so/1a18b312-21cd-4484-bce5-9fb7ed1c5e01?format=jpeg",
+    "https://cdn.cosmos.so/d765f64f-7a66-462f-8b2d-3d7bc8d7db55?format=jpeg",
+    "https://cdn.cosmos.so/6b9f08ea-f0c5-471f-a620-71221ff1fb65?format=jpeg",
+    "https://cdn.cosmos.so/40a09525-4b00-4666-86f0-3c45f5d77605?format=jpeg",
+    "https://cdn.cosmos.so/14f05ab6-b4d0-4605-9007-8a2190a249d0?format=jpeg",
+    "https://cdn.cosmos.so/d05009a2-a2f8-4a4c-a0de-e1b0379dddb8?format=jpeg",
+    "https://cdn.cosmos.so/ba646e35-efc2-494a-961b-b40f597e6fc9?format=jpeg",
+    "https://cdn.cosmos.so/e899f9c3-ed48-4899-8c16-fbd5a60705da?format=jpeg",
+    "https://cdn.cosmos.so/24e83c11-c607-45cd-88fb-5059960b56a0?format=jpeg",
+    "https://cdn.cosmos.so/cd346bce-f415-4ea7-8060-99c5f7c1741a?format=jpeg"
+  ];
+
+  // Render DOM nodes
+  const nodes = imgs.map((src, i) => {
+    const el = document.createElement('div');
+    el.className = 'svg-marquee-item';
+    el.innerHTML = `<img src="${src}" alt="Showcase preview ${i+1}" loading="lazy" decoding="async" />`;
+    itemsLayer.appendChild(el);
+    return el;
+  });
+
+  const totalLength = path.getTotalLength();
+  let baseProgress = 0;
+
+  function updatePositions() {
+    const rect = container.getBoundingClientRect();
+    const scrollOffset = (window.innerHeight - rect.top) * 0.05;
+    const count = imgs.length;
+
+    nodes.forEach((node, i) => {
+      let progress = ((i / count) * 100 + baseProgress + scrollOffset) % 100;
+      if (progress < 0) progress += 100;
+
+      const point = path.getPointAtLength((progress / 100) * totalLength);
+      const xPercent = (point.x / 1040) * 100;
+      const yPercent = (point.y / 570) * 100;
+
+      node.style.transform = `translate3d(${xPercent}%, ${yPercent}%, 0) translate(-50%, -50%)`;
+    });
+  }
+
+  let isVisible = false;
+  let animId = null;
+
+  function animate() {
+    if (!isVisible) return;
+    baseProgress += 0.04;
+    updatePositions();
+    animId = requestAnimationFrame(animate);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      isVisible = entry.isIntersecting;
+      if (isVisible && !animId) {
+        animId = requestAnimationFrame(animate);
+      } else if (!isVisible && animId) {
+        cancelAnimationFrame(animId);
+        animId = null;
+      }
+    });
+  }, { rootMargin: '200px 0px' });
+
+  observer.observe(container);
+  window.addEventListener('scroll', updatePositions, { passive: true });
+})();
