@@ -1618,3 +1618,41 @@ function formatTime() {
   updatePositions();
   animId = requestAnimationFrame(animate);
 })();
+
+/* ------------------------------------------------------------
+   16. SERVICES NATURAL CANVAS SCROLL & STROKE ANIMATION
+   ------------------------------------------------------------ */
+(function initServicesStrokeFollowScroll() {
+  const section = document.getElementById('services');
+  const path = document.getElementById('services-scroll-path');
+  const endpointBox = document.getElementById('services-flow-endpoint');
+
+  if (!section || !path) return;
+
+  const pathLength = path.getTotalLength();
+  path.style.strokeDasharray = `${pathLength} ${pathLength}`;
+  path.style.strokeDashoffset = `${pathLength}`;
+
+  function updateStrokeProgress() {
+    const rect = section.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // As user scrolls down through the section canvas, stroke draws down smoothly
+    const totalDist = rect.height - windowHeight * 0.4;
+    const currentDist = windowHeight - rect.top;
+    const progress = Math.max(0, Math.min(1, currentDist / totalDist));
+
+    const drawLength = pathLength * progress;
+    path.style.strokeDashoffset = `${pathLength - drawLength}`;
+
+    // Reveal endpoint box as stroke finishes landing on it
+    if (endpointBox) {
+      const revealProgress = Math.max(0, Math.min(1, (progress - 0.5) / 0.5));
+      endpointBox.style.opacity = String((0.3 + revealProgress * 0.7).toFixed(2));
+    }
+  }
+
+  window.addEventListener('scroll', updateStrokeProgress, { passive: true });
+  window.addEventListener('resize', updateStrokeProgress, { passive: true });
+  updateStrokeProgress();
+})();
