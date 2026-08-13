@@ -1,5 +1,9 @@
-import { Skiper19 } from "@/components/ui/svg-follow-scroll";
+import AetherFlowHero from "@/components/ui/aether-flow-hero";
 
 export default function DemoOne() {
-  return <Skiper19 />;
+  return (
+    <main className="App bg-black">
+      <AetherFlowHero />
+    </main>
+  );
 }
