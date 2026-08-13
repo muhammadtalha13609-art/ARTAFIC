@@ -1637,20 +1637,20 @@ function formatTime() {
     const rect = section.getBoundingClientRect();
     const windowHeight = window.innerHeight;
 
-    // Start drawing when the section top reaches 65% down the viewport (prevents early drawing)
-    const startOffset = windowHeight * 0.65;
-    const currentDist = startOffset - rect.top;
-    const totalDist = rect.height - windowHeight * 0.45;
+    // Stroke remains 0% drawn until the section top enters the top 30% of the screen
+    const startPoint = windowHeight * 0.3;
+    const currentScroll = startPoint - rect.top;
+    const scrollRange = rect.height - windowHeight * 0.6;
     
-    // Smooth progress from 0 (when section enters viewport) to 1 (when line tip reaches Services Box)
-    const progress = Math.max(0, Math.min(1, currentDist / totalDist));
+    // Strict 0 to 1 progress mapping
+    const progress = Math.max(0, Math.min(1, currentScroll / scrollRange));
 
     const drawLength = pathLength * progress;
     path.style.strokeDashoffset = `${pathLength - drawLength}`;
 
-    // Reveal endpoint box with clean opacity elevation as stroke lands on it
+    // Reveal endpoint box opacity as line stroke lands on it
     if (endpointBox) {
-      const revealProgress = Math.max(0, Math.min(1, (progress - 0.6) / 0.4));
+      const revealProgress = Math.max(0, Math.min(1, (progress - 0.7) / 0.3));
       endpointBox.style.opacity = String((0.4 + revealProgress * 0.6).toFixed(2));
     }
   }
