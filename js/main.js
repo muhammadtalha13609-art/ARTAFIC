@@ -1620,53 +1620,39 @@ function formatTime() {
 })();
 
 /* ------------------------------------------------------------
-   16. SERVICES FULL-SCREEN STICKY SCROLL PIN ANIMATION
+   16. SERVICES NATURAL CANVAS SCROLL & STROKE ANIMATION
    ------------------------------------------------------------ */
 (function initServicesStrokeFollowScroll() {
   const section = document.getElementById('services');
   const path = document.getElementById('services-scroll-path');
-  const endpointLayer = document.getElementById('services-endpoint-layer');
-  const introLayer = document.getElementById('services-intro-layer');
+  const endpointBox = document.getElementById('services-flow-endpoint');
 
-  if (!section || !path || !endpointLayer) return;
+  if (!section || !path) return;
 
   const pathLength = path.getTotalLength();
   path.style.strokeDasharray = `${pathLength} ${pathLength}`;
   path.style.strokeDashoffset = `${pathLength}`;
 
-  function updateScrollProgress() {
+  function updateStrokeProgress() {
     const rect = section.getBoundingClientRect();
-    const sectionHeight = section.offsetHeight;
     const windowHeight = window.innerHeight;
 
-    // Calculate progress (0 to 1) as user scrolls through the 250vh sticky section track
-    const totalScrollable = sectionHeight - windowHeight;
-    if (totalScrollable <= 0) return;
+    // As user scrolls down through the section canvas, stroke draws down smoothly
+    const totalDist = rect.height - windowHeight * 0.4;
+    const currentDist = windowHeight - rect.top;
+    const progress = Math.max(0, Math.min(1, currentDist / totalDist));
 
-    const currentScroll = -rect.top;
-    const progress = Math.max(0, Math.min(1, currentScroll / totalScrollable));
-
-    // 1. Synchronized stroke drawing (completes at progress = 0.7)
-    const strokeProgress = Math.min(1, progress / 0.7);
-    const drawLength = pathLength * strokeProgress;
+    const drawLength = pathLength * progress;
     path.style.strokeDashoffset = `${pathLength - drawLength}`;
 
-    // 2. Synchronized card slide up (arrives at progress = 0.7, matching stroke tip)
-    const cardProgress = Math.max(0, Math.min(1, (progress - 0.15) / 0.55));
-    const translateY = (1 - cardProgress) * 100; // 100vh down to 0vh
-    const opacity = Math.min(1, cardProgress * 1.5);
-
-    endpointLayer.style.transform = `translate3d(0, ${translateY.toFixed(2)}vh, 0)`;
-    endpointLayer.style.opacity = String(opacity.toFixed(2));
-
-    // 3. Fade intro text as card reaches top
-    if (introLayer) {
-      const fadeIntroProgress = Math.max(0, (progress - 0.45) / 0.35);
-      introLayer.style.opacity = String((1 - fadeIntroProgress).toFixed(2));
+    // Reveal endpoint box as stroke finishes landing on it
+    if (endpointBox) {
+      const revealProgress = Math.max(0, Math.min(1, (progress - 0.5) / 0.5));
+      endpointBox.style.opacity = String((0.3 + revealProgress * 0.7).toFixed(2));
     }
   }
 
-  window.addEventListener('scroll', updateScrollProgress, { passive: true });
-  window.addEventListener('resize', updateScrollProgress, { passive: true });
-  updateScrollProgress();
+  window.addEventListener('scroll', updateStrokeProgress, { passive: true });
+  window.addEventListener('resize', updateStrokeProgress, { passive: true });
+  updateStrokeProgress();
 })();
