@@ -1620,39 +1620,43 @@ function formatTime() {
 })();
 
 /* ------------------------------------------------------------
-   16. SERVICES NATURAL CANVAS SCROLL & STROKE ANIMATION
+   16. SERVICES FULL-SCREEN STICKY CAMERA PANNING ANIMATION
    ------------------------------------------------------------ */
 (function initServicesStrokeFollowScroll() {
   const section = document.getElementById('services');
   const path = document.getElementById('services-scroll-path');
-  const endpointBox = document.getElementById('services-flow-endpoint');
+  const stage = document.getElementById('services-panning-stage');
 
-  if (!section || !path) return;
+  if (!section || !path || !stage) return;
 
   const pathLength = path.getTotalLength();
   path.style.strokeDasharray = `${pathLength} ${pathLength}`;
   path.style.strokeDashoffset = `${pathLength}`;
 
-  function updateStrokeProgress() {
+  function updateCameraPanning() {
     const rect = section.getBoundingClientRect();
+    const sectionHeight = section.offsetHeight;
     const windowHeight = window.innerHeight;
 
-    // As user scrolls down through the section canvas, stroke draws down smoothly
-    const totalDist = rect.height - windowHeight * 0.4;
-    const currentDist = windowHeight - rect.top;
-    const progress = Math.max(0, Math.min(1, currentDist / totalDist));
+    // Calculate progress (0 to 1) as user scrolls through the 280vh sticky track
+    const totalScrollable = sectionHeight - windowHeight;
+    if (totalScrollable <= 0) return;
 
-    const drawLength = pathLength * progress;
+    const currentScroll = -rect.top;
+    const progress = Math.max(0, Math.min(1, currentScroll / totalScrollable));
+
+    // 1. Draw SVG path stroke as user scrolls (completes at progress = 0.85)
+    const strokeProgress = Math.min(1, progress / 0.85);
+    const drawLength = pathLength * strokeProgress;
     path.style.strokeDashoffset = `${pathLength - drawLength}`;
 
-    // Reveal endpoint box as stroke finishes landing on it
-    if (endpointBox) {
-      const revealProgress = Math.max(0, Math.min(1, (progress - 0.5) / 0.5));
-      endpointBox.style.opacity = String((0.3 + revealProgress * 0.7).toFixed(2));
-    }
+    // 2. Pan stage UP as user scrolls down, following the path to the Services Box
+    const maxPanDistance = 1950; // Total vertical distance to pan down to the Services Box
+    const panY = Math.min(maxPanDistance, progress * maxPanDistance * 1.15);
+    stage.style.transform = `translate3d(0, -${panY.toFixed(1)}px, 0)`;
   }
 
-  window.addEventListener('scroll', updateStrokeProgress, { passive: true });
-  window.addEventListener('resize', updateStrokeProgress, { passive: true });
-  updateStrokeProgress();
+  window.addEventListener('scroll', updateCameraPanning, { passive: true });
+  window.addEventListener('resize', updateCameraPanning, { passive: true });
+  updateCameraPanning();
 })();
