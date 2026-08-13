@@ -7,10 +7,10 @@ const Skiper19 = () => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end end"]
+    offset: ["start 70%", "end end"]
   });
 
-  const pathLength = useTransform(scrollYProgress, [0, 0.85], [0.05, 1]);
+  const pathLength = useTransform(scrollYProgress, [0, 0.85], [0.01, 1]);
   const cardOpacity = useTransform(scrollYProgress, [0.6, 0.9], [0.2, 1]);
 
   return (
