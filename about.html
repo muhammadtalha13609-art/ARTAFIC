@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- Security Headers -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+
+  <!-- SEO -->
+  <title>About Us — ARTAFIC | Digital Agency &amp; Development Studio</title>
+  <meta name="description" content="Learn about ARTAFIC, a digital agency helping businesses build high quality websites and distinctive visual logo identities." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://artafic.com/about.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://artafic.com/about.html" />
+  <meta property="og:title" content="About Us — ARTAFIC" />
+  <meta property="og:description" content="Learn about ARTAFIC's mission, values, and approach to web development and brand building." />
+  <meta property="og:image" content="https://artafic.com/assets/images/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Kanit:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css?v=2.1" />
+</head>
+<body class="about-page" style="background-color: #0C0C0C; color: #FFFFFF;">
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════════════════════ -->
+<header role="banner">
+  <nav class="nav nav--on-dark" id="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+
+      <a href="index.html" class="nav__logo" aria-label="ARTAFIC — Home">
+        <img src="assets/images/logo.png" alt="ARTAFIC" class="nav__logo-image">
+      </a>
+
+      <ul class="nav__links" role="list">
+        <li><a href="index.html#home"         class="nav__link">Home</a></li>
+        <li><a href="index.html#services"     class="nav__link">Services</a></li>
+        <li><a href="about.html"              class="nav__link nav__link--active" style="color: var(--color-teal); font-weight: 600;">About</a></li>
+        <li><a href="index.html#why-artafic"  class="nav__link">Why ARTAFIC</a></li>
+        <li><a href="index.html#before-after" class="nav__link">Before &amp; After</a></li>
+        <li><a href="faq.html"                class="nav__link">FAQ</a></li>
+      </ul>
+
+      <div class="nav__actions">
+        <a href="index.html#booking" class="btn btn--primary btn--sm">Get In Touch</a>
+        <button class="nav__hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="nav__hamburger-line" aria-hidden="true"></span>
+          <span class="nav__hamburger-line" aria-hidden="true"></span>
+          <span class="nav__hamburger-line" aria-hidden="true"></span>
+        </button>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- Mobile Full-Screen Menu -->
+  <div class="nav__mobile" id="mobile-menu" role="dialog" aria-label="Mobile navigation" aria-modal="true">
+    <div class="nav__mobile-header">
+      <a href="index.html" class="nav__logo" aria-label="ARTAFIC — Home" data-mobile-nav-link>
+        <img src="assets/images/logo.png" alt="ARTAFIC" class="nav__logo-image">
+      </a>
+      <button class="nav__mobile-close" id="mobile-menu-close" aria-label="Close navigation menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="nav__mobile-body">
+      <ul class="nav__mobile-links" role="list">
+        <li><a href="index.html#home"         class="nav__mobile-link" data-mobile-nav-link>Home</a></li>
+        <li><a href="index.html#services"     class="nav__mobile-link" data-mobile-nav-link>Services</a></li>
+        <li><a href="about.html"              class="nav__mobile-link" data-mobile-nav-link style="color: var(--color-teal);">About</a></li>
+        <li><a href="index.html#why-artafic"  class="nav__mobile-link" data-mobile-nav-link>Why ARTAFIC</a></li>
+        <li><a href="index.html#before-after" class="nav__mobile-link" data-mobile-nav-link>Before &amp; After</a></li>
+        <li><a href="faq.html"                class="nav__mobile-link" data-mobile-nav-link>FAQ</a></li>
+      </ul>
+      <div class="nav__mobile-actions">
+        <a href="index.html#booking" class="btn btn--primary btn--lg" style="width:100%; justify-content:center;" data-mobile-nav-link>Get In Touch</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main-content" tabindex="-1">
+
+<!-- ═══════════════════════════════════════════════════════════
+     ABOUT ME SECTION (FULL STANDALONE PAGE)
+═══════════════════════════════════════════════════════════ -->
+<section class="about-me-section" id="about" aria-labelledby="about-title" style="position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8rem 1.25rem 6rem; background-color: #0C0C0C; overflow: hidden; font-family: 'Kanit', sans-serif;">
+  
+  <!-- Decorative Corner Floating Images -->
+  <div data-reveal="left-far" style="position: absolute; top: 8%; left: 4%; z-index: 0; transition-delay: 0.1s;">
+    <img
+      src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png"
+      alt="Moon Icon"
+      class="corner-img-top-left"
+      style="width: clamp(120px, 15vw, 210px); height: auto; pointer-events: none; user-select: none;"
+    />
+  </div>
+  
+  <div data-reveal="left-far" style="position: absolute; bottom: 8%; left: 10%; z-index: 0; transition-delay: 0.25s;">
+    <img
+      src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png"
+      alt="3D Object"
+      class="corner-img-bottom-left"
+      style="width: clamp(100px, 12vw, 180px); height: auto; pointer-events: none; user-select: none;"
+    />
+  </div>
+  
+  <div data-reveal="right-far" style="position: absolute; top: 8%; right: 4%; z-index: 0; transition-delay: 0.15s;">
+    <img
+      src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png"
+      alt="Lego Icon"
+      class="corner-img-top-right"
+      style="width: clamp(120px, 15vw, 210px); height: auto; pointer-events: none; user-select: none;"
+    />
+  </div>
+  
+  <div data-reveal="right-far" style="position: absolute; bottom: 8%; right: 10%; z-index: 0; transition-delay: 0.3s;">
+    <img
+      src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png"
+      alt="3D Group"
+      class="corner-img-bottom-right"
+      style="width: clamp(130px, 16vw, 220px); height: auto; pointer-events: none; user-select: none;"
+    />
+  </div>
+
+  <!-- Center Content -->
+  <div style="position: relative; z-index: 10; max-width: 56rem; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4rem; text-align: center;">
+    
+    <!-- Group 1: Heading + Text -->
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+      <h1 id="about-title" class="hero-heading" data-reveal style="font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: -0.025em; text-align: center; font-size: clamp(3rem, 12vw, 160px); background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0;">
+        About us
+      </h1>
+
+      <div style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 720px; align-items: center;">
+        <p class="about-animated-text" style="color: #D7E2EA; font-weight: 500; text-align: center; line-height: 1.625; font-size: clamp(1rem, 2vw, 1.25rem); margin: 0;">
+          We are ARTAFIC, a digital agency focused on helping businesses build a stronger presence in the digital world. We combine creative design, modern technology, and thoughtful development to create websites and logos that represent businesses professionally.
+        </p>
+        <p class="about-animated-text" style="color: #D7E2EA; font-weight: 500; text-align: center; line-height: 1.625; font-size: clamp(1rem, 2vw, 1.25rem); margin: 0;">
+          We work with businesses that want to improve how they look, communicate, and connect with their customers online. From building high quality websites to creating distinctive logos, we focus on clean design, intuitive experiences, and solutions built around each business's goals.
+        </p>
+      </div>
+    </div>
+
+    <!-- Group 2: Contact Button -->
+    <div class="magnetic-wrapper" data-magnet data-reveal style="transition-delay: 0.3s; display: inline-block; transition: transform 0.6s ease-in-out; will-change: transform;">
+      <a
+        href="index.html#booking"
+        style="display: inline-block; border-radius: 9999px; padding: 0.875rem 2.5rem; color: #ffffff; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.875rem; text-decoration: none; background: linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%); box-shadow: 0px 4px 4px rgba(181, 1, 167, 0.25), 4px 4px 12px #7721B1 inset; outline: 2px solid #E3E3E3; outline-offset: -3px; transition: opacity 200ms ease;"
+        onmouseover="this.style.opacity='0.9'"
+        onmouseout="this.style.opacity='1'"
+      >
+        Get In Touch
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════ -->
+<footer class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="container">
+    <div class="footer__grid">
+
+      <div class="footer__brand">
+        <div class="footer__brand-logo">
+          ARTAFIC
+          <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--color-teal); margin-bottom:1px;" aria-hidden="true"></span>
+        </div>
+        <p class="footer__brand-desc">Professional digital experiences built around your business and your customers.</p>
+        <a href="index.html#booking" class="footer__brand-cta">
+          Have a project in mind?
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="footer__col">
+        <p class="footer__col-title">Navigation</p>
+        <ul class="footer__links" role="list">
+          <li><a href="index.html#home" class="footer__link">Home</a></li>
+          <li><a href="index.html#services" class="footer__link">Services</a></li>
+          <li><a href="about.html" class="footer__link" style="color: var(--color-teal);">About</a></li>
+          <li><a href="index.html#why-artafic" class="footer__link">Why ARTAFIC</a></li>
+          <li><a href="index.html#before-after" class="footer__link">Before &amp; After</a></li>
+          <li><a href="faq.html" class="footer__link">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <p class="footer__col-title">Services</p>
+        <ul class="footer__links" role="list">
+          <li><a href="index.html#services" class="footer__link">Web Development</a></li>
+          <li><a href="index.html#services" class="footer__link">Logo Building</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <p class="footer__col-title">Contact</p>
+        <ul class="footer__links" role="list">
+          <li><a href="index.html#booking" class="footer__link">Get In Touch</a></li>
+          <li><a href="mailto:hello@artafic.com" class="footer__link">hello@artafic.com</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copyright">© 2025 ARTAFIC. All rights reserved.</p>
+      <div class="footer__legal">
+        <a href="#" class="footer__legal-link">Privacy Policy</a>
+        <a href="#" class="footer__legal-link">Terms &amp; Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

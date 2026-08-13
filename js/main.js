@@ -38,6 +38,11 @@ function formatTime() {
       nav.classList.remove('is-scrolled');
     }
 
+    if (document.body.classList.contains('about-page')) {
+      nav.classList.add('nav--on-dark');
+      return;
+    }
+
     // Check if navbar overlaps any dark section
     const navBounds = nav.getBoundingClientRect();
     const navCenterY = navBounds.top + navBounds.height / 2;
@@ -684,7 +689,7 @@ function formatTime() {
    10A. HERO 3D SCENE — Three.js via ESM CDN
    ──────────────────────────────────────────────────────────── */
 (async function initHeroThree() {
-  const canvas = document.getElementById('aether-canvas') || document.getElementById('hero-three');
+  const canvas = document.getElementById('hero-three');
   if (!canvas) return;
 
   // Skip on reduced-motion or if WebGL not supported
@@ -1347,8 +1352,10 @@ function formatTime() {
   loop(); // Start the render loop
 })();
 
+
+
 /* ------------------------------------------------------------
-   14. AETHER CANVAS ANIMATION
+   14. AETHER FLOW HERO CANVAS ANIMATION
    ------------------------------------------------------------ */
 (function initAetherCanvas() {
   const canvas = document.getElementById('aether-canvas');
@@ -1415,7 +1422,7 @@ function formatTime() {
       let y = (Math.random() * ((window.innerHeight - size * 2) - (size * 2)) + size * 2);
       let directionX = (Math.random() * 0.4) - 0.2;
       let directionY = (Math.random() * 0.4) - 0.2;
-      let color = 'rgba(191, 128, 255, 0.8)'; // Brighter purple
+      let color = 'rgba(191, 128, 255, 0.8)'; // Brighter purple from Aether Flow Hero
       particles.push(new Particle(x, y, directionX, directionY, size, color));
     }
   }
@@ -1443,9 +1450,9 @@ function formatTime() {
           let distance_mouse_a = Math.sqrt(dx_mouse_a*dx_mouse_a + dy_mouse_a*dy_mouse_a);
 
           if (mouse.x && distance_mouse_a < mouse.radius) {
-               ctx.strokeStyle = `rgba(255, 255, 255, ${opacityValue})`;
+            ctx.strokeStyle = `rgba(255, 255, 255, ${opacityValue})`;
           } else {
-               ctx.strokeStyle = `rgba(200, 150, 255, ${opacityValue})`;
+            ctx.strokeStyle = `rgba(200, 150, 255, ${opacityValue})`;
           }
           
           ctx.lineWidth = 1;
@@ -1460,9 +1467,6 @@ function formatTime() {
 
   const animate = () => {
     animationFrameId = requestAnimationFrame(animate);
-    // Use clearRect so we don't overwrite CSS background, or fill with black if intended
-    // The original react code used black fill, let's keep it transparent just in case index.html has a background
-    // If they strictly want black, uncomment the below lines. We will use clearRect for better integration with existing HTML.
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
     for (let i = 0; i < particles.length; i++) {
@@ -1472,8 +1476,9 @@ function formatTime() {
   };
   
   const handleMouseMove = (event) => {
-    mouse.x = event.clientX;
-    mouse.y = event.clientY;
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = event.clientX - rect.left;
+    mouse.y = event.clientY - rect.top;
   };
   
   const handleMouseOut = () => {
@@ -1489,7 +1494,7 @@ function formatTime() {
 })();
 
 /* ------------------------------------------------------------
-   15. SVG PATH MARQUEE ANIMATION (Pixel-Perfect Path & Scroll Velocity Drive)
+   15. SVG PATH MARQUEE SCROLL ANIMATION (Dense Rotated Ribbon Engine)
    ------------------------------------------------------------ */
 (function initSvgPathMarquee() {
   const container = document.getElementById('svg-path-marquee');
@@ -1498,23 +1503,26 @@ function formatTime() {
 
   if (!container || !path || !itemsLayer) return;
 
-  const imgs = [
+  const baseImgs = [
+    "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=300&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=300&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=300&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=300&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=300&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=300&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1549490349-8643362247b5?w=300&auto=format&fit=crop&q=80",
     "https://cdn.cosmos.so/b9909337-7a53-48bc-9672-33fbd0f040a1?format=jpeg",
     "https://cdn.cosmos.so/ecdc9dd7-2862-4c28-abb1-dcc0947390f3?format=jpeg",
     "https://cdn.cosmos.so/79de41ec-baa4-4ac0-a9a4-c090005ca640?format=jpeg",
     "https://cdn.cosmos.so/1a18b312-21cd-4484-bce5-9fb7ed1c5e01?format=jpeg",
-    "https://cdn.cosmos.so/d765f64f-7a66-462f-8b2d-3d7bc8d7db55?format=jpeg",
-    "https://cdn.cosmos.so/6b9f08ea-f0c5-471f-a620-71221ff1fb65?format=jpeg",
-    "https://cdn.cosmos.so/40a09525-4b00-4666-86f0-3c45f5d77605?format=jpeg",
-    "https://cdn.cosmos.so/14f05ab6-b4d0-4605-9007-8a2190a249d0?format=jpeg",
-    "https://cdn.cosmos.so/d05009a2-a2f8-4a4c-a0de-e1b0379dddb8?format=jpeg",
-    "https://cdn.cosmos.so/ba646e35-efc2-494a-961b-b40f597e6fc9?format=jpeg",
-    "https://cdn.cosmos.so/e899f9c3-ed48-4899-8c16-fbd5a60705da?format=jpeg",
-    "https://cdn.cosmos.so/24e83c11-c607-45cd-88fb-5059960b56a0?format=jpeg",
-    "https://cdn.cosmos.so/cd346bce-f415-4ea7-8060-99c5f7c1741a?format=jpeg"
+    "https://cdn.cosmos.so/d765f64f-7a66-462f-8b2d-3d7bc8d7db55?format=jpeg"
   ];
 
-  // Render DOM nodes inside itemsLayer
+  // Repeat items 3x (39 cards total) to form a continuous dense ribbon matching source image
+  const imgs = [...baseImgs, ...baseImgs, ...baseImgs];
+
+  // Render DOM nodes
   const nodes = imgs.map((src, i) => {
     const el = document.createElement('div');
     el.className = 'svg-marquee-item';
@@ -1524,52 +1532,71 @@ function formatTime() {
   });
 
   const totalLength = path.getTotalLength();
-  let baseProgress = 0;
+  
+  // Motion & Animation state
+  let currentOffset = 0;
+  let targetOffset = 0;
+  let baseVelocity = 0.5; // Gentle float baseline
   let scrollVelocity = 0;
   let lastScrollY = window.scrollY;
   let isHovered = false;
+  
+  // Drag state
+  let isDragging = false;
+  let startX = 0;
+  let dragVelocity = 0;
 
-  function updatePositions() {
+  function calculatePositions() {
     const containerWidth = itemsLayer.clientWidth || 1040;
     const containerHeight = itemsLayer.clientHeight || 570;
     const count = imgs.length;
 
     nodes.forEach((node, i) => {
-      let progress = ((i / count) * 100 + baseProgress) % 100;
-      if (progress < 0) progress += 100;
+      // Calculate position along path (0% to 100%)
+      const basePos = (i * 100) / count;
+      let rawProgress = (basePos + currentOffset) % 100;
+      if (rawProgress < 0) rawProgress = (rawProgress % 100) + 100;
 
-      // Get exact point along path (viewBox dimensions 1040 x 570)
-      const point = path.getPointAtLength((progress / 100) * totalLength);
+      // Get point along path in SVG viewBox coordinates (1040 x 570)
+      const pointDist = (rawProgress / 100) * totalLength;
+      const point = path.getPointAtLength(pointDist);
 
-      // Convert SVG viewBox coordinates to container pixel bounds
+      // Tangent angle calculation along the curve for path rotation (matching source image)
+      const nextDist = (pointDist + 1.5) % totalLength;
+      const nextPoint = path.getPointAtLength(nextDist);
+      const angleRad = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x);
+      const angleDeg = angleRad * (180 / Math.PI);
+
+      // Convert SVG coordinates to CSS container pixel bounds
       const pixelX = (point.x / 1040) * containerWidth;
       const pixelY = (point.y / 570) * containerHeight;
 
-      // Dynamic z-index based on vertical path position for depth
-      const zIndex = Math.round(point.y);
+      // Rolling Z-Index based on vertical distance (depth simulation)
+      const zIndex = Math.floor(1 + (point.y / 570) * 20);
 
-      node.style.transform = `translate3d(${pixelX.toFixed(2)}px, ${pixelY.toFixed(2)}px, 0) translate(-50%, -50%)`;
+      node.style.transform = `translate3d(${pixelX.toFixed(2)}px, ${pixelY.toFixed(2)}px, 0) translate(-50%, -50%) rotate(${angleDeg.toFixed(1)}deg)`;
       node.style.zIndex = String(zIndex);
     });
   }
 
-  // Track page scroll speed and direction to drive path marquee motion
-  window.addEventListener('scroll', () => {
+  // Scroll event handler: gentle, controlled scroll velocity drive
+  function handleScroll() {
     const currentScrollY = window.scrollY;
-    const delta = currentScrollY - lastScrollY;
-    scrollVelocity += delta * 0.025;
+    const deltaY = currentScrollY - lastScrollY;
     lastScrollY = currentScrollY;
-    updatePositions();
-  }, { passive: true });
 
-  // Hover slowdown
+    // Controlled scroll velocity drive (slow, smooth, no flashing)
+    scrollVelocity += deltaY * 0.03;
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('resize', calculatePositions, { passive: true });
+
+  // Hover handlers
   container.addEventListener('mouseenter', () => { isHovered = true; });
   container.addEventListener('mouseleave', () => { isHovered = false; });
 
-  // Drag interaction along path
-  let isDragging = false;
-  let startX = 0;
-
+  // Drag interaction handlers
   itemsLayer.addEventListener('pointerdown', (e) => {
     isDragging = true;
     startX = e.clientX;
@@ -1580,8 +1607,7 @@ function formatTime() {
     if (!isDragging) return;
     const deltaX = e.clientX - startX;
     startX = e.clientX;
-    baseProgress += (deltaX / (itemsLayer.clientWidth || 1000)) * 40;
-    updatePositions();
+    dragVelocity += deltaX * 0.08;
   });
 
   window.addEventListener('pointerup', () => {
@@ -1589,73 +1615,161 @@ function formatTime() {
     itemsLayer.style.cursor = 'grab';
   });
 
-  window.addEventListener('resize', updatePositions);
+  // Animation Loop with Soft Physics
+  let isVisible = true;
 
-  let isVisible = false;
-  let animId = null;
-
-  function animate() {
+  function renderLoop() {
     if (isVisible) {
-      // Continuous base speed + scroll velocity decay
-      const speed = isHovered ? 0.015 : 0.045;
-      scrollVelocity *= 0.90; // Smooth damping
-      baseProgress += speed + scrollVelocity;
-      updatePositions();
+      const hoverFactor = isHovered ? 0.25 : 1.0;
+
+      // Gentle damping physics for smooth, deliberate movement
+      scrollVelocity *= 0.90;
+      dragVelocity *= 0.90;
+
+      // Update target offset
+      targetOffset += (baseVelocity * 0.02 * hoverFactor) + scrollVelocity + dragVelocity;
+
+      // Smooth lerp (0.06 factor) for liquid-soft flow
+      currentOffset += (targetOffset - currentOffset) * 0.06;
+
+      calculatePositions();
     }
-    animId = requestAnimationFrame(animate);
+    requestAnimationFrame(renderLoop);
   }
 
+  // Intersection observer to pause rendering when offscreen
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       isVisible = entry.isIntersecting;
-      if (isVisible && !animId) {
-        animId = requestAnimationFrame(animate);
-      }
     });
-  }, { rootMargin: '200px 0px' });
+  }, { rootMargin: '100px 0px' });
 
   observer.observe(container);
-  updatePositions();
-  animId = requestAnimationFrame(animate);
+
+  // Initial call
+  handleScroll();
+  requestAnimationFrame(renderLoop);
 })();
 
 /* ------------------------------------------------------------
-   16. SERVICES NATURAL CANVAS SCROLL & STROKE ANIMATION
+   16. SERVICES PINNED CANVAS SCROLL ANIMATION
    ------------------------------------------------------------ */
 (function initServicesStrokeFollowScroll() {
   const section = document.getElementById('services');
   const path = document.getElementById('services-scroll-path');
+  const stage = document.getElementById('services-panning-stage');
   const endpointBox = document.getElementById('services-flow-endpoint');
 
-  if (!section || !path) return;
+  if (!section || !path || !stage) return;
 
   const pathLength = path.getTotalLength();
   path.style.strokeDasharray = `${pathLength} ${pathLength}`;
   path.style.strokeDashoffset = `${pathLength}`;
 
-  function updateStrokeProgress() {
+  function updateTimeline() {
     const rect = section.getBoundingClientRect();
     const windowHeight = window.innerHeight;
+    const sectionHeight = section.offsetHeight;
 
-    // Stroke remains 0% drawn until the section top enters the top 30% of the screen
-    const startPoint = windowHeight * 0.3;
-    const currentScroll = startPoint - rect.top;
-    const scrollRange = rect.height - windowHeight * 0.6;
+    // Framer Motion offset: ["start start", "end end"]
+    // Starts when top of track reaches top of screen (rect.top == 0)
+    // Ends when bottom of track reaches bottom of screen (rect.bottom == windowHeight)
+    // Total scroll distance WHILE PINNED is sectionHeight - windowHeight
+    const pinnedScrollRange = sectionHeight - windowHeight;
     
-    // Strict 0 to 1 progress mapping
-    const progress = Math.max(0, Math.min(1, currentScroll / scrollRange));
+    // Progress is strictly 0 when rect.top >= 0, and reaches 1 when rect.top <= -pinnedScrollRange
+    const progress = Math.max(0, Math.min(1, -rect.top / pinnedScrollRange));
 
-    const drawLength = pathLength * progress;
+    // TIMELINE MAPPED TO PINNED SCROLL PROGRESS (0.0 to 1.0):
+    // 0.00 - 0.28: PHASE 1 — STARTING MASHUP LOOPS
+    //              Stroke draws the 3-4 top mashup loops (0% -> 38% path length).
+    //              Camera stays LOCKED at top (panProgress = 0) so the user can watch all 3-4 loops draw right over "Our Services".
+    //
+    // 0.28 - 0.88: PHASE 2 — DOWNWARD TRAVEL & CAMERA PAN (starts slightly earlier, expanded timeline)
+    //              Stroke draws down from mashup to Services Box (38% -> 100% path length).
+    //              Camera smoothly pans down following the leading tip of the line (panProgress = 0 -> 1).
+    //              Services Box fades in between 0.38 and 0.70 so the destination is clearly visible ahead of the line.
+    //
+    // 0.88 - 1.00: PHASE 3 — FINAL CONNECTED HOLD
+    //              Line touches terminal dot on Services Box. Composition holds fixed before section unpins.
+
+    let strokeProgress = 0;
+    let panProgress = 0;
+
+    if (progress <= 0.28) {
+      // Phase 1: Draw upper mashup loops (0% to 38% of stroke) while camera stays stationary at top
+      strokeProgress = (progress / 0.28) * 0.38;
+      panProgress = 0;
+    } else if (progress <= 0.88) {
+      // Phase 2: Downward travel (38% to 100% of stroke) and camera pan (0% to 100%)
+      const localP = (progress - 0.28) / 0.60;
+      strokeProgress = 0.38 + (localP * 0.62);
+      panProgress = localP;
+    } else {
+      // Phase 3: Hold connected state
+      strokeProgress = 1;
+      panProgress = 1;
+    }
+
+    // Apply Stroke Drawing
+    const drawLength = pathLength * strokeProgress;
     path.style.strokeDashoffset = `${pathLength - drawLength}`;
 
-    // Reveal endpoint box opacity as line stroke lands on it
+    // Calculate exact Y coordinate of SVG endpoint dynamically (original proportional scale)
+    let maxPanDistance = 0;
     if (endpointBox) {
-      const revealProgress = Math.max(0, Math.min(1, (progress - 0.7) / 0.3));
-      endpointBox.style.opacity = String((0.4 + revealProgress * 0.6).toFixed(2));
+      const svg = document.querySelector('.services-panning-svg');
+      if (svg) {
+        const baseWidth = svg.clientWidth;
+        const viewBoxWidth = 1278;
+        const cssTransformScale = 1.0; // Original proportional size (no extra scaling)
+        
+        const finalScale = (baseWidth / viewBoxWidth) * cssTransformScale;
+        
+        // The stroke ends at roughly Y = 2669 in the viewBox coordinates
+        const svgEndY = 2669;
+        const stageY = svgEndY * finalScale;
+        
+        // Position the endpoint box exactly at the line's tip (adjusting 11px for the 22px dot)
+        endpointBox.style.top = `${stageY - 11}px`;
+        
+        // Calculate maxPanDistance so that when panProgress = 1.0, 
+        // the entire Services box is completely visible with breathing room below it (no bottom cropping)
+        const cardHeight = endpointBox.offsetHeight;
+        const desiredTopInViewport = Math.max(75, windowHeight - cardHeight - 25);
+        maxPanDistance = stageY - desiredTopInViewport;
+      }
+    }
+    
+    // Ensure stage is tall enough to contain the endpoint box
+    const requiredStageHeight = endpointBox ? parseFloat(endpointBox.style.top || 0) + endpointBox.offsetHeight + 100 : 2600;
+    if (stage.offsetHeight < requiredStageHeight) {
+      stage.style.height = `${requiredStageHeight}px`;
+    }
+    
+    const maxPossiblePan = stage.offsetHeight - windowHeight;
+    maxPanDistance = Math.max(0, Math.min(maxPanDistance, maxPossiblePan));
+
+    // Apply Camera Panning
+    const currentPan = panProgress * maxPanDistance;
+    stage.style.transform = `translate3d(0, -${currentPan}px, 0)`;
+
+    // Services Box Visibility Fade In
+    // Fades in gradually during Phase 2 (between 0.38 and 0.70 progress) so it is completely visible well before line arrives
+    if (endpointBox) {
+      if (progress < 0.38) {
+        endpointBox.style.opacity = '0';
+      } else if (progress < 0.70) {
+        endpointBox.style.opacity = String(((progress - 0.38) / 0.32).toFixed(2));
+      } else {
+        endpointBox.style.opacity = '1';
+      }
     }
   }
 
-  window.addEventListener('scroll', updateStrokeProgress, { passive: true });
-  window.addEventListener('resize', updateStrokeProgress, { passive: true });
-  updateStrokeProgress();
+  window.addEventListener('scroll', updateTimeline, { passive: true });
+  window.addEventListener('resize', updateTimeline, { passive: true });
+  
+  // Initial call
+  setTimeout(updateTimeline, 100);
 })();
