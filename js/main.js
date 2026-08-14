@@ -1637,33 +1637,33 @@ function formatTime() {
     const rect = section.getBoundingClientRect();
     const windowHeight = window.innerHeight;
 
-    // Animation begins with comfortable safe area below navbar (top 14% of screen)
-    const startPoint = windowHeight * 0.14;
+    // Animation begins slightly higher up (20% of screen) ensuring safe zone below navbar
+    const startPoint = windowHeight * 0.20;
     const currentScroll = startPoint - rect.top;
 
-    // Longer effective scroll range for slightly slower, deliberate pacing
-    const scrollRange = rect.height - windowHeight * 0.22;
+    // Scroll range extended slightly for deliberate pacing, 
+    // without out-pacing the physical SVG drawing speed.
+    const scrollRange = rect.height - windowHeight * 0.40;
     
     // Strict 0 to 1 progress mapping
     const rawProgress = Math.max(0, Math.min(1, currentScroll / scrollRange));
 
     // Phase progression shaping:
-    // Phase 1 (Mashup): draws upper loops
-    // Phase 2 (Downward travel): begins slightly earlier, giving more usable viewport space
+    // Phase 1 (Mashup): Completes in the first 25% of the scroll timeline
+    // Phase 2 (Downward travel): Takes the remaining 75%, starting earlier
     let strokeProgress;
-    if (rawProgress < 0.26) {
-      strokeProgress = rawProgress * (0.32 / 0.26);
+    if (rawProgress <= 0.25) {
+      strokeProgress = rawProgress * (0.38 / 0.25);
     } else {
-      strokeProgress = 0.32 + ((rawProgress - 0.26) / 0.74) * 0.68;
+      strokeProgress = 0.38 + ((rawProgress - 0.25) / 0.75) * 0.62;
     }
-    strokeProgress = Math.max(0, Math.min(1, strokeProgress));
 
     const drawLength = pathLength * strokeProgress;
     path.style.strokeDashoffset = `${pathLength - drawLength}`;
 
-    // Reveal endpoint box opacity as line stroke approaches landing point
+    // Reveal endpoint box opacity near the very end
     if (endpointBox) {
-      const revealProgress = Math.max(0, Math.min(1, (strokeProgress - 0.70) / 0.28));
+      const revealProgress = Math.max(0, Math.min(1, (strokeProgress - 0.85) / 0.15));
       endpointBox.style.opacity = String((0.4 + revealProgress * 0.6).toFixed(2));
     }
   }
