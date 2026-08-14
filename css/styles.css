@@ -3850,7 +3850,7 @@ select:focus-visible {
   position: relative;
   width: 100%;
   max-width: 1100px;
-  min-height: 850px;
+  min-height: 960px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -3859,14 +3859,14 @@ select:focus-visible {
 
 @media (min-width: 768px) {
   .services-flow-intro {
-    min-height: 1050px;
+    min-height: 1180px;
   }
 }
 
 .services-overlay-text {
   position: absolute;
   z-index: 10;
-  top: 140px;
+  top: 90px;  /* shifted up from 140px so mashup area clears the navbar */
   left: 50%;
   transform: translateX(-50%);
   width: 90%;

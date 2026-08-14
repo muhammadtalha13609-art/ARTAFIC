@@ -1637,10 +1637,14 @@ function formatTime() {
     const rect = section.getBoundingClientRect();
     const windowHeight = window.innerHeight;
 
-    // Stroke remains 0% drawn until the section top enters the top 30% of the screen
-    const startPoint = windowHeight * 0.3;
+    // Animation starts when section top enters the top 18% of the screen.
+    // Lower value = starts earlier = more room below navbar for the whole journey.
+    const startPoint = windowHeight * 0.18;
     const currentScroll = startPoint - rect.top;
-    const scrollRange = rect.height - windowHeight * 0.6;
+
+    // A smaller multiplier here gives a longer effective scroll range,
+    // making the animation feel more deliberate (slower) without being dramatic.
+    const scrollRange = rect.height - windowHeight * 0.35;
     
     // Strict 0 to 1 progress mapping
     const progress = Math.max(0, Math.min(1, currentScroll / scrollRange));
@@ -1650,7 +1654,7 @@ function formatTime() {
 
     // Reveal endpoint box opacity as line stroke lands on it
     if (endpointBox) {
-      const revealProgress = Math.max(0, Math.min(1, (progress - 0.7) / 0.3));
+      const revealProgress = Math.max(0, Math.min(1, (progress - 0.72) / 0.28));
       endpointBox.style.opacity = String((0.4 + revealProgress * 0.6).toFixed(2));
     }
   }
