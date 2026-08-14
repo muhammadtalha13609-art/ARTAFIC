@@ -53,7 +53,7 @@
       <ul class="nav__links" role="list">
         <li><a href="#home"         class="nav__link" data-nav-link>Home</a></li>
         <li><a href="#services"     class="nav__link" data-nav-link>Services</a></li>
-        <li><a href="about.html"    class="nav__link">About</a></li>
+        <li><a href="#about"        class="nav__link" data-nav-link>About</a></li>
         <li><a href="#why-artafic"  class="nav__link" data-nav-link>Why ARTAFIC</a></li>
         <li><a href="#before-after" class="nav__link" data-nav-link>Before &amp; After</a></li>
         <li><a href="faq.html"      class="nav__link">FAQ</a></li>
@@ -85,7 +85,7 @@
       <ul class="nav__mobile-links" role="list">
         <li><a href="#home"         class="nav__mobile-link" data-mobile-nav-link>Home</a></li>
         <li><a href="#services"     class="nav__mobile-link" data-mobile-nav-link>Services</a></li>
-        <li><a href="about.html"    class="nav__mobile-link">About</a></li>
+        <li><a href="#about"        class="nav__mobile-link" data-mobile-nav-link>About</a></li>
         <li><a href="#why-artafic"  class="nav__mobile-link" data-mobile-nav-link>Why ARTAFIC</a></li>
         <li><a href="#before-after" class="nav__mobile-link" data-mobile-nav-link>Before &amp; After</a></li>
         <li><a href="faq.html"      class="nav__mobile-link">FAQ</a></li>
@@ -149,9 +149,15 @@
      SVG PATH MARQUEE ANIMATION SECTION
 ──────────────────────────────────────────────────────────── -->
 <section class="svg-marquee-section" id="svg-path-marquee" aria-label="Curved Motion Design Showcase">
+  <div class="container text-center" style="position: relative; z-index: 2; pointer-events: none; margin-bottom: 0.5rem; margin-top: 1rem;">
+    <p class="section-label" style="color: var(--color-teal); letter-spacing: 0.15em;">DESIGN &amp; MOTION</p>
+    <h2 class="section-title" style="color: #FFFFFF; font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500;">Curved Motion Showcase</h2>
+    <p style="color: rgba(255,255,255,0.6); font-size: 0.9375rem; max-width: 540px; margin: 0.25rem auto 0;">Scroll down to navigate our work along the dynamic SVG path.</p>
+  </div>
+
   <div class="svg-marquee-container" id="svg-marquee-container">
     <svg viewBox="0 0 1040 570" class="svg-marquee-path-element" preserveAspectRatio="none">
-      <path id="marquee-svg-path" d="M1.12756 531.57C28.0893 516.8 74.8013 483.241 115.862 435.167M115.862 435.167C142.71 403.734 167.142 366.095 182.056 323.447C229.212 188.604 -65.6747 303.582 53.6794 397.09C73.8056 412.858 94.5052 425.626 115.862 435.167ZM115.862 435.167C221.157 482.211 342.426 450.85 489.709 314.125C517.752 288.093 540.139 265.319 557.876 245.305M557.876 245.305C652.19 138.884 615.024 110.493 597.546 85.1004C576.782 54.9327 401.867 14.2899 417.559 188.351C424.308 263.214 481.985 261.608 557.876 245.305ZM557.876 245.305C646.667 226.232 760.389 187.041 846.65 226.667M846.65 226.667C858.081 231.918 869.031 238.554 879.376 246.804C1034.5 370.518 957.576 540.884 843.253 562.658C768.137 576.964 767.606 395.943 846.65 226.667ZM846.65 226.667C887.908 138.309 950.848 53.1511 1036.18 0.642822" fill="none" stroke="rgba(20, 184, 166, 0.35)" stroke-width="2.5" stroke-dasharray="6 6"/>
+      <path id="marquee-svg-path" d="M1.12756 531.57C28.0893 516.8 74.8013 483.241 115.862 435.167M115.862 435.167C142.71 403.734 167.142 366.095 182.056 323.447C229.212 188.604 -65.6747 303.582 53.6794 397.09C73.8056 412.858 94.5052 425.626 115.862 435.167ZM115.862 435.167C221.157 482.211 342.426 450.85 489.709 314.125C517.752 288.093 540.139 265.319 557.876 245.305M557.876 245.305C652.19 138.884 615.024 110.493 597.546 85.1004C576.782 54.9327 401.867 14.2899 417.559 188.351C424.308 263.214 481.985 261.608 557.876 245.305ZM557.876 245.305C646.667 226.232 760.389 187.041 846.65 226.667M846.65 226.667C887.908 231.918 869.031 238.554 879.376 246.804C1034.5 370.518 957.576 540.884 843.253 562.658C768.137 576.964 767.606 395.943 846.65 226.667ZM846.65 226.667C887.908 138.309 950.848 53.1511 1036.18 0.642822" fill="none" stroke="rgba(20, 184, 166, 0.35)" stroke-width="2.5" stroke-dasharray="6 6"/>
     </svg>
     <div class="svg-marquee-items-layer" id="svg-marquee-items"></div>
   </div>
@@ -355,79 +361,74 @@
 <!-- ═══════════════════════════════════════════════════════════
      SERVICES (NATURAL CANVAS SCROLL & ENDPOINT BOX REVEAL)
 ═══════════════════════════════════════════════════════════ -->
-<section class="services-pin-track" id="services" aria-label="Our Services">
-  <div class="services-sticky-viewport">
-    
-    <!-- Camera Panning Stage -->
-    <div class="services-panning-stage" id="services-panning-stage">
-      
-      <!-- Winding SVG Line Path -->
-      <div class="services-panning-svg-wrap">
-        
-        <!-- "Our Services" positioned directly on the mashup -->
-        <div class="services-mashup-text text-center">
-          <h2 class="services-hero-title" id="services-title">Our Services</h2>
-        </div>
+<section class="services-flow-section" id="services" aria-label="Our Services">
+  
+  <!-- Line Loop & Title Intro Canvas Container -->
+  <div class="services-flow-intro">
+    <div class="services-overlay-text text-center">
+      <h2 class="services-hero-title" id="services-title">Our Services</h2>
+    </div>
 
-        <svg viewBox="0 0 1278 2670" fill="none" class="services-panning-svg" preserveAspectRatio="xMidYTop meet">
-          <path id="services-scroll-path"
-            d="M876.605 394.131C788.982 335.917 696.198 358.139 691.836 416.303C685.453 501.424 853.722 498.43 941.95 409.714C1016.1 335.156 1008.64 186.907 906.167 142.846C807.014 100.212 712.699 198.494 789.049 245.127C889.053 306.207 986.062 116.979 840.548 43.3233C743.932 -5.58141 678.027 57.1682 672.279 112.188C666.53 167.208 712.538 172.943 736.353 163.088C760.167 153.234 764.14 120.924 746.651 93.3868C717.461 47.4252 638.894 77.8642 601.018 116.979C568.164 150.908 557 201.079 576.467 246.924C593.342 286.664 630.24 310.55 671.68 302.614C756.114 286.446 729.747 206.546 681.86 186.442C630.54 164.898 492 209.318 495.026 287.644C496.837 334.494 518.402 366.466 582.455 367.287C680.013 368.538 771.538 299.456 898.634 292.434C1007.02 286.446 1192.67 309.384 1242.36 382.258C1266.99 418.39 1273.65 443.108 1247.75 474.477C1217.32 511.33 1149.4 511.259 1096.84 466.093C1044.29 420.928 1029.14 380.576 1033.97 324.172C1038.31 273.428 1069.55 228.986 1117.2 216.384C1152.2 207.128 1188.29 213.629 1194.45 245.127C1201.49 281.062 1132.22 280.104 1100.44 272.673C1065.32 264.464 1044.22 234.837 1032.77 201.413C1019.29 162.061 1029.71 131.126 1056.44 100.965C1086.19 67.4032 1143.96 54.5526 1175.78 86.1513C1207.02 117.17 1186.81 143.379 1156.22 166.691C1112.57 199.959 1052.57 186.238 999.784 155.164C957.312 130.164 899.171 63.7054 931.284 26.3214C952.068 2.12513 996.288 3.87363 1007.22 43.58C1018.15 83.2749 1003.56 122.644 975.969 163.376C948.377 204.107 907.272 255.122 913.558 321.045C919.727 385.734 990.968 497.068 1063.84 503.35C1111.46 507.456 1166.79 511.984 1175.68 464.527C1191.52 379.956 1101.26 334.985 1030.29 377.017C971.109 412.064 956.297 483.647 953.797 561.655C947.587 755.413 1197.56 941.828 936.039 1140.66C745.771 1285.32 321.926 950.737 134.536 1202.19C-6.68295 1391.68 -53.4837 1655.38 131.935 1760.5C478.381 1956.91 1124.19 1515 1201.28 1997.83C1273.66 2451.23 100.805 1864.7 303.794 2668.89"
-            stroke="#14B8A6"
-            stroke-width="36"
-            stroke-linecap="round"
-          />
-        </svg>
-      </div>
-
-      <!-- Physical End Point Services Box Sitting At Stroke Landing Point -->
-      <div class="services-flow-endpoint container" id="services-flow-endpoint">
-        <div class="services-endpoint-card">
-          <div class="services-endpoint-header text-center">
-            <!-- Stroke Terminal Dot -->
-            <div class="stroke-terminal-dot" aria-hidden="true"></div>
-            <span class="services-endpoint-badge">ARTAFIC SERVICES</span>
-            <h2 class="services-endpoint-title">Two Services. Done Properly.</h2>
-            <p class="services-endpoint-subtitle">We focus exclusively on two core services to guarantee exceptional quality.</p>
-          </div>
-
-          <div class="services-endpoint-grid">
-            <!-- Service 01: Web Development -->
-            <div class="service-endpoint-box">
-              <div class="service-box__header">
-                <span class="service-box__num">01</span>
-                <h3 class="service-box__title">Web Development</h3>
-              </div>
-              <p class="service-box__desc">Professional, responsive websites designed around your business goals, customer behavior, usability, performance, and conversion.</p>
-              <ul class="service-box__features">
-                <li><span class="check">✓</span> Custom website design &amp; development</li>
-                <li><span class="check">✓</span> Mobile-first responsive design</li>
-                <li><span class="check">✓</span> Conversion-focused UX &amp; structure</li>
-                <li><span class="check">✓</span> High performance &amp; speed optimization</li>
-              </ul>
-              <a href="#booking" class="btn btn--primary btn--sm" style="margin-top: 1.5rem; display: inline-flex;">Get In Touch</a>
-            </div>
-
-            <!-- Service 02: Logo Building -->
-            <div class="service-endpoint-box">
-              <div class="service-box__header">
-                <span class="service-box__num">02</span>
-                <h3 class="service-box__title">Logo Building</h3>
-              </div>
-              <p class="service-box__desc">Professional logo design for businesses that need a stronger, clearer visual identity that builds immediate trust with customers.</p>
-              <ul class="service-box__features">
-                <li><span class="check">✓</span> Custom logo concepts &amp; direction</li>
-                <li><span class="check">✓</span> Professional visual identity design</li>
-                <li><span class="check">✓</span> Vector &amp; digital-ready formats</li>
-                <li><span class="check">✓</span> Consistent visual presentation</li>
-              </ul>
-              <a href="#booking" class="btn btn--primary btn--sm" style="margin-top: 1.5rem; display: inline-flex;">Get In Touch</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      
+    <!-- Winding SVG Line Path Spanning Down Canvas -->
+    <div class="services-flow-svg-wrap">
+      <svg viewBox="0 0 1278 2670" fill="none" class="services-flow-svg" preserveAspectRatio="xMidYTop meet">
+        <path id="services-scroll-path"
+          d="M876.605 394.131C788.982 335.917 696.198 358.139 691.836 416.303C685.453 501.424 853.722 498.43 941.95 409.714C1016.1 335.156 1008.64 186.907 906.167 142.846C807.014 100.212 712.699 198.494 789.049 245.127C889.053 306.207 986.062 116.979 840.548 43.3233C743.932 -5.58141 678.027 57.1682 672.279 112.188C666.53 167.208 712.538 172.943 736.353 163.088C760.167 153.234 764.14 120.924 746.651 93.3868C717.461 47.4252 638.894 77.8642 601.018 116.979C568.164 150.908 557 201.079 576.467 246.924C593.342 286.664 630.24 310.55 671.68 302.614C756.114 286.446 729.747 206.546 681.86 186.442C630.54 164.898 492 209.318 495.026 287.644C496.837 334.494 518.402 366.466 582.455 367.287C680.013 368.538 771.538 299.456 898.634 292.434C1007.02 286.446 1192.67 309.384 1242.36 382.258C1266.99 418.39 1273.65 443.108 1247.75 474.477C1217.32 511.33 1149.4 511.259 1096.84 466.093C1044.29 420.928 1029.14 380.576 1033.97 324.172C1038.31 273.428 1069.55 228.986 1117.2 216.384C1152.2 207.128 1188.29 213.629 1194.45 245.127C1201.49 281.062 1132.22 280.104 1100.44 272.673C1065.32 264.464 1044.22 234.837 1032.77 201.413C1019.29 162.061 1029.71 131.126 1056.44 100.965C1086.19 67.4032 1143.96 54.5526 1175.78 86.1513C1207.02 117.17 1186.81 143.379 1156.22 166.691C1112.57 199.959 1052.57 186.238 999.784 155.164C957.312 130.164 899.171 63.7054 931.284 26.3214C952.068 2.12513 996.288 3.87363 1007.22 43.58C1018.15 83.2749 1003.56 122.644 975.969 163.376C948.377 204.107 907.272 255.122 913.558 321.045C919.727 385.734 990.968 497.068 1063.84 503.35C1111.46 507.456 1166.79 511.984 1175.68 464.527C1191.52 379.956 1101.26 334.985 1030.29 377.017C971.109 412.064 956.297 483.647 953.797 561.655C947.587 755.413 1197.56 941.828 936.039 1140.66C745.771 1285.32 321.926 950.737 134.536 1202.19C-6.68295 1391.68 -53.4837 1655.38 131.935 1760.5C478.381 1956.91 1124.19 1515 1201.28 1997.83C1273.66 2451.23 100.805 1864.7 303.794 2668.89"
+          stroke="#14B8A6"
+          stroke-width="32"
+          stroke-linecap="round"
+        />
+      </svg>
     </div>
   </div>
+
+  <!-- Physical End Point Services Box Sitting At Stroke Landing Point -->
+  <div class="services-flow-endpoint container" id="services-flow-endpoint">
+    <div class="services-endpoint-card">
+      <div class="services-endpoint-header text-center">
+        <!-- Stroke Terminal Dot -->
+        <div class="stroke-terminal-dot" aria-hidden="true"></div>
+        <span class="services-endpoint-badge">ARTAFIC SERVICES</span>
+        <h2 class="services-endpoint-title">Two Services. Done Properly.</h2>
+        <p class="services-endpoint-subtitle">We focus exclusively on two core services to guarantee exceptional quality.</p>
+      </div>
+
+      <div class="services-endpoint-grid">
+        <!-- Service 01: Web Development -->
+        <div class="service-endpoint-box">
+          <div class="service-box__header">
+            <span class="service-box__num">01</span>
+            <h3 class="service-box__title">Web Development</h3>
+          </div>
+          <p class="service-box__desc">Professional, responsive websites designed around your business goals, customer behavior, usability, performance, and conversion.</p>
+          <ul class="service-box__features">
+            <li><span class="check">✓</span> Custom website design &amp; development</li>
+            <li><span class="check">✓</span> Mobile-first responsive design</li>
+            <li><span class="check">✓</span> Conversion-focused UX &amp; structure</li>
+            <li><span class="check">✓</span> High performance &amp; speed optimization</li>
+          </ul>
+          <a href="#booking" class="btn btn--primary btn--sm" style="margin-top: 1.5rem; display: inline-flex;">Get In Touch</a>
+        </div>
+
+        <!-- Service 02: Logo Building -->
+        <div class="service-endpoint-box">
+          <div class="service-box__header">
+            <span class="service-box__num">02</span>
+            <h3 class="service-box__title">Logo Building</h3>
+          </div>
+          <p class="service-box__desc">Professional logo design for businesses that need a stronger, clearer visual identity that builds immediate trust with customers.</p>
+          <ul class="service-box__features">
+            <li><span class="check">✓</span> Custom logo concepts &amp; direction</li>
+            <li><span class="check">✓</span> Professional visual identity design</li>
+            <li><span class="check">✓</span> Vector &amp; digital-ready formats</li>
+            <li><span class="check">✓</span> Consistent visual presentation</li>
+          </ul>
+          <a href="#booking" class="btn btn--primary btn--sm" style="margin-top: 1.5rem; display: inline-flex;">Get In Touch</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════
@@ -595,7 +596,8 @@
   <div class="container">
 
     <div class="section-header--centered" data-reveal>
-      <h2 class="section-title" id="why-title" style="font-weight: 800;">Why ARTAFIC</h2>
+      <p class="section-label">Why ARTAFIC</p>
+      <h2 class="section-title" id="why-title">What Makes the Difference.</h2>
       <p class="section-subtitle">These aren't marketing claims. They're the specific ways we approach work differently.</p>
     </div>
 
@@ -647,9 +649,118 @@
 </section>
 
 
+<!-- ═══════════════════════════════════════════════════════════
+     ABOUT ME SECTION
+═══════════════════════════════════════════════════════════ -->
+<section class="about-me-section" id="about" aria-labelledby="about-title" style="position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 5rem 1.25rem; background-color: #0C0C0C; overflow: hidden; font-family: 'Kanit', sans-serif;">
+  
+  <!-- 4 Decorative Corner Floating Images with Framer-Motion Entrance Animations -->
+  <div data-reveal="left-far" style="position: absolute; top: 4%; left: 4%; z-index: 0; transition-delay: 0.1s;">
+    <img
+      src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png"
+      alt="Moon Icon"
+      class="corner-img-top-left"
+      style="width: clamp(120px, 15vw, 210px); height: auto; pointer-events: none; user-select: none;"
+    />
+  </div>
+  
+  <div data-reveal="left-far" style="position: absolute; bottom: 8%; left: 10%; z-index: 0; transition-delay: 0.25s;">
+    <img
+      src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png"
+      alt="3D Object"
+      class="corner-img-bottom-left"
+      style="width: clamp(100px, 12vw, 180px); height: auto; pointer-events: none; user-select: none;"
+    />
+  </div>
+  
+  <div data-reveal="right-far" style="position: absolute; top: 4%; right: 4%; z-index: 0; transition-delay: 0.15s;">
+    <img
+      src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png"
+      alt="Lego Icon"
+      class="corner-img-top-right"
+      style="width: clamp(120px, 15vw, 210px); height: auto; pointer-events: none; user-select: none;"
+    />
+  </div>
+  
+  <div data-reveal="right-far" style="position: absolute; bottom: 8%; right: 10%; z-index: 0; transition-delay: 0.3s;">
+    <img
+      src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png"
+      alt="3D Group"
+      class="corner-img-bottom-right"
+      style="width: clamp(130px, 16vw, 220px); height: auto; pointer-events: none; user-select: none;"
+    />
+  </div>
 
+  <!-- Center Content -->
+  <div style="position: relative; z-index: 10; max-width: 56rem; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4rem; text-align: center;">
+    
+    <!-- Group 1: Heading + Text -->
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+      <h2 id="about-title" class="hero-heading" data-reveal style="font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: -0.025em; text-align: center; font-size: clamp(3rem, 12vw, 160px); background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0;">
+        About us
+      </h2>
 
+      <div style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 720px; align-items: center;">
+        <p class="about-animated-text" style="color: #D7E2EA; font-weight: 500; text-align: center; line-height: 1.625; font-size: clamp(1rem, 2vw, 1.25rem); margin: 0;">
+          We are ARTAFIC a digital agency focused on helping businesses build a stronger presence in the digital world. We combine creative design, modern technology, and thoughtful development to create websites and logos that represent businesses professionally.
+        </p>
+        <p class="about-animated-text" style="color: #D7E2EA; font-weight: 500; text-align: center; line-height: 1.625; font-size: clamp(1rem, 2vw, 1.25rem); margin: 0;">
+          We work with businesses that want to improve how they look, communicate, and connect with their customers online. From building high quality websites to creating distinctive logos, we focus on clean design, intuitive experiences, and solutions built around each business's goals.
+        </p>
+      </div>
+    </div>
 
+    <!-- Group 2: Contact Button -->
+    <div class="magnetic-wrapper" data-magnet data-reveal style="transition-delay: 0.3s; display: inline-block; transition: transform 0.6s ease-in-out; will-change: transform;">
+      <a
+        href="#booking"
+        style="display: inline-block; border-radius: 9999px; padding: 0.875rem 2.5rem; color: #ffffff; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.875rem; text-decoration: none; background: linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%); box-shadow: 0px 4px 4px rgba(181, 1, 167, 0.25), 4px 4px 12px #7721B1 inset; outline: 2px solid #E3E3E3; outline-offset: -3px; transition: opacity 200ms ease;"
+        onmouseover="this.style.opacity='0.9'"
+        onmouseout="this.style.opacity='1'"
+      >
+        Get In Touch
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FAQ PREVIEW (HOMEPAGE CONCISE OBJECTION HANDLING)
+═══════════════════════════════════════════════════════════ -->
+<section class="faq-preview section section--surface" id="faq-preview" aria-labelledby="faq-preview-title">
+  <div class="container">
+    <div class="section-header--centered" data-reveal>
+      <p class="section-label">HAVE QUESTIONS?</p>
+      <h2 class="section-title" id="faq-preview-title">Common Questions Before Getting In Touch.</h2>
+      <p class="section-subtitle">Quick answers to what most businesses ask before starting a project with ARTAFIC.</p>
+    </div>
+
+    <div class="faq-preview__grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2.5rem;" data-reveal data-reveal-delay="2">
+      <div class="faq-preview__card" style="background: var(--color-surface); padding: 1.75rem; border-radius: 1rem; border: 1px solid var(--color-border);">
+        <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--color-charcoal);">What services do you offer?</h3>
+        <p style="font-size: 0.9375rem; color: var(--color-text-body); line-height: 1.6;">We focus on Web Development (custom responsive websites) and Logo Building (clear visual identity design) tailored to your business goals.</p>
+      </div>
+
+      <div class="faq-preview__card" style="background: var(--color-surface); padding: 1.75rem; border-radius: 1rem; border: 1px solid var(--color-border);">
+        <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--color-charcoal);">How does the process work?</h3>
+        <p style="font-size: 0.9375rem; color: var(--color-text-body); line-height: 1.6;">We follow a transparent 4-stage workflow: Understand your goals, Design the UX/visual direction, Build the website, and Refine before launch.</p>
+      </div>
+
+      <div class="faq-preview__card" style="background: var(--color-surface); padding: 1.75rem; border-radius: 1rem; border: 1px solid var(--color-border);">
+        <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--color-charcoal);">What happens after I get in touch?</h3>
+        <p style="font-size: 0.9375rem; color: var(--color-text-body); line-height: 1.6;">We review your inquiry and reach out promptly to discuss your specific goals and provide clear next steps with no pressure.</p>
+      </div>
+    </div>
+
+    <div class="text-center" style="margin-top: 2.5rem;" data-reveal data-reveal-delay="3">
+      <a href="faq.html" class="btn btn--secondary">
+        View All FAQ Questions
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════════════════════════════════════════════════════════
      BOOKING / GET IN TOUCH FORM
@@ -783,7 +894,7 @@
         <ul class="footer__links" role="list">
           <li><a href="#home" class="footer__link">Home</a></li>
           <li><a href="#services" class="footer__link">Services</a></li>
-          <li><a href="about.html" class="footer__link">About</a></li>
+          <li><a href="#about" class="footer__link">About</a></li>
           <li><a href="#why-artafic" class="footer__link">Why ARTAFIC</a></li>
           <li><a href="#before-after" class="footer__link">Before &amp; After</a></li>
           <li><a href="faq.html" class="footer__link">FAQ</a></li>
