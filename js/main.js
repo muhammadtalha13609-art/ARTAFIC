@@ -1637,24 +1637,33 @@ function formatTime() {
     const rect = section.getBoundingClientRect();
     const windowHeight = window.innerHeight;
 
-    // Animation starts when section top enters the top 18% of the screen.
-    // Lower value = starts earlier = more room below navbar for the whole journey.
-    const startPoint = windowHeight * 0.18;
+    // Animation begins with comfortable safe area below navbar (top 14% of screen)
+    const startPoint = windowHeight * 0.14;
     const currentScroll = startPoint - rect.top;
 
-    // A smaller multiplier here gives a longer effective scroll range,
-    // making the animation feel more deliberate (slower) without being dramatic.
-    const scrollRange = rect.height - windowHeight * 0.35;
+    // Longer effective scroll range for slightly slower, deliberate pacing
+    const scrollRange = rect.height - windowHeight * 0.22;
     
     // Strict 0 to 1 progress mapping
-    const progress = Math.max(0, Math.min(1, currentScroll / scrollRange));
+    const rawProgress = Math.max(0, Math.min(1, currentScroll / scrollRange));
 
-    const drawLength = pathLength * progress;
+    // Phase progression shaping:
+    // Phase 1 (Mashup): draws upper loops
+    // Phase 2 (Downward travel): begins slightly earlier, giving more usable viewport space
+    let strokeProgress;
+    if (rawProgress < 0.26) {
+      strokeProgress = rawProgress * (0.32 / 0.26);
+    } else {
+      strokeProgress = 0.32 + ((rawProgress - 0.26) / 0.74) * 0.68;
+    }
+    strokeProgress = Math.max(0, Math.min(1, strokeProgress));
+
+    const drawLength = pathLength * strokeProgress;
     path.style.strokeDashoffset = `${pathLength - drawLength}`;
 
-    // Reveal endpoint box opacity as line stroke lands on it
+    // Reveal endpoint box opacity as line stroke approaches landing point
     if (endpointBox) {
-      const revealProgress = Math.max(0, Math.min(1, (progress - 0.72) / 0.28));
+      const revealProgress = Math.max(0, Math.min(1, (strokeProgress - 0.70) / 0.28));
       endpointBox.style.opacity = String((0.4 + revealProgress * 0.6).toFixed(2));
     }
   }
