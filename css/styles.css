@@ -3955,14 +3955,17 @@ select:focus-visible {
 }
 
 .services-endpoint-card {
-  position: relative;
-  width: 100%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
   max-width: 1150px;
   background: linear-gradient(135deg, #14B8A6 0%, #0F766E 100%);
   border-radius: 2rem;
   padding: 2rem 1.5rem;
   color: #FFFFFF;
   box-shadow: 0 20px 50px rgba(20, 184, 166, 0.25);
+  z-index: 15;
 }
 
 @media (min-width: 768px) {
