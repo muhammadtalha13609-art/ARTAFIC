@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    ARTAFIC — Main JavaScript
    Version: 1.0.0
    ============================================================ */
@@ -439,7 +439,7 @@ function formatTime() {
     },
     process: {
       text: 'Our process has four stages:\n\n**01 — Understand:** We learn about your business, audience, and goals.\n\n**02 — Design:** We create a clear visual and UX direction aligned to those goals.\n\n**03 — Build:** We develop the responsive website from the approved design.\n\n**04 — Refine:** We test, review, and polish before delivery.\n\nEach stage includes your review and approval.',
-      cta: true
+      text: 'Our process has four stages:\n\n**01 - Discover & Strategy:** We start by understanding your goals, audience, and technical requirements.\n\n**02 - UX/UI Design:** We craft intuitive, visually compelling interfaces.\n\n**03 - Development & Launch:** We build your site with modern tech (Next.js, Tailwind, WebGL) and deploy it flawlessly.\n\n**04 - Support & Iteration:** After launch, we monitor performance and iterate to ensure long-term success.',
     },
     cost: {
       text: 'Project pricing is based on scope, requirements, complexity, and your business goals. We don\'t publish fixed packages because no two projects are the same.\n\nThe right approach is a conversation — get in touch and we can discuss your project and provide a proper estimate.',
@@ -481,6 +481,12 @@ function formatTime() {
     if (lower.includes('book') || lower.includes('meeting') || lower.includes('contact') || lower.includes('touch') || lower.includes('start')) {
       return faqAnswers.booking;
     }
+    if (lower === 'hi' || lower === 'hello' || lower === 'hey' || lower.includes('good morning') || lower.includes('good afternoon')) {
+      return {
+        text: 'Hello! I am the ARTAFIC Assistant. How can I help you with your project today?',
+        cta: false
+      };
+    }
 
     return {
       text: 'That\'s a great question. To give you the most accurate information for your specific situation, the best next step is to get in touch with us directly. We\'ll be happy to address your question in full.',
@@ -496,7 +502,12 @@ function formatTime() {
     const avatar = document.createElement('div');
     avatar.className = 'chat-message__avatar';
     avatar.setAttribute('aria-hidden', 'true');
-    avatar.textContent = type === 'bot' ? 'A' : 'Y';
+    if (type === 'bot') {
+      avatar.style.background = '#0C0C0C';
+      avatar.innerHTML = '<img src="assets/chatbot-avatar.png" alt="" style="width:100%;height:100%;object-fit:contain;padding:4px;border-radius:50%;">';
+    } else {
+      avatar.textContent = 'Y';
+    }
 
     const body = document.createElement('div');
     body.className = 'chat-message__body';
