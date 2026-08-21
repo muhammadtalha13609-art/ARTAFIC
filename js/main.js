@@ -1,13 +1,13 @@
-/* ============================================================
-   ARTAFIC — Main JavaScript
+﻿/* ============================================================
+   ARTAFIC â€” Main JavaScript
    Version: 1.0.0
    ============================================================ */
 
 'use strict';
 
-/* ────────────────────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    UTILITIES
-   ──────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
@@ -20,9 +20,9 @@ function formatTime() {
   return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
-/* ────────────────────────────────────────────────────────────
-   01. NAVIGATION — Scroll-aware sticky nav
-   ──────────────────────────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   01. NAVIGATION â€” Scroll-aware sticky nav
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (function initNav() {
   const nav = $('#nav');
   if (!nav) return;
@@ -67,9 +67,9 @@ function formatTime() {
 })();
 
 
-/* ────────────────────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    02. MOBILE MENU
-   ──────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (function initMobileMenu() {
   const hamburger = $('#hamburger');
   const mobileMenu = $('#mobile-menu');
@@ -123,9 +123,9 @@ function formatTime() {
 })();
 
 
-/* ────────────────────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    03. SMOOTH ANCHOR SCROLLING
-   ──────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (function initSmoothScroll() {
   const navHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 72;
 
@@ -148,9 +148,9 @@ function formatTime() {
 })();
 
 
-/* ────────────────────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    04. SCROLL REVEAL (IntersectionObserver)
-   ──────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (function initScrollReveal() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -175,9 +175,9 @@ function formatTime() {
 })();
 
 
-/* ────────────────────────────────────────────────────────────
-   05. BEFORE / AFTER SLIDER — HIGH PERFORMANCE TOUCH TRACKING
-   ──────────────────────────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   05. BEFORE / AFTER SLIDER â€” HIGH PERFORMANCE TOUCH TRACKING
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (function initSlider() {
   const container = $('#slider-container');
   if (!container) return;
@@ -260,9 +260,9 @@ function formatTime() {
 })();
 
 
-/* ────────────────────────────────────────────────────────────
-   06. FAQ ACCORDION — CONTENT-AWARE ACCORDION EXPANSION
-   ──────────────────────────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   06. FAQ ACCORDION â€” CONTENT-AWARE ACCORDION EXPANSION
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (function initAccordion() {
   const accordion = $('#faq-accordion');
   if (!accordion) return;
@@ -309,9 +309,9 @@ function formatTime() {
 })();
 
 
-/* ────────────────────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    07. BOOKING FORM VALIDATION
-   ──────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (function initBookingForm() {
   const form = $('#booking-form');
   const successEl = $('#booking-success');
@@ -401,7 +401,7 @@ function formatTime() {
     // Success
     const submitBtn = $('#form-submit-btn');
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending…';
+    submitBtn.textContent = 'Sendingâ€¦';
 
     // Simulate async submission
     setTimeout(() => {
@@ -413,9 +413,9 @@ function formatTime() {
 })();
 
 
-/* ────────────────────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    08. CHATBOT
-   ──────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (function initChatbot() {
   const launcherBtn = $('#chatbot-launcher-btn');
   const panel = $('#chatbot-panel');
@@ -431,18 +431,18 @@ function formatTime() {
   let isOpen = false;
   let greetingShown = false;
 
-  // ─── FAQ Knowledge Base ───────────────────────────────────
+  // â”€â”€â”€ FAQ Knowledge Base â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const faqAnswers = {
     services: {
-      text: 'ARTAFIC offers two focused services:\n\n**Web Development** — Professional, responsive websites built around your business goals, customer behavior, and conversion.\n\n**Logo Building** — Custom logo design that gives your business a cleaner, more professional visual identity.\n\nWe deliberately keep our focus narrow to ensure quality in both areas.',
+      text: 'ARTAFIC offers two focused services:\n\n**Web Development** â€” Professional, responsive websites built around your business goals, customer behavior, and conversion.\n\n**Logo Building** â€” Custom logo design that gives your business a cleaner, more professional visual identity.\n\nWe deliberately keep our focus narrow to ensure quality in both areas.',
       cta: true
     },
     process: {
-      text: 'Our process has four stages:\n\n**01 — Understand:** We learn about your business, audience, and goals.\n\n**02 — Design:** We create a clear visual and UX direction aligned to those goals.\n\n**03 — Build:** We develop the responsive website from the approved design.\n\n**04 — Refine:** We test, review, and polish before delivery.\n\nEach stage includes your review and approval.',
+      text: 'Our process has four stages:\n\n**01 â€” Understand:** We learn about your business, audience, and goals.\n\n**02 â€” Design:** We create a clear visual and UX direction aligned to those goals.\n\n**03 â€” Build:** We develop the responsive website from the approved design.\n\n**04 â€” Refine:** We test, review, and polish before delivery.\n\nEach stage includes your review and approval.',
       text: 'Our process has four stages:\n\n**01 - Discover & Strategy:** We start by understanding your goals, audience, and technical requirements.\n\n**02 - UX/UI Design:** We craft intuitive, visually compelling interfaces.\n\n**03 - Development & Launch:** We build your site with modern tech (Next.js, Tailwind, WebGL) and deploy it flawlessly.\n\n**04 - Support & Iteration:** After launch, we monitor performance and iterate to ensure long-term success.',
     },
     cost: {
-      text: 'Project pricing is based on scope, requirements, complexity, and your business goals. We don\'t publish fixed packages because no two projects are the same.\n\nThe right approach is a conversation — get in touch and we can discuss your project and provide a proper estimate.',
+      text: 'Project pricing is based on scope, requirements, complexity, and your business goals. We don\'t publish fixed packages because no two projects are the same.\n\nThe right approach is a conversation â€” get in touch and we can discuss your project and provide a proper estimate.',
       cta: true
     },
     timeline: {
@@ -450,19 +450,56 @@ function formatTime() {
       cta: true
     },
     redesign: {
-      text: 'Yes. Redesigning an existing website is one of the most common types of projects we work on.\n\nIf your current site is outdated, underperforming, or no longer reflects your business properly, we can redesign it from the ground up — keeping what works and replacing what doesn\'t.',
+      text: 'Yes. Redesigning an existing website is one of the most common types of projects we work on.\n\nIf your current site is outdated, underperforming, or no longer reflects your business properly, we can redesign it from the ground up â€” keeping what works and replacing what doesn\'t.',
       cta: true
     },
     booking: {
-      text: 'Getting in touch is simple — scroll down to the "Get In Touch" section on this page, or click the "Get In Touch" button in the navigation.\n\nFill in the simple form with your details and we\'ll review your inquiry and reach out promptly.',
+      text: 'Getting in touch is simple â€” scroll down to the "Get In Touch" section on this page, or click the "Get In Touch" button in the navigation.\n\nFill in the simple form with your details and we\'ll review your inquiry and reach out promptly.',
       cta: true
     }
   };
+
+  // Helper for randomized responses
+  function getRandomResponse(responsesArray) {
+    return responsesArray[Math.floor(Math.random() * responsesArray.length)];
+  }
 
   // Fallback for unrecognized messages
   function getFallbackAnswer(message) {
     const lower = message.toLowerCase();
 
+    // 1. Casual conversational elements
+    if (/^(hi|hello|hey|assalamualaikum|greetings|sup)\b/.test(lower) || lower.includes('good morning') || lower.includes('good afternoon')) {
+      const greetings = [
+        'Hello! I am the ARTAFIC Assistant. How can I help you with your project today?',
+        'Hi there! I can help you with questions about our Web Development and Logo Building services. What would you like to know?',
+        'Greetings! How can I assist you with your digital presence today?',
+        'Hey! I am here to answer any questions you have about ARTAFIC\'s services and process.'
+      ];
+      return { text: getRandomResponse(greetings), cta: false };
+    }
+    
+    if (lower.includes('thank') || lower.includes('thx')) {
+      const thanks = [
+        'You\'re welcome! Let me know if you need anything else.',
+        'No problem! Happy to help.',
+        'Anytime! Feel free to ask if you have more questions.'
+      ];
+      return { text: getRandomResponse(thanks), cta: false };
+    }
+    
+    if (lower.includes('bye') || lower.includes('cya') || lower.includes('see ya') || lower.includes('goodbye')) {
+      return { text: 'Goodbye! Feel free to reach out if you have any more questions in the future.', cta: false };
+    }
+    
+    if (lower.includes('who are you') || lower.includes('what are you') || lower.includes('are you ai') || lower.includes('are you a bot') || lower.includes('what can you do')) {
+      return {
+        text: 'I am the ARTAFIC Assistant! I\'m a simple bot designed to quickly answer common questions about our **Web Development** and **Logo Building** services. I can\'t write code or generate images, but I can help you understand our process and pricing!',
+        cta: false
+      };
+    }
+
+    // 2. Existing specific FAQ matchers
     if (lower.includes('service') || lower.includes('offer') || lower.includes('do you do')) {
       return faqAnswers.services;
     }
@@ -481,20 +518,20 @@ function formatTime() {
     if (lower.includes('book') || lower.includes('meeting') || lower.includes('contact') || lower.includes('touch') || lower.includes('start')) {
       return faqAnswers.booking;
     }
-    if (lower === 'hi' || lower === 'hello' || lower === 'hey' || lower.includes('good morning') || lower.includes('good afternoon')) {
-      return {
-        text: 'Hello! I am the ARTAFIC Assistant. How can I help you with your project today?',
-        cta: false
-      };
-    }
 
+    // 3. True Fallback (randomized)
+    const fallbacks = [
+      'That\'s a great question. To give you the most accurate information for your specific situation, the best next step is to get in touch with us directly. We\'ll be happy to address your question in full.',
+      'I\'m a simple bot, so I don\'t have a perfect answer for that! For the best response, I recommend getting in touch with our team directly using the contact form.',
+      'I don\'t have a simple answer for that! The best way forward is a quick conversation. Feel free to use our contact form to reach out.'
+    ];
     return {
-      text: 'That\'s a great question. To give you the most accurate information for your specific situation, the best next step is to get in touch with us directly. We\'ll be happy to address your question in full.',
+      text: getRandomResponse(fallbacks),
       cta: true
     };
   }
 
-  // ─── Message Rendering ───────────────────────────────────
+  // â”€â”€â”€ Message Rendering â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function renderMessage(text, type = 'bot', hasCta = false) {
     const messageEl = document.createElement('div');
     messageEl.className = `chat-message chat-message--${type}`;
@@ -591,7 +628,7 @@ function formatTime() {
     renderMessage(answerObj.text, 'bot', answerObj.cta);
   }
 
-  // ─── Open / Close ─────────────────────────────────────────
+  // â”€â”€â”€ Open / Close â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function openPanel() {
     isOpen = true;
     launcherBtn.classList.add('is-open');
@@ -603,7 +640,7 @@ function formatTime() {
 
     if (!greetingShown) {
       greetingShown = true;
-      renderMessage('Hi there 👋 I\'m the ARTAFIC assistant.\n\nI can answer questions about our services, process, and pricing. What would you like to know?', 'bot', false);
+      renderMessage('Hi there ðŸ‘‹ I\'m the ARTAFIC assistant.\n\nI can answer questions about our services, process, and pricing. What would you like to know?', 'bot', false);
     }
 
     setTimeout(() => input.focus(), 300);
@@ -628,7 +665,7 @@ function formatTime() {
     if (e.key === 'Escape' && isOpen) closePanel();
   });
 
-  // ─── Predefined Suggestion Buttons ───────────────────────
+  // â”€â”€â”€ Predefined Suggestion Buttons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   $$('.chatbot-panel__suggestion', suggestionsEl).forEach(btn => {
     btn.addEventListener('click', async () => {
       const key = btn.dataset.question;
@@ -637,7 +674,7 @@ function formatTime() {
     });
   });
 
-  // ─── User Input ───────────────────────────────────────────
+  // â”€â”€â”€ User Input â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   async function handleUserMessage() {
     const message = input.value.trim();
     if (!message) return;
@@ -660,9 +697,9 @@ function formatTime() {
 })();
 
 
-/* ────────────────────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    09. ACTIVE NAV LINK (scroll-spy)
-   ──────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (function initScrollSpy() {
   const navLinks = $$('[data-nav-link]');
   const sectionIds = ['home', 'services', 'about', 'why-artafic', 'before-after', 'faq'];
@@ -691,9 +728,9 @@ function formatTime() {
 })();
 
 
-/* ────────────────────────────────────────────────────────────
-   10A. HERO 3D SCENE — Three.js via ESM CDN
-   ──────────────────────────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   10A. HERO 3D SCENE â€” Three.js via ESM CDN
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (async function initHeroThree() {
   const canvas = document.getElementById('aether-canvas') || document.getElementById('hero-three');
   if (!canvas) return;
@@ -702,7 +739,7 @@ function formatTime() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (!window.WebGLRenderingContext) return;
 
-  // ── Dynamically load Three.js from ESM CDN (no npm needed) ──
+  // â”€â”€ Dynamically load Three.js from ESM CDN (no npm needed) â”€â”€
   let THREE;
   try {
     THREE = await import('https://esm.sh/three@0.163.0');
@@ -711,28 +748,28 @@ function formatTime() {
     return;
   }
 
-  // ── Renderer ──
+  // â”€â”€ Renderer â”€â”€
   const renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
-    alpha: true,          // transparent bg — particle canvas shows behind
+    alpha: true,          // transparent bg â€” particle canvas shows behind
     powerPreference: 'high-performance'
   });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0x000000, 0);  // fully transparent clear
 
-  // ── Scene & Camera ──
+  // â”€â”€ Scene & Camera â”€â”€
   const scene  = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
   camera.position.set(0, 0, 5);
 
-  // ── Teal colour palette ──
+  // â”€â”€ Teal colour palette â”€â”€
   const TEAL       = 0x14b8a6;
   const TEAL_LIGHT = 0x5eead4;
   const TEAL_DARK  = 0x0d9488;
 
-  // ── Main object: Torus Knot ──
+  // â”€â”€ Main object: Torus Knot â”€â”€
   // Wireframe so the particle canvas shows through the geometry
   const knotGeo = new THREE.TorusKnotGeometry(1.2, 0.38, 180, 24, 2, 3);
   const knotMat = new THREE.MeshStandardMaterial({
@@ -757,7 +794,7 @@ function formatTime() {
   const wireMesh = new THREE.Mesh(knotGeo, wireMat);
   scene.add(wireMesh);
 
-  // ── Secondary object: Icosahedron orbiting the knot ──
+  // â”€â”€ Secondary object: Icosahedron orbiting the knot â”€â”€
   const icoGeo  = new THREE.IcosahedronGeometry(0.55, 1);
   const icoMat  = new THREE.MeshStandardMaterial({
     color: TEAL_LIGHT,
@@ -777,7 +814,7 @@ function formatTime() {
   icoWireMesh.position.copy(icoMesh.position);
   scene.add(icoWireMesh);
 
-  // ── Third object: Octahedron — left side ──
+  // â”€â”€ Third object: Octahedron â€” left side â”€â”€
   const octGeo  = new THREE.OctahedronGeometry(0.42, 0);
   const octMat  = new THREE.MeshStandardMaterial({
     color: TEAL_DARK,
@@ -796,7 +833,7 @@ function formatTime() {
   octWireMesh.position.copy(octMesh.position);
   scene.add(octWireMesh);
 
-  // ── Lights ──
+  // â”€â”€ Lights â”€â”€
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
   scene.add(ambientLight);
 
@@ -808,7 +845,7 @@ function formatTime() {
   pointLight2.position.set(-3, -2, 2);
   scene.add(pointLight2);
 
-  // ── Mouse tracking for camera drift ──
+  // â”€â”€ Mouse tracking for camera drift â”€â”€
   const mouse3d = { x: 0, y: 0 };
   const mouseLerped = { x: 0, y: 0 };
 
@@ -817,7 +854,7 @@ function formatTime() {
     mouse3d.y = (e.clientY / window.innerHeight - 0.5) * -2;
   }, { passive: true });
 
-  // ── Resize ──
+  // â”€â”€ Resize â”€â”€
   function resizeThree() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -826,7 +863,7 @@ function formatTime() {
   }
   window.addEventListener('resize', resizeThree, { passive: true });
 
-  // ── Animation loop ──
+  // â”€â”€ Animation loop â”€â”€
   let clock = new THREE.Clock();
 
   function animateThree() {
@@ -870,9 +907,9 @@ function formatTime() {
 })();
 
 
-/* ────────────────────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    10. HERO AETHERFLOW INTERACTIVE PARTICLE CANVAS
-   ──────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (function initHeroCanvas() {
   const canvas = document.getElementById('aether-canvas') || document.getElementById('hero-canvas');
   if (!canvas) return;
@@ -882,7 +919,7 @@ function formatTime() {
   let animationId;
   const mouse = { x: null, y: null, radius: 180 };
 
-  /* ── Particle Class ── */
+  /* â”€â”€ Particle Class â”€â”€ */
   class Particle {
     constructor(x, y, dx, dy, size, color) {
       this.x = x;
@@ -1011,9 +1048,9 @@ function formatTime() {
   animate();
 })();
 
-/* ────────────────────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    10. ABOUT SECTION SCROLL TEXT REVEAL & MAGNETIC HOVER
-   ──────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (function initAboutAnimations() {
   const textEls = document.querySelectorAll('.about-animated-text');
   if (!textEls.length) return;
@@ -1136,9 +1173,9 @@ function formatTime() {
     });
   });
 })();
-/* ────────────────────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    12. FULL-SCREEN SCROLL STORYTELLING ENGINE
-   ──────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (function initTimeline() {
   const processSection  = document.getElementById('process');
   const stickyContainer = document.getElementById('process-sticky');
@@ -1661,16 +1698,16 @@ function formatTime() {
     const progress = Math.max(0, Math.min(1, -rect.top / pinnedScrollRange));
 
     // TIMELINE MAPPED TO PINNED SCROLL PROGRESS (0.0 to 1.0):
-    // 0.00 - 0.28: PHASE 1 G�� STARTING MASHUP LOOPS
+    // 0.00 - 0.28: PHASE 1 Gï¿½ï¿½ STARTING MASHUP LOOPS
     //              Stroke draws the 3-4 top mashup loops (0% -> 38% path length).
     //              Camera stays LOCKED at top (panProgress = 0) so the user can watch all 3-4 loops draw right over "Our Services".
     //
-    // 0.28 - 0.88: PHASE 2 G�� DOWNWARD TRAVEL & CAMERA PAN (starts slightly earlier, expanded timeline)
+    // 0.28 - 0.88: PHASE 2 Gï¿½ï¿½ DOWNWARD TRAVEL & CAMERA PAN (starts slightly earlier, expanded timeline)
     //              Stroke draws down from mashup to Services Box (38% -> 100% path length).
     //              Camera smoothly pans down following the leading tip of the line (panProgress = 0 -> 1).
     //              Services Box fades in between 0.38 and 0.70 so the destination is clearly visible ahead of the line.
     //
-    // 0.88 - 1.00: PHASE 3 G�� FINAL CONNECTED HOLD
+    // 0.88 - 1.00: PHASE 3 Gï¿½ï¿½ FINAL CONNECTED HOLD
     //              Line touches terminal dot on Services Box. Composition holds fixed before section unpins.
 
     let strokeProgress = 0;
@@ -1754,3 +1791,5 @@ function formatTime() {
   setTimeout(updateTimeline, 100);
 })();
 })();
+
+
