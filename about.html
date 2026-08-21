@@ -96,23 +96,21 @@
   
   <!-- SECTION 01: EDITORIAL INTRO -->
   <section class="about-intro" id="about-intro">
-    <div class="container">
-      <div class="about-intro__grid">
-        <div class="about-intro__content">
+    <div class="floating-paths-bg" data-pos="1" data-theme="normal"></div>
+    <div class="container relative-z">
+      <div class="about-intro__content">
+        <div style="grid-column: 1 / -1;">
           <p class="about-label fade-up">About ARTAFIC</p>
           <h1 class="about-heading-huge" style="margin-bottom: 2rem;">
             <span class="reveal-text-mask"><span class="reveal-text-inner">We build</span></span><br>
             <span class="reveal-text-mask"><span class="reveal-text-inner">digital experiences</span></span><br>
             <span class="reveal-text-mask"><span class="reveal-text-inner">with intention.</span></span>
           </h1>
-          <p class="about-text-body fade-up" style="max-width: 500px; transition-delay: 0.4s;">
+        </div>
+        <div style="grid-column: 2 / -1;">
+          <p class="about-text-body fade-up" style="transition-delay: 0.4s;">
             ARTAFIC is a digital agency built to help businesses present themselves better online. We bring design and technology together to create digital experiences that feel clear, intentional, and distinctive.
           </p>
-        </div>
-        <div class="about-intro__visual fade-up" style="transition-delay: 0.8s;">
-          <div class="about-intro__glow"></div>
-          <div class="about-intro__shape"></div>
-          <div class="about-intro__shape--2"></div>
         </div>
       </div>
       <div class="about-intro__scroll">
@@ -124,7 +122,8 @@
 
   <!-- SECTION 02: WHY EXISTS -->
   <section class="why-exists" id="why-exists">
-    <div class="container">
+    <div class="floating-paths-bg" data-pos="-1" data-theme="minimal"></div>
+    <div class="container relative-z">
       <div class="why-exists__container">
         <div class="why-exists__left">
           <p class="about-label fade-up">Why ARTAFIC Exists</p>
@@ -146,7 +145,7 @@
 
   <!-- SECTION 03: STORY -->
   <section class="our-story" id="our-story">
-    <div class="container">
+    <div class="container relative-z">
       <div class="story-wrapper">
         <div class="story-item">
           <div class="story-item__num">01</div>
@@ -177,20 +176,22 @@
 
   <!-- SECTION 04: PHILOSOPHY -->
   <section class="philosophy" id="philosophy">
-    <div class="philosophy__sticky">
-      <div class="container">
-        <p class="about-label" style="position: absolute; top: 15vh; left: 1.25rem;">Our Philosophy</p>
-        <div class="philosophy__grid">
-          <div class="philosophy__left">
-            <h3 class="philosophy__title is-active"><span>01</span> DESIGN WITH PURPOSE</h3>
-            <h3 class="philosophy__title"><span>02</span> BUILD WITH INTENTION</h3>
-            <h3 class="philosophy__title"><span>03</span> MAKE IT DISTINCTIVE</h3>
-          </div>
-          <div class="philosophy__right">
-            <p class="philosophy__desc about-text-body is-active" style="font-size: clamp(1.5rem, 3vw, 2.5rem); color: #FFF;">Every visual decision should serve a reason. We strip away the unnecessary so the core message stands out.</p>
-            <p class="philosophy__desc about-text-body" style="font-size: clamp(1.5rem, 3vw, 2.5rem); color: #FFF;">Technology should make the experience better, not more complicated. We focus on smooth performance and solid architecture.</p>
-            <p class="philosophy__desc about-text-body" style="font-size: clamp(1.5rem, 3vw, 2.5rem); color: #FFF;">Your business shouldn't look like everyone else's. We craft digital identities that feel genuinely connected to your brand.</p>
-          </div>
+    <div class="philosophy__container container relative-z">
+      <div class="philosophy__left">
+        <p class="about-label" style="margin-bottom: 4rem;">Our Philosophy</p>
+        <h3 class="phil-title is-active"><span>01</span> DESIGN WITH PURPOSE</h3>
+        <h3 class="phil-title"><span>02</span> BUILD WITH INTENTION</h3>
+        <h3 class="phil-title"><span>03</span> MAKE IT DISTINCTIVE</h3>
+      </div>
+      <div class="philosophy__right">
+        <div class="phil-desc is-active" data-index="0">
+          <p class="about-text-body" style="font-size: clamp(1.5rem, 3vw, 2.5rem); color: #FFF;">Every visual decision should serve a reason. We strip away the unnecessary so the core message stands out.</p>
+        </div>
+        <div class="phil-desc" data-index="1">
+          <p class="about-text-body" style="font-size: clamp(1.5rem, 3vw, 2.5rem); color: #FFF;">Technology should make the experience better, not more complicated. We focus on smooth performance and solid architecture.</p>
+        </div>
+        <div class="phil-desc" data-index="2">
+          <p class="about-text-body" style="font-size: clamp(1.5rem, 3vw, 2.5rem); color: #FFF;">Your business shouldn't look like everyone else's. We craft digital identities that feel genuinely connected to your brand.</p>
         </div>
       </div>
     </div>
@@ -199,19 +200,19 @@
   <!-- SECTION 05: LESS NOISE -->
   <section class="less-noise" id="less-noise">
     <div class="less-noise__sticky">
-      <div class="less-noise__bg"></div>
+      <div class="floating-paths-bg" data-pos="1" data-theme="heavy" style="opacity: 0.8;"></div>
+      <div class="grain-overlay"></div>
       <div class="less-noise__glow"></div>
-      <div class="less-noise__text-wrap">
-        <div class="less-noise__word less-noise__word1">LESS NOISE.</div>
-        <div class="less-noise__word less-noise__word2">MORE IDENTITY.</div>
-        <div class="less-noise__sub about-text-body">We care about clarity, detail, usability, and creating work that feels genuinely connected to the business behind it.</div>
-      </div>
+      
+      <div class="less-noise__word less-noise__word1 about-heading-giant">LESS NOISE.</div>
+      <div class="less-noise__word less-noise__word2 about-heading-giant">MORE IDENTITY.</div>
     </div>
   </section>
 
   <!-- SECTION 06: BELIEFS -->
   <section class="beliefs" id="beliefs">
-    <div class="container">
+    <div class="floating-paths-bg" data-pos="-1" data-theme="minimal" style="opacity: 0.5;"></div>
+    <div class="container relative-z">
       <p class="about-label fade-up" style="text-align: center; display: block; margin-bottom: 6rem;">What We Believe</p>
       
       <div class="belief-row">
@@ -239,22 +240,22 @@
 
   <!-- SECTION 07: MINDSET -->
   <section class="mindset" id="mindset">
-    <div class="container">
+    <div class="container relative-z">
       <div class="mindset__layout">
-        <div class="mindset__parallax" data-parallax="0.08">
+        <div data-parallax="0.08">
           <p class="about-label fade-up">The ARTAFIC Mindset</p>
           <h2 class="about-heading-large fade-up" style="transition-delay: 0.2s;">
             We don't believe every business needs more noise.<br>It needs a clearer voice.
           </h2>
         </div>
-        <div class="mindset__parallax" data-parallax="-0.05">
+        <div data-parallax="-0.05">
           <p class="about-text-body fade-up" style="padding-top: 2rem;">
             That means thoughtful design, purposeful technology, and digital experiences built around the business&mdash;not around a template.
           </p>
         </div>
       </div>
     </div>
-    <div class="mindset__tech">
+    <div class="mindset__tech relative-z">
       <div class="mindset__tech-line"></div>
       <span class="mindset__tech-text">SEC-07</span>
       <span class="mindset__tech-text" style="margin-top: 4px;">MINDSET_SYS</span>
@@ -263,8 +264,8 @@
 
   <!-- SECTION 08: FINAL -->
   <section class="about-final" id="final">
-    <div class="container">
-      <div class="about-final__glow"></div>
+    <div class="floating-paths-bg" data-pos="2" data-theme="minimal" style="opacity: 0.3;"></div>
+    <div class="container relative-z">
       <div class="about-final__content">
         <h2 class="about-heading-large fade-up" style="color: rgba(255,255,255,0.5);">Good digital work doesn't just make a business look better.</h2>
         <h2 class="about-heading-large fade-up" style="color: #FFF; margin-top: 2rem; transition-delay: 0.2s;">It makes the business easier to understand, easier to remember, and easier to trust.</h2>
@@ -274,8 +275,8 @@
 
   <!-- SECTION 09: CTA -->
   <section class="about-cta" id="about-cta">
-    <div class="container fade-up">
-      <h2 class="about-cta__title">HAVE SOMETHING WORTH BUILDING?</h2>
+    <div class="container relative-z fade-up">
+      <h2 class="about-label" style="margin-bottom: 1rem;">HAVE SOMETHING WORTH BUILDING?</h2>
       <p class="about-text-body">Let's turn the idea into something people remember.</p>
       <a href="index.html#booking" class="btn btn--primary">
         Let's Talk
@@ -341,4 +342,5 @@
 <script src="js/main.js?v=2.1"></script>
 <script src="js/about.js?v=1.0"></script>`n</body>
 </html>
+
 
