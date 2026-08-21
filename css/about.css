@@ -1,0 +1,550 @@
+﻿/* ==========================================================================
+   ARTAFIC ABOUT PAGE - PREMIUM EDITORIAL DESIGN
+   ========================================================================== */
+
+/* Global Overrides for About Page */
+.about-page {
+  background-color: #080808;
+  color: #F5F5F5;
+  overflow-x: hidden;
+}
+
+/* Typography Extensions */
+.about-heading-huge {
+  font-family: var(--font-heading);
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  line-height: 0.95;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.about-heading-large {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.about-text-body {
+  font-size: clamp(1.125rem, 2vw, 1.35rem);
+  line-height: 1.6;
+  color: #A1A1AA;
+}
+
+.about-label {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--color-teal);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Reveal Utilities */
+.reveal-text-mask {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: top;
+}
+.reveal-text-inner {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-text-inner.is-revealed {
+  transform: translateY(0);
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fade-up.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Section 01: Intro */
+.about-intro {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 100px;
+}
+.about-intro__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  width: 100%;
+  align-items: center;
+}
+.about-intro__visual {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.about-intro__shape {
+  width: 350px;
+  height: 350px;
+  border: 1px solid rgba(20,184,166,0.3);
+  position: absolute;
+  border-radius: 50%;
+  animation: slowSpin 25s linear infinite;
+}
+.about-intro__shape--2 {
+  width: 250px;
+  height: 450px;
+  border-radius: 200px;
+  border: 1px dashed rgba(245,245,245,0.15);
+  animation: slowSpin 35s linear infinite reverse;
+}
+.about-intro__glow {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  background: var(--color-teal);
+  filter: blur(120px);
+  opacity: 0.15;
+  border-radius: 50%;
+}
+.about-intro__scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 1s ease 1.5s;
+}
+.about-intro__scroll.is-revealed {
+  opacity: 1;
+}
+.about-intro__scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--color-teal), transparent);
+}
+
+@keyframes slowSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Section 02: Why Exists */
+.why-exists {
+  position: relative;
+  padding: 12rem 0;
+}
+.why-exists__container {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 4rem;
+  position: relative;
+}
+.why-exists__line {
+  width: 1px;
+  height: 100%;
+  background: rgba(255,255,255,0.05);
+  position: relative;
+}
+.why-exists__line-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: var(--color-teal);
+  transition: height 0.1s ease-out;
+}
+.why-exists__right {
+  padding-top: 6rem;
+}
+
+/* Section 03: Story */
+.our-story {
+  padding: 10rem 0;
+}
+.story-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.story-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 2rem;
+  margin-bottom: 8rem;
+  opacity: 0.3;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: translateY(20px);
+}
+.story-item.is-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.story-item__num {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  transition: color 0.5s ease;
+}
+.story-item.is-active .story-item__num {
+  color: var(--color-teal);
+}
+.story-item__content {
+  border-left: 1px solid rgba(255,255,255,0.05);
+  padding-left: 3rem;
+  position: relative;
+}
+.story-item__content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 1px;
+  height: 0%;
+  background: var(--color-teal);
+  transition: height 0.8s ease;
+}
+.story-item.is-active .story-item__content::before {
+  height: 100%;
+}
+
+/* Section 04: Philosophy */
+.philosophy {
+  height: 300vh;
+  position: relative;
+}
+.philosophy__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: #080808;
+}
+.philosophy__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  width: 100%;
+}
+.philosophy__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+.philosophy__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1;
+  color: rgba(255,255,255,0.15);
+  transition: color 0.5s ease, transform 0.5s ease;
+  transform: translateX(0);
+  cursor: default;
+  padding: 1rem 0;
+}
+.philosophy__title.is-active {
+  color: #FFF;
+  transform: translateX(20px);
+}
+.philosophy__title span {
+  display: block;
+  font-size: 1rem;
+  color: var(--color-teal);
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.philosophy__title.is-active span {
+  opacity: 1;
+  transform: translateY(0);
+}
+.philosophy__right {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.philosophy__desc {
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none;
+}
+.philosophy__desc.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Section 05: Less Noise */
+.less-noise {
+  height: 200vh;
+  position: relative;
+}
+.less-noise__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #080808;
+}
+.less-noise__bg {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  background-position: center center;
+  opacity: 0.5;
+  transform: perspective(1000px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+}
+.less-noise__glow {
+  position: absolute;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(20,184,166,0.08) 0%, rgba(20,184,166,0) 70%);
+  border-radius: 50%;
+  z-index: 1;
+}
+.less-noise__text-wrap {
+  position: relative;
+  text-align: center;
+  z-index: 2;
+  width: 100%;
+}
+.less-noise__word {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-family: var(--font-heading);
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  font-weight: 600;
+  line-height: 1;
+}
+.less-noise__word1 {
+  opacity: 1;
+  color: #FFF;
+}
+.less-noise__word2 {
+  opacity: 0;
+  color: var(--color-teal);
+  transform: translate(-50%, -50%) scale(0.9);
+}
+.less-noise__sub {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 600px;
+  opacity: 0;
+  margin-top: 4rem;
+}
+
+/* Section 06: Beliefs */
+.beliefs {
+  padding: 12rem 0;
+}
+.belief-row {
+  margin-bottom: 8rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.belief-keyword {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  color: var(--color-teal);
+  line-height: 1;
+  margin-bottom: 1rem;
+  transform: translateX(-30px);
+  opacity: 0;
+  transition: transform 1s ease, opacity 1s ease;
+}
+.belief-row.is-active .belief-keyword {
+  transform: translateX(0);
+  opacity: 1;
+}
+.belief-text {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  color: rgba(255,255,255,0.3);
+  transition: color 1s ease;
+  padding-left: 2rem;
+  border-left: 2px solid transparent;
+}
+.belief-row.is-active .belief-text {
+  color: #FFF;
+  border-left-color: var(--color-teal);
+}
+
+/* Section 07: Mindset */
+.mindset {
+  padding: 12rem 0;
+  position: relative;
+  overflow: hidden;
+}
+.mindset__layout {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+.mindset__tech {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  opacity: 0.3;
+}
+.mindset__tech-line {
+  width: 1px;
+  height: 150px;
+  background: var(--color-teal);
+  margin-bottom: 1rem;
+}
+.mindset__tech-text {
+  font-family: monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: #FFF;
+}
+.mindset__parallax {
+  transition: transform 0.1s ease-out;
+}
+
+/* Section 08: Final */
+.about-final {
+  padding: 15rem 0;
+  text-align: center;
+  position: relative;
+}
+.about-final__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background: var(--color-teal);
+  filter: blur(150px);
+  opacity: 0.08;
+  border-radius: 50%;
+  z-index: 0;
+}
+.about-final__content {
+  position: relative;
+  z-index: 1;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Section 09: CTA */
+.about-cta {
+  padding: 8rem 0 12rem;
+  text-align: center;
+}
+.about-cta__title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+.about-cta .btn {
+  margin-top: 3rem;
+}
+
+/* Responsive Overrides */
+@media (max-width: 1024px) {
+  .about-intro__grid {
+    gap: 2rem;
+  }
+  .why-exists__container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .why-exists__line {
+    display: none;
+  }
+  .why-exists__right {
+    padding-top: 0;
+  }
+  .philosophy__grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .philosophy__desc {
+    position: relative;
+    top: auto;
+    transform: none !important;
+    display: none;
+    margin-top: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--color-teal);
+  }
+  .philosophy__desc.is-active {
+    display: block;
+    opacity: 1;
+  }
+  .mindset__layout {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-intro {
+    padding-top: 120px;
+  }
+  .about-intro__grid {
+    grid-template-columns: 1fr;
+  }
+  .about-intro__visual {
+    order: -1;
+    min-height: 350px;
+  }
+  .story-item {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .story-item__num {
+    font-size: 1.25rem;
+  }
+  .story-item__content {
+    padding-left: 1.5rem;
+  }
+  .belief-text {
+    padding-left: 1rem;
+  }
+}
