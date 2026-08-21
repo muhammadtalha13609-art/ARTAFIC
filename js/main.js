@@ -464,6 +464,148 @@ function formatTime() {
     return responsesArray[Math.floor(Math.random() * responsesArray.length)];
   }
 
+  // Answer matching logic for ARTAFIC Assistant
+  function getFallbackAnswer(message) {
+    const rawText = message.trim();
+    const lower = rawText.toLowerCase().replace(/[?!.,;]/g, '');
+
+    // 1. Casual conversational elements (Greetings & Closures)
+    if (/^(hi|hello|hey|greetings|sup)\b/.test(lower) || lower.includes('good morning') || lower.includes('good afternoon')) {
+      return { 
+        text: getRandomResponse([
+          "Hi there! I'm ARTAFIC Assistant. How can I help you learn about our services?",
+          "Hello! I'm ARTAFIC Assistant. What can I help you with today?",
+          "Hey! I'm the digital assistant for ARTAFIC. Let me know if you have any questions."
+        ]), 
+        cta: false 
+      };
+    }
+    
+    if (lower === 'assalamualaikum' || lower === 'salam') {
+      return {
+        text: getRandomResponse([
+          "Walaikum Assalam! I'm ARTAFIC Assistant. How can I help you today?",
+          "Walaikum Assalam! I'm the digital assistant for ARTAFIC. What can I do for you?"
+        ]),
+        cta: false
+      };
+    }
+
+    if (lower === 'thanks' || lower === 'thank you' || lower === 'thx') {
+      return { 
+        text: getRandomResponse([
+          "You're welcome! Let me know if you need anything else.",
+          "Happy to help! Have a great day.",
+          "Anytime! Feel free to ask if you have more questions."
+        ]), 
+        cta: false 
+      };
+    }
+    
+    if (lower === 'bye' || lower === 'goodbye' || lower === 'cya' || lower === 'see ya') {
+      return { 
+        text: getRandomResponse([
+          "Goodbye! Feel free to reach out if you have any more questions.",
+          "Bye! Have a wonderful day.",
+          "See you later! Let us know if you need anything else."
+        ]), 
+        cta: false 
+      };
+    }
+
+    // 2. Strict Predefined Intent Matching
+    if (lower.includes('who are you') || lower.includes('what are you') || lower.includes('are you ai') || lower.includes('your name')) {
+      return {
+        text: "I'm ARTAFIC Assistant, the digital assistant for ARTAFIC. I can help you learn about ARTAFIC, our services, and how to get in touch.",
+        cta: false
+      };
+    }
+
+    if (lower.includes('what is artafic') || lower.includes('about artafic') || lower.includes('who is artafic')) {
+      return {
+        text: "ARTAFIC is a digital agency built to help businesses present themselves better online. We combine design and technology to create clear, intentional, and distinctive digital experiences.",
+        cta: false
+      };
+    }
+
+    if (lower.includes('what do you do') || lower.includes('what does artafic do') || lower.includes('what services do you offer') || lower.includes('service') || lower.includes('offer')) {
+      return {
+        text: "We offer two focused services: **Web Development** and **Logo Building**. We deliberately keep our focus narrow to ensure high quality in both areas.",
+        cta: true
+      };
+    }
+
+    if (lower.includes('how can you help') || lower.includes('help us')) {
+      return {
+        text: "We help businesses communicate clearly online. Through custom Web Development and Logo Building, we build digital experiences that leave a strong, professional impression.",
+        cta: true
+      };
+    }
+
+    if (lower.includes('build a website') || lower.includes('create a website') || lower.includes('web development')) {
+      return {
+        text: "Yes, we specialize in Web Development. We build professional, responsive websites focused on your business goals, customer behavior, and conversion.",
+        cta: true
+      };
+    }
+
+    if (lower.includes('design a logo') || lower.includes('create a logo') || lower.includes('logo building')) {
+      return {
+        text: "Yes, we offer Logo Building. We design custom logos that give your business a cleaner, more professional visual identity.",
+        cta: true
+      };
+    }
+
+    if (lower.includes('who is artafic for') || lower.includes('ideal client')) {
+      return {
+        text: "ARTAFIC is for businesses that have something valuable to offer but feel their current digital presence doesn't reflect that value effectively.",
+        cta: false
+      };
+    }
+
+    if (lower.includes('contact') || lower.includes('work with you') || lower.includes('hire') || lower.includes('get in touch') || lower.includes('reach out')) {
+      return {
+        text: "We'd love to hear from you! You can use our contact form to get in touch and discuss your project.",
+        cta: true
+      };
+    }
+
+    // 3. Fallbacks for existing FAQ button mappings
+    if (lower.includes('process') || lower.includes('work') || lower.includes('how do you work')) {
+      return faqAnswers.process;
+    }
+    if (lower.includes('cost') || lower.includes('price') || lower.includes('much') || lower.includes('pricing')) {
+      return faqAnswers.cost;
+    }
+    if (lower.includes('time') || lower.includes('long') || lower.includes('week') || lower.includes('month')) {
+      return faqAnswers.timeline;
+    }
+    if (lower.includes('redesign') || lower.includes('existing') || lower.includes('current')) {
+      return faqAnswers.redesign;
+    }
+    if (lower.includes('book') || lower.includes('meeting')) {
+      return faqAnswers.booking;
+    }
+
+    // 4. Unclear Input check (very short or gibberish)
+    if (rawText.split(' ').length <= 2) {
+      return {
+        text: "I'm not quite sure what you mean. Try asking me about ARTAFIC, our services, or working with us.",
+        cta: false
+      };
+    }
+
+    // 5. Unrelated / General Fallback
+    return {
+      text: getRandomResponse([
+        "I'm ARTAFIC Assistant. I can help you with ARTAFIC, our services, or how to get in touch with us.",
+        "I don't have information on that. I'm ARTAFIC Assistant, and I can answer questions about our web development and logo services.",
+        "I'm not equipped to answer that! I'm here to assist you with questions about ARTAFIC and our offerings."
+      ]),
+      cta: false
+    };
+  }
+
   // Fallback for unrecognized messages
   function getFallbackAnswer(message) {
     const lower = message.toLowerCase();
@@ -640,7 +782,7 @@ function formatTime() {
 
     if (!greetingShown) {
       greetingShown = true;
-      renderMessage('Hi there ðŸ‘‹ I\'m the ARTAFIC assistant.\n\nI can answer questions about our services, process, and pricing. What would you like to know?', 'bot', false);
+      renderMessage("I'm ARTAFIC Assistant, the digital assistant for ARTAFIC. I can help you learn about ARTAFIC, our services, and how to get in touch.", 'bot', false);
     }
 
     setTimeout(() => input.focus(), 300);
@@ -1791,5 +1933,8 @@ function formatTime() {
   setTimeout(updateTimeline, 100);
 })();
 })();
+
+
+
 
 
