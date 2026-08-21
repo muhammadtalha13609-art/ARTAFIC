@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    ARTAFIC — Main JavaScript
    Version: 1.0.0
    ============================================================ */
@@ -1623,52 +1623,123 @@ function formatTime() {
    16. SERVICES NATURAL CANVAS SCROLL & STROKE ANIMATION
    ------------------------------------------------------------ */
 (function initServicesStrokeFollowScroll() {
+(function initServicesStrokeFollowScroll() {
   const section = document.getElementById('services');
   const path = document.getElementById('services-scroll-path');
+  const stage = document.getElementById('services-panning-stage');
   const endpointBox = document.getElementById('services-flow-endpoint');
 
-  if (!section || !path) return;
+  if (!section || !path || !stage) return;
 
   const pathLength = path.getTotalLength();
   path.style.strokeDasharray = `${pathLength} ${pathLength}`;
   path.style.strokeDashoffset = `${pathLength}`;
 
-  function updateStrokeProgress() {
+  function updateTimeline() {
     const rect = section.getBoundingClientRect();
     const windowHeight = window.innerHeight;
+    const sectionHeight = section.offsetHeight;
 
-    // Animation begins slightly higher up (20% of screen) ensuring safe zone below navbar
-    const startPoint = windowHeight * 0.20;
-    const currentScroll = startPoint - rect.top;
-
-    // Scroll range extended slightly for deliberate pacing, 
-    // without out-pacing the physical SVG drawing speed.
-    const scrollRange = rect.height - windowHeight * 0.40;
+    // Framer Motion offset: ["start start", "end end"]
+    // Starts when top of track reaches top of screen (rect.top == 0)
+    // Ends when bottom of track reaches bottom of screen (rect.bottom == windowHeight)
+    // Total scroll distance WHILE PINNED is sectionHeight - windowHeight
+    const pinnedScrollRange = sectionHeight - windowHeight;
     
-    // Strict 0 to 1 progress mapping
-    const rawProgress = Math.max(0, Math.min(1, currentScroll / scrollRange));
+    // Progress is strictly 0 when rect.top >= 0, and reaches 1 when rect.top <= -pinnedScrollRange
+    const progress = Math.max(0, Math.min(1, -rect.top / pinnedScrollRange));
 
-    // Phase progression shaping:
-    // Phase 1 (Mashup): Completes in the first 25% of the scroll timeline
-    // Phase 2 (Downward travel): Takes the remaining 75%, starting earlier
-    let strokeProgress;
-    if (rawProgress <= 0.25) {
-      strokeProgress = rawProgress * (0.38 / 0.25);
+    // TIMELINE MAPPED TO PINNED SCROLL PROGRESS (0.0 to 1.0):
+    // 0.00 - 0.28: PHASE 1 G�� STARTING MASHUP LOOPS
+    //              Stroke draws the 3-4 top mashup loops (0% -> 38% path length).
+    //              Camera stays LOCKED at top (panProgress = 0) so the user can watch all 3-4 loops draw right over "Our Services".
+    //
+    // 0.28 - 0.88: PHASE 2 G�� DOWNWARD TRAVEL & CAMERA PAN (starts slightly earlier, expanded timeline)
+    //              Stroke draws down from mashup to Services Box (38% -> 100% path length).
+    //              Camera smoothly pans down following the leading tip of the line (panProgress = 0 -> 1).
+    //              Services Box fades in between 0.38 and 0.70 so the destination is clearly visible ahead of the line.
+    //
+    // 0.88 - 1.00: PHASE 3 G�� FINAL CONNECTED HOLD
+    //              Line touches terminal dot on Services Box. Composition holds fixed before section unpins.
+
+    let strokeProgress = 0;
+    let panProgress = 0;
+
+    if (progress <= 0.20) {
+      // Phase 1: Draw upper mashup loops (0% to 38% of stroke) while camera stays stationary at top
+      strokeProgress = (progress / 0.20) * 0.38;
+      panProgress = 0;
+    } else if (progress <= 0.85) {
+      // Phase 2: Downward travel (38% to 100% of stroke) and camera pan (0% to 100%)
+      const localP = (progress - 0.20) / 0.65;
+      strokeProgress = 0.38 + (localP * 0.62);
+      panProgress = Math.pow(localP, 1.15);
     } else {
-      strokeProgress = 0.38 + ((rawProgress - 0.25) / 0.75) * 0.62;
+      // Phase 3: Hold connected state
+      strokeProgress = 1;
+      panProgress = 1;
     }
 
+    // Apply Stroke Drawing
     const drawLength = pathLength * strokeProgress;
     path.style.strokeDashoffset = `${pathLength - drawLength}`;
 
-    // Reveal endpoint box opacity near the very end
+    // Calculate exact Y coordinate of SVG endpoint dynamically (original proportional scale)
+    let maxPanDistance = 0;
     if (endpointBox) {
-      const revealProgress = Math.max(0, Math.min(1, (strokeProgress - 0.85) / 0.15));
-      endpointBox.style.opacity = String((0.4 + revealProgress * 0.6).toFixed(2));
+      const svg = document.querySelector('.services-panning-svg');
+      if (svg) {
+        const baseWidth = svg.clientWidth;
+        const viewBoxWidth = 1278;
+        const cssTransformScale = 1.0; // Original proportional size (no extra scaling)
+        
+        const finalScale = (baseWidth / viewBoxWidth) * cssTransformScale;
+        
+        // The stroke ends at roughly Y = 2669 in the viewBox coordinates
+        const svgEndY = 2669;
+        const stageY = svgEndY * finalScale;
+        
+        // Position the endpoint box exactly at the line's tip (adjusting 11px for the 22px dot)
+        endpointBox.style.top = `${stageY - 11}px`;
+        
+        // Calculate maxPanDistance so that when panProgress = 1.0, 
+        // the entire Services box is completely visible with breathing room below it (no bottom cropping)
+        const cardHeight = endpointBox.offsetHeight;
+        const desiredTopInViewport = Math.max(75, windowHeight - cardHeight - 25);
+        maxPanDistance = stageY - desiredTopInViewport;
+      }
+    }
+    
+    // Ensure stage is tall enough to contain the endpoint box
+    const requiredStageHeight = endpointBox ? parseFloat(endpointBox.style.top || 0) + endpointBox.offsetHeight + 100 : 2600;
+    if (stage.offsetHeight < requiredStageHeight) {
+      stage.style.height = `${requiredStageHeight}px`;
+    }
+    
+    const maxPossiblePan = stage.offsetHeight - windowHeight;
+    maxPanDistance = Math.max(0, Math.min(maxPanDistance, maxPossiblePan));
+
+    // Apply Camera Panning
+    const currentPan = panProgress * maxPanDistance;
+    stage.style.transform = `translate3d(0, -${currentPan}px, 0)`;
+
+    // Services Box Visibility Fade In
+    // Fades in gradually during Phase 2 (between 0.38 and 0.70 progress) so it is completely visible well before line arrives
+    if (endpointBox) {
+      if (progress < 0.38) {
+        endpointBox.style.opacity = '0';
+      } else if (progress < 0.70) {
+        endpointBox.style.opacity = String(((progress - 0.38) / 0.32).toFixed(2));
+      } else {
+        endpointBox.style.opacity = '1';
+      }
     }
   }
 
-  window.addEventListener('scroll', updateStrokeProgress, { passive: true });
-  window.addEventListener('resize', updateStrokeProgress, { passive: true });
-  updateStrokeProgress();
+  window.addEventListener('scroll', updateTimeline, { passive: true });
+  window.addEventListener('resize', updateTimeline, { passive: true });
+  
+  // Initial call
+  setTimeout(updateTimeline, 100);
+})();
 })();
