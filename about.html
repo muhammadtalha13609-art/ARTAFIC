@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -11,16 +11,16 @@
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
 
   <!-- SEO -->
-  <title>About Us — ARTAFIC | Digital Agency &amp; Development Studio</title>
-  <meta name="description" content="Learn about ARTAFIC, a digital agency helping businesses build high quality websites and distinctive visual logo identities." />
+  <title>About &mdash; ARTAFIC | Our Story & Philosophy</title>
+  <meta name="description" content="Learn about ARTAFIC. We bring design and technology together to create digital experiences that feel clear, intentional, and distinctive." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://artafic.com/about.html" />
+  <link rel="canonical" href="https://artafic.com/faq.html" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://artafic.com/about.html" />
-  <meta property="og:title" content="About Us — ARTAFIC" />
-  <meta property="og:description" content="Learn about ARTAFIC's mission, values, and approach to web development and brand building." />
+  <meta property="og:url" content="https://artafic.com/faq.html" />
+  <meta property="og:title" content="About &mdash; ARTAFIC" />
+  <meta property="og:description" content="Find answers to common questions about ARTAFIC's web development and logo design services." />
   <meta property="og:image" content="https://artafic.com/assets/images/og-image.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
 
@@ -32,13 +32,13 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css?v=2.1" />
 </head>
-<body class="about-page" style="background-color: #0C0C0C; color: #FFFFFF;">
+<body class="about-page">
 
 <!-- ═══════════════════════════════════════════════════════════
      NAVIGATION
 ═══════════════════════════════════════════════════════════ -->
 <header role="banner">
-  <nav class="nav nav--on-dark" id="nav" aria-label="Main navigation">
+  <nav class="nav" id="nav" aria-label="Main navigation">
     <div class="nav__inner">
 
       <a href="index.html" class="nav__logo" aria-label="ARTAFIC — Home">
@@ -48,7 +48,7 @@
       <ul class="nav__links" role="list">
         <li><a href="index.html#home"         class="nav__link">Home</a></li>
         <li><a href="index.html#services"     class="nav__link">Services</a></li>
-        <li><a href="about.html"              class="nav__link nav__link--active" style="color: var(--color-teal); font-weight: 600;">About</a></li>
+        <li><a href="about.html" class="nav__link nav__link--active" style="color: var(--color-teal); font-weight: 600;">About</a></li>
         <li><a href="index.html#why-artafic"  class="nav__link">Why ARTAFIC</a></li>
         <li><a href="index.html#before-after" class="nav__link">Before &amp; After</a></li>
         <li><a href="faq.html"                class="nav__link">FAQ</a></li>
@@ -80,10 +80,10 @@
       <ul class="nav__mobile-links" role="list">
         <li><a href="index.html#home"         class="nav__mobile-link" data-mobile-nav-link>Home</a></li>
         <li><a href="index.html#services"     class="nav__mobile-link" data-mobile-nav-link>Services</a></li>
-        <li><a href="about.html"              class="nav__mobile-link" data-mobile-nav-link style="color: var(--color-teal);">About</a></li>
+        <li><a href="about.html" class="nav__mobile-link" style="color: var(--color-teal);" data-mobile-nav-link>About</a></li>
         <li><a href="index.html#why-artafic"  class="nav__mobile-link" data-mobile-nav-link>Why ARTAFIC</a></li>
         <li><a href="index.html#before-after" class="nav__mobile-link" data-mobile-nav-link>Before &amp; After</a></li>
-        <li><a href="faq.html"                class="nav__mobile-link" data-mobile-nav-link>FAQ</a></li>
+        <li><a href="faq.html" class="nav__mobile-link" data-mobile-nav-link>FAQ</a></li>
       </ul>
       <div class="nav__mobile-actions">
         <a href="index.html#booking" class="btn btn--primary btn--lg" style="width:100%; justify-content:center;" data-mobile-nav-link>Get In Touch</a>
@@ -94,86 +94,177 @@
 
 <main id="main-content" tabindex="-1">
 
-<!-- ═══════════════════════════════════════════════════════════
-     ABOUT ME SECTION (FULL STANDALONE PAGE)
-═══════════════════════════════════════════════════════════ -->
-<section class="about-me-section" id="about" aria-labelledby="about-title" style="position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8rem 1.25rem 6rem; background-color: #0C0C0C; overflow: hidden; font-family: 'Kanit', sans-serif;">
+<style>
+  /* About Page Specific Styles */
+  @media (max-width: 768px) {
+    .why-exists__grid {
+      grid-template-columns: 1fr !important;
+      gap: 2rem !important;
+    }
+    .philosophy__row {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+    }
+    .philosophy__content {
+      padding-left: 0 !important;
+      padding-top: 1rem !important;
+      border-left: none !important;
+      border-top: 2px solid var(--color-teal) !important;
+      margin-top: 1rem !important;
+    }
+    .mindset__layout {
+      grid-template-columns: 1fr !important;
+      gap: 2rem !important;
+      align-items: flex-start !important;
+    }
+  }
+</style>
   
-  <!-- Decorative Corner Floating Images -->
-  <div data-reveal="left-far" style="position: absolute; top: 8%; left: 4%; z-index: 0; transition-delay: 0.1s;">
-    <img
-      src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png"
-      alt="Moon Icon"
-      class="corner-img-top-left"
-      style="width: clamp(120px, 15vw, 210px); height: auto; pointer-events: none; user-select: none;"
-    />
-  </div>
-  
-  <div data-reveal="left-far" style="position: absolute; bottom: 8%; left: 10%; z-index: 0; transition-delay: 0.25s;">
-    <img
-      src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png"
-      alt="3D Object"
-      class="corner-img-bottom-left"
-      style="width: clamp(100px, 12vw, 180px); height: auto; pointer-events: none; user-select: none;"
-    />
-  </div>
-  
-  <div data-reveal="right-far" style="position: absolute; top: 8%; right: 4%; z-index: 0; transition-delay: 0.15s;">
-    <img
-      src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png"
-      alt="Lego Icon"
-      class="corner-img-top-right"
-      style="width: clamp(120px, 15vw, 210px); height: auto; pointer-events: none; user-select: none;"
-    />
-  </div>
-  
-  <div data-reveal="right-far" style="position: absolute; bottom: 8%; right: 10%; z-index: 0; transition-delay: 0.3s;">
-    <img
-      src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png"
-      alt="3D Group"
-      class="corner-img-bottom-right"
-      style="width: clamp(130px, 16vw, 220px); height: auto; pointer-events: none; user-select: none;"
-    />
-  </div>
-
-  <!-- Center Content -->
-  <div style="position: relative; z-index: 10; max-width: 56rem; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4rem; text-align: center;">
-    
-    <!-- Group 1: Heading + Text -->
-    <div style="display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
-      <h1 id="about-title" class="hero-heading" data-reveal style="font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: -0.025em; text-align: center; font-size: clamp(3rem, 12vw, 160px); background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0;">
-        About us
-      </h1>
-
-      <div style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 720px; align-items: center;">
-        <p class="about-animated-text" style="color: #D7E2EA; font-weight: 500; text-align: center; line-height: 1.625; font-size: clamp(1rem, 2vw, 1.25rem); margin: 0;">
-          We are ARTAFIC, a digital agency focused on helping businesses build a stronger presence in the digital world. We combine creative design, modern technology, and thoughtful development to create websites and logos that represent businesses professionally.
-        </p>
-        <p class="about-animated-text" style="color: #D7E2EA; font-weight: 500; text-align: center; line-height: 1.625; font-size: clamp(1rem, 2vw, 1.25rem); margin: 0;">
-          We work with businesses that want to improve how they look, communicate, and connect with their customers online. From building high quality websites to creating distinctive logos, we focus on clean design, intuitive experiences, and solutions built around each business's goals.
-        </p>
+  <!-- SECTION 1 — ABOUT ARTAFIC -->
+  <section class="about-intro section" id="about-intro" style="padding-top: 10rem;">
+    <div class="container container--sm text-center">
+      <div class="about-intro__content" data-reveal>
+        <p class="section-label">ABOUT ARTAFIC</p>
+        <h1 class="about-intro__title" style="font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; font-weight: 500; color: var(--color-text-primary); margin-bottom: 2rem;">Built around a simple idea:<br>businesses deserve better digital experiences.</h1>
+        <p class="about-intro__desc" style="font-size: 1.125rem; color: var(--color-text-body); line-height: 1.7;">ARTAFIC is a digital agency built to help businesses present themselves better online. We bring design and technology together to create digital experiences that feel clear, intentional, and distinctive.</p>
       </div>
     </div>
+  </section>
 
-    <!-- Group 2: Contact Button -->
-    <div class="magnetic-wrapper" data-magnet data-reveal style="transition-delay: 0.3s; display: inline-block; transition: transform 0.6s ease-in-out; will-change: transform;">
-      <a
-        href="index.html#booking"
-        style="display: inline-block; border-radius: 9999px; padding: 0.875rem 2.5rem; color: #ffffff; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.875rem; text-decoration: none; background: linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%); box-shadow: 0px 4px 4px rgba(181, 1, 167, 0.25), 4px 4px 12px #7721B1 inset; outline: 2px solid #E3E3E3; outline-offset: -3px; transition: opacity 200ms ease;"
-        onmouseover="this.style.opacity='0.9'"
-        onmouseout="this.style.opacity='1'"
-      >
-        Get In Touch
+  <!-- SECTION 2 — WHY ARTAFIC EXISTS -->
+  <section class="why-exists section section--surface" id="why-exists">
+    <div class="container">
+      <div class="why-exists__grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+        <div class="why-exists__left" data-reveal>
+          <p class="section-label">WHY ARTAFIC EXISTS</p>
+          <h2 class="why-exists__title" style="font-family: var(--font-heading); font-size: 2.25rem; line-height: 1.2; font-weight: 500; color: var(--color-text-primary);">A good business can lose attention simply because its digital presence doesn't reflect what it offers.</h2>
+        </div>
+        <div class="why-exists__right" data-reveal data-reveal-delay="2">
+          <p class="why-exists__desc" style="font-size: 1.125rem; color: var(--color-text-body); line-height: 1.7;">ARTAFIC exists to close that gap. We bring thoughtful design and modern development together to create digital experiences that communicate clearly and leave a stronger impression.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3 — OUR STORY -->
+  <section class="our-story section" id="our-story">
+    <div class="container container--sm text-center">
+      <div data-reveal>
+        <p class="section-label">OUR STORY</p>
+        <p class="our-story__text" style="font-size: 1.25rem; color: var(--color-text-body); line-height: 1.6;">ARTAFIC was built from a simple observation: too many businesses have something valuable to offer, but their digital presence doesn't communicate that value.</p>
+        <p class="our-story__text" style="font-size: 1.25rem; color: var(--color-text-body); line-height: 1.6; margin-top: 1.5rem;">Instead of treating design and development as separate pieces, ARTAFIC brings them together to create work that feels intentional from the first impression to the final interaction.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4 — OUR PHILOSOPHY -->
+  <section class="philosophy section section--surface" id="philosophy">
+    <div class="container container--md">
+      <div class="section-header--centered" data-reveal>
+        <p class="section-label">OUR PHILOSOPHY</p>
+      </div>
+      <div class="philosophy__rows" style="margin-top: 4rem;">
+        
+        <div class="philosophy__row" data-reveal style="display: flex; align-items: center; padding: 3rem 0; border-top: 1px solid var(--color-border);">
+          <div class="philosophy__num" style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-text-muted); width: 60px;">01</div>
+          <div class="philosophy__content" style="flex: 1; padding-left: 2rem; border-left: 1px solid var(--color-teal);">
+            <h3 class="philosophy__title" style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-text-primary); margin-bottom: 0.5rem;">DESIGN WITH PURPOSE</h3>
+            <p class="philosophy__desc" style="font-size: 1.125rem; color: var(--color-text-body);">Every visual decision should serve a reason.</p>
+          </div>
+        </div>
+
+        <div class="philosophy__row" data-reveal style="display: flex; align-items: center; padding: 3rem 0; border-top: 1px solid var(--color-border);">
+          <div class="philosophy__num" style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-text-muted); width: 60px;">02</div>
+          <div class="philosophy__content" style="flex: 1; padding-left: 2rem; border-left: 1px solid var(--color-teal);">
+            <h3 class="philosophy__title" style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-text-primary); margin-bottom: 0.5rem;">BUILD WITH INTENTION</h3>
+            <p class="philosophy__desc" style="font-size: 1.125rem; color: var(--color-text-body);">Technology should make the experience better, not more complicated.</p>
+          </div>
+        </div>
+
+        <div class="philosophy__row" data-reveal style="display: flex; align-items: center; padding: 3rem 0; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+          <div class="philosophy__num" style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-text-muted); width: 60px;">03</div>
+          <div class="philosophy__content" style="flex: 1; padding-left: 2rem; border-left: 1px solid var(--color-teal);">
+            <h3 class="philosophy__title" style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-text-primary); margin-bottom: 0.5rem;">MAKE IT DISTINCTIVE</h3>
+            <p class="philosophy__desc" style="font-size: 1.125rem; color: var(--color-text-body);">Your business shouldn't look like everyone else's.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5 — LESS NOISE. MORE IDENTITY. -->
+  <section class="more-identity section" id="more-identity" style="position: relative; overflow: hidden;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(20,184,166,0.05) 0%, rgba(20,184,166,0) 70%); border-radius: 50%; pointer-events: none;"></div>
+    <div class="container container--sm text-center" data-reveal style="position: relative; z-index: 1;">
+      <h2 class="more-identity__title" style="font-family: var(--font-heading); font-size: clamp(3rem, 7vw, 5rem); line-height: 1; font-weight: 600; color: var(--color-text-primary); letter-spacing: -0.02em; margin-bottom: 2rem;">LESS NOISE.<br>MORE IDENTITY.</h2>
+      <p class="more-identity__desc" style="font-size: 1.25rem; color: var(--color-text-body); max-width: 600px; margin: 0 auto; line-height: 1.6;">We care about clarity, detail, usability, and creating work that feels genuinely connected to the business behind it.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 6 — WHAT WE BELIEVE -->
+  <section class="what-we-believe section section--surface" id="what-we-believe">
+    <div class="container container--sm">
+      <div class="section-header--centered" data-reveal>
+        <p class="section-label">WHAT WE BELIEVE</p>
+      </div>
+      <div class="beliefs-list" style="margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem;">
+        <div class="belief-item" data-reveal style="display: flex; align-items: center; gap: 1rem;">
+          <div class="belief-indicator" style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-teal);"></div>
+          <p class="belief-text" style="font-family: var(--font-heading); font-size: 2rem; color: var(--color-text-primary);">Clear over complicated.</p>
+        </div>
+        <div class="belief-item" data-reveal style="display: flex; align-items: center; gap: 1rem;">
+          <div class="belief-indicator" style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-teal);"></div>
+          <p class="belief-text" style="font-family: var(--font-heading); font-size: 2rem; color: var(--color-text-primary);">Purpose over decoration.</p>
+        </div>
+        <div class="belief-item" data-reveal style="display: flex; align-items: center; gap: 1rem;">
+          <div class="belief-indicator" style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-teal);"></div>
+          <p class="belief-text" style="font-family: var(--font-heading); font-size: 2rem; color: var(--color-text-primary);">Identity over imitation.</p>
+        </div>
+        <div class="belief-item" data-reveal style="display: flex; align-items: center; gap: 1rem;">
+          <div class="belief-indicator" style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-teal);"></div>
+          <p class="belief-text" style="font-family: var(--font-heading); font-size: 2rem; color: var(--color-text-primary);">Experience over excess.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7 — THE ARTAFIC MINDSET -->
+  <section class="mindset section" id="mindset">
+    <div class="container">
+      <div class="mindset__layout" style="display: grid; grid-template-columns: 3fr 2fr; gap: 4rem; align-items: flex-end;">
+        <div class="mindset__left" data-reveal>
+          <p class="section-label">THE ARTAFIC MINDSET</p>
+          <h2 class="mindset__title" style="font-family: var(--font-heading); font-size: 2.5rem; line-height: 1.2; font-weight: 500; color: var(--color-text-primary);">We don't believe every business needs more noise. It needs a clearer voice.</h2>
+        </div>
+        <div class="mindset__right" data-reveal data-reveal-delay="2" style="padding-bottom: 0.5rem;">
+          <p class="mindset__desc" style="font-size: 1.125rem; color: var(--color-text-body); line-height: 1.7;">That means thoughtful design, purposeful technology, and digital experiences built around the business—not around a template.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8 — FINAL STATEMENT -->
+  <section class="final-statement section section--surface" id="final-statement" style="padding: 8rem 0;">
+    <div class="container container--md text-center" data-reveal>
+      <h2 class="final-statement__title" style="font-family: var(--font-heading); font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.3; font-weight: 400; color: var(--color-text-primary);">Good digital work doesn't just make a business look better.</h2>
+      <h2 class="final-statement__title final-statement__title--teal" style="font-family: var(--font-heading); font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.3; font-weight: 400; color: var(--color-teal); margin-top: 1.5rem;">It makes the business easier to understand, easier to remember, and easier to trust.</h2>
+    </div>
+  </section>
+
+  <!-- SECTION 9 — CTA -->
+  <section class="about-cta section" id="about-cta" style="padding: 6rem 0;">
+    <div class="container text-center" data-reveal>
+      <h2 class="about-cta__title" style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 500; color: var(--color-text-primary); margin-bottom: 0.5rem;">HAVE SOMETHING WORTH BUILDING?</h2>
+      <p class="about-cta__desc" style="font-size: 1.125rem; color: var(--color-text-muted);">Let's turn the idea into something people remember.</p>
+      <a href="index.html#booking" class="btn btn--primary" style="margin-top: 2rem;">
+        LET'S TALK
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </a>
     </div>
+  </section>
 
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════
-     FOOTER
-═══════════════════════════════════════════════════════════ -->
-<footer class="footer" role="contentinfo" aria-label="Site footer">
+</main>
   <div class="container">
     <div class="footer__grid">
 
@@ -194,7 +285,7 @@
         <ul class="footer__links" role="list">
           <li><a href="index.html#home" class="footer__link">Home</a></li>
           <li><a href="index.html#services" class="footer__link">Services</a></li>
-          <li><a href="about.html" class="footer__link" style="color: var(--color-teal);">About</a></li>
+          <li><a href="about.html" class="footer__link">About</a></li>
           <li><a href="index.html#why-artafic" class="footer__link">Why ARTAFIC</a></li>
           <li><a href="index.html#before-after" class="footer__link">Before &amp; After</a></li>
           <li><a href="faq.html" class="footer__link">FAQ</a></li>
@@ -220,17 +311,13 @@
     </div>
 
     <div class="footer__bottom">
-      <p class="footer__copyright">© 2025 ARTAFIC. All rights reserved.</p>
-      <div class="footer__legal">
-        <a href="#" class="footer__legal-link">Privacy Policy</a>
-        <a href="#" class="footer__legal-link">Terms &amp; Conditions</a>
-      </div>
+      <p class="footer__copyright">&copy; 2026 ARTAFIC. All rights reserved.</p>
     </div>
   </div>
 </footer>
 
-</main>
-
-<script src="js/main.js" defer></script>
+<!-- JS -->
+<script src="js/main.js?v=2.1"></script>
 </body>
 </html>
+
