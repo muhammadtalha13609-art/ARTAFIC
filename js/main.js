@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    ARTAFIC â€” Main JavaScript
    Version: 1.0.0
    ============================================================ */
@@ -1947,7 +1947,6 @@ function formatTime() {
    ARTAFIC SITE-WIDE PAGE TRANSITION — BULLETPROOF HTML DIV ENGINE
    ============================================================ */
 (function initPageTransitions() {
-  const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // 1. Inject Styles + HTML Div Wave Overlay
   function ensureOverlay() {
