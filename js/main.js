@@ -1947,7 +1947,6 @@ function formatTime() {
 (function initPageTransitions() {
   const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // 1. Inject Styles + Overlay Elements Guaranteed
   function ensureOverlay() {
     let style = document.getElementById('artafic-transition-style');
     if (!style) {
@@ -2074,7 +2073,6 @@ function formatTime() {
     return overlay;
   }
 
-  // 2. Perform Exit Sweep Reveal on Destination Page Load
   function handleExitReveal() {
     const overlay = ensureOverlay();
     const isNavigating = sessionStorage.getItem('artafic_transition_active') === 'true';
@@ -2104,7 +2102,6 @@ function formatTime() {
     handleExitReveal();
   }
 
-  // 3. Trigger Enter Sweep & Page Navigation
   function triggerPageTransition(targetHref) {
     const overlay = ensureOverlay();
     if (isReducedMotion) {
@@ -2128,7 +2125,6 @@ function formatTime() {
     }, 360);
   }
 
-  // 4. Trigger Enter Sweep & Section Anchor Scroll
   function triggerSectionTransition(targetElement, hash) {
     const overlay = ensureOverlay();
     
@@ -2166,7 +2162,6 @@ function formatTime() {
     }, 340);
   }
 
-  // 5. Global Link & Button Click Interceptor
   document.addEventListener('click', (e) => {
     const link = e.target.closest('a, [data-nav-link], [data-mobile-nav-link]');
     if (!link) return;
@@ -2199,7 +2194,6 @@ function formatTime() {
     const targetPathClean = targetUrl.pathname.replace(/\/$/, '');
     const isSamePath = targetPathClean === currentPathClean;
 
-    // Section anchor click on same page (e.g. #services, #why-artafic, #booking, #home)
     if (isSamePath && targetUrl.hash) {
       const targetElement = document.querySelector(targetUrl.hash);
       if (targetElement) {
@@ -2209,7 +2203,6 @@ function formatTime() {
       }
     }
 
-    // Full page navigation click (e.g. about.html, faq.html, index.html)
     e.preventDefault();
     triggerPageTransition(targetUrl.href);
   }, true);
