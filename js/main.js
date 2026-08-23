@@ -1941,6 +1941,7 @@ function formatTime() {
 
 
 
+
 /* ============================================================
    ARTAFIC SITE-WIDE PAGE TRANSITION (FLUID WAVE REFERENCE MATCHED)
    ============================================================ */
@@ -1959,12 +1960,12 @@ function formatTime() {
           left: 0 !important;
           width: 100vw !important;
           height: 100vh !important;
-          z-index: 9999999 !important;
+          z-index: 2147483647 !important;
           pointer-events: none !important;
           overflow: hidden !important;
-          visibility: hidden;
-          opacity: 0;
-          transition: opacity 0.25s ease, visibility 0.25s ease;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          transition: opacity 0.3s ease, visibility 0.3s ease !important;
         }
         .artafic-transition-overlay.is-visible {
           visibility: visible !important;
@@ -1981,55 +1982,61 @@ function formatTime() {
         }
         .artafic-wave {
           transform: translate3d(0, -105%, 0);
-          transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+          transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
           will-change: transform;
         }
+        /* Enter Phase: Waves Sweep Down to Cover Screen */
         .artafic-transition-overlay.is-entering .wave-1 {
           transform: translate3d(0, 0%, 0) !important;
-          transition-duration: 0.32s !important;
+          transition-duration: 0.36s !important;
           transition-delay: 0ms !important;
         }
         .artafic-transition-overlay.is-entering .wave-2 {
           transform: translate3d(0, 0%, 0) !important;
-          transition-duration: 0.35s !important;
-          transition-delay: 35ms !important;
+          transition-duration: 0.40s !important;
+          transition-delay: 40ms !important;
         }
         .artafic-transition-overlay.is-entering .wave-3 {
           transform: translate3d(0, 0%, 0) !important;
-          transition-duration: 0.38s !important;
-          transition-delay: 70ms !important;
+          transition-duration: 0.44s !important;
+          transition-delay: 80ms !important;
         }
         .artafic-transition-overlay.is-entering .wave-4 {
           transform: translate3d(0, 0%, 0) !important;
-          transition-duration: 0.42s !important;
-          transition-delay: 105ms !important;
+          transition-duration: 0.48s !important;
+          transition-delay: 120ms !important;
         }
+
+        /* Covered Solid State */
         .artafic-transition-overlay.is-covered .artafic-wave {
           transform: translate3d(0, 0%, 0) !important;
+          transition: none !important;
         }
+
+        /* Exit Phase: Waves Sweep Down/Out to Reveal Destination Page */
         .artafic-transition-overlay.is-exiting .wave-1 {
           transform: translate3d(0, 105%, 0) !important;
-          transition-duration: 0.35s !important;
+          transition-duration: 0.38s !important;
           transition-delay: 0ms !important;
         }
         .artafic-transition-overlay.is-exiting .wave-2 {
           transform: translate3d(0, 105%, 0) !important;
-          transition-duration: 0.38s !important;
-          transition-delay: 40ms !important;
+          transition-duration: 0.42s !important;
+          transition-delay: 45ms !important;
         }
         .artafic-transition-overlay.is-exiting .wave-3 {
           transform: translate3d(0, 105%, 0) !important;
-          transition-duration: 0.42s !important;
-          transition-delay: 80ms !important;
+          transition-duration: 0.46s !important;
+          transition-delay: 90ms !important;
         }
         .artafic-transition-overlay.is-exiting .wave-4 {
           transform: translate3d(0, 105%, 0) !important;
-          transition-duration: 0.45s !important;
-          transition-delay: 120ms !important;
+          transition-duration: 0.50s !important;
+          transition-delay: 135ms !important;
         }
         @media (prefers-reduced-motion: reduce) {
           .artafic-wave { transform: none !important; transition: none !important; }
-          .artafic-transition-overlay { transition: opacity 0.2s ease, visibility 0.2s ease !important; }
+          .artafic-transition-overlay { transition: opacity 0.25s ease, visibility 0.25s ease !important; }
         }
       `;
       document.head.appendChild(style);
@@ -2073,6 +2080,7 @@ function formatTime() {
     return overlay;
   }
 
+  // 2. Perform Exit Sweep Reveal on Destination Page Load
   function handleExitReveal() {
     const overlay = ensureOverlay();
     const isNavigating = sessionStorage.getItem('artafic_transition_active') === 'true';
@@ -2080,17 +2088,18 @@ function formatTime() {
     if (isNavigating) {
       sessionStorage.removeItem('artafic_transition_active');
       
-      overlay.classList.remove('is-entering', 'is-exiting');
-      overlay.classList.add('is-visible', 'is-covered', 'is-active');
+      // Step 1: Set covered state
+      overlay.className = 'artafic-transition-overlay is-visible is-covered is-active';
+      void overlay.offsetWidth; // FORCED LAYOUT REFLOW
 
+      // Step 2: Sweep out to reveal new page
       requestAnimationFrame(() => {
         setTimeout(() => {
-          overlay.classList.remove('is-covered');
-          overlay.classList.add('is-exiting');
+          overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
 
           setTimeout(() => {
-            overlay.classList.remove('is-visible', 'is-exiting', 'is-active');
-          }, 500);
+            overlay.className = 'artafic-transition-overlay';
+          }, 650);
         }, 50);
       });
     }
@@ -2102,6 +2111,7 @@ function formatTime() {
     handleExitReveal();
   }
 
+  // 3. Trigger Enter Sweep & Page Navigation
   function triggerPageTransition(targetHref) {
     const overlay = ensureOverlay();
     if (isReducedMotion) {
@@ -2110,9 +2120,8 @@ function formatTime() {
     }
 
     sessionStorage.setItem('artafic_transition_active', 'true');
-    overlay.classList.remove('is-exiting', 'is-covered');
-    overlay.classList.add('is-visible', 'is-entering', 'is-active');
-
+    
+    // Close mobile menu if open
     const mobileMenu = document.getElementById('mobile-menu');
     const hamburger = document.getElementById('hamburger');
     if (mobileMenu && mobileMenu.classList.contains('is-open')) {
@@ -2120,11 +2129,22 @@ function formatTime() {
       if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
     }
 
+    // Step 1: Make overlay visible with starting offscreen position (-105%)
+    overlay.className = 'artafic-transition-overlay is-visible is-active';
+    void overlay.offsetWidth; // FORCED LAYOUT REFLOW GUARANTEES ANIMATION VISIBILITY
+
+    // Step 2: Animate waves down to cover screen
+    requestAnimationFrame(() => {
+      overlay.classList.add('is-entering');
+    });
+
+    // Step 3: Wait for waves to fully cover screen (450ms) BEFORE executing navigation
     setTimeout(() => {
       window.location.href = targetHref;
-    }, 360);
+    }, 460);
   }
 
+  // 4. Trigger Enter Sweep & Section Anchor Scroll
   function triggerSectionTransition(targetElement, hash) {
     const overlay = ensureOverlay();
     
@@ -2141,27 +2161,34 @@ function formatTime() {
       return;
     }
 
-    overlay.classList.remove('is-exiting', 'is-covered');
-    overlay.classList.add('is-visible', 'is-entering', 'is-active');
+    // Step 1: Make overlay visible with starting offscreen position
+    overlay.className = 'artafic-transition-overlay is-visible is-active';
+    void overlay.offsetWidth; // FORCED LAYOUT REFLOW
 
+    // Step 2: Animate waves down to cover screen
+    requestAnimationFrame(() => {
+      overlay.classList.add('is-entering');
+    });
+
+    // Step 3: Once screen is covered (450ms), jump scroll position and exit sweep
     setTimeout(() => {
       targetElement.scrollIntoView({ behavior: 'auto' });
       if (history.pushState) history.pushState(null, null, hash);
 
-      overlay.classList.remove('is-entering');
-      overlay.classList.add('is-covered');
+      overlay.className = 'artafic-transition-overlay is-visible is-covered is-active';
+      void overlay.offsetWidth; // FORCED LAYOUT REFLOW
 
       setTimeout(() => {
-        overlay.classList.remove('is-covered');
-        overlay.classList.add('is-exiting');
+        overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
 
         setTimeout(() => {
-          overlay.classList.remove('is-visible', 'is-exiting', 'is-active');
-        }, 500);
-      }, 40);
-    }, 340);
+          overlay.className = 'artafic-transition-overlay';
+        }, 650);
+      }, 50);
+    }, 460);
   }
 
+  // 5. Global Link & Button Click Interceptor (CAPTURE PHASE GUARANTEED)
   document.addEventListener('click', (e) => {
     const link = e.target.closest('a, [data-nav-link], [data-mobile-nav-link]');
     if (!link) return;
@@ -2198,12 +2225,14 @@ function formatTime() {
       const targetElement = document.querySelector(targetUrl.hash);
       if (targetElement) {
         e.preventDefault();
+        e.stopImmediatePropagation();
         triggerSectionTransition(targetElement, targetUrl.hash);
         return;
       }
     }
 
     e.preventDefault();
+    e.stopImmediatePropagation();
     triggerPageTransition(targetUrl.href);
   }, true);
 })();
