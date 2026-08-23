@@ -1938,3 +1938,143 @@ function formatTime() {
 
 
 
+
+
+/* ============================================================
+   ARTAFIC SITE-WIDE PAGE TRANSITION (FLUID WAVE REFERENCE MATCHED)
+   ============================================================ */
+(function initPageTransitions() {
+  const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function ensureOverlay() {
+    let overlay = document.getElementById('artafic-transition-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'artafic-transition-overlay';
+      overlay.className = 'artafic-transition-overlay';
+      overlay.setAttribute('aria-hidden', 'true');
+      overlay.innerHTML = `
+        <svg class="artafic-transition-svg" viewBox="0 0 1440 900" preserveAspectRatio="none">
+          <defs>
+            <filter id="artafic-drop-shadow-1" x="-10%" y="-10%" width="130%" height="130%">
+              <feDropShadow dx="-4" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.35" />
+            </filter>
+            <filter id="artafic-drop-shadow-2" x="-10%" y="-10%" width="130%" height="130%">
+              <feDropShadow dx="-4" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.4" />
+            </filter>
+            <filter id="artafic-drop-shadow-3" x="-10%" y="-10%" width="130%" height="130%">
+              <feDropShadow dx="-4" dy="8" stdDeviation="14" flood-color="#000000" flood-opacity="0.45" />
+            </filter>
+          </defs>
+
+          <!-- Layer 1: Light Mint Green -->
+          <path class="artafic-wave wave-1" d="M -100,-100 L 1540,-100 L 1540,280 C 1200,420 980,180 620,380 C 320,540 180,320 -100,460 Z" fill="#C6EBC5" filter="url(#artafic-drop-shadow-1)"/>
+          
+          <!-- Layer 2: Vibrant Seafoam Emerald -->
+          <path class="artafic-wave wave-2" d="M -100,-100 L 1540,-100 L 1540,480 C 1150,620 900,360 540,580 C 260,740 120,520 -100,660 Z" fill="#52B788" filter="url(#artafic-drop-shadow-2)"/>
+
+          <!-- Layer 3: ARTAFIC Electric Teal -->
+          <path class="artafic-wave wave-3" d="M -100,-100 L 1540,-100 L 1540,680 C 1100,820 820,560 460,780 C 200,940 80,720 -100,860 Z" fill="#14B8A6" filter="url(#artafic-drop-shadow-3)"/>
+
+          <!-- Layer 4: Dark Base -->
+          <path class="artafic-wave wave-4" d="M -100,-100 L 1540,-100 L 1540,1100 L -100,1100 Z" fill="#080808"/>
+        </svg>
+      `;
+      document.body.appendChild(overlay);
+    }
+    return overlay;
+  }
+
+  function handleExitReveal() {
+    const overlay = ensureOverlay();
+    const isNavigating = sessionStorage.getItem('artafic_transition_active') === 'true';
+
+    if (isNavigating) {
+      sessionStorage.removeItem('artafic_transition_active');
+      
+      overlay.classList.remove('is-entering', 'is-exiting');
+      overlay.classList.add('is-visible', 'is-covered', 'is-active');
+
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          overlay.classList.remove('is-covered');
+          overlay.classList.add('is-exiting');
+
+          setTimeout(() => {
+            overlay.classList.remove('is-visible', 'is-exiting', 'is-active');
+          }, 550);
+        }, 50);
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', handleExitReveal);
+  } else {
+    handleExitReveal();
+  }
+
+  function triggerTransition(targetHref) {
+    const overlay = ensureOverlay();
+    if (isReducedMotion) {
+      window.location.href = targetHref;
+      return;
+    }
+
+    sessionStorage.setItem('artafic_transition_active', 'true');
+    overlay.classList.remove('is-exiting', 'is-covered');
+    overlay.classList.add('is-visible', 'is-entering', 'is-active');
+
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamburger = document.getElementById('hamburger');
+    if (mobileMenu && mobileMenu.classList.contains('is-open')) {
+      mobileMenu.classList.remove('is-open');
+      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+    }
+
+    setTimeout(() => {
+      window.location.href = targetHref;
+    }, 380);
+  }
+
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+
+    const href = link.getAttribute('href');
+    if (!href) return;
+
+    if (
+      link.target === '_blank' ||
+      href.startsWith('mailto:') ||
+      href.startsWith('tel:') ||
+      href.startsWith('javascript:') ||
+      link.hasAttribute('download')
+    ) {
+      return;
+    }
+
+    let currentUrl, targetUrl;
+    try {
+      currentUrl = new URL(window.location.href);
+      targetUrl = new URL(href, window.location.href);
+    } catch (err) {
+      return;
+    }
+
+    if (targetUrl.origin !== currentUrl.origin) return;
+
+    const isSamePath = targetUrl.pathname.replace(/\/$/, '') === currentUrl.pathname.replace(/\/$/, '');
+
+    if (isSamePath && targetUrl.hash) {
+      return;
+    }
+
+    if (isSamePath && !targetUrl.hash) {
+      return;
+    }
+
+    e.preventDefault();
+    triggerTransition(targetUrl.href);
+  });
+})();
