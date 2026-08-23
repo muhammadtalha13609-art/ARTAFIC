@@ -1942,12 +1942,14 @@ function formatTime() {
 
 
 
+
 /* ============================================================
-   ARTAFIC SITE-WIDE PAGE TRANSITION (FLUID WAVE REFERENCE MATCHED)
+   ARTAFIC SITE-WIDE PAGE TRANSITION — BULLETPROOF HTML DIV ENGINE
    ============================================================ */
 (function initPageTransitions() {
   const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // 1. Inject Styles + HTML Div Wave Overlay
   function ensureOverlay() {
     let style = document.getElementById('artafic-transition-style');
     if (!style) {
@@ -1965,7 +1967,7 @@ function formatTime() {
           overflow: hidden !important;
           visibility: hidden !important;
           opacity: 0 !important;
-          transition: opacity 0.3s ease, visibility 0.3s ease !important;
+          transition: opacity 0.25s ease, visibility 0.25s ease !important;
         }
         .artafic-transition-overlay.is-visible {
           visibility: visible !important;
@@ -1974,68 +1976,104 @@ function formatTime() {
         .artafic-transition-overlay.is-active {
           pointer-events: auto !important;
         }
-        .artafic-transition-svg {
+
+        /* HTML Wave Layer Boxes */
+        .artafic-wave-layer {
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
           width: 100% !important;
           height: 100% !important;
+          transform: translate3d(0, -100%, 0) !important;
+          transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1) !important;
+          will-change: transform !important;
+          display: flex !important;
+          flex-direction: column !important;
+          justify-content: flex-start !important;
+        }
+
+        .artafic-wave-layer .wave-shape-top {
+          width: 100% !important;
+          height: 70% !important;
+          flex-shrink: 0 !important;
+        }
+
+        .artafic-wave-layer .wave-svg-curve {
+          width: 100% !important;
+          height: 30% !important;
           display: block !important;
-          object-fit: cover !important;
+          margin-top: -1px !important;
+          flex-shrink: 0 !important;
         }
-        .artafic-wave {
-          transform: translate3d(0, -105%, 0);
-          transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
-          will-change: transform;
-        }
-        /* Enter Phase: Waves Sweep Down to Cover Screen */
-        .artafic-transition-overlay.is-entering .wave-1 {
+
+        /* Colors & Drop Shadows */
+        .wl-1 .wave-shape-top { background-color: #C6EBC5 !important; }
+        .wl-1 .wave-svg-curve path { fill: #C6EBC5 !important; }
+        .wl-1 { box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35) !important; }
+
+        .wl-2 .wave-shape-top { background-color: #52B788 !important; }
+        .wl-2 .wave-svg-curve path { fill: #52B788 !important; }
+        .wl-2 { box-shadow: 0 14px 35px rgba(0, 0, 0, 0.4) !important; }
+
+        .wl-3 .wave-shape-top { background-color: #14B8A6 !important; }
+        .wl-3 .wave-svg-curve path { fill: #14B8A6 !important; }
+        .wl-3 { box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important; }
+
+        .wl-4 .wave-shape-top { background-color: #080808 !important; }
+        .wl-4 .wave-svg-curve path { fill: #080808 !important; }
+
+        /* Enter Phase: Layers Sweep Down to Cover Viewport */
+        .artafic-transition-overlay.is-entering .wl-1 {
           transform: translate3d(0, 0%, 0) !important;
-          transition-duration: 0.36s !important;
+          transition-duration: 0.34s !important;
           transition-delay: 0ms !important;
         }
-        .artafic-transition-overlay.is-entering .wave-2 {
+        .artafic-transition-overlay.is-entering .wl-2 {
           transform: translate3d(0, 0%, 0) !important;
-          transition-duration: 0.40s !important;
+          transition-duration: 0.38s !important;
           transition-delay: 40ms !important;
         }
-        .artafic-transition-overlay.is-entering .wave-3 {
+        .artafic-transition-overlay.is-entering .wl-3 {
           transform: translate3d(0, 0%, 0) !important;
-          transition-duration: 0.44s !important;
+          transition-duration: 0.42s !important;
           transition-delay: 80ms !important;
         }
-        .artafic-transition-overlay.is-entering .wave-4 {
+        .artafic-transition-overlay.is-entering .wl-4 {
           transform: translate3d(0, 0%, 0) !important;
-          transition-duration: 0.48s !important;
+          transition-duration: 0.46s !important;
           transition-delay: 120ms !important;
         }
 
         /* Covered Solid State */
-        .artafic-transition-overlay.is-covered .artafic-wave {
+        .artafic-transition-overlay.is-covered .artafic-wave-layer {
           transform: translate3d(0, 0%, 0) !important;
           transition: none !important;
         }
 
-        /* Exit Phase: Waves Sweep Down/Out to Reveal Destination Page */
-        .artafic-transition-overlay.is-exiting .wave-1 {
-          transform: translate3d(0, 105%, 0) !important;
-          transition-duration: 0.38s !important;
+        /* Exit Phase: Layers Sweep Down/Out to Reveal Destination Page */
+        .artafic-transition-overlay.is-exiting .wl-1 {
+          transform: translate3d(0, 100%, 0) !important;
+          transition-duration: 0.36s !important;
           transition-delay: 0ms !important;
         }
-        .artafic-transition-overlay.is-exiting .wave-2 {
-          transform: translate3d(0, 105%, 0) !important;
-          transition-duration: 0.42s !important;
-          transition-delay: 45ms !important;
+        .artafic-transition-overlay.is-exiting .wl-2 {
+          transform: translate3d(0, 100%, 0) !important;
+          transition-duration: 0.40s !important;
+          transition-delay: 40ms !important;
         }
-        .artafic-transition-overlay.is-exiting .wave-3 {
-          transform: translate3d(0, 105%, 0) !important;
-          transition-duration: 0.46s !important;
-          transition-delay: 90ms !important;
+        .artafic-transition-overlay.is-exiting .wl-3 {
+          transform: translate3d(0, 100%, 0) !important;
+          transition-duration: 0.44s !important;
+          transition-delay: 80ms !important;
         }
-        .artafic-transition-overlay.is-exiting .wave-4 {
-          transform: translate3d(0, 105%, 0) !important;
-          transition-duration: 0.50s !important;
-          transition-delay: 135ms !important;
+        .artafic-transition-overlay.is-exiting .wl-4 {
+          transform: translate3d(0, 100%, 0) !important;
+          transition-duration: 0.48s !important;
+          transition-delay: 120ms !important;
         }
+
         @media (prefers-reduced-motion: reduce) {
-          .artafic-wave { transform: none !important; transition: none !important; }
+          .artafic-wave-layer { transform: none !important; transition: none !important; }
           .artafic-transition-overlay { transition: opacity 0.25s ease, visibility 0.25s ease !important; }
         }
       `;
@@ -2049,36 +2087,68 @@ function formatTime() {
       overlay.className = 'artafic-transition-overlay';
       overlay.setAttribute('aria-hidden', 'true');
       overlay.innerHTML = `
-        <svg class="artafic-transition-svg" viewBox="0 0 1440 900" preserveAspectRatio="none">
-          <defs>
-            <filter id="artafic-drop-shadow-1" x="-10%" y="-10%" width="130%" height="130%">
-              <feDropShadow dx="-4" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.35" />
-            </filter>
-            <filter id="artafic-drop-shadow-2" x="-10%" y="-10%" width="130%" height="130%">
-              <feDropShadow dx="-4" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.4" />
-            </filter>
-            <filter id="artafic-drop-shadow-3" x="-10%" y="-10%" width="130%" height="130%">
-              <feDropShadow dx="-4" dy="8" stdDeviation="14" flood-color="#000000" flood-opacity="0.45" />
-            </filter>
-          </defs>
+        <!-- Layer 1: Mint Green -->
+        <div class="artafic-wave-layer wl-1">
+          <div class="wave-shape-top"></div>
+          <svg class="wave-svg-curve" viewBox="0 0 1440 240" preserveAspectRatio="none">
+            <path d="M0,0 L1440,0 L1440,120 C1080,220 860,60 500,170 C240,240 100,130 0,190 Z" />
+          </svg>
+        </div>
 
-          <!-- Layer 1: Light Mint Green -->
-          <path class="artafic-wave wave-1" d="M -100,-100 L 1540,-100 L 1540,280 C 1200,420 980,180 620,380 C 320,540 180,320 -100,460 Z" fill="#C6EBC5" filter="url(#artafic-drop-shadow-1)"/>
-          
-          <!-- Layer 2: Vibrant Seafoam Emerald -->
-          <path class="artafic-wave wave-2" d="M -100,-100 L 1540,-100 L 1540,480 C 1150,620 900,360 540,580 C 260,740 120,520 -100,660 Z" fill="#52B788" filter="url(#artafic-drop-shadow-2)"/>
+        <!-- Layer 2: Seafoam Emerald -->
+        <div class="artafic-wave-layer wl-2">
+          <div class="wave-shape-top"></div>
+          <svg class="wave-svg-curve" viewBox="0 0 1440 240" preserveAspectRatio="none">
+            <path d="M0,0 L1440,0 L1440,140 C1050,240 800,80 440,190 C200,260 80,150 0,210 Z" />
+          </svg>
+        </div>
 
-          <!-- Layer 3: ARTAFIC Electric Teal -->
-          <path class="artafic-wave wave-3" d="M -100,-100 L 1540,-100 L 1540,680 C 1100,820 820,560 460,780 C 200,940 80,720 -100,860 Z" fill="#14B8A6" filter="url(#artafic-drop-shadow-3)"/>
+        <!-- Layer 3: ARTAFIC Electric Teal -->
+        <div class="artafic-wave-layer wl-3">
+          <div class="wave-shape-top"></div>
+          <svg class="wave-svg-curve" viewBox="0 0 1440 240" preserveAspectRatio="none">
+            <path d="M0,0 L1440,0 L1440,160 C1000,260 740,100 380,210 C160,280 60,170 0,230 Z" />
+          </svg>
+        </div>
 
-          <!-- Layer 4: Dark Base -->
-          <path class="artafic-wave wave-4" d="M -100,-100 L 1540,-100 L 1540,1100 L -100,1100 Z" fill="#080808"/>
-        </svg>
+        <!-- Layer 4: Dark Ocean Base -->
+        <div class="artafic-wave-layer wl-4">
+          <div class="wave-shape-top"></div>
+          <svg class="wave-svg-curve" viewBox="0 0 1440 240" preserveAspectRatio="none">
+            <path d="M0,0 L1440,0 L1440,180 C950,280 680,120 320,230 C120,300 40,190 0,240 Z" />
+          </svg>
+        </div>
       `;
       document.body.appendChild(overlay);
     }
     return overlay;
   }
+
+  // Expose Global Console Test Function for Verification
+  window.testArtaficTransition = function() {
+    console.log('ARTAFIC TRANSITION: Manual Console Test Triggered');
+    const overlay = ensureOverlay();
+    overlay.className = 'artafic-transition-overlay is-visible is-active';
+    void overlay.offsetWidth;
+
+    requestAnimationFrame(() => {
+      overlay.classList.add('is-entering');
+    });
+
+    setTimeout(() => {
+      overlay.className = 'artafic-transition-overlay is-visible is-covered is-active';
+      void overlay.offsetWidth;
+
+      setTimeout(() => {
+        overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
+
+        setTimeout(() => {
+          overlay.className = 'artafic-transition-overlay';
+          console.log('ARTAFIC TRANSITION: Manual Console Test Finished');
+        }, 650);
+      }, 300);
+    }, 500);
+  };
 
   // 2. Perform Exit Sweep Reveal on Destination Page Load
   function handleExitReveal() {
@@ -2086,13 +2156,12 @@ function formatTime() {
     const isNavigating = sessionStorage.getItem('artafic_transition_active') === 'true';
 
     if (isNavigating) {
+      console.log('ARTAFIC TRANSITION: Exit Reveal Running on Destination Page Load');
       sessionStorage.removeItem('artafic_transition_active');
       
-      // Step 1: Set covered state
       overlay.className = 'artafic-transition-overlay is-visible is-covered is-active';
-      void overlay.offsetWidth; // FORCED LAYOUT REFLOW
+      void overlay.offsetWidth;
 
-      // Step 2: Sweep out to reveal new page
       requestAnimationFrame(() => {
         setTimeout(() => {
           overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
@@ -2113,6 +2182,7 @@ function formatTime() {
 
   // 3. Trigger Enter Sweep & Page Navigation
   function triggerPageTransition(targetHref) {
+    console.log('ARTAFIC TRANSITION TRIGGERED FOR PAGE:', targetHref);
     const overlay = ensureOverlay();
     if (isReducedMotion) {
       window.location.href = targetHref;
@@ -2121,7 +2191,6 @@ function formatTime() {
 
     sessionStorage.setItem('artafic_transition_active', 'true');
     
-    // Close mobile menu if open
     const mobileMenu = document.getElementById('mobile-menu');
     const hamburger = document.getElementById('hamburger');
     if (mobileMenu && mobileMenu.classList.contains('is-open')) {
@@ -2129,23 +2198,22 @@ function formatTime() {
       if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
     }
 
-    // Step 1: Make overlay visible with starting offscreen position (-105%)
     overlay.className = 'artafic-transition-overlay is-visible is-active';
-    void overlay.offsetWidth; // FORCED LAYOUT REFLOW GUARANTEES ANIMATION VISIBILITY
+    void overlay.offsetWidth;
 
-    // Step 2: Animate waves down to cover screen
     requestAnimationFrame(() => {
       overlay.classList.add('is-entering');
     });
 
-    // Step 3: Wait for waves to fully cover screen (450ms) BEFORE executing navigation
     setTimeout(() => {
+      console.log('ARTAFIC TRANSITION: Screen Covered. Navigating to:', targetHref);
       window.location.href = targetHref;
-    }, 460);
+    }, 480);
   }
 
   // 4. Trigger Enter Sweep & Section Anchor Scroll
   function triggerSectionTransition(targetElement, hash) {
+    console.log('ARTAFIC TRANSITION TRIGGERED FOR SECTION:', hash);
     const overlay = ensureOverlay();
     
     const mobileMenu = document.getElementById('mobile-menu');
@@ -2161,22 +2229,19 @@ function formatTime() {
       return;
     }
 
-    // Step 1: Make overlay visible with starting offscreen position
     overlay.className = 'artafic-transition-overlay is-visible is-active';
-    void overlay.offsetWidth; // FORCED LAYOUT REFLOW
+    void overlay.offsetWidth;
 
-    // Step 2: Animate waves down to cover screen
     requestAnimationFrame(() => {
       overlay.classList.add('is-entering');
     });
 
-    // Step 3: Once screen is covered (450ms), jump scroll position and exit sweep
     setTimeout(() => {
       targetElement.scrollIntoView({ behavior: 'auto' });
       if (history.pushState) history.pushState(null, null, hash);
 
       overlay.className = 'artafic-transition-overlay is-visible is-covered is-active';
-      void overlay.offsetWidth; // FORCED LAYOUT REFLOW
+      void overlay.offsetWidth;
 
       setTimeout(() => {
         overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
@@ -2185,7 +2250,7 @@ function formatTime() {
           overlay.className = 'artafic-transition-overlay';
         }, 650);
       }, 50);
-    }, 460);
+    }, 480);
   }
 
   // 5. Global Link & Button Click Interceptor (CAPTURE PHASE GUARANTEED)
@@ -2221,10 +2286,13 @@ function formatTime() {
     const targetPathClean = targetUrl.pathname.replace(/\/$/, '');
     const isSamePath = targetPathClean === currentPathClean;
 
+    console.log('ARTAFIC TRANSITION CLICK DETECTED:', href, '| samePath:', isSamePath);
+
     if (isSamePath && targetUrl.hash) {
       const targetElement = document.querySelector(targetUrl.hash);
       if (targetElement) {
         e.preventDefault();
+        e.stopPropagation();
         e.stopImmediatePropagation();
         triggerSectionTransition(targetElement, targetUrl.hash);
         return;
@@ -2232,6 +2300,7 @@ function formatTime() {
     }
 
     e.preventDefault();
+    e.stopPropagation();
     e.stopImmediatePropagation();
     triggerPageTransition(targetUrl.href);
   }, true);
