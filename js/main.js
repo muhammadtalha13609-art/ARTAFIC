@@ -1940,13 +1940,102 @@ function formatTime() {
 
 
 
+
 /* ============================================================
    ARTAFIC SITE-WIDE PAGE TRANSITION (FLUID WAVE REFERENCE MATCHED)
    ============================================================ */
 (function initPageTransitions() {
   const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // 1. Inject Styles + Overlay Elements Guaranteed
   function ensureOverlay() {
+    let style = document.getElementById('artafic-transition-style');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'artafic-transition-style';
+      style.textContent = `
+        .artafic-transition-overlay {
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100vw !important;
+          height: 100vh !important;
+          z-index: 9999999 !important;
+          pointer-events: none !important;
+          overflow: hidden !important;
+          visibility: hidden;
+          opacity: 0;
+          transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+        .artafic-transition-overlay.is-visible {
+          visibility: visible !important;
+          opacity: 1 !important;
+        }
+        .artafic-transition-overlay.is-active {
+          pointer-events: auto !important;
+        }
+        .artafic-transition-svg {
+          width: 100% !important;
+          height: 100% !important;
+          display: block !important;
+          object-fit: cover !important;
+        }
+        .artafic-wave {
+          transform: translate3d(0, -105%, 0);
+          transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+          will-change: transform;
+        }
+        .artafic-transition-overlay.is-entering .wave-1 {
+          transform: translate3d(0, 0%, 0) !important;
+          transition-duration: 0.32s !important;
+          transition-delay: 0ms !important;
+        }
+        .artafic-transition-overlay.is-entering .wave-2 {
+          transform: translate3d(0, 0%, 0) !important;
+          transition-duration: 0.35s !important;
+          transition-delay: 35ms !important;
+        }
+        .artafic-transition-overlay.is-entering .wave-3 {
+          transform: translate3d(0, 0%, 0) !important;
+          transition-duration: 0.38s !important;
+          transition-delay: 70ms !important;
+        }
+        .artafic-transition-overlay.is-entering .wave-4 {
+          transform: translate3d(0, 0%, 0) !important;
+          transition-duration: 0.42s !important;
+          transition-delay: 105ms !important;
+        }
+        .artafic-transition-overlay.is-covered .artafic-wave {
+          transform: translate3d(0, 0%, 0) !important;
+        }
+        .artafic-transition-overlay.is-exiting .wave-1 {
+          transform: translate3d(0, 105%, 0) !important;
+          transition-duration: 0.35s !important;
+          transition-delay: 0ms !important;
+        }
+        .artafic-transition-overlay.is-exiting .wave-2 {
+          transform: translate3d(0, 105%, 0) !important;
+          transition-duration: 0.38s !important;
+          transition-delay: 40ms !important;
+        }
+        .artafic-transition-overlay.is-exiting .wave-3 {
+          transform: translate3d(0, 105%, 0) !important;
+          transition-duration: 0.42s !important;
+          transition-delay: 80ms !important;
+        }
+        .artafic-transition-overlay.is-exiting .wave-4 {
+          transform: translate3d(0, 105%, 0) !important;
+          transition-duration: 0.45s !important;
+          transition-delay: 120ms !important;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .artafic-wave { transform: none !important; transition: none !important; }
+          .artafic-transition-overlay { transition: opacity 0.2s ease, visibility 0.2s ease !important; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
     let overlay = document.getElementById('artafic-transition-overlay');
     if (!overlay) {
       overlay = document.createElement('div');
@@ -1985,6 +2074,7 @@ function formatTime() {
     return overlay;
   }
 
+  // 2. Perform Exit Sweep Reveal on Destination Page Load
   function handleExitReveal() {
     const overlay = ensureOverlay();
     const isNavigating = sessionStorage.getItem('artafic_transition_active') === 'true';
@@ -2002,7 +2092,7 @@ function formatTime() {
 
           setTimeout(() => {
             overlay.classList.remove('is-visible', 'is-exiting', 'is-active');
-          }, 550);
+          }, 500);
         }, 50);
       });
     }
@@ -2014,7 +2104,8 @@ function formatTime() {
     handleExitReveal();
   }
 
-  function triggerTransition(targetHref) {
+  // 3. Trigger Enter Sweep & Page Navigation
+  function triggerPageTransition(targetHref) {
     const overlay = ensureOverlay();
     if (isReducedMotion) {
       window.location.href = targetHref;
@@ -2034,14 +2125,54 @@ function formatTime() {
 
     setTimeout(() => {
       window.location.href = targetHref;
-    }, 380);
+    }, 360);
   }
 
+  // 4. Trigger Enter Sweep & Section Anchor Scroll
+  function triggerSectionTransition(targetElement, hash) {
+    const overlay = ensureOverlay();
+    
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamburger = document.getElementById('hamburger');
+    if (mobileMenu && mobileMenu.classList.contains('is-open')) {
+      mobileMenu.classList.remove('is-open');
+      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+    }
+
+    if (isReducedMotion) {
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+      if (history.pushState) history.pushState(null, null, hash);
+      return;
+    }
+
+    overlay.classList.remove('is-exiting', 'is-covered');
+    overlay.classList.add('is-visible', 'is-entering', 'is-active');
+
+    setTimeout(() => {
+      targetElement.scrollIntoView({ behavior: 'auto' });
+      if (history.pushState) history.pushState(null, null, hash);
+
+      overlay.classList.remove('is-entering');
+      overlay.classList.add('is-covered');
+
+      setTimeout(() => {
+        overlay.classList.remove('is-covered');
+        overlay.classList.add('is-exiting');
+
+        setTimeout(() => {
+          overlay.classList.remove('is-visible', 'is-exiting', 'is-active');
+        }, 500);
+      }, 40);
+    }, 340);
+  }
+
+  // 5. Global Link & Button Click Interceptor
   document.addEventListener('click', (e) => {
-    const link = e.target.closest('a');
+    const link = e.target.closest('a, [data-nav-link], [data-mobile-nav-link]');
     if (!link) return;
 
-    const href = link.getAttribute('href');
+    let href = link.getAttribute('href');
+    if (!href && link.tagName === 'A') href = link.href;
     if (!href) return;
 
     if (
@@ -2064,17 +2195,22 @@ function formatTime() {
 
     if (targetUrl.origin !== currentUrl.origin) return;
 
-    const isSamePath = targetUrl.pathname.replace(/\/$/, '') === currentUrl.pathname.replace(/\/$/, '');
+    const currentPathClean = currentUrl.pathname.replace(/\/$/, '');
+    const targetPathClean = targetUrl.pathname.replace(/\/$/, '');
+    const isSamePath = targetPathClean === currentPathClean;
 
+    // Section anchor click on same page (e.g. #services, #why-artafic, #booking, #home)
     if (isSamePath && targetUrl.hash) {
-      return;
+      const targetElement = document.querySelector(targetUrl.hash);
+      if (targetElement) {
+        e.preventDefault();
+        triggerSectionTransition(targetElement, targetUrl.hash);
+        return;
+      }
     }
 
-    if (isSamePath && !targetUrl.hash) {
-      return;
-    }
-
+    // Full page navigation click (e.g. about.html, faq.html, index.html)
     e.preventDefault();
-    triggerTransition(targetUrl.href);
-  });
+    triggerPageTransition(targetUrl.href);
+  }, true);
 })();
