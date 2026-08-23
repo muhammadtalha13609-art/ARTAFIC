@@ -36,6 +36,14 @@
     <link rel="preload" as="image" href="https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif">
     <link rel="preload" as="image" href="https://motionsites.ai/assets/hero-stellar-ai-preview-D3HL6bw1.gif">
     <link rel="preload" as="image" href="https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif">
+
+  <!-- Anti-Flash Page Transition -->
+  <script>
+    if (sessionStorage.getItem('artafic_transition_active') === 'true') {
+      document.documentElement.style.backgroundColor = '#080808';
+      document.write('<style id="artafic-anti-flash">body { visibility: hidden !important; }</style>');
+    }
+  </script>
 </head>
 <body>
 

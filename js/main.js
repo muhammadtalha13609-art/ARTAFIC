@@ -1947,7 +1947,6 @@ function formatTime() {
    ARTAFIC SITE-WIDE PAGE TRANSITION — BULLETPROOF HTML DIV ENGINE
    ============================================================ */
 (function initPageTransitions() {
-
   // 1. Inject Styles + HTML Div Wave Overlay
   function ensureOverlay() {
     let style = document.getElementById('artafic-transition-style');
@@ -1979,100 +1978,80 @@ function formatTime() {
         /* HTML Wave Layer Boxes */
         .artafic-wave-layer {
           position: absolute !important;
-          top: 0 !important;
+          top: -200vh !important;
           left: 0 !important;
-          width: 100% !important;
-          height: 100% !important;
-          transform: translate3d(0, -100%, 0) !important;
-          transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1) !important;
+          width: 100vw !important;
+          height: 200vh !important;
+          transform: translate3d(0, 0%, 0) !important;
+          transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1) !important;
           will-change: transform !important;
           display: flex !important;
           flex-direction: column !important;
           justify-content: flex-start !important;
         }
 
-        .artafic-wave-layer .wave-shape-top {
+        .artafic-wave-layer .wave-svg-top {
           width: 100% !important;
-          height: 70% !important;
+          height: 20vh !important;
+          display: block !important;
+          margin-bottom: -1px !important;
+          flex-shrink: 0 !important;
+        }
+        
+        .artafic-wave-layer .wave-solid-fill {
+          width: 100% !important;
+          height: 160vh !important;
           flex-shrink: 0 !important;
         }
 
-        .artafic-wave-layer .wave-svg-curve {
+        .artafic-wave-layer .wave-svg-bottom {
           width: 100% !important;
-          height: 30% !important;
+          height: 20vh !important;
           display: block !important;
           margin-top: -1px !important;
           flex-shrink: 0 !important;
         }
 
-        /* Colors & Drop Shadows */
-        .wl-1 .wave-shape-top { background-color: #C6EBC5 !important; }
-        .wl-1 .wave-svg-curve path { fill: #C6EBC5 !important; }
+        /* Colors */
+        .wl-1 .wave-solid-fill { background-color: #C6EBC5 !important; }
+        .wl-1 svg path { fill: #C6EBC5 !important; }
         .wl-1 { box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35) !important; }
 
-        .wl-2 .wave-shape-top { background-color: #52B788 !important; }
-        .wl-2 .wave-svg-curve path { fill: #52B788 !important; }
+        .wl-2 .wave-solid-fill { background-color: #52B788 !important; }
+        .wl-2 svg path { fill: #52B788 !important; }
         .wl-2 { box-shadow: 0 14px 35px rgba(0, 0, 0, 0.4) !important; }
 
-        .wl-3 .wave-shape-top { background-color: #14B8A6 !important; }
-        .wl-3 .wave-svg-curve path { fill: #14B8A6 !important; }
+        .wl-3 .wave-solid-fill { background-color: #14B8A6 !important; }
+        .wl-3 svg path { fill: #14B8A6 !important; }
         .wl-3 { box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important; }
 
-        .wl-4 .wave-shape-top { background-color: #080808 !important; }
-        .wl-4 .wave-svg-curve path { fill: #080808 !important; }
+        .wl-4 .wave-solid-fill { background-color: #080808 !important; }
+        .wl-4 svg path { fill: #080808 !important; }
 
         /* Enter Phase: Layers Sweep Down to Cover Viewport */
-        .artafic-transition-overlay.is-entering .wl-1 {
-          transform: translate3d(0, 0%, 0) !important;
-          transition-duration: 0.34s !important;
-          transition-delay: 0ms !important;
+        .artafic-transition-overlay.is-entering .artafic-wave-layer {
+          transform: translate3d(0, 60%, 0) !important;
         }
-        .artafic-transition-overlay.is-entering .wl-2 {
-          transform: translate3d(0, 0%, 0) !important;
-          transition-duration: 0.38s !important;
-          transition-delay: 40ms !important;
-        }
-        .artafic-transition-overlay.is-entering .wl-3 {
-          transform: translate3d(0, 0%, 0) !important;
-          transition-duration: 0.42s !important;
-          transition-delay: 80ms !important;
-        }
-        .artafic-transition-overlay.is-entering .wl-4 {
-          transform: translate3d(0, 0%, 0) !important;
-          transition-duration: 0.46s !important;
-          transition-delay: 120ms !important;
-        }
+        .artafic-transition-overlay.is-entering .wl-1 { transition-duration: 0.75s !important; transition-delay: 0ms !important; }
+        .artafic-transition-overlay.is-entering .wl-2 { transition-duration: 0.75s !important; transition-delay: 90ms !important; }
+        .artafic-transition-overlay.is-entering .wl-3 { transition-duration: 0.75s !important; transition-delay: 180ms !important; }
+        .artafic-transition-overlay.is-entering .wl-4 { transition-duration: 0.75s !important; transition-delay: 270ms !important; }
 
         /* Covered Solid State */
         .artafic-transition-overlay.is-covered .artafic-wave-layer {
-          transform: translate3d(0, 0%, 0) !important;
+          transform: translate3d(0, 60%, 0) !important;
           transition: none !important;
         }
 
         /* Exit Phase: Layers Sweep Down/Out to Reveal Destination Page */
+        .artafic-transition-overlay.is-exiting .artafic-wave-layer {
+          transform: translate3d(0, 160%, 0) !important;
+        }
         /* Reverse delays so wl-4 leaves first, revealing the colors underneath */
-        .artafic-transition-overlay.is-exiting .wl-1 {
-          transform: translate3d(0, 100%, 0) !important;
-          transition-duration: 0.48s !important;
-          transition-delay: 120ms !important;
-        }
-        .artafic-transition-overlay.is-exiting .wl-2 {
-          transform: translate3d(0, 100%, 0) !important;
-          transition-duration: 0.44s !important;
-          transition-delay: 80ms !important;
-        }
-        .artafic-transition-overlay.is-exiting .wl-3 {
-          transform: translate3d(0, 100%, 0) !important;
-          transition-duration: 0.40s !important;
-          transition-delay: 40ms !important;
-        }
-        .artafic-transition-overlay.is-exiting .wl-4 {
-          transform: translate3d(0, 100%, 0) !important;
-          transition-duration: 0.36s !important;
-          transition-delay: 0ms !important;
-        }
-
-        
+        .artafic-transition-overlay.is-exiting .wl-4 { transition-duration: 0.75s !important; transition-delay: 0ms !important; }
+        .artafic-transition-overlay.is-exiting .wl-3 { transition-duration: 0.75s !important; transition-delay: 90ms !important; }
+        .artafic-transition-overlay.is-exiting .wl-2 { transition-duration: 0.75s !important; transition-delay: 180ms !important; }
+        .artafic-transition-overlay.is-exiting .wl-1 { transition-duration: 0.75s !important; transition-delay: 270ms !important; }
       `;
       document.head.appendChild(style);
     }
@@ -2086,33 +2065,45 @@ function formatTime() {
       overlay.innerHTML = `
         <!-- Layer 1: Mint Green -->
         <div class="artafic-wave-layer wl-1">
-          <div class="wave-shape-top"></div>
-          <svg class="wave-svg-curve" viewBox="0 0 1440 240" preserveAspectRatio="none">
-            <path d="M0,0 L1440,0 L1440,120 C1080,220 860,60 500,170 C240,240 100,130 0,190 Z" />
+          <svg class="wave-svg-top" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0,100 C20,30 80,70 100,0 L100,100 L0,100 Z" />
+          </svg>
+          <div class="wave-solid-fill"></div>
+          <svg class="wave-svg-bottom" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0,0 C30,70 70,30 100,100 L100,0 L0,0 Z" />
           </svg>
         </div>
 
         <!-- Layer 2: Seafoam Emerald -->
         <div class="artafic-wave-layer wl-2">
-          <div class="wave-shape-top"></div>
-          <svg class="wave-svg-curve" viewBox="0 0 1440 240" preserveAspectRatio="none">
-            <path d="M0,0 L1440,0 L1440,140 C1050,240 800,80 440,190 C200,260 80,150 0,210 Z" />
+          <svg class="wave-svg-top" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0,100 C40,10 60,90 100,0 L100,100 L0,100 Z" />
+          </svg>
+          <div class="wave-solid-fill"></div>
+          <svg class="wave-svg-bottom" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0,0 C20,80 80,20 100,100 L100,0 L0,0 Z" />
           </svg>
         </div>
 
         <!-- Layer 3: ARTAFIC Electric Teal -->
         <div class="artafic-wave-layer wl-3">
-          <div class="wave-shape-top"></div>
-          <svg class="wave-svg-curve" viewBox="0 0 1440 240" preserveAspectRatio="none">
-            <path d="M0,0 L1440,0 L1440,160 C1000,260 740,100 380,210 C160,280 60,170 0,230 Z" />
+          <svg class="wave-svg-top" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0,100 C10,40 90,60 100,0 L100,100 L0,100 Z" />
+          </svg>
+          <div class="wave-solid-fill"></div>
+          <svg class="wave-svg-bottom" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0,0 C40,60 60,40 100,100 L100,0 L0,0 Z" />
           </svg>
         </div>
 
         <!-- Layer 4: Dark Ocean Base -->
         <div class="artafic-wave-layer wl-4">
-          <div class="wave-shape-top"></div>
-          <svg class="wave-svg-curve" viewBox="0 0 1440 240" preserveAspectRatio="none">
-            <path d="M0,0 L1440,0 L1440,180 C950,280 680,120 320,230 C120,300 40,190 0,240 Z" />
+          <svg class="wave-svg-top" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0,100 C30,40 70,20 100,0 L100,100 L0,100 Z" />
+          </svg>
+          <div class="wave-solid-fill"></div>
+          <svg class="wave-svg-bottom" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0,0 C25,85 75,15 100,100 L100,0 L0,0 Z" />
           </svg>
         </div>
       `;
@@ -2138,13 +2129,12 @@ function formatTime() {
 
       setTimeout(() => {
         overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
-
         setTimeout(() => {
           overlay.className = 'artafic-transition-overlay';
           console.log('ARTAFIC TRANSITION: Manual Console Test Finished');
-        }, 650);
-      }, 300);
-    }, 500);
+        }, 1100);
+      }, 150); // Wait 150ms in covered state
+    }, 1150); // Enter duration
   };
 
   // 2. Perform Exit Sweep Reveal on Destination Page Load
@@ -2159,15 +2149,16 @@ function formatTime() {
       overlay.className = 'artafic-transition-overlay is-visible is-covered is-active';
       void overlay.offsetWidth;
 
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
+      document.documentElement.style.backgroundColor = '';
+      const antiFlash = document.getElementById('artafic-anti-flash');
+      if (antiFlash) antiFlash.remove();
 
-          setTimeout(() => {
-            overlay.className = 'artafic-transition-overlay';
-          }, 650);
-        }, 50);
-      });
+      setTimeout(() => {
+        overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
+        setTimeout(() => {
+          overlay.className = 'artafic-transition-overlay';
+        }, 1100);
+      }, 50);
     }
   }
 
@@ -2200,23 +2191,26 @@ function formatTime() {
 
     setTimeout(() => {
       console.log('ARTAFIC TRANSITION: Screen Covered. Navigating to:', targetHref);
+      
+      // Prevent white flash during unload
+      document.documentElement.style.backgroundColor = '#080808';
+      document.body.style.display = 'none';
+
       window.location.href = targetHref;
-    }, 480);
+    }, 1150); // 270ms max delay + 750ms duration + 130ms hold
   }
 
   // 4. Trigger Enter Sweep & Section Anchor Scroll
   function triggerSectionTransition(targetElement, hash) {
     console.log('ARTAFIC TRANSITION TRIGGERED FOR SECTION:', hash);
     const overlay = ensureOverlay();
-    
+
     const mobileMenu = document.getElementById('mobile-menu');
     const hamburger = document.getElementById('hamburger');
     if (mobileMenu && mobileMenu.classList.contains('is-open')) {
       mobileMenu.classList.remove('is-open');
       if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
     }
-
-    
 
     overlay.className = 'artafic-transition-overlay is-visible is-active';
     void overlay.offsetWidth;
@@ -2226,38 +2220,30 @@ function formatTime() {
     }, 20);
 
     setTimeout(() => {
-      targetElement.scrollIntoView({ behavior: 'auto' });
-      if (history.pushState) history.pushState(null, null, hash);
-
       overlay.className = 'artafic-transition-overlay is-visible is-covered is-active';
       void overlay.offsetWidth;
 
+      window.location.hash = hash;
+      const navHeight = document.querySelector('.navbar').offsetHeight;
+      const offset = targetElement.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+      window.scrollTo({ top: offset, behavior: 'auto' });
+
       setTimeout(() => {
         overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
-
         setTimeout(() => {
           overlay.className = 'artafic-transition-overlay';
-        }, 650);
-      }, 50);
-    }, 480);
+        }, 1100);
+      }, 150);
+    }, 1150);
   }
 
-  // 5. Global Link & Button Click Interceptor (CAPTURE PHASE GUARANTEED)
-  document.addEventListener('click', (e) => {
-    const link = e.target.closest('a, [data-nav-link], [data-mobile-nav-link]');
-    if (!link) return;
+  // Intercept Navigation Clicks Globablly
+  document.addEventListener('click', function(e) {
+    let target = e.target.closest('a');
+    if (!target) return;
 
-    let href = link.getAttribute('href');
-    if (!href && link.tagName === 'A') href = link.href;
-    if (!href) return;
-
-    if (
-      link.target === '_blank' ||
-      href.startsWith('mailto:') ||
-      href.startsWith('tel:') ||
-      href.startsWith('javascript:') ||
-      link.hasAttribute('download')
-    ) {
+    let href = target.getAttribute('href');
+    if (!href || href.startsWith('#') && href.length === 1 || href.startsWith('javascript') || href.startsWith('mailto:') || href.startsWith('tel:')) {
       return;
     }
 
