@@ -1,386 +1,294 @@
-/* ==========================================================================
-   ARTAFIC ABOUT PAGE — SURGICAL EDITORIAL REFINEMENT (15-25% POLISH)
-   Restored Baseline + Enhanced Hierarchy, Typography & Content Clarity
+﻿/* ==========================================================================
+   ARTAFIC ABOUT PAGE - PREMIUM EDITORIAL DESIGN & FLOATING PATHS
    ========================================================================== */
 
-:root {
-  --font-display: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-  --font-sans: 'Manrope', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-
-  --color-bg: #080808;
-  --color-ivory: #F1F0EA;       /* Warm Ivory Display */
-  --color-sand: #B5B3AD;        /* High-Contrast Body Text */
-  --color-stone: #7F7D77;       /* Muted Metadata */
-  --color-teal: #14B8A6;        /* Electric Teal Accent */
-  --color-teal-glow: rgba(20, 184, 166, 0.15);
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-surface: rgba(18, 18, 20, 0.65);
-}
-
-/* ── Global Page Base ── */
+/* Global Overrides */
 .about-page {
-  background-color: var(--color-bg);
-  color: var(--color-ivory);
+  background-color: #080808;
+  color: #F5F5F5;
   overflow-x: hidden;
   position: relative;
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Editorial Noise Texture ── */
-.editorial-noise {
-  position: fixed;
+/* Floating Paths Background Component */
+.floating-paths-bg {
+  position: absolute;
   inset: 0;
-  background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.03"/%3E%3C/svg%3E');
   pointer-events: none;
-  z-index: 40;
-  mix-blend-mode: overlay;
+  z-index: 0;
+  overflow: hidden;
+}
+.fp-svg {
+  width: 100%;
+  height: 100%;
+}
+.fp-path {
+  stroke-dasharray: 1;
+  animation: floatPath linear infinite;
+  transition: opacity 0.5s ease;
+}
+@keyframes floatPath {
+  0% { stroke-dashoffset: 1; opacity: 0.2; }
+  50% { stroke-dashoffset: 0.5; opacity: 0.8; }
+  100% { stroke-dashoffset: 0; opacity: 0.2; }
 }
 
-/* ── Typography & Headings ── */
-.ed-display-giant {
-  font-family: var(--font-display);
-  font-size: clamp(3.5rem, 10.5vw, 9.5rem);
-  line-height: 0.9;
+@media (prefers-reduced-motion: reduce) {
+  .fp-path {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 0.3;
+  }
+}
+
+/* Typography Extensions */
+.about-heading-giant {
+  font-family: var(--font-heading);
+  font-size: clamp(4rem, 12vw, 11rem);
+  line-height: 0.85;
   font-weight: 600;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
 }
 
-.ed-display-large {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 6.5vw, 5.5rem);
+.about-heading-huge {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 8vw, 7rem);
   line-height: 0.95;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.about-heading-large {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  font-weight: 500;
   letter-spacing: -0.02em;
-  color: var(--color-ivory);
 }
 
-.ed-statement {
-  font-family: var(--font-display);
-  font-size: clamp(1.85rem, 4.2vw, 3.5rem);
-  line-height: 1.12;
-  font-weight: 500;
-  color: var(--color-ivory);
+.about-text-body {
+  font-size: clamp(1.125rem, 2vw, 1.35rem);
+  line-height: 1.6;
+  color: #A1A1AA;
 }
 
-.ed-quote {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  line-height: 1.15;
-  font-weight: 500;
-  color: var(--color-ivory);
-}
-
-.ed-heading-medium {
-  font-family: var(--font-sans);
-  font-size: clamp(1.25rem, 2.2vw, 1.85rem);
-  line-height: 1.3;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--color-ivory);
-}
-
-.ed-body-lead {
-  font-family: var(--font-sans);
-  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
-  line-height: 1.65;
-  color: var(--color-sand);
-  font-weight: 400;
-}
-
-.ed-body {
-  font-family: var(--font-sans);
-  font-size: clamp(0.98rem, 1.6vw, 1.15rem);
-  line-height: 1.7;
-  color: var(--color-sand);
-  font-weight: 400;
-}
-
-.ed-micro-label {
-  font-family: var(--font-mono);
+.about-label {
+  font-family: var(--font-heading);
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.15em;
   color: var(--color-teal);
   text-transform: uppercase;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  margin-bottom: 2rem;
 }
 
-.ed-micro-label::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--color-teal);
-  box-shadow: 0 0 8px var(--color-teal-glow);
-  display: inline-block;
-}
-
-.tech-tag {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--color-stone);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.text-teal {
-  color: var(--color-teal);
-}
-
+/* Utilities */
 .relative-z {
   position: relative;
   z-index: 10;
 }
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.04"/%3E%3C/svg%3E');
+  pointer-events: none;
+  z-index: 50;
+  mix-blend-mode: overlay;
+}
 
-/* ── Kinetic Text Mask Animations ── */
-.kinetic-mask {
+/* Animations */
+.reveal-text-mask {
   overflow: hidden;
   display: inline-block;
   vertical-align: top;
-  padding-bottom: 0.1em;
 }
-
-.kinetic-text {
+.reveal-text-inner {
   display: inline-block;
-  transform: translateY(115%);
-  opacity: 0;
-  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+  transform: translateY(110%);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-.kinetic-text.is-revealed {
+.reveal-text-inner.is-revealed {
   transform: translateY(0);
-  opacity: 1;
 }
-
 .fade-up {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .fade-up.is-revealed {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* ── 1. Hero / Intro ── */
-.ed-hero {
+/* Section 01: Intro */
+.about-intro {
   position: relative;
-  min-height: 85vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  padding-top: 130px;
-  padding-bottom: 4.5rem;
-  border-bottom: 1px solid var(--color-border);
+  padding-top: 100px;
 }
-
-.ed-hero__abstract-visual {
+.about-intro__content {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 4rem;
+  align-items: end;
+  padding-bottom: 4rem;
+}
+.about-intro__scroll {
   position: absolute;
-  top: 50%;
-  right: 5%;
-  transform: translateY(-50%);
-  width: 380px;
-  height: 380px;
-  pointer-events: none;
-  opacity: 0.4;
+  bottom: 0;
+  left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.about-intro__scroll-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--color-teal), transparent);
 }
 
-.ed-abstract-svg {
+/* Section 02: Why Exists */
+.why-exists {
+  position: relative;
+  padding: 12rem 0;
+}
+.why-exists__container {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 4rem;
+}
+.why-exists__line {
+  width: 1px;
+  height: 100%;
+  background: rgba(255,255,255,0.05);
+  position: relative;
+}
+.why-exists__line-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 0%;
+  background: var(--color-teal);
+  transition: height 0.1s ease-out;
+}
+.why-exists__right {
+  padding-top: 8rem;
+}
+
+/* Section 03: Story */
+.our-story {
+  padding: 12rem 0;
+  position: relative;
+}
+.story-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.story-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 2rem;
+  margin-bottom: 8rem;
+  opacity: 0.3;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: translateY(20px);
+}
+.story-item.is-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.story-item__num {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  transition: color 0.5s ease;
+}
+.story-item.is-active .story-item__num {
+  color: var(--color-teal);
+}
+.story-item__content {
+  border-left: 1px solid rgba(255,255,255,0.05);
+  padding-left: 3rem;
+  position: relative;
+}
+.story-item__content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 1px;
+  height: 0%;
+  background: var(--color-teal);
+  transition: height 0.8s ease;
+}
+.story-item.is-active .story-item__content::before {
   height: 100%;
 }
 
-.ed-hero__grid {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 4rem;
-  align-items: end;
-  padding-top: 2rem;
-}
-
-/* ── 2. Why ARTAFIC Exists ── */
-.ed-why {
+/* Section 04: Philosophy */
+.philosophy {
+  padding: 12rem 0;
   position: relative;
-  padding: 9rem 0;
-  border-bottom: 1px solid var(--color-border);
 }
-
-.ed-why__split {
+.philosophy__container {
   display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 4rem;
-  margin-top: 2rem;
-  align-items: start;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
 }
-
-.ed-why__blocks {
-  margin-top: 5rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
-  position: relative;
-  padding-top: 2.5rem;
-  border-top: 1px solid var(--color-border);
-}
-
-.ed-why__line-fill {
-  position: absolute;
-  top: -1px;
-  left: 0;
-  width: 0%;
-  height: 2px;
-  background: var(--color-teal);
-  box-shadow: 0 0 10px var(--color-teal-glow);
-  transition: width 0.3s ease-out;
-}
-
-.ed-block__num {
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--color-teal);
-  margin-bottom: 1rem;
-}
-
-.ed-block__title {
-  font-family: var(--font-sans);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--color-ivory);
-  margin-bottom: 0.6rem;
-}
-
-/* ── 3. What We Do (Practical Services Split) ── */
-.ed-what {
-  padding: 9rem 0;
-  position: relative;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.ed-what__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 3rem;
-  margin-top: 3.5rem;
-}
-
-.ed-service-box {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 14px;
-  padding: 3.5rem 3rem;
-  position: relative;
-  transition: all 0.35s ease;
-}
-
-.ed-service-box:hover {
-  border-color: rgba(20, 184, 166, 0.35);
-  background: rgba(22, 22, 26, 0.85);
-  transform: translateY(-3px);
-}
-
-/* ── 4. How We Think (OBSERVE, CONNECT, BUILD) ── */
-.ed-think {
-  padding: 9.5rem 0;
-  position: relative;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.ed-think__layout {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 5rem;
-}
-
-.ed-think__left {
+.philosophy__left {
   position: sticky;
   top: 30vh;
   align-self: start;
 }
-
-.think-title {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 4.25rem);
-  color: var(--color-stone);
-  transition: color 0.4s ease, transform 0.4s ease;
-  margin-bottom: 1.25rem;
-}
-
-.think-title.is-active {
-  color: var(--color-ivory);
-  transform: translateX(10px);
-}
-
-.ed-think__right {
+.philosophy__right {
   display: flex;
   flex-direction: column;
-  gap: 20vh;
-  padding-top: 8vh;
-  padding-bottom: 8vh;
+  gap: 30vh;
+  padding-top: 20vh;
+  padding-bottom: 20vh;
 }
-
-.think-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 14px;
-  padding: 2.5rem;
-  opacity: 0.35;
-  transition: opacity 0.5s ease, border-color 0.4s ease;
-}
-
-.think-card.is-active {
-  opacity: 1;
-  border-color: rgba(20, 184, 166, 0.3);
-}
-
-/* ── 5. Philosophy (Interactive List) ── */
-.ed-philosophy {
-  padding: 9.5rem 0;
-  position: relative;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.phil-list {
+.phil-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 4vw, 3.5rem);
+  color: rgba(255,255,255,0.15);
+  transition: color 0.5s ease, transform 0.5s ease;
+  margin-bottom: 2rem;
   display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  margin-top: 3rem;
+  align-items: center;
+  gap: 1rem;
 }
-
-.phil-row {
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: 2.25rem;
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 3rem;
-  opacity: 0.45;
-  transition: opacity 0.45s ease;
-}
-
-.phil-row.is-active,
-.phil-row:hover {
-  opacity: 1;
-}
-
-.phil-row__title {
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-  color: var(--color-ivory);
-}
-
-.phil-row__num {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
+.phil-title span {
+  font-size: 1rem;
   color: var(--color-teal);
-  margin-right: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.phil-title.is-active {
+  color: #FFF;
+  transform: translateX(20px);
+}
+.phil-title.is-active span {
+  opacity: 1;
+}
+.phil-desc {
+  opacity: 0.2;
+  transition: opacity 0.8s ease;
+}
+.phil-desc.is-active {
+  opacity: 1;
 }
 
-/* ── 6. LESS NOISE. MORE IDENTITY. (PRESERVED SIGNATURE SCROLL ANIMATION) ── */
+/* Section 05: Less Noise */
 .less-noise {
   height: 150vh;
   position: relative;
@@ -388,7 +296,6 @@
   align-items: center;
   justify-content: center;
 }
-
 .less-noise__sticky {
   position: sticky;
   top: 0;
@@ -400,42 +307,15 @@
   justify-content: center;
   overflow: hidden;
 }
-
-.floating-paths-bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.fp-svg {
-  width: 100%;
-  height: 100%;
-}
-
-.fp-path {
-  stroke-dasharray: 1;
-  animation: floatPath linear infinite;
-  transition: opacity 0.5s ease;
-}
-
-@keyframes floatPath {
-  0% { stroke-dashoffset: 1; opacity: 0.15; }
-  50% { stroke-dashoffset: 0.5; opacity: 0.5; }
-  100% { stroke-dashoffset: 0; opacity: 0.15; }
-}
-
 .less-noise__glow {
   position: absolute;
   width: 60vw;
   height: 60vw;
-  background: radial-gradient(circle, rgba(20,184,166,0.12) 0%, rgba(20,184,166,0) 60%);
+  background: radial-gradient(circle, rgba(20,184,166,0.1) 0%, rgba(20,184,166,0) 60%);
   border-radius: 50%;
   z-index: 1;
   pointer-events: none;
 }
-
 .less-noise__word {
   position: absolute;
   top: 50%;
@@ -446,181 +326,155 @@
   transition: transform 0.1s linear, opacity 0.1s linear;
 }
 
-.less-noise__word1 {
-  color: var(--color-ivory);
+/* Section 06: Beliefs */
+.beliefs {
+  padding: 15rem 0;
+  position: relative;
 }
-
-.less-noise__word2 {
+.belief-row {
+  margin-bottom: 12rem;
+  text-align: center;
+}
+.belief-keyword {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 10vw, 8rem);
+  color: #FFF;
+  line-height: 1;
+  margin-bottom: 1rem;
+  opacity: 0.2;
+  transition: opacity 1s ease, transform 1s ease;
+  transform: translateY(40px);
+}
+.belief-text {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4vw, 3rem);
   color: var(--color-teal);
+  opacity: 0;
+  transition: opacity 1s ease 0.2s, transform 1s ease 0.2s;
+  transform: translateY(20px);
+  display: block;
+}
+.belief-row.is-active .belief-keyword {
+  opacity: 1;
+  transform: translateY(0);
+}
+.belief-row.is-active .belief-text {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.less-noise__tag-top {
+/* Section 07: Mindset */
+.mindset {
+  padding: 12rem 0;
+  position: relative;
+}
+.mindset__layout {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 8rem;
+  align-items: end;
+}
+.mindset__tech {
   position: absolute;
-  top: 15%;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--color-stone);
-  letter-spacing: 0.2em;
-  z-index: 3;
+  top: 20%;
+  right: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  opacity: 0.4;
+}
+.mindset__tech-line {
+  width: 1px;
+  height: 200px;
+  background: var(--color-teal);
+  margin-bottom: 1rem;
 }
 
-/* ── 7. What We Believe (Typographic Manifesto Grid) ── */
-.ed-manifesto {
-  padding: 9.5rem 0;
-  position: relative;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.manifesto-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2.5rem;
-  margin-top: 3.5rem;
-}
-
-.manifesto-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 14px;
-  padding: 2.75rem 2.25rem;
-  transition: all 0.35s ease;
-}
-
-.manifesto-card:hover,
-.manifesto-card.is-active {
-  border-color: rgba(20, 184, 166, 0.3);
-}
-
-.manifesto-card__word {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 3.8vw, 3.25rem);
-  line-height: 1.1;
-  color: var(--color-ivory);
-  margin-bottom: 0.75rem;
-}
-
-.manifesto-card__word .keyword {
-  color: var(--color-teal);
-}
-
-/* ── 8. ARTAFIC Mindset ── */
-.ed-mindset {
-  padding: 9.5rem 0;
-  position: relative;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.ed-mindset__grid {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 4.5rem;
-  align-items: start;
-}
-
-/* ── 9. What You Get (Practical Outcomes Grid) ── */
-.ed-outcomes {
-  padding: 9.5rem 0;
-  position: relative;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.outcomes-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2.5rem;
-  margin-top: 3.5rem;
-}
-
-.outcome-box {
-  border-top: 1px solid var(--color-border);
-  padding-top: 1.75rem;
-}
-
-.outcome-box__title {
-  font-family: var(--font-sans);
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--color-ivory);
-  margin-bottom: 0.6rem;
-}
-
-/* ── 10. Final Climax & CTA ── */
-.ed-final {
-  padding: 10rem 0;
-  position: relative;
-  border-bottom: 1px solid var(--color-border);
-  text-align: center;
-}
-
-.ed-cta {
-  padding: 8rem 0 11rem;
+/* Section 08: Final */
+.about-final {
+  padding: 18rem 0;
   text-align: center;
   position: relative;
 }
+.about-final__content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-.ed-cta .btn {
+/* Section 09: CTA */
+.about-cta {
+  padding: 6rem 0 12rem;
+  text-align: center;
+  position: relative;
+}
+.about-cta .btn {
   margin-top: 2.5rem;
-  padding: 1rem 2.5rem;
-  font-size: 1.05rem;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.about-cta .btn:hover {
+  box-shadow: 0 0 20px rgba(20,184,166,0.3);
+  transform: translateY(-2px);
+}
+.about-cta .btn svg {
+  transition: transform 0.3s ease;
+}
+.about-cta .btn:hover svg {
+  transform: translateX(4px);
 }
 
-.ed-cta .btn:hover {
-  box-shadow: 0 0 25px var(--color-teal-glow);
-  transform: translateY(-3px);
-}
-
-/* ── Responsive Adjustments ── */
+/* Responsive */
 @media (max-width: 1024px) {
-  .ed-hero__grid,
-  .ed-why__split,
-  .ed-think__layout,
-  .ed-mindset__grid,
-  .phil-row {
+  .about-intro__content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .why-exists__container {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
-
-  .ed-hero__abstract-visual {
+  .why-exists__line {
     display: none;
   }
-
-  .ed-why__blocks,
-  .ed-what__grid,
-  .manifesto-grid,
-  .outcomes-grid {
+  .why-exists__right {
+    padding-top: 0;
+  }
+  .philosophy__container {
     grid-template-columns: 1fr;
   }
-
-  .ed-think__left {
+  .philosophy__left {
     position: relative;
     top: auto;
+    margin-bottom: 4rem;
   }
-
-  .ed-think__right {
+  .philosophy__right {
     padding: 0;
-    gap: 3rem;
+    gap: 4rem;
+  }
+  .mindset__layout {
+    grid-template-columns: 1fr;
+    gap: 4rem;
   }
 }
 
 @media (max-width: 768px) {
-  .ed-hero {
-    padding-top: 110px;
-    min-height: auto;
+  .about-intro {
+    padding-top: 120px;
   }
-
-  .ed-why,
-  .ed-what,
-  .ed-think,
-  .ed-philosophy,
-  .ed-manifesto,
-  .ed-mindset,
-  .ed-outcomes,
-  .ed-final {
-    padding: 5.5rem 0;
+  .story-item {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
-
-  .less-noise {
-    height: 120vh;
+  .story-item__num {
+    font-size: 1.25rem;
+  }
+  .story-item__content {
+    padding-left: 1.5rem;
+  }
+  /* Reduce paths complexity on mobile */
+  .fp-path:nth-child(n+18) {
+    display: none; /* Show only half the paths for performance */
   }
 }

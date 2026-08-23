@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -11,31 +11,32 @@
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
 
   <!-- SEO -->
-  <title>About &mdash; ARTAFIC | Digital Studio &amp; Visual Direction</title>
-  <meta name="description" content="Learn about ARTAFIC. We build websites and visual identities that make a business easier to understand and remember." />
+  <title>About &mdash; ARTAFIC | Our Story & Philosophy</title>
+  <meta name="description" content="Learn about ARTAFIC. We bring design and technology together to create digital experiences that feel clear, intentional, and distinctive." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://artafic.com/about.html" />
+  <link rel="canonical" href="https://artafic.com/faq.html" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://artafic.com/about.html" />
+  <meta property="og:url" content="https://artafic.com/faq.html" />
   <meta property="og:title" content="About &mdash; ARTAFIC" />
-  <meta property="og:description" content="Discover the story, guiding philosophy, and mindset behind ARTAFIC." />
+  <meta property="og:description" content="Find answers to common questions about ARTAFIC's web development and logo design services." />
   <meta property="og:image" content="https://artafic.com/assets/images/og-image.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Kanit:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=2.2" />
-  <link rel="stylesheet" href="css/about.css?v=2.4" />
+  <link rel="stylesheet" href="css/styles.css?v=2.1" />`n  <link rel="stylesheet" href="css/about.css?v=1.0" />
 </head>
 <body class="about-page">
 
-<!-- NAVIGATION -->
+<!-- ═══════════════════════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════════════════════ -->
 <header role="banner">
   <nav class="nav" id="nav" aria-label="Main navigation">
     <div class="nav__inner">
@@ -92,310 +93,199 @@
 </header>
 
 <main id="main-content" tabindex="-1">
-
-  <!-- TEXTURE OVERLAY -->
-  <div class="editorial-noise"></div>
   
-  <!-- 1. HERO / INTRO -->
-  <section class="ed-hero" id="about-hero">
-    <div class="ed-hero__abstract-visual">
-      <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" class="ed-abstract-svg">
-        <circle cx="200" cy="200" r="199" stroke="var(--color-ivory)" stroke-opacity="0.15" stroke-width="1" stroke-dasharray="4 4"/>
-        <line x1="200" y1="0" x2="200" y2="400" stroke="var(--color-ivory)" stroke-opacity="0.1" stroke-width="1"/>
-        <line x1="0" y1="200" x2="400" y2="200" stroke="var(--color-ivory)" stroke-opacity="0.1" stroke-width="1"/>
-        <path d="M50 200 Q200 50 350 200 T50 200" stroke="var(--color-teal)" stroke-opacity="0.25" stroke-width="1" fill="none"/>
-      </svg>
-    </div>
-    
+  <!-- SECTION 01: EDITORIAL INTRO -->
+  <section class="about-intro" id="about-intro">
+    <div class="floating-paths-bg" data-pos="1" data-theme="normal"></div>
     <div class="container relative-z">
-      <div class="fade-up" style="margin-bottom: 1.5rem;">
-        <span class="ed-micro-label">ABOUT / ARTAFIC</span>
-      </div>
-      
-      <div class="ed-hero__grid">
-        <div>
-          <h1 class="ed-display-large">
-            <span class="kinetic-mask"><span class="kinetic-text">We build websites and</span></span><br>
-            <span class="kinetic-mask"><span class="kinetic-text text-teal">visual identities</span></span><br>
-            <span class="kinetic-mask"><span class="kinetic-text">that make a business easier</span></span><br>
-            <span class="kinetic-mask"><span class="kinetic-text">to understand and remember.</span></span>
+      <div class="about-intro__content">
+        <div style="grid-column: 1 / -1;">
+          <p class="about-label fade-up">About ARTAFIC</p>
+          <h1 class="about-heading-huge" style="margin-bottom: 2rem;">
+            <span class="reveal-text-mask"><span class="reveal-text-inner">We build</span></span><br>
+            <span class="reveal-text-mask"><span class="reveal-text-inner">digital experiences</span></span><br>
+            <span class="reveal-text-mask"><span class="reveal-text-inner">with intention.</span></span>
           </h1>
         </div>
-        
-        <div class="fade-up" style="transition-delay: 0.3s;">
-          <p class="ed-body-lead" style="margin-bottom: 1rem; color: var(--color-ivory);">
-            ARTAFIC brings website design, modern development and visual direction together.
-          </p>
-          <p class="ed-body">
-            We work with growing businesses and founders who want a clear, distinctive digital presence without generic template noise.
+        <div style="grid-column: 2 / -1;">
+          <p class="about-text-body fade-up" style="transition-delay: 0.4s;">
+            ARTAFIC is a digital agency built to help businesses present themselves better online. We bring design and technology together to create digital experiences that feel clear, intentional, and distinctive.
           </p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- 2. WHAT WE DO (Practical Information) -->
-  <section class="ed-what" id="what-we-do">
-    <div class="container relative-z">
-      <span class="ed-micro-label fade-up">01 / WHAT WE DO</span>
-      <h2 class="ed-statement fade-up" style="margin-top: 1rem; margin-bottom: 2rem;">TWO CORE SERVICES</h2>
-
-      <div class="ed-what__grid">
-        <div class="ed-service-box fade-up">
-          <span class="tech-tag" style="margin-bottom: 1rem; display: block;">SERVICE 01</span>
-          <h3 class="ed-heading-medium" style="margin-bottom: 0.75rem;">WEBSITES</h3>
-          <p class="ed-body">
-            Bespoke website design and development built for speed, clarity and real visitors—never bloated templates.
-          </p>
-        </div>
-
-        <div class="ed-service-box fade-up" style="transition-delay: 0.15s;">
-          <span class="tech-tag" style="margin-bottom: 1rem; display: block;">SERVICE 02</span>
-          <h3 class="ed-heading-medium" style="margin-bottom: 0.75rem;">VISUAL IDENTITY</h3>
-          <p class="ed-body">
-            Logos, typography and visual direction that help your business look consistent, memorable and credible everywhere.
-          </p>
-        </div>
+      <div class="about-intro__scroll">
+        <span style="font-family: var(--font-heading); font-size: 0.75rem; letter-spacing: 0.1em; color: var(--color-text-muted); text-transform: uppercase;">Scroll to explore</span>
+        <div class="about-intro__scroll-line"></div>
       </div>
     </div>
   </section>
 
-  <!-- 3. WHY ARTAFIC EXISTS -->
-  <section class="ed-why" id="why-exists">
+  <!-- SECTION 02: WHY EXISTS -->
+  <section class="why-exists" id="why-exists">
+    <div class="floating-paths-bg" data-pos="-1" data-theme="minimal"></div>
     <div class="container relative-z">
-      <span class="ed-micro-label fade-up">02 / WHY ARTAFIC EXISTS</span>
-      
-      <div class="ed-why__split">
-        <div class="ed-why__left fade-up">
-          <h2 class="ed-statement">A good business can lose attention when its digital presence doesn't show its value.</h2>
-        </div>
-        <div class="ed-why__right fade-up">
-          <p class="ed-body" style="margin-bottom: 1rem;">
-            Some businesses have great products but a website that feels generic. Others have a site that looks fine but is hard to navigate.
-          </p>
-          <p class="ed-body">
-            We combine design and engineering so your site works as well as it looks.
-          </p>
-        </div>
-      </div>
-      
-      <div class="ed-why__blocks">
-        <div class="ed-why__line-fill"></div>
-        
-        <div class="ed-block fade-up">
-          <div class="ed-block__num">01</div>
-          <h3 class="ed-block__title">THE OBSERVATION</h3>
-          <p class="ed-body">Too many businesses have a valuable offer, but their website fails to communicate that value clearly.</p>
-        </div>
-        
-        <div class="ed-block fade-up" style="transition-delay: 0.15s;">
-          <div class="ed-block__num">02</div>
-          <h3 class="ed-block__title">THE DISCONNECT</h3>
-          <p class="ed-body">Design and development are often treated as separate jobs, resulting in sites that look good but perform poorly.</p>
-        </div>
-        
-        <div class="ed-block fade-up" style="transition-delay: 0.3s;">
-          <div class="ed-block__num">03</div>
-          <div class="ed-block__content">
-            <h3 class="ed-block__title">THE SOLUTION</h3>
-            <p class="ed-body">We unify the process. Every visual decision is backed by solid code, so the final site performs seamlessly.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. HOW WE THINK (OBSERVE, CONNECT, BUILD) -->
-  <section class="ed-think" id="how-we-think">
-    <div class="container relative-z">
-      <span class="ed-micro-label fade-up">03 / HOW WE THINK</span>
-      
-      <div class="ed-think__layout" style="margin-top: 2rem;">
-        <div class="ed-think__left">
-          <h3 class="think-title is-active" data-index="0">OBSERVE</h3>
-          <h3 class="think-title" data-index="1">CONNECT</h3>
-          <h3 class="think-title" data-index="2">BUILD</h3>
-        </div>
-
-        <div class="ed-think__right">
-          <div class="think-card is-active" data-index="0">
-            <span class="tech-tag" style="margin-bottom: 0.75rem; display: block;">STAGE 01</span>
-            <h4 class="ed-heading-medium" style="margin-bottom: 0.5rem;">OBSERVE</h4>
-            <p class="ed-body-lead">Understand the business, its customers and what needs to be communicated.</p>
-          </div>
-
-          <div class="think-card" data-index="1">
-            <span class="tech-tag" style="margin-bottom: 0.75rem; display: block;">STAGE 02</span>
-            <h4 class="ed-heading-medium" style="margin-bottom: 0.5rem;">CONNECT</h4>
-            <p class="ed-body-lead">Turn that understanding into a clear visual and digital direction.</p>
-          </div>
-
-          <div class="think-card" data-index="2">
-            <span class="tech-tag" style="margin-bottom: 0.75rem; display: block;">STAGE 03</span>
-            <h4 class="ed-heading-medium" style="margin-bottom: 0.5rem;">BUILD</h4>
-            <p class="ed-body-lead">Design and develop the final experience with attention to the details that matter.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. OUR PHILOSOPHY -->
-  <section class="ed-philosophy" id="philosophy">
-    <div class="container relative-z">
-      <span class="ed-micro-label fade-up">04 / OUR PHILOSOPHY</span>
-      
-      <div class="phil-list">
-        <div class="phil-row fade-up">
-          <h3 class="phil-row__title"><span class="phil-row__num">01</span> DESIGN WITH PURPOSE</h3>
-          <p class="ed-body-lead">Every visual choice should have a reason. Good design should help people understand what matters.</p>
-        </div>
-
-        <div class="phil-row fade-up" style="transition-delay: 0.15s;">
-          <h3 class="phil-row__title"><span class="phil-row__num">02</span> BUILD WITH INTENTION</h3>
-          <p class="ed-body-lead">Development should support the design, not fight against it. The final website should work as well as it looks.</p>
-        </div>
-
-        <div class="phil-row fade-up" style="transition-delay: 0.3s;">
-          <h3 class="phil-row__title"><span class="phil-row__num">03</span> MAKE IT DISTINCTIVE</h3>
-          <p class="ed-body-lead">Your website should feel connected to your business instead of looking like another version of the same template.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. LESS NOISE. MORE IDENTITY. (PRESERVED SIGNATURE ANIMATION) -->
-  <section class="less-noise" id="less-noise">
-    <div class="less-noise__sticky">
-      <div class="floating-paths-bg" data-pos="1" data-theme="heavy"></div>
-      <div class="less-noise__glow"></div>
-      
-      <span class="less-noise__tag-top">[ ARTAFIC // CORE MANIFESTO ]</span>
-      
-      <div class="less-noise__word less-noise__word1 ed-display-giant">LESS NOISE.</div>
-      <div class="less-noise__word less-noise__word2 ed-display-giant text-teal">MORE IDENTITY.</div>
-    </div>
-  </section>
-
-  <!-- 7. WHAT WE BELIEVE (Typographic Manifesto Grid) -->
-  <section class="ed-manifesto" id="beliefs">
-    <div class="container relative-z">
-      <span class="ed-micro-label fade-up">05 / WHAT WE BELIEVE</span>
-      
-      <div class="manifesto-grid">
-        <div class="manifesto-card fade-up">
-          <span class="tech-tag" style="margin-bottom: 0.75rem; display: block;">STANDARD // 01</span>
-          <h3 class="manifesto-card__word"><span class="keyword">CLEAR</span> over complicated.</h3>
-          <p class="ed-body">If an element doesn't help the customer understand your value, it is noise and should be removed.</p>
-        </div>
-
-        <div class="manifesto-card fade-up" style="transition-delay: 0.1s;">
-          <span class="tech-tag" style="margin-bottom: 0.75rem; display: block;">STANDARD // 02</span>
-          <h3 class="manifesto-card__word"><span class="keyword">PURPOSE</span> over decoration.</h3>
-          <p class="ed-body">Design choices must serve a commercial goal, not just visual trendiness.</p>
-        </div>
-
-        <div class="manifesto-card fade-up" style="transition-delay: 0.2s;">
-          <span class="tech-tag" style="margin-bottom: 0.75rem; display: block;">STANDARD // 03</span>
-          <h3 class="manifesto-card__word"><span class="keyword">IDENTITY</span> over imitation.</h3>
-          <p class="ed-body">Your business is unique. Your website should reflect that character instead of copying everyone else.</p>
-        </div>
-
-        <div class="manifesto-card fade-up" style="transition-delay: 0.3s;">
-          <span class="tech-tag" style="margin-bottom: 0.75rem; display: block;">STANDARD // 04</span>
-          <h3 class="manifesto-card__word"><span class="keyword">EXPERIENCE</span> over excess.</h3>
-          <p class="ed-body">Speed, smooth navigation and clarity outperform bloated features every time.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 8. ARTAFIC MINDSET -->
-  <section class="ed-mindset" id="mindset">
-    <div class="container relative-z">
-      <div class="ed-mindset__grid">
-        <div>
-          <span class="ed-micro-label fade-up">06 / ARTAFIC MINDSET</span>
-          <h2 class="ed-quote fade-up" style="margin-top: 1rem; transition-delay: 0.15s;">
-            "We don't believe every business needs more noise.<br>
-            <span class="text-teal">It needs a clearer voice."</span>
+      <div class="why-exists__container">
+        <div class="why-exists__left">
+          <p class="about-label fade-up">Why ARTAFIC Exists</p>
+          <h2 class="about-heading-large fade-up" style="transition-delay: 0.2s;">
+            A good business can lose attention simply because its digital presence doesn't reflect what it offers.
           </h2>
         </div>
-
-        <div class="fade-up" style="transition-delay: 0.3s; padding-top: 1.5rem;">
-          <span class="tech-tag" style="margin-bottom: 1rem; display: block;">SEC / 06 &bull; MINDSET</span>
-          <p class="ed-body-lead" style="color: var(--color-ivory); margin-bottom: 0.75rem;">
-            We remove the clutter that distracts from what matters.
-          </p>
-          <p class="ed-body">
-            A website should make your business easier to understand, not harder.
+        <div class="why-exists__line">
+          <div class="why-exists__line-fill"></div>
+        </div>
+        <div class="why-exists__right">
+          <p class="about-text-body fade-up" style="transition-delay: 0.4s;" data-parallax="0.05">
+            ARTAFIC exists to close that gap. We bring thoughtful design and modern development together to create digital experiences that communicate clearly and leave a stronger impression.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 9. WHAT YOU GET (Practical Outcomes Grid) -->
-  <section class="ed-outcomes" id="what-you-get">
+  <!-- SECTION 03: STORY -->
+  <section class="our-story" id="our-story">
     <div class="container relative-z">
-      <span class="ed-micro-label fade-up">07 / WHAT YOU GET</span>
-      <h2 class="ed-statement fade-up" style="margin-top: 0.75rem;">PRACTICAL OUTCOMES FOR YOUR BUSINESS</h2>
-
-      <div class="outcomes-grid">
-        <div class="outcome-box fade-up">
-          <span class="tech-tag" style="margin-bottom: 0.5rem; display: block;">OUTCOME // 01</span>
-          <h3 class="outcome-box__title">A CLEARER PRESENCE</h3>
-          <p class="ed-body">A website that makes your business value easy to understand immediately.</p>
+      <div class="story-wrapper">
+        <div class="story-item">
+          <div class="story-item__num">01</div>
+          <div class="story-item__content">
+            <h3 style="font-family: var(--font-heading); font-size: 2rem; color: #FFF; margin-bottom: 1rem; font-weight: 500;">The Observation</h3>
+            <p class="about-text-body">Too many businesses have something valuable to offer, but their digital presence fails to communicate that value effectively to their audience.</p>
+          </div>
         </div>
-
-        <div class="outcome-box fade-up" style="transition-delay: 0.1s;">
-          <span class="tech-tag" style="margin-bottom: 0.5rem; display: block;">OUTCOME // 02</span>
-          <h3 class="outcome-box__title">A STRONGER IDENTITY</h3>
-          <p class="ed-body">A visual direction that feels connected to your brand character.</p>
+        
+        <div class="story-item">
+          <div class="story-item__num">02</div>
+          <div class="story-item__content">
+            <h3 style="font-family: var(--font-heading); font-size: 2rem; color: #FFF; margin-bottom: 1rem; font-weight: 500;">The Disconnect</h3>
+            <p class="about-text-body">Often, design and development are treated as completely separate pieces, resulting in websites that either look good but perform poorly, or function well but look like templates.</p>
+          </div>
         </div>
-
-        <div class="outcome-box fade-up" style="transition-delay: 0.2s;">
-          <span class="tech-tag" style="margin-bottom: 0.5rem; display: block;">OUTCOME // 03</span>
-          <h3 class="outcome-box__title">A BETTER EXPERIENCE</h3>
-          <p class="ed-body">Fast load speeds and intuitive navigation for real visitors.</p>
-        </div>
-
-        <div class="outcome-box fade-up" style="transition-delay: 0.3s;">
-          <span class="tech-tag" style="margin-bottom: 0.5rem; display: block;">OUTCOME // 04</span>
-          <h3 class="outcome-box__title">A UNIFIED RESULT</h3>
-          <p class="ed-body">Design and development built together by one team from start to finish.</p>
+        
+        <div class="story-item">
+          <div class="story-item__num">03</div>
+          <div class="story-item__content">
+            <h3 style="font-family: var(--font-heading); font-size: 2rem; color: #FFF; margin-bottom: 1rem; font-weight: 500;">The Solution</h3>
+            <p class="about-text-body">ARTAFIC brings design and engineering together to create work that feels completely intentional—from the very first visual impression to the final technical interaction.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 10. FINAL CLIMAX & CTA -->
-  <section class="ed-final" id="final-statement">
-    <div class="container relative-z fade-up">
-      <p class="ed-body-lead" style="margin-bottom: 1.5rem; color: var(--color-sand);">
-        Good digital work doesn't just make a business look better.
-      </p>
-      <h2 class="ed-statement">
-        It makes the business <span class="text-teal">easier to understand</span>, <span class="text-teal">easier to remember</span> and <span class="text-teal">easier to trust</span>.
-      </h2>
+  <!-- SECTION 04: PHILOSOPHY -->
+  <section class="philosophy" id="philosophy">
+    <div class="philosophy__container container relative-z">
+      <div class="philosophy__left">
+        <p class="about-label" style="margin-bottom: 4rem;">Our Philosophy</p>
+        <h3 class="phil-title is-active"><span>01</span> DESIGN WITH PURPOSE</h3>
+        <h3 class="phil-title"><span>02</span> BUILD WITH INTENTION</h3>
+        <h3 class="phil-title"><span>03</span> MAKE IT DISTINCTIVE</h3>
+      </div>
+      <div class="philosophy__right">
+        <div class="phil-desc is-active" data-index="0">
+          <p class="about-text-body" style="font-size: clamp(1.5rem, 3vw, 2.5rem); color: #FFF;">Every visual decision should serve a reason. We strip away the unnecessary so the core message stands out.</p>
+        </div>
+        <div class="phil-desc" data-index="1">
+          <p class="about-text-body" style="font-size: clamp(1.5rem, 3vw, 2.5rem); color: #FFF;">Technology should make the experience better, not more complicated. We focus on smooth performance and solid architecture.</p>
+        </div>
+        <div class="phil-desc" data-index="2">
+          <p class="about-text-body" style="font-size: clamp(1.5rem, 3vw, 2.5rem); color: #FFF;">Your business shouldn't look like everyone else's. We craft digital identities that feel genuinely connected to your brand.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- 11. FINAL CTA -->
-  <section class="ed-cta" id="about-cta">
+  <!-- SECTION 05: LESS NOISE -->
+  <section class="less-noise" id="less-noise">
+    <div class="less-noise__sticky">
+      <div class="floating-paths-bg" data-pos="1" data-theme="heavy" style="opacity: 0.8;"></div>
+      <div class="grain-overlay"></div>
+      <div class="less-noise__glow"></div>
+      
+      <div class="less-noise__word less-noise__word1 about-heading-giant">LESS NOISE.</div>
+      <div class="less-noise__word less-noise__word2 about-heading-giant">MORE IDENTITY.</div>
+    </div>
+  </section>
+
+  <!-- SECTION 06: BELIEFS -->
+  <section class="beliefs" id="beliefs">
+    <div class="floating-paths-bg" data-pos="-1" data-theme="minimal" style="opacity: 0.5;"></div>
+    <div class="container relative-z">
+      <p class="about-label fade-up" style="text-align: center; display: block; margin-bottom: 6rem;">What We Believe</p>
+      
+      <div class="belief-row">
+        <span class="belief-keyword">CLEAR</span>
+        <span class="belief-text">over complicated.</span>
+      </div>
+      
+      <div class="belief-row">
+        <span class="belief-keyword">PURPOSE</span>
+        <span class="belief-text">over decoration.</span>
+      </div>
+      
+      <div class="belief-row">
+        <span class="belief-keyword">IDENTITY</span>
+        <span class="belief-text">over imitation.</span>
+      </div>
+      
+      <div class="belief-row">
+        <span class="belief-keyword">EXPERIENCE</span>
+        <span class="belief-text">over excess.</span>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- SECTION 07: MINDSET -->
+  <section class="mindset" id="mindset">
+    <div class="container relative-z">
+      <div class="mindset__layout">
+        <div data-parallax="0.08">
+          <p class="about-label fade-up">The ARTAFIC Mindset</p>
+          <h2 class="about-heading-large fade-up" style="transition-delay: 0.2s;">
+            We don't believe every business needs more noise.<br>It needs a clearer voice.
+          </h2>
+        </div>
+        <div data-parallax="-0.05">
+          <p class="about-text-body fade-up" style="padding-top: 2rem;">
+            That means thoughtful design, purposeful technology, and digital experiences built around the business&mdash;not around a template.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="mindset__tech relative-z">
+      <div class="mindset__tech-line"></div>
+      <span class="mindset__tech-text">SEC-07</span>
+      <span class="mindset__tech-text" style="margin-top: 4px;">MINDSET_SYS</span>
+    </div>
+  </section>
+
+  <!-- SECTION 08: FINAL -->
+  <section class="about-final" id="final">
+    <div class="floating-paths-bg" data-pos="2" data-theme="minimal" style="opacity: 0.3;"></div>
+    <div class="container relative-z">
+      <div class="about-final__content">
+        <h2 class="about-heading-large fade-up" style="color: rgba(255,255,255,0.5);">Good digital work doesn't just make a business look better.</h2>
+        <h2 class="about-heading-large fade-up" style="color: #FFF; margin-top: 2rem; transition-delay: 0.2s;">It makes the business easier to understand, easier to remember, and easier to trust.</h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 09: CTA -->
+  <section class="about-cta" id="about-cta">
     <div class="container relative-z fade-up">
-      <span class="ed-micro-label" style="margin-bottom: 1rem;">START A CONVERSATION</span>
-      <h2 class="ed-statement" style="margin-bottom: 0.75rem;">HAVE SOMETHING WORTH BUILDING?</h2>
-      <p class="ed-body-lead" style="max-width: 500px; margin: 0 auto;">Tell us what you're working on.</p>
+      <h2 class="about-label" style="margin-bottom: 1rem;">HAVE SOMETHING WORTH BUILDING?</h2>
+      <p class="about-text-body">Let's turn the idea into something people remember.</p>
       <a href="index.html#booking" class="btn btn--primary">
-        LET'S TALK
+        Let's Talk
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left: 0.5rem; transition: transform 0.3s ease;"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </a>
     </div>
   </section>
 
 </main>
-
 <footer class="footer" role="contentinfo" aria-label="Site footer">
   <div class="container">
     <div class="footer__grid">
@@ -448,8 +338,9 @@
   </div>
 </footer>
 
-<!-- JS Scripts -->
-<script src="js/main.js?v=2.2"></script>
-<script src="js/about.js?v=2.4"></script>
-</body>
+<!-- JS -->
+<script src="js/main.js?v=2.1"></script>
+<script src="js/about.js?v=1.0"></script>`n</body>
 </html>
+
+
