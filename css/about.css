@@ -1,11 +1,23 @@
 /* ==========================================================================
-   ARTAFIC ABOUT PAGE — EDITORIAL DESIGN SYSTEM (UI/UX PRO MAX)
+   ARTAFIC ABOUT PAGE — EDITORIAL MASTER DESIGN SYSTEM
    ========================================================================== */
 
-/* ── Global Page Theme ── */
+/* ── Global Page Theme & Variables ── */
+:root {
+  --color-base: #080808;
+  --color-text-primary: #F1F0EA;
+  --color-text-secondary: #B7B5AE;
+  --color-text-muted: #777771;
+  --color-teal: #14B8A6;
+  --color-ivory: #D9D1C7;
+
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
 .about-page {
-  background-color: #080808;
-  color: #F5F5F5;
+  background-color: var(--color-base);
+  color: var(--color-text-primary);
   overflow-x: hidden;
   position: relative;
   font-family: var(--font-body);
@@ -13,496 +25,336 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Typography & Text Hierarchy ── */
-.about-heading-giant {
-  font-family: var(--font-heading);
-  font-size: clamp(3.5rem, 11vw, 10.5rem);
-  line-height: 0.88;
-  font-weight: 800;
-  letter-spacing: -0.04em;
+/* ── Typography System ── */
+.ed-micro-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--color-text-muted);
   text-transform: uppercase;
 }
 
-.about-heading-huge {
-  font-family: var(--font-heading);
-  font-size: clamp(2.75rem, 7.5vw, 6.5rem);
-  line-height: 0.96;
-  font-weight: 700;
+.ed-tech-label {
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--color-teal);
+  letter-spacing: 0.1em;
+}
+
+.ed-tech-coord {
+  font-family: monospace;
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
+.ed-body {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  line-height: 1.6;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.ed-statement {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.05;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.ed-quote {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  line-height: 1.1;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-text-primary);
+}
+
+.ed-display-medium {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 5rem);
+  line-height: 0.95;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.ed-signature {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 11vw, 10rem);
+  line-height: 0.85;
+  font-weight: 600;
   letter-spacing: -0.03em;
   text-transform: uppercase;
-  color: #FFFFFF;
-}
-
-.about-heading-large {
-  font-family: var(--font-heading);
-  font-size: clamp(1.85rem, 4.2vw, 3.75rem);
-  line-height: 1.12;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: #FFFFFF;
-}
-
-.about-heading-medium {
-  font-family: var(--font-heading);
-  font-size: clamp(1.35rem, 2.8vw, 2.25rem);
-  line-height: 1.25;
-  font-weight: 600;
-  color: #FFFFFF;
-}
-
-.about-text-lead {
-  font-size: clamp(1.15rem, 2vw, 1.4rem);
-  line-height: 1.65;
-  color: #E4E4E7;
-  font-weight: 400;
-}
-
-.about-text-body {
-  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-  line-height: 1.7;
-  color: #D4D4D8;
-  font-weight: 400;
-}
-
-.about-text-muted {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #A1A1AA;
 }
 
 .text-teal {
   color: var(--color-teal);
 }
+.mb-4 { margin-bottom: 1rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mt-4 { margin-top: 1rem; }
 
-/* ── Section Label Pattern ── */
-.about-label {
-  font-family: var(--font-heading);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  color: var(--color-teal);
-  text-transform: uppercase;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 2rem;
+/* ── Texture & Lighting ── */
+.editorial-noise {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.03"/%3E%3C/svg%3E');
+  mix-blend-mode: overlay;
 }
 
-.about-label__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--color-teal);
-  box-shadow: 0 0 10px rgba(20, 184, 166, 0.8);
-  display: inline-block;
-}
-
-/* ── Layering & Backgrounds ── */
 .relative-z {
   position: relative;
   z-index: 10;
 }
 
-.grain-overlay {
-  position: absolute;
-  inset: 0;
-  background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.035"/%3E%3C/svg%3E');
-  pointer-events: none;
-  z-index: 40;
-  mix-blend-mode: overlay;
-}
-
-.floating-paths-bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.fp-svg {
-  width: 100%;
-  height: 100%;
-}
-
-.fp-path {
-  stroke-dasharray: 1;
-  animation: floatPath linear infinite;
-  transition: opacity 0.5s ease;
-}
-
-@keyframes floatPath {
-  0% { stroke-dashoffset: 1; opacity: 0.2; }
-  50% { stroke-dashoffset: 0.5; opacity: 0.8; }
-  100% { stroke-dashoffset: 0; opacity: 0.2; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .fp-path {
-    animation: none;
-    stroke-dashoffset: 0;
-    opacity: 0.3;
-  }
-}
-
-/* ── Typographic Mask & Reveal Animations ── */
-.reveal-text-mask {
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: top;
-  padding-bottom: 0.1em;
-}
-
-.reveal-text-inner {
-  display: inline-block;
-  transform: translateY(115%);
-  opacity: 0;
-  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
-}
-
-.reveal-text-inner.is-revealed {
-  transform: translateY(0);
-  opacity: 1;
-}
-
+/* ── Utilities ── */
 .fade-up {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(25px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .fade-up.is-revealed {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* ── Badges & Technical UI Fragments ── */
-.tech-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: var(--font-heading);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #A1A1AA;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 0.35rem 0.75rem;
-  border-radius: 9999px;
+.kinetic-mask {
+  overflow: hidden;
+  padding-bottom: 0.1em;
+}
+.kinetic-text {
+  display: inline-block;
+  transform: translateY(115%);
+  opacity: 0;
+  /* GSAP / JS handles animation */
 }
 
-.tech-tag--teal {
-  color: var(--color-teal);
-  background: rgba(20, 184, 166, 0.08);
-  border-color: rgba(20, 184, 166, 0.25);
-}
-
-.coordinate-badge {
-  font-family: monospace;
-  font-size: 0.75rem;
-  color: #71717A;
-  letter-spacing: 0.08em;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* ── Section 01: Hero Intro ── */
-.about-intro {
+/* ── 1. Hero / Intro ── */
+.ed-hero {
   position: relative;
-  min-height: 88vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  padding-top: 130px;
-  padding-bottom: 5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 15vh;
+  padding-bottom: 5vh;
 }
 
-.about-intro__content {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 4rem;
-  align-items: end;
-  padding-bottom: 3rem;
-}
-
-.about-intro__meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.about-intro__scroll {
+.ed-hero__abstract-visual {
   position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  right: -5%;
+  transform: translateY(-50%);
+  width: 600px;
+  height: 600px;
+  z-index: 1;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.ed-abstract-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ed-hero__label-wrap {
+  margin-bottom: 3rem;
+}
+
+.ed-hero__typography {
+  margin-bottom: 8rem;
+}
+.ed-hero__line1 {
+  font-family: var(--font-body);
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+}
+.ed-hero__line2 {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7.5vw, 6.5rem);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+.ed-hero__line3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-teal);
+  margin-left: clamp(2rem, 15vw, 12rem);
+  margin-top: 0.5rem;
+}
+
+.ed-hero__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 5%;
+}
+.ed-hero__footer-text {
+  max-width: 320px;
+  padding-left: 2rem;
+  border-left: 1px solid rgba(241, 240, 234, 0.1);
+}
+
+/* ── 2. Why ARTAFIC Exists ── */
+.ed-why {
+  padding: 10rem 0;
+  position: relative;
+}
+.ed-why__top {
+  margin-bottom: 4rem;
+}
+.ed-why__split {
+  display: grid;
+  grid-template-columns: 6fr 3.5fr;
+  gap: 5%;
+  align-items: start;
+  margin-bottom: 6rem;
+}
+.ed-why__hr {
+  width: 100%;
+  height: 1px;
+  background: rgba(241, 240, 234, 0.08);
+  margin-bottom: 6rem;
+}
+.ed-why__blocks {
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
+  gap: 4rem;
 }
-
-.about-intro__scroll:hover {
-  opacity: 0.8;
-}
-
-.about-intro__scroll-line {
-  width: 1px;
-  height: 44px;
-  background: linear-gradient(to bottom, var(--color-teal), transparent);
-  position: relative;
-  overflow: hidden;
-}
-
-/* ── Section 02: Why ARTAFIC Exists (Editorial Split Pattern) ── */
-.why-exists {
-  position: relative;
-  padding: 10rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.why-exists__container {
-  display: grid;
-  grid-template-columns: 1.2fr 60px 1fr;
-  gap: 3rem;
-  align-items: center;
-}
-
-.why-exists__line {
+.ed-why__line-container {
+  position: absolute;
+  top: 0;
+  left: 32px;
   width: 1px;
   height: 100%;
-  min-height: 280px;
-  background: rgba(255, 255, 255, 0.08);
-  position: relative;
-  margin: 0 auto;
+  background: rgba(241, 240, 234, 0.05);
 }
-
-.why-exists__line-fill {
+.ed-why__line-fill {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 0%;
+  height: 0%; /* updated by js */
   background: var(--color-teal);
-  box-shadow: 0 0 10px rgba(20, 184, 166, 0.8);
-  transition: height 0.15s ease-out;
 }
-
-.why-card-glass {
-  background: rgba(18, 18, 20, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 2.5rem;
-  backdrop-filter: blur(12px);
-  position: relative;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-}
-
-.why-card-glass__metric-row {
+.ed-block {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  grid-template-columns: 64px 1fr;
+  gap: 3rem;
+  align-items: start;
 }
-
-.why-metric {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.why-metric__val {
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
+.ed-block__num {
+  font-family: var(--font-body);
+  font-size: 14px;
   font-weight: 700;
-  color: var(--color-teal);
+  color: var(--color-text-muted);
+  padding-top: 0.25rem;
+  text-align: center;
 }
-
-.why-metric__lbl {
-  font-size: 0.75rem;
-  color: #A1A1AA;
-  text-transform: uppercase;
+.ed-block__title {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: 600;
   letter-spacing: 0.05em;
-}
-
-/* ── Section 03: Our Story (StoryTimeline & TimelineItem Pattern) ── */
-.our-story {
-  padding: 11rem 0;
-  position: relative;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.story-wrapper {
-  max-width: 860px;
-  margin: 0 auto;
-}
-
-.story-item {
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 2.5rem;
-  margin-bottom: 6rem;
-  opacity: 0.4;
-  transition: opacity 0.7s ease, transform 0.7s ease;
-  transform: translateY(25px);
-}
-
-.story-item:last-child {
-  margin-bottom: 0;
-}
-
-.story-item.is-active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.story-item__num {
-  font-family: var(--font-heading);
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #71717A;
-  transition: color 0.5s ease;
-}
-
-.story-item.is-active .story-item__num {
-  color: var(--color-teal);
-}
-
-.story-item__content {
-  border-left: 2px solid rgba(255, 255, 255, 0.08);
-  padding-left: 3rem;
-  position: relative;
-}
-
-.story-item__content::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -2px;
-  width: 2px;
-  height: 0%;
-  background: var(--color-teal);
-  transition: height 0.8s ease;
-  box-shadow: 0 0 10px var(--color-teal);
-}
-
-.story-item.is-active .story-item__content::before {
-  height: 100%;
-}
-
-.story-item__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
 }
 
-/* ── Section 04: Philosophy (Sticky Storytelling Pattern) ── */
-.philosophy {
-  padding: 11rem 0;
-  position: relative;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+/* ── 3. Our Story / Timeline ── */
+.ed-timeline {
+  padding: 8rem 0;
 }
-
-.philosophy__container {
+.ed-timeline__hr {
+  width: 100%;
+  height: 1px;
+  background: rgba(241, 240, 234, 0.08);
+  margin-bottom: 3rem;
+}
+.ed-timeline__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
 }
-
-.philosophy__left {
-  position: sticky;
-  top: 28vh;
-  align-self: start;
-}
-
-.philosophy__right {
+.ed-time-item {
   display: flex;
   flex-direction: column;
-  gap: 25vh;
-  padding-top: 15vh;
-  padding-bottom: 15vh;
+  gap: 1rem;
 }
-
-.phil-title {
-  font-family: var(--font-heading);
-  font-size: clamp(1.75rem, 3.8vw, 3.25rem);
-  color: #71717A; /* Readable inactive state */
-  transition: color 0.5s ease, transform 0.5s ease;
-  margin-bottom: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  cursor: pointer;
-}
-
-.phil-title span {
-  font-size: 0.9rem;
-  font-family: monospace;
+.ed-time-item__num {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
   color: var(--color-teal);
-  opacity: 0.5;
-  transition: opacity 0.5s ease;
+}
+.ed-time-item__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  transition: color 0.4s ease;
+}
+.ed-time-item:hover .ed-time-item__title {
+  color: var(--color-text-primary);
 }
 
-.phil-title.is-active {
-  color: #FFFFFF;
-  transform: translateX(16px);
+/* ── 4. Philosophy (Sticky Scroll) ── */
+.ed-philosophy {
+  padding: 12rem 0;
 }
-
-.phil-title.is-active span {
-  opacity: 1;
+.ed-philosophy__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
 }
-
-.phil-card-box {
-  background: rgba(16, 16, 18, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  padding: 3rem 2.5rem;
-  opacity: 0.35;
-  transition: opacity 0.7s ease, border-color 0.5s ease, transform 0.5s ease;
-  transform: translateY(20px);
+.ed-philosophy__left {
+  position: relative;
 }
-
-.phil-card-box.is-active {
-  opacity: 1;
-  border-color: rgba(20, 184, 166, 0.35);
-  transform: translateY(0);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(20, 184, 166, 0.06);
+.ed-philosophy__sticky {
+  position: sticky;
+  top: 30vh;
 }
-
-.phil-card__ui-metric {
+.ed-philosophy__right {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 2rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  flex-direction: column;
+  gap: 30vh;
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+}
+.ed-phil-item {
+  display: flex;
+  gap: 2rem;
+  opacity: 0.2;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateX(-10px);
+}
+.ed-phil-item.is-active {
+  opacity: 1;
+  transform: translateX(0);
+}
+.ed-phil-item__num {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-teal);
+  padding-top: 0.5rem;
+}
+.ed-phil-item__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400;
+  color: var(--color-text-primary);
 }
 
-.phil-card__ui-bar {
-  width: 120px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.phil-card__ui-bar-fill {
-  height: 100%;
-  background: var(--color-teal);
-}
-
-/* ── Section 05: Less Noise. More Identity. (SIGNATURE SECTION - PRESERVED) ── */
+/* ── 5. Less Noise (Preserved) ── */
 .less-noise {
   height: 150vh;
   position: relative;
@@ -510,7 +362,6 @@
   align-items: center;
   justify-content: center;
 }
-
 .less-noise__sticky {
   position: sticky;
   top: 0;
@@ -522,7 +373,6 @@
   justify-content: center;
   overflow: hidden;
 }
-
 .less-noise__glow {
   position: absolute;
   width: 60vw;
@@ -532,7 +382,6 @@
   z-index: 1;
   pointer-events: none;
 }
-
 .less-noise__word {
   position: absolute;
   top: 50%;
@@ -542,323 +391,176 @@
   z-index: 2;
   transition: transform 0.1s linear, opacity 0.1s linear;
 }
-
-.less-noise__word1 {
-  color: #FFFFFF;
-}
-
-.less-noise__word2 {
-  color: var(--color-teal);
-}
-
+.less-noise__word1 { color: var(--color-text-primary); }
+.less-noise__word2 { color: var(--color-teal); }
 .less-noise__tag-top {
   position: absolute;
   top: 15%;
   font-family: monospace;
   font-size: 0.8rem;
-  color: #71717A;
+  color: var(--color-text-muted);
   letter-spacing: 0.2em;
   z-index: 3;
 }
-
-/* ── Section 06: What We Believe (Typographic ManifestoList) ── */
-.beliefs {
-  padding: 11rem 0;
-  position: relative;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.beliefs-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  margin-top: 4rem;
-}
-
-.belief-card {
-  background: rgba(16, 16, 18, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  padding: 3rem 2.5rem;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 250px;
-}
-
-.belief-card::before {
-  content: '';
+.floating-paths-bg {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 0%;
-  height: 2px;
-  background: var(--color-teal);
-  transition: width 0.4s ease;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.fp-svg { width: 100%; height: 100%; }
+.fp-path {
+  stroke-dasharray: 1;
+  animation: floatPath linear infinite;
+  transition: opacity 0.5s ease;
+}
+@keyframes floatPath {
+  0% { stroke-dashoffset: 1; opacity: 0.2; }
+  50% { stroke-dashoffset: 0.5; opacity: 0.8; }
+  100% { stroke-dashoffset: 0; opacity: 0.2; }
 }
 
-.belief-card:hover,
-.belief-card.is-active {
-  border-color: rgba(20, 184, 166, 0.3);
-  background: rgba(20, 20, 24, 0.95);
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(20, 184, 166, 0.06);
+/* ── 6. Editorial Manifesto ── */
+.ed-manifesto {
+  padding: 15rem 0;
 }
-
-.belief-card:hover::before,
-.belief-card.is-active::before {
+.ed-manifesto__space {
+  position: relative;
+  height: 80vh;
   width: 100%;
 }
+.ed-manifesto-item {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  opacity: 0.3;
+  transition: opacity 0.6s ease, filter 0.6s ease;
+  filter: blur(2px);
+}
+.ed-manifesto-item.is-active {
+  opacity: 1;
+  filter: blur(0px);
+}
+.ed-manifesto-item__word {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 5rem);
+  line-height: 1;
+  color: var(--color-text-primary);
+}
+.ed-manifesto-item__sub {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin-top: 0.5rem;
+  margin-left: 2rem;
+}
+.pos-1 { top: 0; left: 5%; }
+.pos-2 { top: 30%; right: 15%; }
+.pos-3 { top: 60%; left: 20%; }
+.pos-4 { top: 85%; right: 5%; }
 
-.belief-card__header {
+/* ── 7. Mindset (Technical Editorial) ── */
+.ed-mindset {
+  padding: 10rem 0;
+}
+.ed-mindset__grid {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  gap: 5%;
+}
+.ed-mindset__tech-box {
+  border: 1px solid rgba(241, 240, 234, 0.1);
+  padding: 2rem;
+  background: rgba(8, 8, 8, 0.5);
+  backdrop-filter: blur(4px);
+}
+.ed-mindset__tech-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(241, 240, 234, 0.05);
+  padding-bottom: 1rem;
 }
 
-.belief-card__num {
-  font-family: monospace;
-  font-size: 0.85rem;
-  color: #71717A;
-  letter-spacing: 0.1em;
+/* ── 8. Final CTA ── */
+.ed-cta {
+  padding: 15rem 0;
+  text-align: center;
 }
-
-.belief-card__statement {
-  font-family: var(--font-heading);
-  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-  font-weight: 700;
+.ed-cta__statement {
+  max-width: 800px;
+  margin: 0 auto 10rem auto;
+}
+.ed-cta__huge {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 400;
+  color: var(--color-text-primary);
   line-height: 1.1;
-  color: #FFFFFF;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
-
-.belief-card__statement .keyword {
-  color: var(--color-teal);
+.ed-cta__sub {
+  font-family: var(--font-body);
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  color: var(--color-text-secondary);
 }
-
-.belief-card__desc {
-  font-size: 1.05rem;
-  line-height: 1.65;
-  color: #D4D4D8;
-  margin: 0;
-}
-
-/* ── Section 07: ARTAFIC Mindset (Asymmetric Editorial) ── */
-.mindset {
-  padding: 11rem 0;
-  position: relative;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.mindset__layout {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 5rem;
-  align-items: start;
-}
-
-.mindset__quote {
-  font-family: var(--font-heading);
-  font-size: clamp(2.25rem, 4.8vw, 4.25rem);
-  line-height: 1.12;
-  font-weight: 600;
-  color: #FFFFFF;
-  letter-spacing: -0.02em;
-}
-
-.mindset__pillars {
+.ed-cta__action-area {
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
-  padding-top: 1rem;
+  align-items: center;
 }
-
-.mindset-pillar {
-  background: rgba(16, 16, 18, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 14px;
-  padding: 1.5rem;
-  display: flex;
-  gap: 1.25rem;
-  align-items: flex-start;
-  transition: all 0.3s ease;
-}
-
-.mindset-pillar:hover {
-  background: rgba(22, 22, 26, 0.85);
-  border-color: rgba(20, 184, 166, 0.25);
-  transform: translateX(6px);
-}
-
-.mindset-pillar__icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: rgba(20, 184, 166, 0.1);
-  border: 1px solid rgba(20, 184, 166, 0.2);
-  color: var(--color-teal);
-  display: flex;
+.ed-magnetic-btn {
+  position: relative;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 1px solid rgba(241, 240, 234, 0.15);
+  text-decoration: none;
+  cursor: pointer;
 }
-
-/* ── Section 08: Final Conclusion Card ── */
-.about-final {
-  padding: 12rem 0;
-  position: relative;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.about-final__card {
-  max-width: 1060px;
-  margin: 0 auto;
-  background: linear-gradient(180deg, rgba(20, 20, 24, 0.85) 0%, rgba(10, 10, 12, 0.95) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  padding: 5rem 4rem;
-  text-align: center;
-  position: relative;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
-}
-
-.about-final__card::before {
-  content: '';
+.ed-magnetic-btn__circle {
   position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 50%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--color-teal), transparent);
+  inset: 0;
+  border-radius: 50%;
+  background: var(--color-teal);
+  transform: scale(0);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
 }
-
-.about-final__lead {
-  font-family: var(--font-heading);
-  font-size: clamp(1.4rem, 2.8vw, 2.25rem);
-  font-weight: 500;
-  color: #A1A1AA;
-  margin-bottom: 2rem;
-  line-height: 1.35;
+.ed-magnetic-btn:hover .ed-magnetic-btn__circle {
+  transform: scale(1);
 }
-
-.about-final__impact {
-  font-family: var(--font-heading);
-  font-size: clamp(1.85rem, 4vw, 3.25rem);
-  font-weight: 700;
-  color: #FFFFFF;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  margin: 0;
-}
-
-/* ── Section 09: Minimal Editorial CTA Pattern ── */
-.about-cta {
-  padding: 8rem 0 12rem;
-  text-align: center;
+.ed-magnetic-btn__text {
   position: relative;
+  z-index: 2;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-text-primary);
+  transition: color 0.3s ease;
+}
+.ed-magnetic-btn:hover .ed-magnetic-btn__text {
+  color: #080808;
 }
 
-.about-cta .btn {
-  margin-top: 2.5rem;
-  padding: 1rem 2.5rem;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-}
-
-.about-cta .btn:hover {
-  box-shadow: 0 0 25px rgba(20, 184, 166, 0.35);
-  transform: translateY(-3px);
-}
-
-/* ── Responsive Adjustments ── */
+/* ── Responsive ── */
 @media (max-width: 1024px) {
-  .about-intro__content {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-  
-  .why-exists__container {
-    grid-template-columns: 1fr;
-    gap: 3.5rem;
-  }
-  
-  .why-exists__line {
-    display: none;
-  }
-  
-  .philosophy__container {
-    grid-template-columns: 1fr;
-    gap: 4rem;
-  }
-  
-  .philosophy__left {
-    position: relative;
-    top: auto;
-  }
-  
-  .philosophy__right {
-    padding: 0;
-    gap: 4rem;
-  }
-  
-  .mindset__layout {
-    grid-template-columns: 1fr;
-    gap: 3.5rem;
-  }
-  
-  .beliefs-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  .about-intro {
-    padding-top: 110px;
-    min-height: auto;
-  }
-  
-  .why-exists,
-  .our-story,
-  .philosophy,
-  .beliefs,
-  .mindset,
-  .about-final {
-    padding: 6.5rem 0;
-  }
-  
-  .less-noise {
-    height: 120vh;
-  }
-  
-  .story-item {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  
-  .story-item__content {
-    padding-left: 1.5rem;
-  }
-  
-  .why-card-glass {
-    padding: 1.75rem;
-  }
-  
-  .why-card-glass__metric-row {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  
-  .about-final__card {
-    padding: 3.5rem 1.75rem;
-    border-radius: 18px;
-  }
-  
-  .fp-path:nth-child(n+18) {
-    display: none;
-  }
+  .ed-why__split { grid-template-columns: 1fr; gap: 2rem; }
+  .ed-mindset__grid { grid-template-columns: 1fr; gap: 4rem; }
+  .ed-philosophy__grid { grid-template-columns: 1fr; gap: 4rem; }
+  .ed-philosophy__sticky { position: relative; top: 0; }
+  .ed-manifesto__space { height: 60vh; }
+  .pos-1 { top: 0; left: 0; }
+  .pos-2 { top: 25%; right: 0; }
+  .pos-3 { top: 50%; left: 0; }
+  .pos-4 { top: 75%; right: 0; }
+  .ed-timeline__grid { grid-template-columns: 1fr; }
+  .ed-time-item { border-left: 1px solid rgba(241, 240, 234, 0.1); padding-left: 2rem; }
+  .ed-timeline__hr { display: none; }
 }
