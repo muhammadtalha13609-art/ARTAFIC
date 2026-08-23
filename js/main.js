@@ -2050,31 +2050,29 @@ function formatTime() {
         }
 
         /* Exit Phase: Layers Sweep Down/Out to Reveal Destination Page */
+        /* Reverse delays so wl-4 leaves first, revealing the colors underneath */
         .artafic-transition-overlay.is-exiting .wl-1 {
-          transform: translate3d(0, 100%, 0) !important;
-          transition-duration: 0.36s !important;
-          transition-delay: 0ms !important;
-        }
-        .artafic-transition-overlay.is-exiting .wl-2 {
-          transform: translate3d(0, 100%, 0) !important;
-          transition-duration: 0.40s !important;
-          transition-delay: 40ms !important;
-        }
-        .artafic-transition-overlay.is-exiting .wl-3 {
-          transform: translate3d(0, 100%, 0) !important;
-          transition-duration: 0.44s !important;
-          transition-delay: 80ms !important;
-        }
-        .artafic-transition-overlay.is-exiting .wl-4 {
           transform: translate3d(0, 100%, 0) !important;
           transition-duration: 0.48s !important;
           transition-delay: 120ms !important;
         }
-
-        @media (prefers-reduced-motion: reduce) {
-          .artafic-wave-layer { transform: none !important; transition: none !important; }
-          .artafic-transition-overlay { transition: opacity 0.25s ease, visibility 0.25s ease !important; }
+        .artafic-transition-overlay.is-exiting .wl-2 {
+          transform: translate3d(0, 100%, 0) !important;
+          transition-duration: 0.44s !important;
+          transition-delay: 80ms !important;
         }
+        .artafic-transition-overlay.is-exiting .wl-3 {
+          transform: translate3d(0, 100%, 0) !important;
+          transition-duration: 0.40s !important;
+          transition-delay: 40ms !important;
+        }
+        .artafic-transition-overlay.is-exiting .wl-4 {
+          transform: translate3d(0, 100%, 0) !important;
+          transition-duration: 0.36s !important;
+          transition-delay: 0ms !important;
+        }
+
+        
       `;
       document.head.appendChild(style);
     }
@@ -2130,9 +2128,9 @@ function formatTime() {
     overlay.className = 'artafic-transition-overlay is-visible is-active';
     void overlay.offsetWidth;
 
-    requestAnimationFrame(() => {
+    setTimeout(() => {
       overlay.classList.add('is-entering');
-    });
+    }, 20);
 
     setTimeout(() => {
       overlay.className = 'artafic-transition-overlay is-visible is-covered is-active';
@@ -2183,10 +2181,6 @@ function formatTime() {
   function triggerPageTransition(targetHref) {
     console.log('ARTAFIC TRANSITION TRIGGERED FOR PAGE:', targetHref);
     const overlay = ensureOverlay();
-    if (isReducedMotion) {
-      window.location.href = targetHref;
-      return;
-    }
 
     sessionStorage.setItem('artafic_transition_active', 'true');
     
@@ -2200,9 +2194,9 @@ function formatTime() {
     overlay.className = 'artafic-transition-overlay is-visible is-active';
     void overlay.offsetWidth;
 
-    requestAnimationFrame(() => {
+    setTimeout(() => {
       overlay.classList.add('is-entering');
-    });
+    }, 20);
 
     setTimeout(() => {
       console.log('ARTAFIC TRANSITION: Screen Covered. Navigating to:', targetHref);
@@ -2222,18 +2216,14 @@ function formatTime() {
       if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
     }
 
-    if (isReducedMotion) {
-      targetElement.scrollIntoView({ behavior: 'smooth' });
-      if (history.pushState) history.pushState(null, null, hash);
-      return;
-    }
+    
 
     overlay.className = 'artafic-transition-overlay is-visible is-active';
     void overlay.offsetWidth;
 
-    requestAnimationFrame(() => {
+    setTimeout(() => {
       overlay.classList.add('is-entering');
-    });
+    }, 20);
 
     setTimeout(() => {
       targetElement.scrollIntoView({ behavior: 'auto' });
