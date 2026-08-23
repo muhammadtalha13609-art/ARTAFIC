@@ -1,15 +1,15 @@
 /**
- * ARTAFIC — About Page Interactive Engine v2.3
- * Master UI/UX Pro Max + React Bits Animation Toolbox + ECC Verification
+ * ARTAFIC — About Page Interactive Engine v2.4 (Surgical Polish Edition)
+ * Preserves the exact signature "LESS NOISE. MORE IDENTITY." scroll animation formula.
  */
-(function initAboutMasterExperience() {
+(function initAboutSurgicalExperience() {
   const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // 1. React Bits Background Tool: Floating Paths SVG Generator
+  // Floating Paths SVG Generator
   function createPathsSVG(position, themeMode) {
     let paths = '';
     const isMobile = window.innerWidth < 768;
-    const numPaths = isMobile ? 16 : 32;
+    const numPaths = isMobile ? 16 : 30;
     
     for (let i = 0; i < numPaths; i++) {
       const mX = -(380 - i * 5 * position);
@@ -31,11 +31,9 @@
       
       let color;
       if (themeMode === 'heavy') {
-        color = Math.random() < 0.2 ? `rgba(20, 184, 166, ${0.12 + i * 0.015})` : `rgba(241, 240, 234, ${0.03 + i * 0.005})`;
-      } else if (themeMode === 'minimal') {
-        color = `rgba(241, 240, 234, ${0.02 + i * 0.002})`;
+        color = Math.random() < 0.2 ? `rgba(20, 184, 166, ${0.1 + i * 0.012})` : `rgba(241, 240, 234, ${0.03 + i * 0.004})`;
       } else {
-        color = Math.random() < 0.05 ? `rgba(20, 184, 166, ${0.06 + i * 0.01})` : `rgba(241, 240, 234, ${0.02 + i * 0.005})`;
+        color = Math.random() < 0.05 ? `rgba(20, 184, 166, ${0.05 + i * 0.01})` : `rgba(241, 240, 234, ${0.02 + i * 0.004})`;
       }
       
       const width = 0.5 + i * 0.03;
@@ -56,27 +54,16 @@
       container.innerHTML = createPathsSVG(pos, theme);
     });
 
-    // 2. React Bits Tool 1: Staggered Text Mask Reveal
+    // Staggered Kinetic Text Reveal
     setTimeout(() => {
-      document.querySelectorAll('.about-intro .reveal-text-inner, .about-intro .fade-up').forEach((el, index) => {
+      document.querySelectorAll('.ed-hero .kinetic-text, .ed-hero .fade-up').forEach((el, index) => {
         setTimeout(() => {
           el.classList.add('is-revealed');
         }, index * 90);
       });
     }, 100);
 
-    // Scroll Prompt Button Click Handler
-    const scrollPrompt = document.getElementById('scroll-prompt');
-    if (scrollPrompt) {
-      scrollPrompt.addEventListener('click', () => {
-        const nextSec = document.getElementById('what-we-do');
-        if (nextSec) {
-          nextSec.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    }
-
-    // 3. Staggered Scroll Reveal Observer
+    // Staggered Scroll Reveal Observer
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -86,40 +73,22 @@
       });
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
 
-    document.querySelectorAll('.reveal-text-inner:not(.about-intro *), .fade-up:not(.about-intro *)').forEach(el => {
+    document.querySelectorAll('.kinetic-text:not(.ed-hero *), .fade-up:not(.ed-hero *)').forEach(el => {
       revealObserver.observe(el);
     });
 
-    // 4. React Bits Tool 3: Timeline Progress & Node Observer (Section 04)
-    const timelineCards = document.querySelectorAll('.timeline-card');
-    const timelineFill = document.querySelector('.timeline-sequence__line-fill');
-    
-    const timelineObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.2) {
-          entry.target.classList.add('is-active');
-          const step = parseInt(entry.target.dataset.step || '1');
-          if (timelineFill) {
-            timelineFill.style.width = `${(step / timelineCards.length) * 100}%`;
-          }
-        }
-      });
-    }, { rootMargin: '-10% 0px -25% 0px', threshold: [0.2, 0.5] });
+    // How We Think Sticky Sync
+    const thinkTitles = document.querySelectorAll('.think-title');
+    const thinkCards = document.querySelectorAll('.think-card');
 
-    timelineCards.forEach(card => timelineObserver.observe(card));
-
-    // 5. React Bits Tool 4: How We Think Sticky Sync (Section 05)
-    const thinkWords = document.querySelectorAll('.think-word');
-    const thinkDescs = document.querySelectorAll('.think-desc');
-
-    thinkWords.forEach((word, i) => {
-      word.addEventListener('click', () => {
-        thinkWords.forEach(w => w.classList.remove('is-active'));
-        thinkDescs.forEach(d => d.classList.remove('is-active'));
-        word.classList.add('is-active');
-        if (thinkDescs[i]) {
-          thinkDescs[i].classList.add('is-active');
-          thinkDescs[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    thinkTitles.forEach((title, i) => {
+      title.addEventListener('click', () => {
+        thinkTitles.forEach(t => t.classList.remove('is-active'));
+        thinkCards.forEach(c => c.classList.remove('is-active'));
+        title.classList.add('is-active');
+        if (thinkCards[i]) {
+          thinkCards[i].classList.add('is-active');
+          thinkCards[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       });
     });
@@ -128,16 +97,16 @@
       entries.forEach(entry => {
         if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
           const idx = parseInt(entry.target.dataset.index || '0');
-          thinkWords.forEach((w, i) => w.classList.toggle('is-active', i === idx));
-          thinkDescs.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+          thinkTitles.forEach((t, i) => t.classList.toggle('is-active', i === idx));
+          thinkCards.forEach((c, i) => c.classList.toggle('is-active', i === idx));
         }
       });
     }, { rootMargin: '-30% 0px -30% 0px', threshold: [0.3, 0.6] });
 
-    thinkDescs.forEach(el => thinkObserver.observe(el));
+    thinkCards.forEach(el => thinkObserver.observe(el));
 
-    // 6. Philosophy Active Observer (Section 06)
-    const philItems = document.querySelectorAll('.phil-item');
+    // Philosophy Observer
+    const philRows = document.querySelectorAll('.phil-row');
     const philObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -145,22 +114,11 @@
         }
       });
     }, { rootMargin: '-15% 0px -20% 0px', threshold: 0.2 });
-    philItems.forEach(el => philObserver.observe(el));
+    philRows.forEach(el => philObserver.observe(el));
 
-    // 7. Beliefs Statement Active Observer (Section 08)
-    const beliefStatements = document.querySelectorAll('.belief-statement');
-    const beliefObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-active');
-        }
-      });
-    }, { rootMargin: '-10% 0px -20% 0px', threshold: 0.2 });
-    beliefStatements.forEach(el => beliefObserver.observe(el));
-
-    // 8. Scroll Engine (Why Exists Line & PRESERVED SIGNATURE LESS NOISE ANIMATION)
+    // Scroll Engine (Why Exists Line & PRESERVED SIGNATURE LESS NOISE ANIMATION)
     const whyExistsSec = document.getElementById('why-exists');
-    const whyLineFill = document.querySelector('.why-exists__line-fill');
+    const whyLineFill = document.querySelector('.ed-why__line-fill');
     const lessNoiseSec = document.getElementById('less-noise');
     const word1 = document.querySelector('.less-noise__word1');
     const word2 = document.querySelector('.less-noise__word2');
@@ -172,17 +130,17 @@
         window.requestAnimationFrame(() => {
           const winH = window.innerHeight;
 
-          // Section 03 Why Exists Line Progress
+          // Why Exists Horizontal Line Progress
           if (whyExistsSec && whyLineFill) {
             const rect = whyExistsSec.getBoundingClientRect();
             if (rect.top < winH / 2 && rect.bottom > 0) {
               let progress = (winH / 2 - rect.top) / (rect.height);
               progress = Math.max(0, Math.min(1, progress));
-              whyLineFill.style.height = `${progress * 100}%`;
+              whyLineFill.style.width = `${progress * 100}%`;
             }
           }
 
-          // Section 07 PRESERVED LESS NOISE SIGNATURE SCROLL FORMULA
+          // PRESERVED LESS NOISE SIGNATURE SCROLL FORMULA (EXACT ORIGINAL)
           if (lessNoiseSec && word1 && word2 && !isReducedMotion) {
             const rect = lessNoiseSec.getBoundingClientRect();
             if (rect.top < winH && rect.bottom > 0) {
