@@ -1983,7 +1983,7 @@ function formatTime() {
           width: 100vw !important;
           height: 200vh !important;
           transform: translate3d(0, 0%, 0) !important;
-          transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1) !important;
+          transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1) !important;
           will-change: transform !important;
           display: flex !important;
           flex-direction: column !important;
@@ -2028,26 +2028,23 @@ function formatTime() {
         .wl-4 .wave-solid-fill { background-color: #080808 !important; }
         .wl-4 svg path { fill: #080808 !important; }
 
-        /* Enter Phase: Layers Sweep Down to Cover Viewport */
-        .artafic-transition-overlay.is-entering .artafic-wave-layer {
-          transform: translate3d(0, 60%, 0) !important;
-        }
-        .artafic-transition-overlay.is-entering .wl-1 { transition-duration: 0.85s !important; transition-delay: 0ms !important; }
-        .artafic-transition-overlay.is-entering .wl-2 { transition-duration: 0.85s !important; transition-delay: 150ms !important; }
-        .artafic-transition-overlay.is-entering .wl-3 { transition-duration: 0.85s !important; transition-delay: 300ms !important; }
-        .artafic-transition-overlay.is-entering .wl-4 { transition-duration: 0.85s !important; transition-delay: 450ms !important; }
+        /* Enter Phase: Layers Sweep Down to staggered COVER positions */
+        .artafic-transition-overlay.is-entering .wl-1 { transform: translate3d(0, 60%, 0) !important; transition-delay: 0ms !important; }
+        .artafic-transition-overlay.is-entering .wl-2 { transform: translate3d(0, 45%, 0) !important; transition-delay: 150ms !important; }
+        .artafic-transition-overlay.is-entering .wl-3 { transform: translate3d(0, 30%, 0) !important; transition-delay: 300ms !important; }
+        .artafic-transition-overlay.is-entering .wl-4 { transform: translate3d(0, 15%, 0) !important; transition-delay: 450ms !important; }
 
-        /* Covered Solid State */
-        .artafic-transition-overlay.is-covered .artafic-wave-layer {
-          transform: translate3d(0, 60%, 0) !important;
-          transition: none !important;
-        }
+        /* Covered Solid State (No Transitions) - Exactly matches entered positions to form 4-color composition */
+        .artafic-transition-overlay.is-covered .wl-1 { transform: translate3d(0, 60%, 0) !important; transition: none !important; }
+        .artafic-transition-overlay.is-covered .wl-2 { transform: translate3d(0, 45%, 0) !important; transition: none !important; }
+        .artafic-transition-overlay.is-covered .wl-3 { transform: translate3d(0, 30%, 0) !important; transition: none !important; }
+        .artafic-transition-overlay.is-covered .wl-4 { transform: translate3d(0, 15%, 0) !important; transition: none !important; }
 
         /* Exit Phase: Layers Sweep Down/Out to Reveal Destination Page */
         .artafic-transition-overlay.is-exiting .artafic-wave-layer {
           transform: translate3d(0, 160%, 0) !important;
         }
-        /* Reverse delays so wl-4 leaves first, revealing the colors underneath */
+        /* Reverse delays so wl-4 leaves first, revealing Teal, etc. */
         .artafic-transition-overlay.is-exiting .wl-4 { transition-duration: 0.85s !important; transition-delay: 0ms !important; }
         .artafic-transition-overlay.is-exiting .wl-3 { transition-duration: 0.85s !important; transition-delay: 150ms !important; }
         .artafic-transition-overlay.is-exiting .wl-2 { transition-duration: 0.85s !important; transition-delay: 300ms !important; }
@@ -2060,7 +2057,12 @@ function formatTime() {
     if (!overlay) {
       overlay = document.createElement('div');
       overlay.id = 'artafic-transition-overlay';
-      overlay.className = 'artafic-transition-overlay';
+      
+      const isNavigating = sessionStorage.getItem('artafic_transition_active') === 'true';
+      overlay.className = isNavigating 
+        ? 'artafic-transition-overlay is-visible is-covered is-active'
+        : 'artafic-transition-overlay';
+
       overlay.setAttribute('aria-hidden', 'true');
       overlay.innerHTML = `
         <!-- Layer 1: Mint Green -->
@@ -2112,13 +2114,9 @@ function formatTime() {
     return overlay;
   }
 
-  // 1b. Handle back/forward cache restorations gracefully
+  // Handle back/forward cache restorations gracefully
   window.addEventListener('pageshow', (e) => {
     if (e.persisted) {
-      document.documentElement.style.backgroundColor = '';
-      document.body.style.display = '';
-      const antiFlash = document.getElementById('artafic-anti-flash');
-      if (antiFlash) antiFlash.remove();
       sessionStorage.removeItem('artafic_transition_active');
       const overlay = document.getElementById('artafic-transition-overlay');
       if (overlay) overlay.className = 'artafic-transition-overlay';
@@ -2145,34 +2143,30 @@ function formatTime() {
         setTimeout(() => {
           overlay.className = 'artafic-transition-overlay';
           console.log('ARTAFIC TRANSITION: Manual Console Test Finished');
-        }, 1350);
+        }, 1400);
       }, 150); // Wait 150ms in covered state
     }, 1350); // Enter duration (850ms + 450ms stagger)
   };
 
   // 2. Perform Exit Sweep Reveal on Destination Page Load
   function handleExitReveal() {
-    const overlay = ensureOverlay();
     const isNavigating = sessionStorage.getItem('artafic_transition_active') === 'true';
+    if (!isNavigating) return;
 
-    if (isNavigating) {
-      console.log('ARTAFIC TRANSITION: Exit Reveal Running on Destination Page Load');
-      sessionStorage.removeItem('artafic_transition_active');
-      
-      overlay.className = 'artafic-transition-overlay is-visible is-covered is-active';
-      void overlay.offsetWidth;
-
-      document.documentElement.style.backgroundColor = '';
-      const antiFlash = document.getElementById('artafic-anti-flash');
-      if (antiFlash) antiFlash.remove();
-
+    // ensureOverlay() was already called synchronously when main.js loaded,
+    // creating it in the is-covered state instantly.
+    const overlay = ensureOverlay();
+    
+    console.log('ARTAFIC TRANSITION: Exit Reveal Running on Destination Page Load');
+    sessionStorage.removeItem('artafic_transition_active');
+    
+    // Slight timeout to ensure the browser has painted the covered state
+    setTimeout(() => {
+      overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
       setTimeout(() => {
-        overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
-        setTimeout(() => {
-          overlay.className = 'artafic-transition-overlay';
-        }, 1350); // 850 duration + 450 stagger = 1300 + margin
-      }, 50);
-    }
+        overlay.className = 'artafic-transition-overlay';
+      }, 1400); 
+    }, 150);
   }
 
   if (document.readyState === 'loading') {
@@ -2181,7 +2175,7 @@ function formatTime() {
     handleExitReveal();
   }
 
-  // 3. Trigger Enter Sweep & Page Navigation
+  // 3. Trigger Enter Sweep & Page Navigation (Fetch Router to eliminate flash)
   function triggerPageTransition(targetHref) {
     console.log('ARTAFIC TRANSITION TRIGGERED FOR PAGE:', targetHref);
     const overlay = ensureOverlay();
@@ -2202,52 +2196,35 @@ function formatTime() {
       overlay.classList.add('is-entering');
     }, 20);
 
-    setTimeout(() => {
-      console.log('ARTAFIC TRANSITION: Screen Covered. Navigating to:', targetHref);
-      
-      // Prevent white flash during unload. DO NOT hide body entirely with display: none,
-      // because if the link is a hashtag on the same page, the user will be stuck with a black screen!
-      document.documentElement.style.backgroundColor = '#080808';
+    const startTime = Date.now();
+    const MIN_ENTER_TIME = 1350; // 850 duration + 450 stagger + 50 margin
 
-      window.location.href = targetHref;
-    }, 1350); 
-  }
+    // Fetch the next page in the background
+    fetch(targetHref)
+      .then(res => res.text())
+      .then(html => {
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(0, MIN_ENTER_TIME - elapsed);
 
-  // 4. Trigger Enter Sweep & Section Anchor Scroll
-  function triggerSectionTransition(targetElement, hash) {
-    console.log('ARTAFIC TRANSITION TRIGGERED FOR SECTION:', hash);
-    const overlay = ensureOverlay();
-
-    const mobileMenu = document.getElementById('mobile-menu');
-    const hamburger = document.getElementById('hamburger');
-    if (mobileMenu && mobileMenu.classList.contains('is-open')) {
-      mobileMenu.classList.remove('is-open');
-      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
-    }
-
-    overlay.className = 'artafic-transition-overlay is-visible is-active';
-    void overlay.offsetWidth;
-
-    setTimeout(() => {
-      overlay.classList.add('is-entering');
-    }, 20);
-
-    setTimeout(() => {
-      overlay.className = 'artafic-transition-overlay is-visible is-covered is-active';
-      void overlay.offsetWidth;
-
-      window.location.hash = hash;
-      const navHeight = document.querySelector('.navbar').offsetHeight;
-      const offset = targetElement.getBoundingClientRect().top + window.scrollY - navHeight - 16;
-      window.scrollTo({ top: offset, behavior: 'auto' });
-
-      setTimeout(() => {
-        overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
         setTimeout(() => {
-          overlay.className = 'artafic-transition-overlay';
-        }, 1350);
-      }, 50);
-    }, 1350);
+          console.log('ARTAFIC TRANSITION: Screen Covered. Replacing DOM seamlessly.');
+          window.history.pushState(null, '', targetHref);
+          
+          // Using document.write seamlessly replaces the DOM without a flash,
+          // instantly re-executing main.js which creates the overlay at is-covered.
+          document.open();
+          document.write(html);
+          document.close();
+        }, remaining);
+      })
+      .catch(err => {
+        // Fallback to standard navigation if fetch fails
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(0, MIN_ENTER_TIME - elapsed);
+        setTimeout(() => {
+          window.location.href = targetHref;
+        }, remaining);
+      });
   }
 
   // Intercept Navigation Clicks Globablly
@@ -2256,7 +2233,8 @@ function formatTime() {
     if (!target) return;
 
     let href = target.getAttribute('href');
-    if (!href || href.startsWith('#') && href.length === 1 || href.startsWith('javascript') || href.startsWith('mailto:') || href.startsWith('tel:')) {
+    if (!href || href.startsWith('#') || href.startsWith('javascript') || href.startsWith('mailto:') || href.startsWith('tel:')) {
+      // Ignore anchors entirely, let the smooth scroll handle it natively without waves
       return;
     }
 
@@ -2270,23 +2248,7 @@ function formatTime() {
 
     if (targetUrl.origin !== currentUrl.origin) return;
 
-    const currentPathClean = currentUrl.pathname.replace(/\/$/, '');
-    const targetPathClean = targetUrl.pathname.replace(/\/$/, '');
-    const isSamePath = targetPathClean === currentPathClean;
-
-    console.log('ARTAFIC TRANSITION CLICK DETECTED:', href, '| samePath:', isSamePath);
-
-    if (isSamePath && targetUrl.hash) {
-      const targetElement = document.querySelector(targetUrl.hash);
-      if (targetElement) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        triggerSectionTransition(targetElement, targetUrl.hash);
-        return;
-      }
-    }
-
+    // Standard cross-page internal link
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
