@@ -1,8 +1,11 @@
-﻿(function initAboutPage() {
-  // SVG Path Generator mimicking Framer Motion logic
+/* ============================================================
+   ARTAFIC � About Page Interactive Scripts
+   ============================================================ */
+
+(function() {
   function createPathsSVG(position, themeMode) {
     let paths = '';
-    const numPaths = window.innerWidth < 768 ? 18 : 36; // Optimize for mobile
+    const numPaths = window.innerWidth < 768 ? 18 : 36;
     
     for (let i = 0; i < numPaths; i++) {
       const mX = -(380 - i * 5 * position);
@@ -40,8 +43,10 @@
     return `<svg class="fp-svg" viewBox="0 0 696 316" preserveAspectRatio="xMidYMid slice">${paths}</svg>`;
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    
+  window.initAboutPage = function() {
+    const intro = document.querySelector('.about-intro');
+    if (!intro) return;
+
     // Inject Floating Paths
     document.querySelectorAll('.floating-paths-bg').forEach(container => {
       const pos = parseFloat(container.dataset.pos || '1');
@@ -129,7 +134,6 @@
         window.requestAnimationFrame(() => {
           const winH = window.innerHeight;
 
-          // Why Exists Line
           if (whyExists && whyLineFill) {
             const rect = whyExists.getBoundingClientRect();
             if (rect.top < winH / 2 && rect.bottom > 0) {
@@ -139,11 +143,10 @@
             }
           }
 
-          // Less Noise Transition
           if (lessNoiseSec && word1 && word2) {
             const rect = lessNoiseSec.getBoundingClientRect();
             if (rect.top < winH && rect.bottom > 0) {
-              const progress = 1 - (rect.bottom / (rect.height + winH)); // 0 to 1 as it scrolls
+              const progress = 1 - (rect.bottom / (rect.height + winH));
               
               if (progress < 0.4) {
                 word1.style.opacity = 1 - (progress * 2.5);
@@ -152,14 +155,13 @@
                 word2.style.transform = 'translate(-50%, -50%) scale(0.9)';
               } else {
                 word1.style.opacity = 0;
-                const p2 = (progress - 0.4) / 0.6; // 0 to 1
+                const p2 = (progress - 0.4) / 0.6;
                 word2.style.opacity = p2 * 1.5;
                 word2.style.transform = `translate(-50%, -50%) scale(${0.9 + p2 * 0.1})`;
               }
             }
           }
           
-          // Generic Parallax
           parallaxEls.forEach(el => {
             const speed = parseFloat(el.getAttribute('data-parallax')) || 0.1;
             const rect = el.getBoundingClientRect();
@@ -174,6 +176,11 @@
         ticking = true;
       }
     }, { passive: true });
-    
-  });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', window.initAboutPage);
+  } else {
+    window.initAboutPage();
+  }
 })();

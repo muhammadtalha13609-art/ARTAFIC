@@ -1813,7 +1813,6 @@ function formatTime() {
    16. SERVICES NATURAL CANVAS SCROLL & STROKE ANIMATION
    ------------------------------------------------------------ */
 (function initServicesStrokeFollowScroll() {
-(function initServicesStrokeFollowScroll() {
   const section = document.getElementById('services');
   const path = document.getElementById('services-scroll-path');
   const stage = document.getElementById('services-panning-stage');
@@ -1932,7 +1931,6 @@ function formatTime() {
   // Initial call
   setTimeout(updateTimeline, 100);
 })();
-})();
 
 
 
@@ -1944,10 +1942,127 @@ function formatTime() {
 
 
 /* ============================================================
-   ARTAFIC SITE-WIDE PAGE TRANSITION — BULLETPROOF HTML DIV ENGINE
+   ARTAFIC SITE-WIDE PAGE TRANSITION � ULTRA SMOOTH PJAX ENGINE
    ============================================================ */
+
+// Global Script Re-initializer for Page Transitions
+window.reinitPageScripts = function(targetUrl) {
+  try {
+    // 1. Scroll Reveal Observer
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.fade-up, .reveal-text-inner').forEach((el) => {
+        el.classList.remove('is-revealed');
+        revealObserver.observe(el);
+      });
+    } else {
+      document.querySelectorAll('.fade-up, .reveal-text-inner').forEach((el) => {
+        el.classList.add('is-revealed');
+      });
+    }
+
+    // 2. Accordion (FAQ & Services)
+    const accordion = document.getElementById('faq-accordion');
+    if (accordion) {
+      const items = accordion.querySelectorAll('.accordion__item');
+      items.forEach((item) => {
+        const trigger = item.querySelector('.accordion__trigger');
+        const body = item.querySelector('.accordion__body');
+        if (!trigger || !body) return;
+
+        // Clone to clear old listeners
+        const newTrigger = trigger.cloneNode(true);
+        trigger.parentNode.replaceChild(newTrigger, trigger);
+
+        newTrigger.addEventListener('click', () => {
+          const isOpen = item.classList.contains('is-open');
+          items.forEach((other) => {
+            if (other !== item && other.classList.contains('is-open')) {
+              other.classList.remove('is-open');
+              const otherTrigger = other.querySelector('.accordion__trigger');
+              const otherBody = other.querySelector('.accordion__body');
+              if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+              if (otherBody) otherBody.style.maxHeight = null;
+            }
+          });
+
+          if (isOpen) {
+            item.classList.remove('is-open');
+            newTrigger.setAttribute('aria-expanded', 'false');
+            body.style.maxHeight = null;
+          } else {
+            item.classList.add('is-open');
+            newTrigger.setAttribute('aria-expanded', 'true');
+            body.style.maxHeight = body.scrollHeight + 'px';
+          }
+        });
+      });
+    }
+
+    // 3. Before / After Slider
+    const sliderContainer = document.getElementById('slider-container');
+    if (sliderContainer) {
+      const sliderHandle = document.getElementById('slider-handle');
+      const sliderAfter = document.getElementById('slider-after');
+      if (sliderHandle && sliderAfter) {
+        let isDown = false;
+        function updateSlider(clientX) {
+          const rect = sliderContainer.getBoundingClientRect();
+          let x = clientX - rect.left;
+          x = Math.max(0, Math.min(x, rect.width));
+          const percentage = (x / rect.width) * 100;
+          sliderHandle.style.left = percentage + '%';
+          sliderAfter.style.clipPath = `polygon(${percentage}% 0, 100% 0, 100% 100%, ${percentage}% 100%)`;
+        }
+
+        sliderContainer.onmousedown = (e) => { isDown = true; updateSlider(e.clientX); };
+        window.onmouseup = () => { isDown = false; };
+        window.onmousemove = (e) => { if (isDown) updateSlider(e.clientX); };
+
+        sliderContainer.ontouchstart = (e) => { isDown = true; updateSlider(e.touches[0].clientX); };
+        window.ontouchend = () => { isDown = false; };
+        window.ontouchmove = (e) => { if (isDown) updateSlider(e.touches[0].clientX); };
+      }
+    }
+
+    // 4. Booking Form
+    const bookingForm = document.getElementById('booking-form');
+    if (bookingForm) {
+      const successEl = document.getElementById('booking-success');
+      bookingForm.onsubmit = function(e) {
+        e.preventDefault();
+        const submitBtn = bookingForm.querySelector('button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Sending...';
+        }
+        setTimeout(() => {
+          bookingForm.style.display = 'none';
+          if (successEl) successEl.classList.remove('hidden');
+        }, 800);
+      };
+    }
+
+    // 5. About Page Scripts
+    if (typeof window.initAboutPage === 'function' && document.querySelector('.about-intro')) {
+      window.initAboutPage();
+    }
+
+  } catch (err) {
+    console.error('Error re-initializing page scripts:', err);
+  }
+};
+
 (function initPageTransitions() {
-  // 1. Inject Styles + HTML Div Wave Overlay
   function ensureOverlay() {
     let style = document.getElementById('artafic-transition-style');
     if (!style) {
@@ -1960,22 +2075,23 @@ function formatTime() {
           left: 0 !important;
           width: 100vw !important;
           height: 100vh !important;
-          z-index: 2147483647 !important;
+          z-index: 999999 !important;
           pointer-events: none !important;
           overflow: hidden !important;
           visibility: hidden !important;
           opacity: 0 !important;
-          transition: opacity 0.25s ease, visibility 0.25s ease !important;
         }
+
         .artafic-transition-overlay.is-visible {
           visibility: visible !important;
           opacity: 1 !important;
         }
+
         .artafic-transition-overlay.is-active {
           pointer-events: auto !important;
         }
 
-        /* HTML Wave Layer Boxes */
+        /* 4 Wave Layers */
         .artafic-wave-layer {
           position: absolute !important;
           top: -200vh !important;
@@ -1983,7 +2099,7 @@ function formatTime() {
           width: 100vw !important;
           height: 200vh !important;
           transform: translate3d(0, 0%, 0) !important;
-          transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1) !important;
+          transition: transform 0.85s cubic-bezier(0.76, 0, 0.24, 1) !important;
           will-change: transform !important;
           display: flex !important;
           flex-direction: column !important;
@@ -1992,63 +2108,113 @@ function formatTime() {
 
         .artafic-wave-layer .wave-svg-top {
           width: 100% !important;
-          height: 20vh !important;
+          height: 14vh !important;
           display: block !important;
           margin-bottom: -1px !important;
           flex-shrink: 0 !important;
         }
-        
+
         .artafic-wave-layer .wave-solid-fill {
           width: 100% !important;
-          height: 160vh !important;
+          height: 172vh !important;
           flex-shrink: 0 !important;
         }
 
         .artafic-wave-layer .wave-svg-bottom {
           width: 100% !important;
-          height: 20vh !important;
+          height: 14vh !important;
           display: block !important;
           margin-top: -1px !important;
           flex-shrink: 0 !important;
         }
 
-        /* Colors */
+        /* Layer Colors */
         .wl-1 .wave-solid-fill { background-color: #C6EBC5 !important; }
         .wl-1 svg path { fill: #C6EBC5 !important; }
-        .wl-1 { box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35) !important; }
+        .wl-1 { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25) !important; }
 
         .wl-2 .wave-solid-fill { background-color: #52B788 !important; }
         .wl-2 svg path { fill: #52B788 !important; }
-        .wl-2 { box-shadow: 0 14px 35px rgba(0, 0, 0, 0.4) !important; }
+        .wl-2 { box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3) !important; }
 
         .wl-3 .wave-solid-fill { background-color: #14B8A6 !important; }
         .wl-3 svg path { fill: #14B8A6 !important; }
-        .wl-3 { box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important; }
+        .wl-3 { box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35) !important; }
 
-        .wl-4 .wave-solid-fill { background-color: #080808 !important; }
-        .wl-4 svg path { fill: #080808 !important; }
+        .wl-4 .wave-solid-fill { background-color: #0a1012 !important; }
+        .wl-4 svg path { fill: #0a1012 !important; }
 
-        /* Enter Phase: Layers Sweep Down to staggered COVER positions */
-        .artafic-transition-overlay.is-entering .wl-1 { transform: translate3d(0, 60%, 0) !important; transition-delay: 0ms !important; }
-        .artafic-transition-overlay.is-entering .wl-2 { transform: translate3d(0, 45%, 0) !important; transition-delay: 150ms !important; }
-        .artafic-transition-overlay.is-entering .wl-3 { transform: translate3d(0, 30%, 0) !important; transition-delay: 300ms !important; }
-        .artafic-transition-overlay.is-entering .wl-4 { transform: translate3d(0, 15%, 0) !important; transition-delay: 450ms !important; }
+        /* ENTER: Waves sweep down to layered positions covering the entire screen */
+        .artafic-transition-overlay.is-entering .wl-1 { transform: translate3d(0, 62%, 0) !important; transition-delay: 0ms !important; }
+        .artafic-transition-overlay.is-entering .wl-2 { transform: translate3d(0, 48%, 0) !important; transition-delay: 120ms !important; }
+        .artafic-transition-overlay.is-entering .wl-3 { transform: translate3d(0, 34%, 0) !important; transition-delay: 240ms !important; }
+        .artafic-transition-overlay.is-entering .wl-4 { transform: translate3d(0, 20%, 0) !important; transition-delay: 360ms !important; }
 
-        /* Covered Solid State (No Transitions) - Exactly matches entered positions to form 4-color composition */
-        .artafic-transition-overlay.is-covered .wl-1 { transform: translate3d(0, 60%, 0) !important; transition: none !important; }
-        .artafic-transition-overlay.is-covered .wl-2 { transform: translate3d(0, 45%, 0) !important; transition: none !important; }
-        .artafic-transition-overlay.is-covered .wl-3 { transform: translate3d(0, 30%, 0) !important; transition: none !important; }
-        .artafic-transition-overlay.is-covered .wl-4 { transform: translate3d(0, 15%, 0) !important; transition: none !important; }
+        /* COVERED STATE: Locked in composition */
+        .artafic-transition-overlay.is-covered .wl-1 { transform: translate3d(0, 62%, 0) !important; transition: none !important; }
+        .artafic-transition-overlay.is-covered .wl-2 { transform: translate3d(0, 48%, 0) !important; transition: none !important; }
+        .artafic-transition-overlay.is-covered .wl-3 { transform: translate3d(0, 34%, 0) !important; transition: none !important; }
+        .artafic-transition-overlay.is-covered .wl-4 { transform: translate3d(0, 20%, 0) !important; transition: none !important; }
 
-        /* Exit Phase: Layers Sweep Down/Out to Reveal Destination Page */
+        /* EXIT: Waves continue sweeping down off bottom of viewport */
         .artafic-transition-overlay.is-exiting .artafic-wave-layer {
           transform: translate3d(0, 160%, 0) !important;
         }
-        /* Reverse delays so wl-4 leaves first, revealing Teal, etc. */
         .artafic-transition-overlay.is-exiting .wl-4 { transition-duration: 0.85s !important; transition-delay: 0ms !important; }
-        .artafic-transition-overlay.is-exiting .wl-3 { transition-duration: 0.85s !important; transition-delay: 150ms !important; }
-        .artafic-transition-overlay.is-exiting .wl-2 { transition-duration: 0.85s !important; transition-delay: 300ms !important; }
-        .artafic-transition-overlay.is-exiting .wl-1 { transition-duration: 0.85s !important; transition-delay: 450ms !important; }
+        .artafic-transition-overlay.is-exiting .wl-3 { transition-duration: 0.85s !important; transition-delay: 100ms !important; }
+        .artafic-transition-overlay.is-exiting .wl-2 { transition-duration: 0.85s !important; transition-delay: 200ms !important; }
+        .artafic-transition-overlay.is-exiting .wl-1 { transition-duration: 0.85s !important; transition-delay: 300ms !important; }
+
+        /* Centered Destination Title Wrap */
+        .artafic-transition-title-wrap {
+          position: absolute !important;
+          top: 50% !important;
+          left: 50% !important;
+          transform: translate(-50%, -50%) scale(0.92) !important;
+          z-index: 10 !important;
+          text-align: center !important;
+          pointer-events: none !important;
+          opacity: 0 !important;
+          transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: center !important;
+          justify-content: center !important;
+        }
+
+        .artafic-transition-title-wrap.is-visible {
+          opacity: 1 !important;
+          transform: translate(-50%, -50%) scale(1) !important;
+        }
+
+        .artafic-transition-title-wrap.is-fading {
+          opacity: 0 !important;
+          transform: translate(-50%, -60%) scale(0.96) !important;
+          transition: opacity 0.25s ease, transform 0.25s ease !important;
+        }
+
+        .artafic-transition-subtitle {
+          font-family: 'Kanit', 'Montserrat', sans-serif !important;
+          font-size: 0.85rem !important;
+          font-weight: 600 !important;
+          letter-spacing: 0.35em !important;
+          text-transform: uppercase !important;
+          color: #14B8A6 !important;
+          margin-bottom: 0.4rem !important;
+          text-shadow: 0 0 15px rgba(20, 184, 166, 0.5) !important;
+        }
+
+        .artafic-transition-title {
+          font-family: 'Kanit', 'Montserrat', sans-serif !important;
+          font-size: clamp(2.4rem, 6.5vw, 4.8rem) !important;
+          font-weight: 800 !important;
+          letter-spacing: 0.08em !important;
+          text-transform: uppercase !important;
+          color: #FFFFFF !important;
+          margin: 0 !important;
+          line-height: 1.1 !important;
+          text-shadow: 0 4px 25px rgba(0, 0, 0, 0.7), 0 0 35px rgba(20, 184, 166, 0.35) !important;
+        }
       `;
       document.head.appendChild(style);
     }
@@ -2057,56 +2223,57 @@ function formatTime() {
     if (!overlay) {
       overlay = document.createElement('div');
       overlay.id = 'artafic-transition-overlay';
-      
-      const isNavigating = sessionStorage.getItem('artafic_transition_active') === 'true';
-      overlay.className = isNavigating 
-        ? 'artafic-transition-overlay is-visible is-covered is-active'
-        : 'artafic-transition-overlay';
-
+      overlay.className = 'artafic-transition-overlay';
       overlay.setAttribute('aria-hidden', 'true');
       overlay.innerHTML = `
         <!-- Layer 1: Mint Green -->
         <div class="artafic-wave-layer wl-1">
-          <svg class="wave-svg-top" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M0,100 C20,80 30,20 50,50 S80,20 100,0 L100,100 L0,100 Z" />
+          <svg class="wave-svg-top" viewBox="0 0 1000 120" preserveAspectRatio="none">
+            <path d="M0,120 C150,15 320,105 500,35 C680,10 820,95 1000,25 L1000,120 L0,120 Z" />
           </svg>
           <div class="wave-solid-fill"></div>
-          <svg class="wave-svg-bottom" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M0,0 C20,20 30,80 50,50 S80,80 100,100 L100,0 L0,0 Z" />
+          <svg class="wave-svg-bottom" viewBox="0 0 1000 120" preserveAspectRatio="none">
+            <path d="M0,0 C150,105 320,15 500,85 C680,110 820,25 1000,95 L1000,0 L0,0 Z" />
           </svg>
         </div>
 
         <!-- Layer 2: Seafoam Emerald -->
         <div class="artafic-wave-layer wl-2">
-          <svg class="wave-svg-top" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M0,100 C25,60 40,90 60,30 S85,15 100,0 L100,100 L0,100 Z" />
+          <svg class="wave-svg-top" viewBox="0 0 1000 120" preserveAspectRatio="none">
+            <path d="M0,120 C180,30 360,5 520,75 C700,115 850,20 1000,60 L1000,120 L0,120 Z" />
           </svg>
           <div class="wave-solid-fill"></div>
-          <svg class="wave-svg-bottom" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M0,0 C25,40 40,10 60,70 S85,85 100,100 L100,0 L0,0 Z" />
+          <svg class="wave-svg-bottom" viewBox="0 0 1000 120" preserveAspectRatio="none">
+            <path d="M0,0 C180,90 360,115 520,45 C700,5 850,100 1000,60 L1000,0 L0,0 Z" />
           </svg>
         </div>
 
         <!-- Layer 3: ARTAFIC Electric Teal -->
         <div class="artafic-wave-layer wl-3">
-          <svg class="wave-svg-top" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M0,100 C15,90 35,40 55,60 S75,10 100,0 L100,100 L0,100 Z" />
+          <svg class="wave-svg-top" viewBox="0 0 1000 120" preserveAspectRatio="none">
+            <path d="M0,120 C130,20 310,95 490,40 C670,5 830,85 1000,15 L1000,120 L0,120 Z" />
           </svg>
           <div class="wave-solid-fill"></div>
-          <svg class="wave-svg-bottom" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M0,0 C15,10 35,60 55,40 S75,90 100,100 L100,0 L0,0 Z" />
+          <svg class="wave-svg-bottom" viewBox="0 0 1000 120" preserveAspectRatio="none">
+            <path d="M0,0 C130,100 310,25 490,80 C670,115 830,35 1000,105 L1000,0 L0,0 Z" />
           </svg>
         </div>
 
         <!-- Layer 4: Dark Ocean Base -->
         <div class="artafic-wave-layer wl-4">
-          <svg class="wave-svg-top" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M0,100 C30,30 45,70 70,20 S90,40 100,0 L100,100 L0,100 Z" />
+          <svg class="wave-svg-top" viewBox="0 0 1000 120" preserveAspectRatio="none">
+            <path d="M0,120 C200,45 380,20 540,70 C700,20 860,80 1000,30 L1000,120 L0,120 Z" />
           </svg>
           <div class="wave-solid-fill"></div>
-          <svg class="wave-svg-bottom" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M0,0 C30,70 45,30 70,80 S90,60 100,100 L100,0 L0,0 Z" />
+          <svg class="wave-svg-bottom" viewBox="0 0 1000 120" preserveAspectRatio="none">
+            <path d="M0,0 C200,75 380,100 540,50 C700,100 860,40 1000,90 L1000,0 L0,0 Z" />
           </svg>
+        </div>
+
+        <!-- Centered Destination Page Title -->
+        <div class="artafic-transition-title-wrap" id="artafic-transition-title-wrap">
+          <span class="artafic-transition-subtitle">ARTAFIC</span>
+          <h2 class="artafic-transition-title" id="artafic-transition-title">PAGE</h2>
         </div>
       `;
       document.body.appendChild(overlay);
@@ -2114,74 +2281,64 @@ function formatTime() {
     return overlay;
   }
 
-  // Handle back/forward cache restorations gracefully
-  window.addEventListener('pageshow', (e) => {
-    if (e.persisted) {
-      sessionStorage.removeItem('artafic_transition_active');
-      const overlay = document.getElementById('artafic-transition-overlay');
-      if (overlay) overlay.className = 'artafic-transition-overlay';
-    }
-  });
+  function getDestinationLabel(linkElement, href) {
+    const text = (linkElement ? linkElement.textContent.trim() : '').toUpperCase();
+    const lowerHref = (href || '').toLowerCase();
 
-  // Expose Global Console Test Function for Verification
-  window.testArtaficTransition = function() {
-    console.log('ARTAFIC TRANSITION: Manual Console Test Triggered');
-    const overlay = ensureOverlay();
-    overlay.className = 'artafic-transition-overlay is-visible is-active';
-    void overlay.offsetWidth;
+    if (lowerHref.includes('about') || text.includes('ABOUT')) return 'ABOUT';
+    if (lowerHref.includes('services') || text.includes('SERVICES')) return 'SERVICES';
+    if (lowerHref.includes('faq') || text.includes('FAQ')) return 'FAQ';
+    if (lowerHref.includes('why-artafic') || text.includes('WHY')) return 'WHY ARTAFIC';
+    if (lowerHref.includes('before-after') || text.includes('BEFORE')) return 'BEFORE & AFTER';
+    if (lowerHref.includes('booking') || text.includes('TOUCH') || text.includes('BOOK')) return 'GET IN TOUCH';
+    if (lowerHref.includes('home') || lowerHref.endsWith('/') || lowerHref.endsWith('index.html') || text === 'HOME') return 'HOME';
 
-    setTimeout(() => {
-      overlay.classList.add('is-entering');
-    }, 20);
-
-    setTimeout(() => {
-      overlay.className = 'artafic-transition-overlay is-visible is-covered is-active';
-      void overlay.offsetWidth;
-
-      setTimeout(() => {
-        overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
-        setTimeout(() => {
-          overlay.className = 'artafic-transition-overlay';
-          console.log('ARTAFIC TRANSITION: Manual Console Test Finished');
-        }, 1400);
-      }, 150); // Wait 150ms in covered state
-    }, 1350); // Enter duration (850ms + 450ms stagger)
-  };
-
-  // 2. Perform Exit Sweep Reveal on Destination Page Load
-  function handleExitReveal() {
-    const isNavigating = sessionStorage.getItem('artafic_transition_active') === 'true';
-    if (!isNavigating) return;
-
-    // ensureOverlay() was already called synchronously when main.js loaded,
-    // creating it in the is-covered state instantly.
-    const overlay = ensureOverlay();
-    
-    console.log('ARTAFIC TRANSITION: Exit Reveal Running on Destination Page Load');
-    sessionStorage.removeItem('artafic_transition_active');
-    
-    // Slight timeout to ensure the browser has painted the covered state
-    setTimeout(() => {
-      overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
-      setTimeout(() => {
-        overlay.className = 'artafic-transition-overlay';
-      }, 1400); 
-    }, 150);
+    if (text && text.length < 25 && !text.includes('\n')) return text;
+    return 'ARTAFIC';
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', handleExitReveal);
-  } else {
-    handleExitReveal();
+  function updateActiveNavLinks(targetUrlString) {
+    try {
+      const url = new URL(targetUrlString, window.location.href);
+      const path = url.pathname.split('/').pop() || 'index.html';
+
+      document.querySelectorAll('.nav__link, .nav__mobile-link').forEach(link => {
+        const href = link.getAttribute('href') || '';
+        const linkPath = href.split('#')[0].split('/').pop();
+
+        link.classList.remove('nav__link--active');
+        link.style.color = '';
+        link.style.fontWeight = '';
+
+        if (path === 'about.html' && (href === 'about.html' || linkPath === 'about.html')) {
+          link.classList.add('nav__link--active');
+          link.style.color = 'var(--color-teal)';
+          link.style.fontWeight = '600';
+        } else if (path === 'faq.html' && (href === 'faq.html' || linkPath === 'faq.html')) {
+          link.classList.add('nav__link--active');
+          link.style.color = 'var(--color-teal)';
+          link.style.fontWeight = '600';
+        } else if ((path === '' || path === 'index.html') && (href === 'index.html#home' || href === '#home' || href === 'index.html')) {
+          link.classList.add('nav__link--active');
+        }
+      });
+    } catch (e) {}
   }
 
-  // 3. Trigger Enter Sweep & Page Navigation (Fetch Router to eliminate flash)
-  function triggerPageTransition(targetHref) {
-    console.log('ARTAFIC TRANSITION TRIGGERED FOR PAGE:', targetHref);
-    const overlay = ensureOverlay();
+  let isTransitionRunning = false;
 
-    sessionStorage.setItem('artafic_transition_active', 'true');
-    
+  function runPageTransition(targetUrlString, labelText, targetHash) {
+    if (isTransitionRunning) return;
+    isTransitionRunning = true;
+
+    const overlay = ensureOverlay();
+    const titleWrap = document.getElementById('artafic-transition-title-wrap');
+    const titleEl = document.getElementById('artafic-transition-title');
+
+    if (titleEl) titleEl.textContent = labelText || 'ARTAFIC';
+    if (titleWrap) titleWrap.className = 'artafic-transition-title-wrap';
+
+    // Close mobile menu if open
     const mobileMenu = document.getElementById('mobile-menu');
     const hamburger = document.getElementById('hamburger');
     if (mobileMenu && mobileMenu.classList.contains('is-open')) {
@@ -2189,6 +2346,7 @@ function formatTime() {
       if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
     }
 
+    // 1. ENTER: Start wave entrance
     overlay.className = 'artafic-transition-overlay is-visible is-active';
     void overlay.offsetWidth;
 
@@ -2196,45 +2354,109 @@ function formatTime() {
       overlay.classList.add('is-entering');
     }, 20);
 
-    const startTime = Date.now();
-    const MIN_ENTER_TIME = 1350; // 850 duration + 450 stagger + 50 margin
+    const currentUrl = new URL(window.location.href);
+    const targetUrl = new URL(targetUrlString, window.location.href);
+    const isSamePage = currentUrl.origin === targetUrl.origin && currentUrl.pathname === targetUrl.pathname;
 
-    // Fetch the next page in the background
-    fetch(targetHref)
-      .then(res => res.text())
-      .then(html => {
-        const elapsed = Date.now() - startTime;
-        const remaining = Math.max(0, MIN_ENTER_TIME - elapsed);
+    const fetchPromise = !isSamePage 
+      ? fetch(targetUrl.href).then(r => r.text()) 
+      : Promise.resolve(null);
 
+    const MIN_ENTER_HOLD = 1050; // Total enter time
+
+    setTimeout(() => {
+      // 2. FULL COVER: Display destination text label
+      if (titleWrap) titleWrap.classList.add('is-visible');
+
+      fetchPromise.then(html => {
+        // 3. SILENT BACKGROUND DOM SWAP
+        if (html) {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+
+          // Swap <title>
+          document.title = doc.title;
+
+          // Swap <body> class
+          document.body.className = doc.body.className;
+
+          // Swap <main id="main-content">
+          const currentMain = document.getElementById('main-content');
+          const newMain = doc.getElementById('main-content');
+          if (currentMain && newMain) {
+            currentMain.innerHTML = newMain.innerHTML;
+            currentMain.className = newMain.className;
+          }
+
+          // Update URL
+          window.history.pushState(null, '', targetUrl.href);
+
+          // Update active links
+          updateActiveNavLinks(targetUrl.href);
+
+          // Scroll to position
+          if (targetHash) {
+            const targetEl = document.querySelector(targetHash);
+            if (targetEl) {
+              const navH = document.getElementById('nav')?.offsetHeight || 72;
+              window.scrollTo({ top: targetEl.offsetTop - navH, behavior: 'instant' });
+            } else {
+              window.scrollTo({ top: 0, behavior: 'instant' });
+            }
+          } else {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+          }
+
+          // Re-initialize scripts
+          if (typeof window.reinitPageScripts === 'function') {
+            window.reinitPageScripts(targetUrl.href);
+          }
+        } else if (targetHash) {
+          const targetEl = document.querySelector(targetHash);
+          if (targetEl) {
+            const navH = document.getElementById('nav')?.offsetHeight || 72;
+            window.scrollTo({ top: targetEl.offsetTop - navH, behavior: 'instant' });
+          }
+          window.history.pushState(null, '', targetUrl.href);
+        }
+
+        // 4. HOLD state for ~400ms so user sees the title & wave composition
         setTimeout(() => {
-          console.log('ARTAFIC TRANSITION: Screen Covered. Replacing DOM seamlessly.');
-          window.history.pushState(null, '', targetHref);
-          
-          // Using document.write seamlessly replaces the DOM without a flash,
-          // instantly re-executing main.js which creates the overlay at is-covered.
-          document.open();
-          document.write(html);
-          document.close();
-        }, remaining);
-      })
-      .catch(err => {
-        // Fallback to standard navigation if fetch fails
-        const elapsed = Date.now() - startTime;
-        const remaining = Math.max(0, MIN_ENTER_TIME - elapsed);
-        setTimeout(() => {
-          window.location.href = targetHref;
-        }, remaining);
+          // Fade out title
+          if (titleWrap) {
+            titleWrap.classList.remove('is-visible');
+            titleWrap.classList.add('is-fading');
+          }
+
+          // 5. EXIT: Waves sweep down off screen
+          setTimeout(() => {
+            overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
+
+            // Complete lifecycle after exit transition finishes (~1150ms)
+            setTimeout(() => {
+              overlay.className = 'artafic-transition-overlay';
+              if (titleWrap) titleWrap.className = 'artafic-transition-title-wrap';
+              isTransitionRunning = false;
+            }, 1250);
+          }, 200);
+        }, 400);
+
+      }).catch(err => {
+        // Safe fallback
+        console.error('Fetch transition error, fallback to native:', err);
+        window.location.href = targetUrl.href;
       });
+
+    }, MIN_ENTER_HOLD);
   }
 
-  // Intercept Navigation Clicks Globablly
+  // Intercept Navigation Clicks Globally
   document.addEventListener('click', function(e) {
     let target = e.target.closest('a');
     if (!target) return;
 
     let href = target.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('javascript') || href.startsWith('mailto:') || href.startsWith('tel:')) {
-      // Ignore anchors entirely, let the smooth scroll handle it natively without waves
+    if (!href || href.startsWith('javascript') || href.startsWith('mailto:') || href.startsWith('tel:')) {
       return;
     }
 
@@ -2248,10 +2470,41 @@ function formatTime() {
 
     if (targetUrl.origin !== currentUrl.origin) return;
 
-    // Standard cross-page internal link
+    const currentPathClean = currentUrl.pathname.replace(/\/$/, '');
+    const targetPathClean = targetUrl.pathname.replace(/\/$/, '');
+    const isSamePath = targetPathClean === currentPathClean;
+
+    // Check if it is a pure in-page anchor on the current page
+    if (isSamePath && targetUrl.hash) {
+      const targetElement = document.querySelector(targetUrl.hash);
+      if (targetElement) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        const label = getDestinationLabel(target, href);
+        runPageTransition(targetUrl.href, label, targetUrl.hash);
+        return;
+      }
+    }
+
+    // Cross-page or page-level navigation
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
-    triggerPageTransition(targetUrl.href);
+
+    const label = getDestinationLabel(target, href);
+    runPageTransition(targetUrl.href, label, targetUrl.hash);
   }, true);
+
+  // Handle Browser Back / Forward buttons
+  window.addEventListener('popstate', () => {
+    const url = window.location.href;
+    const label = getDestinationLabel(null, url);
+    runPageTransition(url, label, window.location.hash);
+  });
+
+  // Expose Global Console Test Function
+  window.testArtaficTransition = function(customLabel) {
+    runPageTransition(window.location.href, customLabel || 'ARTAFIC', null);
+  };
 })();
