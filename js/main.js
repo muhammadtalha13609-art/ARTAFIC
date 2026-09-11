@@ -398,17 +398,29 @@ function formatTime() {
       description: $('#field-description') ? sanitize($('#field-description').value) : ''
     };
 
-    // Success
+        // Success & Honest Dispatch
+    const nameVal = $('#field-name').value.trim();
+    const emailVal = $('#field-email').value.trim();
+    const serviceVal = $('#field-service').value;
+    const descVal = $('#field-description') ? $('#field-description').value.trim() : '';
+
+    const subject = encodeURIComponent(`Project Inquiry: ${serviceVal} - ${nameVal}`);
+    const body = encodeURIComponent(
+      `Name: ${nameVal}\nEmail: ${emailVal}\nService: ${serviceVal}\n\nProject Details:\n${descVal}\n\n---\nSent via artafic.com inquiry form`
+    );
+
     const submitBtn = $('#form-submit-btn');
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Sendingâ€¦';
+    submitBtn.textContent = 'Preparing Message…';
 
-    // Simulate async submission
+    // Trigger direct mail client with pre-filled inquiry details
+    window.location.href = `mailto:hello@artafic.com?subject=${subject}&body=${body}`;
+
     setTimeout(() => {
       form.style.display = 'none';
       successEl.classList.add('is-visible');
       successEl.focus();
-    }, 800);
+    }, 300);
   });
 })();
 
@@ -437,9 +449,9 @@ function formatTime() {
       text: 'ARTAFIC offers two focused services:\n\n**Web Development** â€” Professional, responsive websites built around your business goals, customer behavior, and conversion.\n\n**Logo Building** â€” Custom logo design that gives your business a cleaner, more professional visual identity.\n\nWe deliberately keep our focus narrow to ensure quality in both areas.',
       cta: true
     },
-    process: {
-      text: 'Our process has four stages:\n\n**01 â€” Understand:** We learn about your business, audience, and goals.\n\n**02 â€” Design:** We create a clear visual and UX direction aligned to those goals.\n\n**03 â€” Build:** We develop the responsive website from the approved design.\n\n**04 â€” Refine:** We test, review, and polish before delivery.\n\nEach stage includes your review and approval.',
-      text: 'Our process has four stages:\n\n**01 - Discover & Strategy:** We start by understanding your goals, audience, and technical requirements.\n\n**02 - UX/UI Design:** We craft intuitive, visually compelling interfaces.\n\n**03 - Development & Launch:** We build your site with modern tech (Next.js, Tailwind, WebGL) and deploy it flawlessly.\n\n**04 - Support & Iteration:** After launch, we monitor performance and iterate to ensure long-term success.',
+        process: {
+      text: 'Our process has four stages:\n\n**01 — Understand:** We learn about your business, audience, and goals.\n\n**02 — Design:** We create a clear visual and UX direction aligned to those goals.\n\n**03 — Build:** We develop the responsive website from the approved design.\n\n**04 — Refine:** We test, review, and polish before delivery.\n\nEach stage includes your review and approval.',
+      cta: true
     },
     cost: {
       text: 'Project pricing is based on scope, requirements, complexity, and your business goals. We don\'t publish fixed packages because no two projects are the same.\n\nThe right approach is a conversation â€” get in touch and we can discuss your project and provide a proper estimate.',
@@ -606,72 +618,7 @@ function formatTime() {
     };
   }
 
-  // Fallback for unrecognized messages
-  function getFallbackAnswer(message) {
-    const lower = message.toLowerCase();
-
-    // 1. Casual conversational elements
-    if (/^(hi|hello|hey|assalamualaikum|greetings|sup)\b/.test(lower) || lower.includes('good morning') || lower.includes('good afternoon')) {
-      const greetings = [
-        'Hello! I am the ARTAFIC Assistant. How can I help you with your project today?',
-        'Hi there! I can help you with questions about our Web Development and Logo Building services. What would you like to know?',
-        'Greetings! How can I assist you with your digital presence today?',
-        'Hey! I am here to answer any questions you have about ARTAFIC\'s services and process.'
-      ];
-      return { text: getRandomResponse(greetings), cta: false };
-    }
-    
-    if (lower.includes('thank') || lower.includes('thx')) {
-      const thanks = [
-        'You\'re welcome! Let me know if you need anything else.',
-        'No problem! Happy to help.',
-        'Anytime! Feel free to ask if you have more questions.'
-      ];
-      return { text: getRandomResponse(thanks), cta: false };
-    }
-    
-    if (lower.includes('bye') || lower.includes('cya') || lower.includes('see ya') || lower.includes('goodbye')) {
-      return { text: 'Goodbye! Feel free to reach out if you have any more questions in the future.', cta: false };
-    }
-    
-    if (lower.includes('who are you') || lower.includes('what are you') || lower.includes('are you ai') || lower.includes('are you a bot') || lower.includes('what can you do')) {
-      return {
-        text: 'I am the ARTAFIC Assistant! I\'m a simple bot designed to quickly answer common questions about our **Web Development** and **Logo Building** services. I can\'t write code or generate images, but I can help you understand our process and pricing!',
-        cta: false
-      };
-    }
-
-    // 2. Existing specific FAQ matchers
-    if (lower.includes('service') || lower.includes('offer') || lower.includes('do you do')) {
-      return faqAnswers.services;
-    }
-    if (lower.includes('process') || lower.includes('work') || lower.includes('how')) {
-      return faqAnswers.process;
-    }
-    if (lower.includes('cost') || lower.includes('price') || lower.includes('much') || lower.includes('pricing')) {
-      return faqAnswers.cost;
-    }
-    if (lower.includes('time') || lower.includes('long') || lower.includes('week') || lower.includes('month')) {
-      return faqAnswers.timeline;
-    }
-    if (lower.includes('redesign') || lower.includes('existing') || lower.includes('current')) {
-      return faqAnswers.redesign;
-    }
-    if (lower.includes('book') || lower.includes('meeting') || lower.includes('contact') || lower.includes('touch') || lower.includes('start')) {
-      return faqAnswers.booking;
-    }
-
-    // 3. True Fallback (randomized)
-    const fallbacks = [
-      'That\'s a great question. To give you the most accurate information for your specific situation, the best next step is to get in touch with us directly. We\'ll be happy to address your question in full.',
-      'I\'m a simple bot, so I don\'t have a perfect answer for that! For the best response, I recommend getting in touch with our team directly using the contact form.',
-      'I don\'t have a simple answer for that! The best way forward is a quick conversation. Feel free to use our contact form to reach out.'
-    ];
-    return {
-      text: getRandomResponse(fallbacks),
-      cta: true
-    };
-  }
+  // Deduplicated fallback handler: using primary intent-matching getFallbackAnswer
 
   // â”€â”€â”€ Message Rendering â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function renderMessage(text, type = 'bot', hasCta = false) {
@@ -694,8 +641,17 @@ function formatTime() {
     const bubble = document.createElement('div');
     bubble.className = 'chat-message__bubble';
 
-    // Convert basic markdown-like **bold** to <strong>
-    const formattedText = text
+    // Escape HTML to prevent DOM XSS, then format markdown
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+    const safeText = escapeHtml(text);
+    const formattedText = safeText
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\n/g, '<br>');
     bubble.innerHTML = formattedText;
@@ -1973,10 +1929,10 @@ window.reinitPageScripts = function(targetUrl) {
     // 2. Accordion (FAQ & Services)
     const accordion = document.getElementById('faq-accordion');
     if (accordion) {
-      const items = accordion.querySelectorAll('.accordion__item');
+      const items = accordion.querySelectorAll('.accordion__item, .faq-item');
       items.forEach((item) => {
-        const trigger = item.querySelector('.accordion__trigger');
-        const body = item.querySelector('.accordion__body');
+        const trigger = item.querySelector('.accordion__trigger, .faq-item__trigger');
+        const body = item.querySelector('.accordion__body, .faq-item__body');
         if (!trigger || !body) return;
 
         // Clone to clear old listeners
@@ -1988,8 +1944,8 @@ window.reinitPageScripts = function(targetUrl) {
           items.forEach((other) => {
             if (other !== item && other.classList.contains('is-open')) {
               other.classList.remove('is-open');
-              const otherTrigger = other.querySelector('.accordion__trigger');
-              const otherBody = other.querySelector('.accordion__body');
+              const otherTrigger = other.querySelector('.accordion__trigger, .faq-item__trigger');
+              const otherBody = other.querySelector('.accordion__body, .faq-item__body');
               if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
               if (otherBody) otherBody.style.maxHeight = null;
             }
@@ -2288,8 +2244,11 @@ window.reinitPageScripts = function(targetUrl) {
     if (lowerHref.includes('about') || text.includes('ABOUT')) return 'ABOUT';
     if (lowerHref.includes('services') || text.includes('SERVICES')) return 'SERVICES';
     if (lowerHref.includes('faq') || text.includes('FAQ')) return 'FAQ';
+    if (lowerHref.includes('privacy') || text.includes('PRIVACY')) return 'PRIVACY POLICY';
+    if (lowerHref.includes('terms') || text.includes('TERMS')) return 'TERMS OF SERVICE';
     if (lowerHref.includes('why-artafic') || text.includes('WHY')) return 'WHY ARTAFIC';
     if (lowerHref.includes('before-after') || text.includes('BEFORE')) return 'BEFORE & AFTER';
+    if (lowerHref.includes('portfolio') || text.includes('WORK') || text.includes('PORTFOLIO')) return 'SELECTED WORK';
     if (lowerHref.includes('booking') || text.includes('TOUCH') || text.includes('BOOK')) return 'GET IN TOUCH';
     if (lowerHref.includes('home') || lowerHref.endsWith('/') || lowerHref.endsWith('index.html') || text === 'HOME') return 'HOME';
 
@@ -2310,7 +2269,11 @@ window.reinitPageScripts = function(targetUrl) {
         link.style.color = '';
         link.style.fontWeight = '';
 
-        if (path === 'about.html' && (href === 'about.html' || linkPath === 'about.html')) {
+        if (path === 'services.html' && (href === 'services.html' || linkPath === 'services.html')) {
+          link.classList.add('nav__link--active');
+          link.style.color = 'var(--color-teal)';
+          link.style.fontWeight = '600';
+        } else if (path === 'about.html' && (href === 'about.html' || linkPath === 'about.html')) {
           link.classList.add('nav__link--active');
           link.style.color = 'var(--color-teal)';
           link.style.fontWeight = '600';

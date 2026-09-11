@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- Security Headers -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+
+  <!-- SEO -->
+  <title>Services — ARTAFIC | Web Development & Logo Building</title>
+  <meta name="description" content="Explore ARTAFIC's focused digital services: Custom Web Development and Logo Building designed for businesses that want to be taken seriously online." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://artafic.com/services.html" />
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://artafic.com/services.html" />
+  <meta property="og:title" content="Services — ARTAFIC" />
+  <meta property="og:description" content="Custom Web Development and Logo Building for businesses seeking a credible, professional digital presence." />
+  <meta property="og:image" content="https://artafic.com/assets/images/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Kanit:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css?v=5.0" />
+</head>
+<body class="services-page">
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════════════════════ -->
+<header role="banner">
+  <nav class="nav" id="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+
+      <a href="index.html" class="nav__logo" aria-label="ARTAFIC — Home">
+        <img src="assets/images/logo.png" alt="ARTAFIC" class="nav__logo-image">
+      </a>
+
+      <ul class="nav__links" role="list">
+        <li><a href="index.html#home"         class="nav__link">Home</a></li>
+        <li><a href="services.html"           class="nav__link nav__link--active" style="color: var(--color-teal); font-weight: 600;">Services</a></li>
+        <li><a href="about.html"              class="nav__link">About</a></li>
+        <li><a href="index.html#why-artafic"  class="nav__link">Why ARTAFIC</a></li>
+        <li><a href="index.html#before-after" class="nav__link">Before &amp; After</a></li>
+        <li><a href="faq.html"                class="nav__link">FAQ</a></li>
+      </ul>
+
+      <div class="nav__actions">
+        <a href="index.html#booking" class="btn btn--primary btn--sm">Get In Touch</a>
+        <button class="nav__hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="nav__hamburger-line" aria-hidden="true"></span>
+          <span class="nav__hamburger-line" aria-hidden="true"></span>
+          <span class="nav__hamburger-line" aria-hidden="true"></span>
+        </button>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- Mobile Full-Screen Menu -->
+  <div class="nav__mobile" id="mobile-menu" role="dialog" aria-label="Mobile navigation" aria-modal="true">
+    <div class="nav__mobile-header">
+      <a href="index.html" class="nav__logo" aria-label="ARTAFIC — Home" data-mobile-nav-link>
+        <img src="assets/images/logo.png" alt="ARTAFIC" class="nav__logo-image">
+      </a>
+      <button class="nav__mobile-close" id="mobile-menu-close" aria-label="Close navigation menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="nav__mobile-body">
+      <ul class="nav__mobile-links" role="list">
+        <li><a href="index.html#home"         class="nav__mobile-link" data-mobile-nav-link>Home</a></li>
+        <li><a href="services.html"           class="nav__mobile-link" data-mobile-nav-link style="color: var(--color-teal);">Services</a></li>
+        <li><a href="about.html"              class="nav__mobile-link" data-mobile-nav-link>About</a></li>
+        <li><a href="index.html#why-artafic"  class="nav__mobile-link" data-mobile-nav-link>Why ARTAFIC</a></li>
+        <li><a href="index.html#before-after" class="nav__mobile-link" data-mobile-nav-link>Before &amp; After</a></li>
+        <li><a href="faq.html"                class="nav__mobile-link" data-mobile-nav-link>FAQ</a></li>
+      </ul>
+      <div class="nav__mobile-actions">
+        <a href="index.html#booking" class="btn btn--primary btn--lg" style="width:100%; justify-content:center;" data-mobile-nav-link>Get In Touch</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN SERVICES CONTENT
+═══════════════════════════════════════════════════════════ -->
+<main id="main-content" tabindex="-1">
+
+  <!-- HERO SECTION -->
+  <section class="section" style="padding-top: 8rem; padding-bottom: 4rem; background: var(--color-bg); border-bottom: 1px solid var(--color-border);">
+    <div class="container" style="max-width: 960px;">
+      <p class="section-label" style="color: var(--color-teal); font-weight: 700; letter-spacing: 0.2em; margin-bottom: 1.25rem;">WHAT WE DO</p>
+      <h1 class="section-title" style="font-size: clamp(2.5rem, 5.5vw, 4rem); font-family: var(--font-heading); color: var(--color-charcoal); line-height: 1.15; margin-bottom: 1.5rem;">
+        Two focused services.<br><span style="color: var(--color-teal);">Deliberate execution.</span>
+      </h1>
+      <p style="font-size: 1.125rem; color: var(--color-text-body); line-height: 1.7; max-width: 680px;">
+        We do not offer dozens of generic services. We specialize strictly in Web Development and Logo Building for businesses that want a credible, modern online presence.
+      </p>
+    </div>
+  </section>
+
+  <!-- SERVICE 01: WEB DEVELOPMENT -->
+  <section class="section" id="web-development" style="padding: 5rem 0; background: var(--color-surface); border-bottom: 1px solid var(--color-border);">
+    <div class="container" style="max-width: 960px;">
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+        <span style="font-family: var(--font-heading); font-weight: 700; font-size: 0.875rem; letter-spacing: 0.15em; color: var(--color-teal); background: rgba(20, 184, 166, 0.1); padding: 0.35rem 0.85rem; border-radius: var(--radius-full);">SERVICE 01</span>
+      </div>
+
+      <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-family: var(--font-heading); color: var(--color-charcoal); margin-bottom: 1.5rem;">Web Development</h2>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; margin-top: 2rem;">
+        <div>
+          <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--color-charcoal); margin-bottom: 0.75rem;">Purpose &amp; Problem Solved</h3>
+          <p style="color: var(--color-text-body); line-height: 1.65; font-size: 0.95rem;">
+            Most business websites suffer from generic templates, cluttered interfaces, or slow performance. We design and build custom websites that communicate authority, guide visitor attention, and make your business feel professional and trustworthy.
+          </p>
+        </div>
+
+        <div>
+          <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--color-charcoal); margin-bottom: 0.75rem;">Who It Is For</h3>
+          <p style="color: var(--color-text-body); line-height: 1.65; font-size: 0.95rem;">
+            Businesses with an outdated online presence, companies launching a new offering, and established brands seeking a website that genuinely reflects the quality of their work.
+          </p>
+        </div>
+
+        <div>
+          <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--color-charcoal); margin-bottom: 0.75rem;">What You Receive</h3>
+          <ul style="color: var(--color-text-body); line-height: 1.65; font-size: 0.95rem; padding-left: 1.25rem;">
+            <li>Custom responsive layout (desktop, tablet, mobile)</li>
+            <li>Clean semantic markup and fast loading performance</li>
+            <li>Purposeful interactive elements and accessible navigation</li>
+            <li>Production deployment support and direct handoff</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--color-charcoal); margin-bottom: 0.75rem;">Client Involvement</h3>
+          <p style="color: var(--color-text-body); line-height: 1.65; font-size: 0.95rem;">
+            We collaborate closely during discovery and milestone reviews. You provide the business context and goals; we handle the design, technical build, and performance polish.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE 02: LOGO BUILDING -->
+  <section class="section" id="logo-building" style="padding: 5rem 0; background: var(--color-bg); border-bottom: 1px solid var(--color-border);">
+    <div class="container" style="max-width: 960px;">
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+        <span style="font-family: var(--font-heading); font-weight: 700; font-size: 0.875rem; letter-spacing: 0.15em; color: var(--color-teal); background: rgba(20, 184, 166, 0.1); padding: 0.35rem 0.85rem; border-radius: var(--radius-full);">SERVICE 02</span>
+      </div>
+
+      <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-family: var(--font-heading); color: var(--color-charcoal); margin-bottom: 1.5rem;">Logo Building</h2>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; margin-top: 2rem;">
+        <div>
+          <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--color-charcoal); margin-bottom: 0.75rem;">Purpose &amp; Problem Solved</h3>
+          <p style="color: var(--color-text-body); line-height: 1.65; font-size: 0.95rem;">
+            An unrefined or cluttered logo undermines credibility before a visitor even reads your copy. We build clean, modern, and memorable brand marks engineered for clarity across digital surfaces, favicons, headers, and print.
+          </p>
+        </div>
+
+        <div>
+          <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--color-charcoal); margin-bottom: 0.75rem;">Who It Is For</h3>
+          <p style="color: var(--color-text-body); line-height: 1.65; font-size: 0.95rem;">
+            Founders establishing a new company identity or existing businesses seeking a cleaner, more contemporary visual signature without unnecessary visual noise.
+          </p>
+        </div>
+
+        <div>
+          <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--color-charcoal); margin-bottom: 0.75rem;">What You Receive</h3>
+          <ul style="color: var(--color-text-body); line-height: 1.65; font-size: 0.95rem; padding-left: 1.25rem;">
+            <li>Primary logo mark and typography lockup</li>
+            <li>Scalable vector source files (SVG) and high-res assets</li>
+            <li>Dark and light surface variations</li>
+            <li>Favicon and social avatar exports</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--color-charcoal); margin-bottom: 0.75rem;">Client Involvement</h3>
+          <p style="color: var(--color-text-body); line-height: 1.65; font-size: 0.95rem;">
+            Initial discussion on your brand values, target audience, and preferred aesthetic. Feedback rounds on conceptual directions leading to the final polished identity.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section class="section" style="padding: 6rem 1.5rem; background: var(--color-surface); text-align: center;">
+    <div class="container" style="max-width: 640px;">
+      <p class="section-label" style="color: var(--color-teal); font-weight: 700; letter-spacing: 0.2em; margin-bottom: 1rem;">GET STARTED</p>
+      <h2 style="font-size: clamp(2rem, 4vw, 2.75rem); font-family: var(--font-heading); color: var(--color-charcoal); margin-bottom: 1.25rem;">Have a project in mind?</h2>
+      <p style="color: var(--color-text-body); line-height: 1.7; font-size: 1.05rem; margin-bottom: 2rem;">
+        Tell us about your business goals and we will respond with clear next steps.
+      </p>
+      <a href="index.html#booking" class="btn btn--primary btn--lg">Get In Touch</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════ -->
+<footer class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="container">
+    <div class="footer__grid">
+
+      <div class="footer__brand">
+        <div class="footer__brand-logo">
+          ARTAFIC
+          <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--color-teal); margin-bottom:1px;" aria-hidden="true"></span>
+        </div>
+        <p class="footer__brand-desc">Professional digital experiences built around your business and your customers.</p>
+        <a href="index.html#booking" class="footer__brand-cta">
+          Have a project in mind?
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="footer__col">
+        <p class="footer__col-title">Navigation</p>
+        <ul class="footer__links" role="list">
+          <li><a href="index.html#home" class="footer__link">Home</a></li>
+          <li><a href="services.html" class="footer__link" style="color: var(--color-teal);">Services</a></li>
+          <li><a href="about.html" class="footer__link">About</a></li>
+          <li><a href="index.html#why-artafic" class="footer__link">Why ARTAFIC</a></li>
+          <li><a href="index.html#before-after" class="footer__link">Before &amp; After</a></li>
+          <li><a href="faq.html" class="footer__link">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <p class="footer__col-title">Services</p>
+        <ul class="footer__links" role="list">
+          <li><a href="services.html#web-development" class="footer__link">Web Development</a></li>
+          <li><a href="services.html#logo-building" class="footer__link">Logo Building</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <p class="footer__col-title">Contact</p>
+        <ul class="footer__links" role="list">
+          <li><a href="index.html#booking" class="footer__link">Get In Touch</a></li>
+          <li><a href="mailto:hello@artafic.com" class="footer__link">hello@artafic.com</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copyright">&copy; 2026 ARTAFIC. All rights reserved.</p>
+      <div class="footer__legal">
+        <a href="privacy.html" class="footer__legal-link">Privacy Policy</a>
+        <a href="terms.html" class="footer__legal-link">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- JS -->
+<script src="js/main.js?v=5.0"></script>
+</body>
+</html>
