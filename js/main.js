@@ -317,10 +317,18 @@ function formatTime() {
   const successEl = $('#booking-success');
   if (!form) return;
 
+  const ALLOWED_SERVICES = ['web-development', 'logo-design', 'both', 'not-sure'];
+  const SERVICE_NAMES = {
+    'web-development': 'Web Development',
+    'logo-design': 'Logo Design',
+    'both': 'Web Development & Logo Design',
+    'not-sure': 'General Inquiry'
+  };
+
   const fields = [
-    { id: 'field-name',    errorId: 'error-name',    validate: v => v.trim().length >= 2 },
-    { id: 'field-email',   errorId: 'error-email',   validate: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) },
-    { id: 'field-service', errorId: 'error-service', validate: v => v !== '' }
+    { id: 'field-name',    errorId: 'error-name',    validate: v => v.trim().length >= 2 && v.trim().length <= 100 },
+    { id: 'field-email',   errorId: 'error-email',   validate: v => v.trim().length <= 100 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) },
+    { id: 'field-service', errorId: 'error-service', validate: v => ALLOWED_SERVICES.includes(v) }
   ];
 
   function setError(fieldId, errorId, hasError) {
@@ -398,15 +406,16 @@ function formatTime() {
       description: $('#field-description') ? sanitize($('#field-description').value) : ''
     };
 
-        // Success & Honest Dispatch
-    const nameVal = $('#field-name').value.trim();
-    const emailVal = $('#field-email').value.trim();
-    const serviceVal = $('#field-service').value;
-    const descVal = $('#field-description') ? $('#field-description').value.trim() : '';
+        // Success & Honest Dispatch with Email Header Injection Protection
+    const cleanName = $('#field-name').value.trim().replace(/[\r\n\x00-\x1f]+/g, ' ').slice(0, 100);
+    const cleanEmail = $('#field-email').value.trim().replace(/[\r\n\x00-\x1f]+/g, '').slice(0, 100);
+    const rawService = $('#field-service').value;
+    const cleanService = SERVICE_NAMES[rawService] || 'Project Inquiry';
+    const cleanDesc = ($('#field-description') ? $('#field-description').value.trim() : '').slice(0, 2000);
 
-    const subject = encodeURIComponent(`Project Inquiry: ${serviceVal} - ${nameVal}`);
+    const subject = encodeURIComponent(`Project Inquiry: ${cleanService} - ${cleanName}`);
     const body = encodeURIComponent(
-      `Name: ${nameVal}\nEmail: ${emailVal}\nService: ${serviceVal}\n\nProject Details:\n${descVal}\n\n---\nSent via artafic.com inquiry form`
+      `Name: ${cleanName}\nEmail: ${cleanEmail}\nService: ${cleanService}\n\nProject Details:\n${cleanDesc}\n\n---\nSent via artafic.com inquiry form`
     );
 
     const submitBtn = $('#form-submit-btn');
@@ -764,24 +773,41 @@ function formatTime() {
   });
 
   // â”€â”€â”€ Predefined Suggestion Buttons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  let isBotReplying = false;
+
   $$('.chatbot-panel__suggestion', suggestionsEl).forEach(btn => {
     btn.addEventListener('click', async () => {
+      if (isBotReplying) return;
       const key = btn.dataset.question;
       renderMessage(btn.textContent, 'user');
-      await botReply(faqAnswers[key] || getFallbackAnswer(btn.textContent));
+      isBotReplying = true;
+      try {
+        await botReply(faqAnswers[key] || getFallbackAnswer(btn.textContent));
+      } finally {
+        isBotReplying = false;
+      }
     });
   });
 
   // â”€â”€â”€ User Input â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   async function handleUserMessage() {
-    const message = input.value.trim();
+    if (isBotReplying) return;
+    let message = input.value.trim();
     if (!message) return;
+    if (message.length > 500) {
+      message = message.slice(0, 500);
+    }
 
     input.value = '';
     renderMessage(message, 'user');
 
-    const answer = getFallbackAnswer(message);
-    await botReply(answer);
+    isBotReplying = true;
+    try {
+      const answer = getFallbackAnswer(message);
+      await botReply(answer);
+    } finally {
+      isBotReplying = false;
+    }
   }
 
   sendBtn.addEventListener('click', handleUserMessage);
@@ -1990,21 +2016,54 @@ window.reinitPageScripts = function(targetUrl) {
       }
     }
 
-    // 4. Booking Form
+    // 4. Booking Form (Hardened PJAX Reinitialization)
     const bookingForm = document.getElementById('booking-form');
     if (bookingForm) {
       const successEl = document.getElementById('booking-success');
+      const ALLOWED_SERVICES = ['web-development', 'logo-design', 'both', 'not-sure'];
+      const SERVICE_NAMES = {
+        'web-development': 'Web Development',
+        'logo-design': 'Logo Design',
+        'both': 'Web Development & Logo Design',
+        'not-sure': 'General Inquiry'
+      };
+
       bookingForm.onsubmit = function(e) {
         e.preventDefault();
+        const rawName = (document.getElementById('field-name')?.value || '').trim();
+        const rawEmail = (document.getElementById('field-email')?.value || '').trim();
+        const rawService = document.getElementById('field-service')?.value || '';
+        const rawDesc = (document.getElementById('field-description')?.value || '').trim();
+
+        if (rawName.length < 2 || rawName.length > 100) return;
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rawEmail) || rawEmail.length > 100) return;
+        if (!ALLOWED_SERVICES.includes(rawService)) return;
+
+        const cleanName = rawName.replace(/[\r\n\x00-\x1f]+/g, ' ').slice(0, 100);
+        const cleanEmail = rawEmail.replace(/[\r\n\x00-\x1f]+/g, '').slice(0, 100);
+        const cleanService = SERVICE_NAMES[rawService] || 'Project Inquiry';
+        const cleanDesc = rawDesc.slice(0, 2000);
+
+        const subject = encodeURIComponent(`Project Inquiry: ${cleanService} - ${cleanName}`);
+        const body = encodeURIComponent(
+          `Name: ${cleanName}\nEmail: ${cleanEmail}\nService: ${cleanService}\n\nProject Details:\n${cleanDesc}\n\n---\nSent via artafic.com inquiry form`
+        );
+
         const submitBtn = bookingForm.querySelector('button[type="submit"]');
         if (submitBtn) {
           submitBtn.disabled = true;
-          submitBtn.textContent = 'Sending...';
+          submitBtn.textContent = 'Preparing Message…';
         }
+
+        window.location.href = `mailto:hello@artafic.com?subject=${subject}&body=${body}`;
+
         setTimeout(() => {
           bookingForm.style.display = 'none';
-          if (successEl) successEl.classList.remove('hidden');
-        }, 800);
+          if (successEl) {
+            successEl.classList.add('is-visible');
+            successEl.focus();
+          }
+        }, 300);
       };
     }
 
@@ -2359,11 +2418,15 @@ window.reinitPageScripts = function(targetUrl) {
 
           // Scroll to position
           if (targetHash) {
-            const targetEl = document.querySelector(targetHash);
-            if (targetEl) {
-              const navH = document.getElementById('nav')?.offsetHeight || 72;
-              window.scrollTo({ top: targetEl.offsetTop - navH, behavior: 'instant' });
-            } else {
+            try {
+              const targetEl = document.querySelector(targetHash);
+              if (targetEl) {
+                const navH = document.getElementById('nav')?.offsetHeight || 72;
+                window.scrollTo({ top: targetEl.offsetTop - navH, behavior: 'instant' });
+              } else {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+              }
+            } catch (err) {
               window.scrollTo({ top: 0, behavior: 'instant' });
             }
           } else {
@@ -2375,11 +2438,13 @@ window.reinitPageScripts = function(targetUrl) {
             window.reinitPageScripts(targetUrl.href);
           }
         } else if (targetHash) {
-          const targetEl = document.querySelector(targetHash);
-          if (targetEl) {
-            const navH = document.getElementById('nav')?.offsetHeight || 72;
-            window.scrollTo({ top: targetEl.offsetTop - navH, behavior: 'instant' });
-          }
+          try {
+            const targetEl = document.querySelector(targetHash);
+            if (targetEl) {
+              const navH = document.getElementById('nav')?.offsetHeight || 72;
+              window.scrollTo({ top: targetEl.offsetTop - navH, behavior: 'instant' });
+            }
+          } catch (err) {}
           window.history.pushState(null, '', targetUrl.href);
         }
 
@@ -2431,6 +2496,8 @@ window.reinitPageScripts = function(targetUrl) {
       return;
     }
 
+    // Strictly permit only http: and https: protocols
+    if (targetUrl.protocol !== 'http:' && targetUrl.protocol !== 'https:') return;
     if (targetUrl.origin !== currentUrl.origin) return;
 
     const currentPathClean = currentUrl.pathname.replace(/\/$/, '');
@@ -2439,14 +2506,18 @@ window.reinitPageScripts = function(targetUrl) {
 
     // Check if it is a pure in-page anchor on the current page
     if (isSamePath && targetUrl.hash) {
-      const targetElement = document.querySelector(targetUrl.hash);
-      if (targetElement) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        const label = getDestinationLabel(target, href);
-        runPageTransition(targetUrl.href, label, targetUrl.hash);
-        return;
+      try {
+        const targetElement = document.querySelector(targetUrl.hash);
+        if (targetElement) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          const label = getDestinationLabel(target, href);
+          runPageTransition(targetUrl.href, label, targetUrl.hash);
+          return;
+        }
+      } catch (err) {
+        // Safe fallback for malformed hash
       }
     }
 

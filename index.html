@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
   <!-- Security Headers -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://esm.sh; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://motionsites.ai https://cdn.cosmos.so https://shrug-person-78902957.figma.site; connect-src 'self' https://esm.sh; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
 
@@ -853,7 +853,7 @@
 
             <div class="form-group">
               <label class="form-label" for="field-name">Name <span aria-hidden="true" style="color:#EF4444">*</span></label>
-              <input class="form-input" type="text" id="field-name" name="name" placeholder="Your name" required autocomplete="name" />
+              <input class="form-input" type="text" id="field-name" name="name" placeholder="Your name" required autocomplete="name" maxlength="100" />
               <span class="form-error" id="error-name" role="alert">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                 Please enter your name.
@@ -862,7 +862,7 @@
 
             <div class="form-group">
               <label class="form-label" for="field-email">Email <span aria-hidden="true" style="color:#EF4444">*</span></label>
-              <input class="form-input" type="email" id="field-email" name="email" placeholder="Your email" required autocomplete="email" />
+              <input class="form-input" type="email" id="field-email" name="email" placeholder="Your email" required autocomplete="email" maxlength="100" />
               <span class="form-error" id="error-email" role="alert">Please enter a valid email address.</span>
             </div>
 
@@ -883,7 +883,7 @@
                 Tell us a little about your project
                 <span class="form-label--optional">(optional)</span>
               </label>
-              <textarea class="form-textarea" id="field-description" name="description" placeholder="Tell us briefly what you're looking for..." rows="4"></textarea>
+              <textarea class="form-textarea" id="field-description" name="description" placeholder="Tell us briefly what you're looking for..." rows="4" maxlength="2000"></textarea>
             </div>
 
             <button type="submit" class="btn btn--primary form-submit" id="form-submit-btn">
@@ -1013,6 +1013,7 @@
       placeholder="Type a message…"
       aria-label="Type your message"
       autocomplete="off"
+      maxlength="500"
     />
     <button class="chatbot-panel__send" id="chatbot-send" aria-label="Send message">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
