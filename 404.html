@@ -88,16 +88,81 @@
      MAIN ERROR CONTENT
 ═══════════════════════════════════════════════════════════ -->
 <main id="main-content" tabindex="-1">
-  <section class="section" style="min-height: 75vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 1.5rem 6rem; background: var(--color-bg);">
-    <div class="container" style="max-width: 680px;">
-      <p class="section-label" style="color: var(--color-teal); font-weight: 700; letter-spacing: 0.2em; margin-bottom: 1.5rem;">ERROR 404</p>
-      <h1 class="section-title" style="font-size: clamp(2.2rem, 5vw, 3.5rem); margin-bottom: 1.5rem; font-family: var(--font-heading); color: var(--color-charcoal);">Page Not Found</h1>
-      <p style="font-size: 1.125rem; color: var(--color-text-body); line-height: 1.7; margin-bottom: 2.5rem;">
-        The page you are looking for might have been moved, had its name changed, or does not exist.
+  <section class="error-404-section" aria-labelledby="error-404-title">
+    <div class="container error-404__container">
+      <p class="error-404__kicker" aria-hidden="true">/Page not found</p>
+
+      <!-- 4 [SVG] 4 Lockup -->
+      <div class="error-404__visual" aria-label="404 — Page Not Found">
+        <span class="error-404__digit" aria-hidden="true">4</span>
+
+        <div class="error-404__character-wrap" aria-hidden="true">
+          <svg class="error-404__svg" viewBox="0 0 140 180" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Abstract 404 character">
+            <!-- Subtle ARTAFIC Brand Teal Accent Spark Dots -->
+            <circle cx="118" cy="20" r="4.5" fill="#14B8A6" />
+            <circle cx="22" cy="28" r="3" fill="#14B8A6" opacity="0.45" />
+
+            <!-- Stick Legs & Feet -->
+            <path d="M 55 135 L 55 162 L 47 162" stroke="#111827" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M 85 135 L 85 162 L 93 162" stroke="#111827" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+
+            <!-- Character Body: Smooth organic rounded form -->
+            <path d="M 44 65 C 40 32, 52 18, 70 18 C 88 18, 100 32, 96 65 C 94 98, 102 126, 94 138 C 86 146, 54 146, 46 138 C 38 126, 46 98, 44 65 Z"
+                  fill="#FFFFFF"
+                  stroke="#111827"
+                  stroke-width="3.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round" />
+
+            <!-- Left Arm & Hand clutching head in astonishment -->
+            <path d="M 42 92 C 30 76, 24 58, 34 44 C 36 41, 40 42, 42 46"
+                  stroke="#111827" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            <!-- Left Hand Fingers -->
+            <path d="M 35 41 L 43 43 M 34 47 L 44 47 M 36 53 L 43 51"
+                  stroke="#111827" stroke-width="2.6" stroke-linecap="round" />
+
+            <!-- Right Arm & Hand clutching head in astonishment -->
+            <path d="M 98 92 C 110 76, 116 58, 106 44 C 104 41, 100 42, 98 46"
+                  stroke="#111827" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            <!-- Right Hand Fingers -->
+            <path d="M 105 41 L 97 43 M 106 47 L 96 47 M 104 53 L 97 51"
+                  stroke="#111827" stroke-width="2.6" stroke-linecap="round" />
+
+            <!-- Expressive Eyes: Curious / surprised dots -->
+            <circle cx="58" cy="40" r="2.8" fill="#111827" />
+            <circle cx="82" cy="40" r="2.8" fill="#111827" />
+
+            <!-- Subtle Expressive Eyebrows -->
+            <path d="M 54 34 Q 58 31 62 34" stroke="#111827" stroke-width="2" stroke-linecap="round" fill="none" />
+            <path d="M 78 34 Q 82 31 86 34" stroke="#111827" stroke-width="2" stroke-linecap="round" fill="none" />
+
+            <!-- Screaming / Bewildered Mouth (Open oval) -->
+            <path d="M 57 60 C 57 48, 83 48, 83 60 C 83 78, 80 88, 70 88 C 60 88, 57 78, 57 60 Z"
+                  fill="#F0FDFA"
+                  stroke="#111827"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round" />
+
+            <!-- Subtle ARTAFIC #14B8A6 Brand Accent Interior / Tongue Curve -->
+            <path d="M 62 82 C 65 77, 75 77, 78 82 C 75 87, 65 87, 62 82 Z"
+                  fill="#14B8A6"
+                  opacity="0.85" />
+          </svg>
+        </div>
+
+        <span class="error-404__digit" aria-hidden="true">4</span>
+      </div>
+
+      <h1 id="error-404-title" class="error-404__title">This page doesn't exist.</h1>
+
+      <p class="error-404__desc">
+        The page you're looking for may have been moved, renamed, or never existed in the first place.
       </p>
-      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="index.html" class="btn btn--primary btn--lg">Return Home</a>
-        <a href="services.html" class="btn btn--outline btn--lg">Our Services</a>
+
+      <div class="error-404__actions">
+        <a href="index.html" class="btn btn--primary btn--lg">Back to Home</a>
+        <a href="services.html" class="btn btn--outline btn--lg">View Services</a>
       </div>
     </div>
   </section>
