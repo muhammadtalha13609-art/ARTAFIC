@@ -5,17 +5,23 @@
                  ─────────────────
    ============================================================ */
 
-.artafic-loader {
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap');
+
+:root {
+  --font-heading: 'Montserrat', sans-serif;
+  --font-sans: 'Montserrat', sans-serif;
+}
+
+.artafic-loading-overlay {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #F8FAFC;
-  z-index: 999999;
+  z-index: 99999;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100dvh;
+  background: #f8fafc;
   opacity: 1;
   visibility: visible;
   transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -23,146 +29,189 @@
   pointer-events: auto;
   user-select: none;
   -webkit-user-select: none;
-  margin: 0;
-  padding: 0;
 }
 
-.artafic-loader--hidden {
+.artafic-loading-overlay--hidden {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
 
-.artafic-loader__text {
+.artafic-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: min(90vw, 520px);
+  user-select: none;
+}
+
+.artafic-loader__word {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: min(240px, 75vw);
-  max-width: 100%;
-  font-family: var(--font-heading, 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
-  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  justify-content: center;
+  font-family: 'Montserrat', var(--font-heading, var(--font-sans, system-ui, sans-serif));
+  font-size: clamp(3rem, 8vw, 5.5rem);
   font-weight: 700;
-  letter-spacing: 0.16em;
-  padding-left: 0.16em; /* Optical balance for letter-spacing */
-  text-transform: uppercase;
-  color: #111827;
+  letter-spacing: 0.12em;
+  padding-left: 0.12em; /* Optical centering for letter-spacing */
   line-height: 1;
-  margin: 0;
-  box-sizing: border-box;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
-.artafic-loader__text span {
+.artafic-letter {
   display: inline-block;
-  opacity: 0.15;
-  transform: translateY(8px);
-  animation: artafic-letter 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  color: #111827;
+  opacity: 0.2;
+  transform: translate3d(0, 10px, 0);
+  animation-name: artafic-letter-reveal;
+  animation-duration: 1.8s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
   will-change: transform, opacity, color;
 }
 
-.artafic-loader__text span:nth-child(1) {
+/*
+ * IMPORTANT:
+ * Every letter has a different delay.
+ * This creates the sequential ARTAFIC animation.
+ */
+.artafic-letter:nth-child(1) {
   animation-delay: 0s;
 }
 
-.artafic-loader__text span:nth-child(2) {
-  animation-delay: 0.08s;
+.artafic-letter:nth-child(2) {
+  animation-delay: 0.12s;
 }
 
-.artafic-loader__text span:nth-child(3) {
-  animation-delay: 0.16s;
-}
-
-.artafic-loader__text span:nth-child(4) {
+.artafic-letter:nth-child(3) {
   animation-delay: 0.24s;
 }
 
-.artafic-loader__text span:nth-child(5) {
-  animation-delay: 0.32s;
+.artafic-letter:nth-child(4) {
+  animation-delay: 0.36s;
 }
 
-.artafic-loader__text span:nth-child(6) {
-  animation-delay: 0.40s;
-}
-
-.artafic-loader__text span:nth-child(7) {
+.artafic-letter:nth-child(5) {
   animation-delay: 0.48s;
 }
 
-@keyframes artafic-letter {
+.artafic-letter:nth-child(6) {
+  animation-delay: 0.60s;
+}
+
+.artafic-letter:nth-child(7) {
+  animation-delay: 0.72s;
+}
+
+@keyframes artafic-letter-reveal {
   0% {
-    opacity: 0.15;
-    transform: translateY(8px);
+    opacity: 0.2;
     color: #111827;
+    transform: translate3d(0, 10px, 0);
   }
 
-  25% {
+  20% {
     opacity: 1;
-    transform: translateY(0);
     color: #14b8a6;
+    transform: translate3d(0, 0, 0);
   }
 
-  50% {
+  40% {
     opacity: 1;
-    transform: translateY(0);
+    color: #14b8a6;
+    transform: translate3d(0, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
     color: #111827;
+    transform: translate3d(0, 0, 0);
   }
 
   100% {
-    opacity: 0.15;
-    transform: translateY(8px);
+    opacity: 0.2;
     color: #111827;
+    transform: translate3d(0, 10px, 0);
   }
 }
 
-.artafic-loader__line {
+/* =========================================
+   LOADING LINE
+   ========================================= */
+
+.artafic-loader__track {
   position: relative;
-  width: min(240px, 75vw);
-  max-width: 100%;
+  width: 70%;
+  max-width: 360px;
   height: 2px;
-  margin-top: 14px;
+  margin-top: 18px;
   overflow: hidden;
   background: rgba(17, 24, 39, 0.12);
   border-radius: 999px;
-  box-sizing: border-box;
 }
 
-.artafic-loader__line span {
+.artafic-loader__progress {
   position: absolute;
   top: 0;
-  left: -35%;
-  width: 35%;
+  left: -40%;
+  width: 40%;
   height: 100%;
   background: #14b8a6;
-  border-radius: inherit;
-  animation: artafic-line 1.8s ease-in-out infinite;
-  will-change: left;
+  border-radius: 999px;
+  animation: artafic-progress 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
 }
 
-@keyframes artafic-line {
+@keyframes artafic-progress {
   0% {
-    left: -35%;
-  }
-
-  50% {
-    left: 100%;
+    transform: translateX(0);
   }
 
   100% {
-    left: 100%;
+    transform: translateX(350%);
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .artafic-loader__text span {
-    animation: none;
-    opacity: 1;
-    transform: none;
-    color: #111827;
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 640px) {
+  .artafic-loader__word {
+    font-size: clamp(2.4rem, 12vw, 4rem);
+    letter-spacing: 0.08em;
+    padding-left: 0.08em;
   }
 
-  .artafic-loader__line span {
+  .artafic-loader__track {
+    width: 65%;
+    margin-top: 14px;
+  }
+}
+
+/* =========================================
+   REDUCED MOTION
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .artafic-letter,
+  .artafic-loader__progress {
     animation: none;
+    will-change: auto;
+  }
+
+  .artafic-letter {
+    opacity: 1;
+    color: #111827;
+    transform: none;
+  }
+
+  .artafic-loader__progress {
     left: 0;
     width: 100%;
+    transform: none;
   }
 }

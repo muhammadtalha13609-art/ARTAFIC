@@ -25,23 +25,30 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Kanit:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=5.0" />
+  <link rel="stylesheet" href="css/styles.css?v=5.2" />
 </head>
 <body class="legal-page">
 
 <!-- ARTAFIC Minimal Branded Loader -->
-<div id="artafic-loader" class="artafic-loader" role="status" aria-label="Loading ARTAFIC">
-  <div class="artafic-loader__text" aria-hidden="true">
-    <span>A</span>
-    <span>R</span>
-    <span>T</span>
-    <span>A</span>
-    <span>F</span>
-    <span>I</span>
-    <span>C</span>
-  </div>
-  <div class="artafic-loader__line" aria-hidden="true">
-    <span></span>
+<div id="artafic-loader" class="artafic-loading-overlay">
+  <div
+    class="artafic-loader"
+    role="status"
+    aria-label="Loading ARTAFIC"
+  >
+    <div class="artafic-loader__word" aria-hidden="true">
+      <span class="artafic-letter">A</span>
+      <span class="artafic-letter">R</span>
+      <span class="artafic-letter">T</span>
+      <span class="artafic-letter">A</span>
+      <span class="artafic-letter">F</span>
+      <span class="artafic-letter">I</span>
+      <span class="artafic-letter">C</span>
+    </div>
+
+    <div class="artafic-loader__track" aria-hidden="true">
+      <div class="artafic-loader__progress"></div>
+    </div>
   </div>
 </div>
 
@@ -225,6 +232,6 @@
 </footer>
 
 <!-- JS -->
-<script src="js/main.js?v=5.0"></script>
+<script src="js/main.js?v=5.2"></script>
 </body>
 </html>

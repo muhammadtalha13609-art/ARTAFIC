@@ -2,13 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import "./artafic-loader.css";
 
 export interface ArtaficLoaderProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Explicit loading flag.
-   * - When `true`, loader remains visible.
+   * - When `true`, loader remains visible and animates continuously.
    * - When transitioning from `true` to `false`, initiates the 150-300ms fade-out.
-   * - When omitted (`undefined`), auto-dismisses as soon as the browser finishes loading (`window.load` / `document.readyState === 'complete'`).
+   * - When omitted (`undefined`), auto-dismisses once page has loaded (`window.load` / `document.readyState === 'complete'`).
    */
   isLoading?: boolean;
   /**
@@ -21,6 +22,7 @@ export interface ArtaficLoaderProps extends React.HTMLAttributes<HTMLDivElement>
    */
   onFinished?: () => void;
   className?: string;
+  overlayClassName?: string;
 }
 
 export function ArtaficLoader({
@@ -28,6 +30,7 @@ export function ArtaficLoader({
   fadeDuration = 250,
   onFinished,
   className,
+  overlayClassName,
   ...props
 }: ArtaficLoaderProps) {
   const [mounted, setMounted] = useState<boolean>(true);
@@ -74,29 +77,33 @@ export function ArtaficLoader({
   return (
     <div
       className={cn(
-        "artafic-loader",
-        isExiting && "artafic-loader--hidden",
-        className
+        "artafic-loading-overlay",
+        isExiting && "artafic-loading-overlay--hidden",
+        overlayClassName
       )}
       style={{
         transitionDuration: `${fadeDuration}ms`,
       }}
-      role="status"
-      aria-label="Loading ARTAFIC"
-      {...props}
     >
-      <div className="artafic-loader__text" aria-hidden="true">
-        <span>A</span>
-        <span>R</span>
-        <span>T</span>
-        <span>A</span>
-        <span>F</span>
-        <span>I</span>
-        <span>C</span>
-      </div>
+      <div
+        className={cn("artafic-loader", className)}
+        role="status"
+        aria-label="Loading ARTAFIC"
+        {...props}
+      >
+        <div className="artafic-loader__word" aria-hidden="true">
+          <span className="artafic-letter">A</span>
+          <span className="artafic-letter">R</span>
+          <span className="artafic-letter">T</span>
+          <span className="artafic-letter">A</span>
+          <span className="artafic-letter">F</span>
+          <span className="artafic-letter">I</span>
+          <span className="artafic-letter">C</span>
+        </div>
 
-      <div className="artafic-loader__line" aria-hidden="true">
-        <span />
+        <div className="artafic-loader__track" aria-hidden="true">
+          <div className="artafic-loader__progress" />
+        </div>
       </div>
     </div>
   );

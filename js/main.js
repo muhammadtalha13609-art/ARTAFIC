@@ -2637,20 +2637,19 @@ window.reinitPageScripts = function(targetUrl) {
   };
 })();
 
-
 /* ============================================================
    33. ARTAFIC MINIMAL BRANDED LOADER
    ============================================================ */
 function initArtaficLoader() {
-  const loader = document.getElementById('artafic-loader');
-  if (!loader) return;
+  const overlay = document.getElementById('artafic-loader') || document.querySelector('.artafic-loading-overlay');
+  if (!overlay) return;
 
   function dismiss() {
-    if (loader.classList.contains('artafic-loader--hidden')) return;
-    loader.classList.add('artafic-loader--hidden');
+    if (overlay.classList.contains('artafic-loading-overlay--hidden')) return;
+    overlay.classList.add('artafic-loading-overlay--hidden');
     setTimeout(() => {
-      if (loader && loader.parentNode) {
-        loader.style.display = 'none';
+      if (overlay && overlay.parentNode) {
+        overlay.style.display = 'none';
       }
     }, 250);
   }
@@ -2660,9 +2659,23 @@ function initArtaficLoader() {
   } else {
     window.addEventListener('load', dismiss, { once: true });
     // Failsafe in case a heavy external asset stalls
-    setTimeout(dismiss, 3000);
+    setTimeout(dismiss, 3500);
   }
 }
+
+window.showArtaficLoader = function() {
+  const overlay = document.getElementById('artafic-loader') || document.querySelector('.artafic-loading-overlay');
+  if (!overlay) return;
+  overlay.style.display = 'flex';
+  overlay.classList.remove('artafic-loading-overlay--hidden');
+};
+
+window.dismissArtaficLoader = function() {
+  const overlay = document.getElementById('artafic-loader') || document.querySelector('.artafic-loading-overlay');
+  if (!overlay) return;
+  overlay.classList.add('artafic-loading-overlay--hidden');
+  setTimeout(() => { if (overlay) overlay.style.display = 'none'; }, 250);
+};
 
 window.initArtaficLoader = initArtaficLoader;
 initArtaficLoader();
