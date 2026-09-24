@@ -188,6 +188,7 @@
 .our-story {
   padding: 12rem 0;
   position: relative;
+  overflow: hidden;
 }
 .story-wrapper {
   max-width: 800px;
@@ -239,6 +240,7 @@
 .philosophy {
   padding: 12rem 0;
   position: relative;
+  overflow: hidden;
 }
 .philosophy__container {
   display: grid;
@@ -368,6 +370,7 @@
 .mindset {
   padding: 12rem 0;
   position: relative;
+  overflow: hidden;
 }
 .mindset__layout {
   display: grid;
@@ -407,6 +410,7 @@
   padding: 6rem 0 12rem;
   text-align: center;
   position: relative;
+  overflow: hidden;
 }
 .about-cta .btn {
   margin-top: 2.5rem;

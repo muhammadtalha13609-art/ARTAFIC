@@ -1923,6 +1923,97 @@ function formatTime() {
 
 
 
+
+/* ============================================================
+   UNIVERSAL FLOATING PATHS BACKGROUND ENGINE (Multi-Theme)
+   ============================================================ */
+function createFloatingPathsSVG(position, theme) {
+  const p = typeof position === 'number' ? position : parseFloat(position || '1');
+  const numPaths = window.innerWidth < 768 ? 20 : 36;
+  let paths = '';
+
+  for (let i = 0; i < numPaths; i++) {
+    // Exact mathematical formula from floating-paths.tsx
+    const mX = -(380 - i * 5 * p);
+    const mY = -(189 + i * 6);
+    const c1X = -(380 - i * 5 * p);
+    const c1Y = -(189 + i * 6);
+    const c2X = -(312 - i * 5 * p);
+    const c2Y = 216 - i * 6;
+    const c3X = 152 - i * 5 * p;
+    const c3Y = 343 - i * 6;
+    const c4X = 616 - i * 5 * p;
+    const c4Y = 470 - i * 6;
+    const c5X = 684 - i * 5 * p;
+    const c5Y = 875 - i * 6;
+    const c6X = 684 - i * 5 * p;
+    const c6Y = 875 - i * 6;
+
+    const d = `M${mX} ${mY}C${c1X} ${c1Y} ${c2X} ${c2Y} ${c3X} ${c3Y}C${c4X} ${c4Y} ${c5X} ${c5Y} ${c6X} ${c6Y}`;
+    const width = (0.5 + i * 0.03).toFixed(2);
+
+    let color;
+    if (theme === 'light') {
+      // Light background: subtle slate-950 / slate-900 (rgba(15,23,42,...)) + occasional teal accent
+      if (i % 6 === 0) {
+        color = `rgba(20, 184, 166, ${(0.10 + i * 0.005).toFixed(3)})`;
+      } else {
+        color = `rgba(15, 23, 42, ${(0.035 + i * 0.005).toFixed(3)})`;
+      }
+    } else {
+      // Dark background: subtle white + electric teal accents
+      if (i % 5 === 0) {
+        color = `rgba(20, 184, 166, ${(0.09 + i * 0.007).toFixed(3)})`;
+      } else {
+        color = `rgba(255, 255, 255, ${(0.025 + i * 0.004).toFixed(3)})`;
+      }
+    }
+
+    const duration = (20 + (i % 10) * 1.2).toFixed(1);
+    const delay = -((i * 1.7) % 20).toFixed(1);
+
+    paths += `<path d="${d}" stroke="${color}" stroke-width="${width}" fill="none" pathLength="1" class="fp-path" style="animation-duration:${duration}s;animation-delay:${delay}s;" />\n`;
+  }
+
+  return `<svg class="fp-svg" viewBox="0 0 696 316" fill="none" preserveAspectRatio="xMidYMid slice" aria-hidden="true">\n${paths}</svg>`;
+}
+
+function initFloatingPaths() {
+  document.querySelectorAll('.floating-paths-bg').forEach((container) => {
+    if (container.__fpInitialized) return;
+    container.__fpInitialized = true;
+
+    const pos = parseFloat(container.dataset.pos || '1');
+    let theme = container.dataset.theme;
+
+    if (!theme || theme === 'auto') {
+      const parent = container.parentElement;
+      if (parent) {
+        const bg = window.getComputedStyle(parent).backgroundColor;
+        const rgb = bg.match(/\d+/g);
+        if (rgb && rgb.length >= 3) {
+          const lum = 0.299 * parseInt(rgb[0], 10) + 0.587 * parseInt(rgb[1], 10) + 0.114 * parseInt(rgb[2], 10);
+          theme = lum >= 128 ? 'light' : 'dark';
+        } else {
+          theme = 'dark';
+        }
+      } else {
+        theme = 'dark';
+      }
+    }
+
+    container.innerHTML = createFloatingPathsSVG(pos, theme);
+  });
+}
+
+// Export to window and run on DOM ready / script load
+window.initFloatingPaths = initFloatingPaths;
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initFloatingPaths);
+} else {
+  initFloatingPaths();
+}
+
 /* ============================================================
    ARTAFIC SITE-WIDE PAGE TRANSITION � ULTRA SMOOTH PJAX ENGINE
    ============================================================ */
@@ -1930,6 +2021,9 @@ function formatTime() {
 // Global Script Re-initializer for Page Transitions
 window.reinitPageScripts = function(targetUrl) {
   try {
+    if (typeof window.initFloatingPaths === 'function') {
+      window.initFloatingPaths();
+    }
     // 1. Scroll Reveal Observer
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!prefersReducedMotion && 'IntersectionObserver' in window) {

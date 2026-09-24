@@ -30,6 +30,8 @@
         color = Math.random() < 0.2 ? `rgba(20, 184, 166, ${0.1 + i * 0.015})` : `rgba(255, 255, 255, ${0.03 + i * 0.005})`;
       } else if (themeMode === 'minimal') {
         color = `rgba(255, 255, 255, ${0.02 + i * 0.002})`;
+      } else if (themeMode === 'light') {
+        color = i % 6 === 0 ? `rgba(20, 184, 166, ${(0.10 + i * 0.005).toFixed(3)})` : `rgba(15, 23, 42, ${(0.035 + i * 0.005).toFixed(3)})`;
       } else {
         color = Math.random() < 0.05 ? `rgba(20, 184, 166, ${0.05 + i * 0.01})` : `rgba(255, 255, 255, ${0.02 + i * 0.005})`;
       }

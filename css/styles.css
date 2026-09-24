@@ -192,18 +192,24 @@ input, textarea, select {
    04. UTILITIES
    ──────────────────────────────────────────────────────────── */
 .container {
+  position: relative;
+  z-index: 1;
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 var(--space-8);
 }
 
 .container--wide {
+  position: relative;
+  z-index: 1;
   max-width: var(--container-wide);
   margin: 0 auto;
   padding: 0 var(--space-8);
 }
 
 .section {
+  position: relative;
+  overflow: hidden;
   padding: var(--space-24) 0;
 }
 
@@ -1092,6 +1098,8 @@ input, textarea, select {
    08. VALUE STRIP
    ──────────────────────────────────────────────────────────── */
 .value-strip {
+  position: relative;
+  overflow: hidden;
   background: var(--color-charcoal);
   padding: var(--space-8) 0;
   border-top: 1px solid rgba(255,255,255,0.06);
@@ -2006,6 +2014,8 @@ input, textarea, select {
    14. BEFORE / AFTER SLIDER
    ──────────────────────────────────────────────────────────── */
 .before-after {
+  position: relative;
+  overflow: hidden;
   padding: var(--space-24) 0;
   background: var(--color-charcoal);
 }
@@ -2429,6 +2439,8 @@ input, textarea, select {
    18. MEETING BOOKING FORM
    ──────────────────────────────────────────────────────────── */
 .booking {
+  position: relative;
+  overflow: hidden;
   padding: var(--space-24) 0;
   background: var(--color-bg-alt);
 }
@@ -2646,11 +2658,15 @@ input, textarea, select {
    19. FOOTER
    ──────────────────────────────────────────────────────────── */
 .footer {
+  position: relative;
+  overflow: hidden;
   background: var(--color-charcoal);
   padding: var(--space-20) 0 var(--space-8);
 }
 
 .footer__grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: var(--space-12);
@@ -2724,6 +2740,8 @@ input, textarea, select {
 }
 
 .footer__bottom {
+  position: relative;
+  z-index: 1;
   border-top: 1px solid rgba(255,255,255,0.08);
   padding-top: var(--space-8);
   display: flex;
@@ -3334,6 +3352,7 @@ input, textarea, select {
    27. MARQUEE PORTFOLIO SECTION
    ------------------------------------------------------------ */
 .marquee-section {
+  position: relative;
   background-color: #0C0C0C;
   padding: 0 0 2.5rem 0;
   overflow: hidden;
@@ -3347,6 +3366,8 @@ input, textarea, select {
 }
 
 .marquee-track-container {
+  position: relative;
+  z-index: 1;
   width: 100%;
   overflow: hidden;
 }
@@ -3417,6 +3438,8 @@ html, body {
   }
 
   .value-strip {
+  position: relative;
+  overflow: hidden;
     padding: 1.25rem 0 !important;
   }
 
@@ -3857,6 +3880,7 @@ select:focus-visible {
 }
 
 .services-panning-stage {
+  z-index: 1;
   position: absolute;
   width: 100%;
   height: 2600px;
@@ -4205,3 +4229,50 @@ select:focus-visible {
   }
 }
 
+
+
+/* ============================================================
+   32. UNIVERSAL FLOATING PATHS BACKGROUND COMPONENT
+   ============================================================ */
+.floating-paths-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.floating-paths-bg .fp-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.floating-paths-bg .fp-path {
+  stroke-dasharray: 1;
+  animation: fpFloatPath linear infinite;
+  will-change: stroke-dashoffset, opacity;
+}
+
+@keyframes fpFloatPath {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 0.25;
+  }
+  50% {
+    stroke-dashoffset: 0.5;
+    opacity: 0.75;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-paths-bg .fp-path {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 0.35;
+  }
+}
