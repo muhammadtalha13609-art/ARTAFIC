@@ -2636,3 +2636,33 @@ window.reinitPageScripts = function(targetUrl) {
     runPageTransition(window.location.href, customLabel || 'ARTAFIC', null);
   };
 })();
+
+
+/* ============================================================
+   33. ARTAFIC MINIMAL BRANDED LOADER
+   ============================================================ */
+function initArtaficLoader() {
+  const loader = document.getElementById('artafic-loader');
+  if (!loader) return;
+
+  function dismiss() {
+    if (loader.classList.contains('artafic-loader--hidden')) return;
+    loader.classList.add('artafic-loader--hidden');
+    setTimeout(() => {
+      if (loader && loader.parentNode) {
+        loader.style.display = 'none';
+      }
+    }, 250);
+  }
+
+  if (document.readyState === 'complete') {
+    dismiss();
+  } else {
+    window.addEventListener('load', dismiss, { once: true });
+    // Failsafe in case a heavy external asset stalls
+    setTimeout(dismiss, 3000);
+  }
+}
+
+window.initArtaficLoader = initArtaficLoader;
+initArtaficLoader();

@@ -4276,3 +4276,146 @@ select:focus-visible {
     opacity: 0.35;
   }
 }
+
+
+/* ============================================================
+   33. ARTAFIC MINIMAL BRANDED FULL-SCREEN LOADER
+   Visual Style:
+                       ARTAFIC
+                 ─────────────────
+   ============================================================ */
+.artafic-loader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #F8FAFC;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+  margin: 0;
+  padding: 0;
+}
+
+.artafic-loader--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.artafic-loader__text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(240px, 75vw);
+  max-width: 100%;
+  font-family: var(--font-heading, 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  padding-left: 0.16em;
+  text-transform: uppercase;
+  color: #111827;
+  line-height: 1;
+  margin: 0;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.artafic-loader__text span {
+  display: inline-block;
+  opacity: 0.15;
+  transform: translateY(8px);
+  animation: artafic-letter 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, opacity, color;
+}
+
+.artafic-loader__text span:nth-child(1) { animation-delay: 0s; }
+.artafic-loader__text span:nth-child(2) { animation-delay: 0.08s; }
+.artafic-loader__text span:nth-child(3) { animation-delay: 0.16s; }
+.artafic-loader__text span:nth-child(4) { animation-delay: 0.24s; }
+.artafic-loader__text span:nth-child(5) { animation-delay: 0.32s; }
+.artafic-loader__text span:nth-child(6) { animation-delay: 0.40s; }
+.artafic-loader__text span:nth-child(7) { animation-delay: 0.48s; }
+
+@keyframes artafic-letter {
+  0% {
+    opacity: 0.15;
+    transform: translateY(8px);
+    color: #111827;
+  }
+  25% {
+    opacity: 1;
+    transform: translateY(0);
+    color: #14b8a6;
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0);
+    color: #111827;
+  }
+  100% {
+    opacity: 0.15;
+    transform: translateY(8px);
+    color: #111827;
+  }
+}
+
+.artafic-loader__line {
+  position: relative;
+  width: min(240px, 75vw);
+  max-width: 100%;
+  height: 2px;
+  margin-top: 14px;
+  overflow: hidden;
+  background: rgba(17, 24, 39, 0.12);
+  border-radius: 999px;
+  box-sizing: border-box;
+}
+
+.artafic-loader__line span {
+  position: absolute;
+  top: 0;
+  left: -35%;
+  width: 35%;
+  height: 100%;
+  background: #14b8a6;
+  border-radius: inherit;
+  animation: artafic-line 1.8s ease-in-out infinite;
+  will-change: left;
+}
+
+@keyframes artafic-line {
+  0% {
+    left: -35%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .artafic-loader__text span {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    color: #111827;
+  }
+  .artafic-loader__line span {
+    animation: none;
+    left: 0;
+    width: 100%;
+  }
+}
