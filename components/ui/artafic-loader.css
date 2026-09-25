@@ -1,27 +1,20 @@
 /* ============================================================
-   ARTAFIC MINIMAL BRANDED FULL-SCREEN LOADER
-   Visual Style:
-                       ARTAFIC
-                 ─────────────────
+   ARTAFIC PREMIUM VECTOR LOADER (SelfMadeSystem Stroke Engine)
+   Visual Language: Official ARTAFIC Logo Geometry & Typography
+   Brand Palette: Dark #111827 · Teal #14B8A6 · Background #F8FAFC
    ============================================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap');
-
-:root {
-  --font-heading: 'Montserrat', sans-serif;
-  --font-sans: 'Montserrat', sans-serif;
-}
 
 .artafic-loading-overlay {
   position: fixed;
   inset: 0;
   z-index: 99999;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100dvh;
-  background: #f8fafc;
+  background: #F8FAFC;
   opacity: 1;
   visibility: visible;
   transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -42,112 +35,75 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: min(90vw, 520px);
+  width: min(88vw, 640px);
   user-select: none;
 }
 
-.artafic-loader__word {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Montserrat', var(--font-heading, var(--font-sans, system-ui, sans-serif));
-  font-size: clamp(3rem, 8vw, 5.5rem);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  padding-left: 0.12em; /* Optical centering for letter-spacing */
-  line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
+.artafic-wordmark-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
 }
 
-.artafic-letter {
-  display: inline-block;
-  color: #111827;
-  opacity: 0.2;
-  transform: translate3d(0, 10px, 0);
-  animation-name: artafic-letter-reveal;
-  animation-duration: 1.8s;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  animation-iteration-count: infinite;
-  animation-fill-mode: both;
-  will-change: transform, opacity, color;
+/* Base / Track Paths (subtle logo skeleton) */
+.artafic-track-dark {
+  stroke: rgba(17, 24, 39, 0.08);
+  stroke-width: 10px;
+  stroke-linejoin: round;
+  fill: none;
 }
 
-/*
- * IMPORTANT:
- * Every letter has a different delay.
- * This creates the sequential ARTAFIC animation.
- */
-.artafic-letter:nth-child(1) {
-  animation-delay: 0s;
+.artafic-track-teal {
+  stroke: rgba(20, 184, 166, 0.12);
+  stroke-width: 10px;
+  stroke-linejoin: round;
+  fill: none;
 }
 
-.artafic-letter:nth-child(2) {
-  animation-delay: 0.12s;
+/* SelfMadeSystem Stroke Animation */
+.dash {
+  animation: dashArray 2s ease-in-out infinite,
+             dashOffset 2s linear infinite;
 }
 
-.artafic-letter:nth-child(3) {
-  animation-delay: 0.24s;
-}
-
-.artafic-letter:nth-child(4) {
-  animation-delay: 0.36s;
-}
-
-.artafic-letter:nth-child(5) {
-  animation-delay: 0.48s;
-}
-
-.artafic-letter:nth-child(6) {
-  animation-delay: 0.60s;
-}
-
-.artafic-letter:nth-child(7) {
-  animation-delay: 0.72s;
-}
-
-@keyframes artafic-letter-reveal {
+@keyframes dashArray {
   0% {
-    opacity: 0.2;
-    color: #111827;
-    transform: translate3d(0, 10px, 0);
+    stroke-dasharray: 0 1 359 0;
   }
-
-  20% {
-    opacity: 1;
-    color: #14b8a6;
-    transform: translate3d(0, 0, 0);
+  50% {
+    stroke-dasharray: 0 359 1 0;
   }
-
-  40% {
-    opacity: 1;
-    color: #14b8a6;
-    transform: translate3d(0, 0, 0);
-  }
-
-  60% {
-    opacity: 1;
-    color: #111827;
-    transform: translate3d(0, 0, 0);
-  }
-
   100% {
-    opacity: 0.2;
-    color: #111827;
-    transform: translate3d(0, 10px, 0);
+    stroke-dasharray: 359 1 0 0;
   }
 }
 
-/* =========================================
-   LOADING LINE
-   ========================================= */
+@keyframes dashOffset {
+  0% {
+    stroke-dashoffset: 365;
+  }
+  100% {
+    stroke-dashoffset: 5;
+  }
+}
 
+/* Sequential Letter Stagger */
+.letter-a1 .dash { animation-delay: 0s; }
+.letter-r .dash  { animation-delay: 0.12s; }
+.letter-t .dash  { animation-delay: 0.24s; }
+.letter-a2 .dash { animation-delay: 0.36s; }
+.letter-f .dash  { animation-delay: 0.48s; }
+.letter-i .dash  { animation-delay: 0.60s; }
+.letter-c .dash  { animation-delay: 0.72s; }
+
+/* Loading Line */
 .artafic-loader__track {
   position: relative;
-  width: 70%;
-  max-width: 360px;
+  width: 60%;
+  max-width: 300px;
   height: 2px;
-  margin-top: 18px;
+  margin-top: 22px;
   overflow: hidden;
   background: rgba(17, 24, 39, 0.12);
   border-radius: 999px;
@@ -159,7 +115,7 @@
   left: -40%;
   width: 40%;
   height: 100%;
-  background: #14b8a6;
+  background: #14B8A6;
   border-radius: 999px;
   animation: artafic-progress 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   will-change: transform;
@@ -169,49 +125,36 @@
   0% {
     transform: translateX(0);
   }
-
   100% {
     transform: translateX(350%);
   }
 }
 
-/* =========================================
-   MOBILE
-   ========================================= */
-
 @media (max-width: 640px) {
-  .artafic-loader__word {
-    font-size: clamp(2.4rem, 12vw, 4rem);
-    letter-spacing: 0.08em;
-    padding-left: 0.08em;
+  .artafic-loader {
+    width: 86vw;
   }
-
   .artafic-loader__track {
     width: 65%;
-    margin-top: 14px;
+    margin-top: 16px;
   }
 }
 
-/* =========================================
-   REDUCED MOTION
-   ========================================= */
-
+/* Accessibility & Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  .artafic-letter,
-  .artafic-loader__progress {
-    animation: none;
-    will-change: auto;
+  .dash, .artafic-loader__progress {
+    animation: none !important;
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
   }
-
-  .artafic-letter {
-    opacity: 1;
-    color: #111827;
-    transform: none;
-  }
-
   .artafic-loader__progress {
     left: 0;
     width: 100%;
-    transform: none;
+  }
+  .artafic-track-dark {
+    stroke-opacity: 0.35;
+  }
+  .artafic-track-teal {
+    stroke-opacity: 0.4;
   }
 }
