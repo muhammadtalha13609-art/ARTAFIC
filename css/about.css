@@ -127,14 +127,14 @@
 }
 
 /* ==========================================================================
-   SECTION 01: ABOUT HERO (Static Fluted Glass Visual - Editorial Layout)
+   SECTION 01: ABOUT HERO (Static Fluted Glass Visual - Bold Heading Only)
    ========================================================================== */
 .about-hero {
   position: relative;
-  min-height: 90vh;
+  min-height: 75vh;
   display: flex;
   align-items: center;
-  padding: 160px 1.5rem 90px;
+  padding: 160px 1.5rem 80px;
   background-color: #0B1120;
   background-image: url('../assets/images/about-hero-fluted-glass-v3.jpg');
   background-position: center right;
@@ -146,138 +146,27 @@
 .about-hero__overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 25% 50%, rgba(11, 17, 32, 0.3) 0%, rgba(7, 10, 16, 0.6) 100%);
+  background: radial-gradient(circle at 25% 50%, rgba(11, 17, 32, 0.35) 0%, rgba(7, 10, 16, 0.65) 100%);
   pointer-events: none;
   z-index: 1;
 }
 
 .about-hero__layout {
-  max-width: 820px;
+  max-width: 900px;
   position: relative;
   z-index: 2;
   text-align: left;
 }
 
-.about-hero__content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.about-hero__eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  margin-bottom: 2rem;
-  padding: 0.35rem 0.9rem;
-  border-radius: 9999px;
-  background: rgba(20, 184, 166, 0.1);
-  border: 1px solid rgba(20, 184, 166, 0.25);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.about-hero__eyebrow-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--about-teal);
-  box-shadow: 0 0 8px var(--about-teal);
-}
-
-.about-hero__eyebrow-text {
-  font-family: var(--about-font-display);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  color: var(--about-teal);
-  text-transform: uppercase;
-}
-
 .about-hero__title {
   font-family: 'Montserrat', sans-serif;
-  font-size: clamp(2.35rem, 5.2vw, 4.35rem);
-  font-weight: 500;
-  line-height: 1.14;
-  letter-spacing: -0.025em;
+  font-size: clamp(3.5rem, 8vw, 6.5rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
   color: #FFFFFF;
-  margin: 0 0 1.75rem 0;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
-}
-
-.about-hero__lead {
-  font-family: var(--about-font-body);
-  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.75);
-  max-width: 580px;
-  margin: 0 0 2.5rem 0;
-  font-weight: 400;
-}
-
-.about-hero__action {
-  margin-bottom: 3.5rem;
-}
-
-.about-hero__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  padding: 0.85rem 1.85rem;
-  border-radius: 9999px;
-  background: rgba(20, 184, 166, 0.12);
-  border: 1px solid rgba(20, 184, 166, 0.35);
-  color: #FFFFFF;
-  font-family: var(--about-font-body);
-  font-size: 0.95rem;
-  font-weight: 500;
-  text-decoration: none;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.about-hero__cta:hover {
-  background: var(--about-teal);
-  color: #0B1120;
-  border-color: var(--about-teal);
-  box-shadow: 0 0 24px rgba(20, 184, 166, 0.35);
-  transform: translateY(-2px);
-}
-
-.about-hero__cta svg {
-  transition: transform 0.3s ease;
-}
-
-.about-hero__cta:hover svg {
-  transform: translateX(3px);
-}
-
-.about-hero__scroll {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
-}
-
-.about-hero__scroll:hover {
-  opacity: 1;
-}
-
-.about-hero__scroll-text {
-  font-family: var(--about-font-display);
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.55);
-  text-transform: uppercase;
-}
-
-.about-hero__scroll-line {
-  width: 1px;
-  height: 44px;
-  background: linear-gradient(to bottom, var(--about-teal), transparent);
+  margin: 0;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
 }
 
 /* ==========================================================================
@@ -877,13 +766,14 @@
 
 @media (max-width: 768px) {
   .about-hero {
-    min-height: 85vh;
+    min-height: 65vh;
     padding-top: 130px;
     padding-bottom: 60px;
   }
 
   .about-hero__title {
-    font-size: clamp(2rem, 8vw, 3rem);
+    font-size: clamp(2.75rem, 10vw, 4.25rem);
+    font-weight: 800;
   }
 
   .who-we-are {
@@ -946,6 +836,7 @@
 
 @media (max-width: 480px) {
   .about-hero {
+    min-height: 60vh;
     padding-top: 120px;
     padding-bottom: 50px;
     padding-left: 1.25rem;
@@ -953,12 +844,9 @@
   }
 
   .about-hero__title {
-    font-size: clamp(1.85rem, 8vw, 2.35rem);
-    line-height: 1.18;
-  }
-
-  .about-hero__action {
-    margin-bottom: 2.5rem;
+    font-size: clamp(2.35rem, 11vw, 3.25rem);
+    line-height: 1.1;
+    font-weight: 800;
   }
 
   .who-we-are__grid,

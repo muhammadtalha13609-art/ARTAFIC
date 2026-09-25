@@ -2502,7 +2502,14 @@ window.reinitPageScripts = function(targetUrl) {
           // Synchronize page stylesheets from target page
           doc.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
             const href = link.getAttribute('href');
-            if (href && !document.querySelector(`link[href="${href}"]`)) {
+            if (!href) return;
+            const baseHref = href.split('?')[0];
+            const existing = document.querySelector(`link[href^="${baseHref}"]`);
+            if (existing) {
+              if (existing.getAttribute('href') !== href) {
+                existing.setAttribute('href', href);
+              }
+            } else {
               const newLink = document.createElement('link');
               newLink.rel = 'stylesheet';
               newLink.href = href;
