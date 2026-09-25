@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://artafic.com/sitemap.xml
+Sitemap: https://artafic.vercel.app/sitemap.xml
