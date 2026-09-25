@@ -93,9 +93,9 @@ export function ArtaficLoader({
     }
 
     // 2. Uncontrolled / page-ready mode:
-    // Ensures a minimum display time of 1800ms so the user can experience the animation
+    // Ensures a minimum display time of 2200ms so the user can experience the animation
     const startTime = Date.now();
-    const MIN_DISPLAY_MS = 1800;
+    const MIN_DISPLAY_MS = 2200;
 
     const dismiss = () => {
       const elapsed = Date.now() - startTime;
@@ -174,7 +174,7 @@ export function ArtaficLoader({
             ))}
           </g>
 
-          {/* Layer 2: SelfMadeSystem Animated Stroke Layer (rendered on top) */}
+          {/* Layer 2: SelfMadeSystem Animated Stroke Layer (active tracer beam, fades at rest) */}
           <g className="artafic-wordmark-stroke" aria-hidden="true">
             {Object.entries(ARTAFIC_VECTOR_PATHS).map(([key, letter]) => (
               <g key={`stroke-group-${key}`} className={`letter-${key}`}>
@@ -182,7 +182,7 @@ export function ArtaficLoader({
                   d={letter.dark}
                   fill="none"
                   stroke="#14B8A6"
-                  strokeWidth={12}
+                  strokeWidth={7}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   className="dash"
@@ -193,8 +193,8 @@ export function ArtaficLoader({
                   <path
                     d={letter.teal}
                     fill="none"
-                    stroke="#111827"
-                    strokeWidth={14}
+                    stroke="#2DD4BF"
+                    strokeWidth={8}
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     className="dash"

@@ -4343,8 +4343,9 @@ select:focus-visible {
 }
 
 .dash {
-  animation: dashArray 2s ease-in-out infinite,
-             dashOffset 2s linear infinite;
+  animation: dashArray 2s ease-in-out infinite both,
+             dashOffset 2s linear infinite both,
+             strokeVis 2s ease-in-out infinite both;
 }
 
 @keyframes dashArray {
@@ -4368,6 +4369,27 @@ select:focus-visible {
   }
 }
 
+/* Active stroke visibility during motion.
+   At resting state (0% and 75%-100%), stroke fades to opacity: 0,
+   guaranteeing the ARTAFIC wordmark has ZERO outline in its resting appearance. */
+@keyframes strokeVis {
+  0% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 /* Sequential Letter Stagger (A -> R -> T -> A -> F -> I -> C) */
 .letter-a1 .dash { animation-delay: 0s; }
 .letter-r .dash  { animation-delay: 0.12s; }
@@ -4387,8 +4409,8 @@ select:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .dash {
     animation: none !important;
-    stroke-dasharray: none !important;
-    stroke-dashoffset: 0 !important;
+    opacity: 0 !important;
+    stroke: transparent !important;
   }
 }
 

@@ -2663,10 +2663,10 @@ function initArtaficLoader() {
     setTimeout(() => { if (overlay) overlay.style.display = 'none'; }, 300);
   });
 
-  // Guarantees at least 1800ms of display time so the SelfMadeSystem
+  // Guarantees at least 2200ms of display time so the SelfMadeSystem
   // stroke animation is visibly watchable before smooth dismissal.
   const startTime = Date.now();
-  const MIN_DISPLAY_MS = 1800;
+  const MIN_DISPLAY_MS = 2200;
 
   function onReady() {
     const elapsed = Date.now() - startTime;
