@@ -2159,8 +2159,14 @@ window.reinitPageScripts = function(targetUrl) {
     }
 
     // 5. About Page Scripts
-    if (typeof window.initAboutPage === 'function' && document.querySelector('.about-intro')) {
-      window.initAboutPage();
+    if (document.querySelector('.about-hero') || document.querySelector('.about-page')) {
+      if (typeof window.initAboutPage === 'function') {
+        window.initAboutPage();
+      } else if (!document.querySelector('script[src*="about.js"]')) {
+        const s = document.createElement('script');
+        s.src = 'js/about.js?v=2.2';
+        document.body.appendChild(s);
+      }
     }
 
   } catch (err) {
@@ -2492,6 +2498,17 @@ window.reinitPageScripts = function(targetUrl) {
 
           // Swap <body> class
           document.body.className = doc.body.className;
+
+          // Synchronize page stylesheets from target page
+          doc.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && !document.querySelector(`link[href="${href}"]`)) {
+              const newLink = document.createElement('link');
+              newLink.rel = 'stylesheet';
+              newLink.href = href;
+              document.head.appendChild(newLink);
+            }
+          });
 
           // Swap <main id="main-content">
           const currentMain = document.getElementById('main-content');
