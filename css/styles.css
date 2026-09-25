@@ -4249,32 +4249,9 @@ select:focus-visible {
 }
 
 .floating-paths-bg .fp-path {
-  stroke-dasharray: 1;
-  animation: fpFloatPath linear infinite;
-  will-change: stroke-dashoffset, opacity;
-}
-
-@keyframes fpFloatPath {
-  0% {
-    stroke-dashoffset: 1;
-    opacity: 0.25;
-  }
-  50% {
-    stroke-dashoffset: 0.5;
-    opacity: 0.75;
-  }
-  100% {
-    stroke-dashoffset: 0;
-    opacity: 0.25;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .floating-paths-bg .fp-path {
-    animation: none;
-    stroke-dashoffset: 0;
-    opacity: 0.35;
-  }
+  /* Static decorative background vector paths — zero animation / repaints */
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
 }
 
 /* ============================================================

@@ -37,10 +37,7 @@
       }
       
       const width = 0.5 + i * 0.03;
-      const duration = 20 + Math.random() * 10;
-      const delay = -Math.random() * 20;
-      
-      paths += `<path d="${d}" stroke="${color}" stroke-width="${width}" fill="none" class="fp-path" style="animation-duration: ${duration}s; animation-delay: ${delay}s;" />`;
+      paths += `<path d="${d}" stroke="${color}" stroke-width="${width}" fill="none" class="fp-path" />`;
     }
     return `<svg class="fp-svg" viewBox="0 0 696 316" preserveAspectRatio="xMidYMid slice">${paths}</svg>`;
   }

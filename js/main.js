@@ -1969,10 +1969,7 @@ function createFloatingPathsSVG(position, theme) {
       }
     }
 
-    const duration = (20 + (i % 10) * 1.2).toFixed(1);
-    const delay = -((i * 1.7) % 20).toFixed(1);
-
-    paths += `<path d="${d}" stroke="${color}" stroke-width="${width}" fill="none" pathLength="1" class="fp-path" style="animation-duration:${duration}s;animation-delay:${delay}s;" />\n`;
+    paths += `<path d="${d}" stroke="${color}" stroke-width="${width}" fill="none" class="fp-path" />\n`;
   }
 
   return `<svg class="fp-svg" viewBox="0 0 696 316" fill="none" preserveAspectRatio="xMidYMid slice" aria-hidden="true">\n${paths}</svg>`;
