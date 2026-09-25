@@ -136,7 +136,7 @@
   align-items: center;
   padding: 160px 1.5rem 90px;
   background-color: #0B1120;
-  background-image: url('../assets/images/about-hero-fluted-glass.svg');
+  background-image: url('../assets/images/about-hero-fluted-glass-v3.jpg');
   background-position: center right;
   background-size: cover;
   background-repeat: no-repeat;
@@ -195,7 +195,7 @@
 }
 
 .about-hero__title {
-  font-family: var(--about-font-display);
+  font-family: 'Montserrat', sans-serif;
   font-size: clamp(2.35rem, 5.2vw, 4.35rem);
   font-weight: 500;
   line-height: 1.14;
