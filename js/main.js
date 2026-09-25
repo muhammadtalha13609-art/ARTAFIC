@@ -824,7 +824,7 @@ function formatTime() {
 /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    09. ACTIVE NAV LINK (scroll-spy)
    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-(function initScrollSpy() {
+window.initScrollSpy = function() {
   const navLinks = $$('[data-nav-link]');
   const sectionIds = ['home', 'services', 'about', 'why-artafic', 'before-after', 'faq'];
   const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
@@ -842,14 +842,16 @@ function formatTime() {
     });
 
     navLinks.forEach(link => {
-      const href = link.getAttribute('href').slice(1);
+      const rawHref = link.getAttribute('href') || '';
+      const href = rawHref.includes('#') ? rawHref.split('#')[1] : '';
       link.classList.toggle('is-active', href === current);
     });
   }
 
   window.addEventListener('scroll', updateActive, { passive: true });
   updateActive();
-})();
+};
+window.initScrollSpy();
 
 
 /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -1300,7 +1302,7 @@ function formatTime() {
 /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    12. FULL-SCREEN SCROLL STORYTELLING ENGINE
    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-(function initTimeline() {
+window.initTimeline = function() {
   const processSection  = document.getElementById('process');
   const stickyContainer = document.getElementById('process-sticky');
   const flowContainer   = document.getElementById('timeline-flow');
@@ -1480,13 +1482,15 @@ function formatTime() {
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
   onScroll();
-})();
+};
+window.initTimeline();
 
 /* ------------------------------------------------------------
    13. MARQUEE SCROLL ANIMATION
    ------------------------------------------------------------ */
 
-(function initMarquee() {
+let marqueeLoopId = null;
+window.initMarquee = function() {
   const section = document.getElementById('marquee');
   const track1 = document.getElementById('marquee-track-1');
   const track2 = document.getElementById('marquee-track-2');
@@ -1504,7 +1508,11 @@ function formatTime() {
     track1.style.transform = `translate3d(${currentOffset - 200}px, 0, 0)`;
     track2.style.transform = `translate3d(${-(currentOffset - 200)}px, 0, 0)`;
 
-    requestAnimationFrame(loop);
+    if (!document.getElementById('marquee-track-1')) {
+      marqueeLoopId = null;
+      return;
+    }
+    marqueeLoopId = requestAnimationFrame(loop);
   }
 
   function handleScroll() {
@@ -1517,18 +1525,24 @@ function formatTime() {
   window.addEventListener("resize", handleScroll, { passive: true });
   handleScroll();
   loop(); // Start the render loop
-})();
+};
+window.initMarquee();
 
 /* ------------------------------------------------------------
    14. AETHER CANVAS ANIMATION
    ------------------------------------------------------------ */
-(function initAetherCanvas() {
+let aetherCanvasAnimId = null;
+window.initAetherCanvas = function() {
   const canvas = document.getElementById('aether-canvas');
   if (!canvas) return;
   
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
 
+  if (aetherCanvasAnimId) {
+    cancelAnimationFrame(aetherCanvasAnimId);
+    aetherCanvasAnimId = null;
+  }
   let animationFrameId;
   let particles = [];
   const mouse = { x: null, y: null, radius: 200 };
@@ -1631,7 +1645,11 @@ function formatTime() {
   };
 
   const animate = () => {
-    animationFrameId = requestAnimationFrame(animate);
+    if (!document.getElementById('aether-canvas')) {
+      aetherCanvasAnimId = null;
+      return;
+    }
+    aetherCanvasAnimId = animationFrameId = requestAnimationFrame(animate);
     // Use clearRect so we don't overwrite CSS background, or fill with black if intended
     // The original react code used black fill, let's keep it transparent just in case index.html has a background
     // If they strictly want black, uncomment the below lines. We will use clearRect for better integration with existing HTML.
@@ -1658,17 +1676,24 @@ function formatTime() {
 
   init();
   animate();
-})();
+};
+window.initAetherCanvas();
 
 /* ------------------------------------------------------------
    15. SVG PATH MARQUEE ANIMATION (Pixel-Perfect Path & Scroll Velocity Drive)
    ------------------------------------------------------------ */
-(function initSvgPathMarquee() {
+let svgMarqueeAnimId = null;
+window.initSvgPathMarquee = function() {
   const container = document.getElementById('svg-path-marquee');
   const path = document.getElementById('marquee-svg-path');
   const itemsLayer = document.getElementById('svg-marquee-items');
 
   if (!container || !path || !itemsLayer) return;
+  if (svgMarqueeAnimId) {
+    cancelAnimationFrame(svgMarqueeAnimId);
+    svgMarqueeAnimId = null;
+  }
+  itemsLayer.innerHTML = '';
 
   const imgs = [
     "https://cdn.cosmos.so/b9909337-7a53-48bc-9672-33fbd0f040a1?format=jpeg",
@@ -1774,7 +1799,11 @@ function formatTime() {
       baseProgress += speed + scrollVelocity;
       updatePositions();
     }
-    animId = requestAnimationFrame(animate);
+    if (!document.getElementById('svg-path-marquee')) {
+      svgMarqueeAnimId = null;
+      return;
+    }
+    svgMarqueeAnimId = animId = requestAnimationFrame(animate);
   }
 
   const observer = new IntersectionObserver((entries) => {
@@ -1789,12 +1818,13 @@ function formatTime() {
   observer.observe(container);
   updatePositions();
   animId = requestAnimationFrame(animate);
-})();
+};
+window.initSvgPathMarquee();
 
 /* ------------------------------------------------------------
    16. SERVICES NATURAL CANVAS SCROLL & STROKE ANIMATION
    ------------------------------------------------------------ */
-(function initServicesStrokeFollowScroll() {
+window.initServicesStrokeFollowScroll = function() {
   const section = document.getElementById('services');
   const path = document.getElementById('services-scroll-path');
   const stage = document.getElementById('services-panning-stage');
@@ -1807,6 +1837,7 @@ function formatTime() {
   path.style.strokeDashoffset = `${pathLength}`;
 
   function updateTimeline() {
+    if (!document.getElementById('services')) return;
     const rect = section.getBoundingClientRect();
     const windowHeight = window.innerHeight;
     const sectionHeight = section.offsetHeight;
@@ -1912,7 +1943,8 @@ function formatTime() {
   
   // Initial call
   setTimeout(updateTimeline, 100);
-})();
+};
+window.initServicesStrokeFollowScroll();
 
 
 
@@ -2158,13 +2190,28 @@ window.reinitPageScripts = function(targetUrl) {
       };
     }
 
-    // 5. About Page Scripts
+    // 5. Home Page Specific Animations
+    if (document.getElementById('aether-canvas') || document.getElementById('home')) {
+      if (typeof window.initAetherCanvas === 'function') window.initAetherCanvas();
+      if (typeof window.initTimeline === 'function') window.initTimeline();
+      if (typeof window.initMarquee === 'function') window.initMarquee();
+      if (typeof window.initSvgPathMarquee === 'function') window.initSvgPathMarquee();
+      if (typeof window.initServicesStrokeFollowScroll === 'function') window.initServicesStrokeFollowScroll();
+      if (typeof window.initScrollSpy === 'function') window.initScrollSpy();
+    }
+
+    // 6. About Page Scripts
     if (document.querySelector('.about-hero') || document.querySelector('.about-page')) {
       if (typeof window.initAboutPage === 'function') {
         window.initAboutPage();
       } else if (!document.querySelector('script[src*="about.js"]')) {
         const s = document.createElement('script');
         s.src = 'js/about.js?v=2.2';
+        s.onload = () => {
+          if (typeof window.initAboutPage === 'function') {
+            window.initAboutPage();
+          }
+        };
         document.body.appendChild(s);
       }
     }
@@ -2393,6 +2440,25 @@ window.reinitPageScripts = function(targetUrl) {
     return overlay;
   }
 
+  function normalizeUrl(urlString) {
+    try {
+      const url = new URL(urlString, window.location.href);
+      if (url.origin === window.location.origin) {
+        let cleanPath = url.pathname.replace(/\/index\.html$/i, '/').replace(/\.html$/i, '');
+        if (!cleanPath.startsWith('/')) cleanPath = '/' + cleanPath;
+        if (cleanPath.length > 1 && cleanPath.endsWith('/')) cleanPath = cleanPath.slice(0, -1);
+        url.pathname = cleanPath;
+
+        if (cleanPath === '/' && (url.hash === '#home' || url.hash === '#')) {
+          url.hash = '';
+        }
+      }
+      return url;
+    } catch (e) {
+      return new URL(urlString, window.location.href);
+    }
+  }
+
   function getDestinationLabel(linkElement, href) {
     const text = (linkElement ? linkElement.textContent.trim() : '').toUpperCase();
     const lowerHref = (href || '').toLowerCase();
@@ -2406,7 +2472,7 @@ window.reinitPageScripts = function(targetUrl) {
     if (lowerHref.includes('before-after') || text.includes('BEFORE')) return 'BEFORE & AFTER';
     if (lowerHref.includes('portfolio') || text.includes('WORK') || text.includes('PORTFOLIO')) return 'SELECTED WORK';
     if (lowerHref.includes('booking') || text.includes('TOUCH') || text.includes('BOOK')) return 'GET IN TOUCH';
-    if (lowerHref.includes('home') || lowerHref.endsWith('/') || lowerHref.endsWith('index.html') || text === 'HOME') return 'HOME';
+    if (lowerHref.includes('home') || lowerHref === '/' || lowerHref.endsWith('/index.html') || text === 'HOME') return 'HOME';
 
     if (text && text.length < 25 && !text.includes('\n')) return text;
     return 'ARTAFIC';
@@ -2414,30 +2480,31 @@ window.reinitPageScripts = function(targetUrl) {
 
   function updateActiveNavLinks(targetUrlString) {
     try {
-      const url = new URL(targetUrlString, window.location.href);
-      const path = url.pathname.split('/').pop() || 'index.html';
+      const url = normalizeUrl(targetUrlString || window.location.href);
+      const cleanPath = url.pathname;
 
       document.querySelectorAll('.nav__link, .nav__mobile-link').forEach(link => {
         const href = link.getAttribute('href') || '';
-        const linkPath = href.split('#')[0].split('/').pop();
+        const linkUrl = normalizeUrl(href);
+        const linkPath = linkUrl.pathname;
 
         link.classList.remove('nav__link--active');
         link.style.color = '';
         link.style.fontWeight = '';
 
-        if (path === 'services.html' && (href === 'services.html' || linkPath === 'services.html')) {
+        if (cleanPath === '/services' && linkPath === '/services') {
           link.classList.add('nav__link--active');
           link.style.color = 'var(--color-teal)';
           link.style.fontWeight = '600';
-        } else if (path === 'about.html' && (href === 'about.html' || linkPath === 'about.html')) {
+        } else if (cleanPath === '/about' && linkPath === '/about') {
           link.classList.add('nav__link--active');
           link.style.color = 'var(--color-teal)';
           link.style.fontWeight = '600';
-        } else if (path === 'faq.html' && (href === 'faq.html' || linkPath === 'faq.html')) {
+        } else if (cleanPath === '/faq' && linkPath === '/faq') {
           link.classList.add('nav__link--active');
           link.style.color = 'var(--color-teal)';
           link.style.fontWeight = '600';
-        } else if ((path === '' || path === 'index.html') && (href === 'index.html#home' || href === '#home' || href === 'index.html')) {
+        } else if (cleanPath === '/' && (linkPath === '/' || href === '/' || href === '#home')) {
           link.classList.add('nav__link--active');
         }
       });
@@ -2473,12 +2540,23 @@ window.reinitPageScripts = function(targetUrl) {
       overlay.classList.add('is-entering');
     }, 20);
 
-    const currentUrl = new URL(window.location.href);
-    const targetUrl = new URL(targetUrlString, window.location.href);
+    const currentUrl = normalizeUrl(window.location.href);
+    const targetUrl = normalizeUrl(targetUrlString);
     const isSamePage = currentUrl.origin === targetUrl.origin && currentUrl.pathname === targetUrl.pathname;
 
+    let fetchUrl = targetUrl.href;
+    if (window.location.protocol === 'file:') {
+      const fileName = targetUrl.pathname === '/' ? 'index.html' : targetUrl.pathname.replace(/^\//, '') + '.html';
+      fetchUrl = fileName;
+    } else {
+      fetchUrl = targetUrl.pathname;
+    }
+
     const fetchPromise = !isSamePage 
-      ? fetch(targetUrl.href).then(r => r.text()) 
+      ? fetch(fetchUrl).then(r => {
+          if (!r.ok) throw new Error('Fetch failed with status ' + r.status);
+          return r.text();
+        }) 
       : Promise.resolve(null);
 
     const MIN_ENTER_HOLD = 1050; // Total enter time
@@ -2525,8 +2603,9 @@ window.reinitPageScripts = function(targetUrl) {
             currentMain.className = newMain.className;
           }
 
-          // Update URL
-          window.history.pushState(null, '', targetUrl.href);
+          // Update URL - ALWAYS CLEAN ROUTE
+          const pushUrl = targetUrl.pathname + targetUrl.search + (targetHash || '');
+          window.history.pushState(null, '', pushUrl);
 
           // Update active links
           updateActiveNavLinks(targetUrl.href);
@@ -2548,7 +2627,7 @@ window.reinitPageScripts = function(targetUrl) {
             window.scrollTo({ top: 0, behavior: 'instant' });
           }
 
-          // Re-initialize scripts
+          // Re-initialize scripts for the new page
           if (typeof window.reinitPageScripts === 'function') {
             window.reinitPageScripts(targetUrl.href);
           }
@@ -2560,7 +2639,8 @@ window.reinitPageScripts = function(targetUrl) {
               window.scrollTo({ top: targetEl.offsetTop - navH, behavior: 'instant' });
             }
           } catch (err) {}
-          window.history.pushState(null, '', targetUrl.href);
+          const pushUrl = targetUrl.pathname + targetUrl.search + (targetHash || '');
+          window.history.pushState(null, '', pushUrl);
         }
 
         // 4. HOLD state for ~400ms so user sees the title & wave composition
@@ -2603,37 +2683,72 @@ window.reinitPageScripts = function(targetUrl) {
       return;
     }
 
+    // Pure local hash like href="#booking"
+    if (href.startsWith('#')) {
+      if (href === '#home') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+          window.history.pushState(null, '', '/');
+        }
+        return;
+      }
+      const targetElement = document.querySelector(href);
+      if (targetElement) {
+        e.preventDefault();
+        const navH = document.getElementById('nav')?.offsetHeight || 72;
+        window.scrollTo({ top: targetElement.offsetTop - navH, behavior: 'smooth' });
+        window.history.pushState(null, '', window.location.pathname + href);
+        return;
+      }
+      return;
+    }
+
     let currentUrl, targetUrl;
     try {
-      currentUrl = new URL(window.location.href);
-      targetUrl = new URL(href, window.location.href);
+      currentUrl = normalizeUrl(window.location.href);
+      targetUrl = normalizeUrl(href);
     } catch (err) {
       return;
     }
 
-    // Strictly permit only http: and https: protocols
-    if (targetUrl.protocol !== 'http:' && targetUrl.protocol !== 'https:') return;
+    // Strictly permit only same-origin http: and https: protocols (and file: for local test)
     if (targetUrl.origin !== currentUrl.origin) return;
 
-    const currentPathClean = currentUrl.pathname.replace(/\/$/, '');
-    const targetPathClean = targetUrl.pathname.replace(/\/$/, '');
-    const isSamePath = targetPathClean === currentPathClean;
+    const isSamePath = targetUrl.pathname === currentUrl.pathname;
 
-    // Check if it is a pure in-page anchor on the current page
+    // Check if it is an anchor on the current page (e.g. href="/#why-artafic" while on "/")
     if (isSamePath && targetUrl.hash) {
+      if (targetUrl.hash === '#home') {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.history.pushState(null, '', targetUrl.pathname);
+        return;
+      }
       try {
         const targetElement = document.querySelector(targetUrl.hash);
         if (targetElement) {
           e.preventDefault();
           e.stopPropagation();
           e.stopImmediatePropagation();
-          const label = getDestinationLabel(target, href);
-          runPageTransition(targetUrl.href, label, targetUrl.hash);
+          const navH = document.getElementById('nav')?.offsetHeight || 72;
+          window.scrollTo({ top: targetElement.offsetTop - navH, behavior: 'smooth' });
+          window.history.pushState(null, '', targetUrl.pathname + targetUrl.hash);
           return;
         }
-      } catch (err) {
-        // Safe fallback for malformed hash
-      }
+      } catch (err) {}
+    }
+
+    // If clicking Home or Logo when already on Home:
+    if (isSamePath && !targetUrl.hash && targetUrl.pathname === '/') {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.history.pushState(null, '', '/');
+      return;
     }
 
     // Cross-page or page-level navigation
@@ -2647,9 +2762,9 @@ window.reinitPageScripts = function(targetUrl) {
 
   // Handle Browser Back / Forward buttons
   window.addEventListener('popstate', () => {
-    const url = window.location.href;
-    const label = getDestinationLabel(null, url);
-    runPageTransition(url, label, window.location.hash);
+    const url = normalizeUrl(window.location.href);
+    const label = getDestinationLabel(null, url.href);
+    runPageTransition(url.href, label, window.location.hash);
   });
 
   // Expose Global Console Test Function
