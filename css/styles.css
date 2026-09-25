@@ -4321,7 +4321,7 @@ select:focus-visible {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: min(88vw, 640px);
+  width: min(88vw, 680px);
   user-select: none;
 }
 
@@ -4332,22 +4332,16 @@ select:focus-visible {
   overflow: visible;
 }
 
-/* Base / Track Paths (subtle logo skeleton) */
-.artafic-track-dark {
-  stroke: rgba(17, 24, 39, 0.08);
-  stroke-width: 10px;
-  stroke-linejoin: round;
-  fill: none;
+/* Layer 1: Solid Filled ARTAFIC Wordmark */
+.artafic-wordmark-fill {
+  user-select: none;
 }
 
-.artafic-track-teal {
-  stroke: rgba(20, 184, 166, 0.12);
-  stroke-width: 10px;
-  stroke-linejoin: round;
-  fill: none;
+/* Layer 2: SelfMadeSystem Animated Stroke Drawing Layer */
+.artafic-wordmark-stroke {
+  user-select: none;
 }
 
-/* SelfMadeSystem Stroke Animation */
 .dash {
   animation: dashArray 2s ease-in-out infinite,
              dashOffset 2s linear infinite;
@@ -4374,7 +4368,7 @@ select:focus-visible {
   }
 }
 
-/* Sequential Letter Stagger */
+/* Sequential Letter Stagger (A -> R -> T -> A -> F -> I -> C) */
 .letter-a1 .dash { animation-delay: 0s; }
 .letter-r .dash  { animation-delay: 0.12s; }
 .letter-t .dash  { animation-delay: 0.24s; }
@@ -4383,81 +4377,18 @@ select:focus-visible {
 .letter-i .dash  { animation-delay: 0.60s; }
 .letter-c .dash  { animation-delay: 0.72s; }
 
-/* =========================================
-   LOADING LINE
-   ========================================= */
-
-.artafic-loader__track {
-  position: relative;
-  width: 60%;
-  max-width: 300px;
-  height: 2px;
-  margin-top: 22px;
-  overflow: hidden;
-  background: rgba(17, 24, 39, 0.12);
-  border-radius: 999px;
-}
-
-.artafic-loader__progress {
-  position: absolute;
-  top: 0;
-  left: -40%;
-  width: 40%;
-  height: 100%;
-  background: #14b8a6;
-  border-radius: 999px;
-  animation: artafic-progress 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  will-change: transform;
-}
-
-@keyframes artafic-progress {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(350%);
-  }
-}
-
-/* =========================================
-   MOBILE
-   ========================================= */
-
 @media (max-width: 640px) {
   .artafic-loader {
     width: 86vw;
   }
-  .artafic-loader__track {
-    width: 65%;
-    margin-top: 16px;
-  }
 }
 
-/* =========================================
-   REDUCED MOTION
-   ========================================= */
-
+/* Accessibility & Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  .dash,
-  .artafic-loader__progress {
+  .dash {
     animation: none !important;
     stroke-dasharray: none !important;
     stroke-dashoffset: 0 !important;
-    will-change: auto;
-  }
-
-  .artafic-loader__progress {
-    left: 0;
-    width: 100%;
-    transform: none;
-  }
-
-  .artafic-track-dark {
-    stroke-opacity: 0.35;
-  }
-
-  .artafic-track-teal {
-    stroke-opacity: 0.4;
   }
 }
 

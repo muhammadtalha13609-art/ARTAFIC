@@ -2638,28 +2638,48 @@ window.reinitPageScripts = function(targetUrl) {
 })();
 
 /* ============================================================
-   33. ARTAFIC MINIMAL BRANDED LOADER
+   33. ARTAFIC MINIMAL BRANDED LOADER (SelfMadeSystem Engine)
    ============================================================ */
 function initArtaficLoader() {
   const overlay = document.getElementById('artafic-loader') || document.querySelector('.artafic-loading-overlay');
   if (!overlay) return;
 
+  const isPreview = window.location.search.includes('loader') || window.location.hash.includes('loader');
+
   function dismiss() {
+    if (isPreview) return;
     if (overlay.classList.contains('artafic-loading-overlay--hidden')) return;
     overlay.classList.add('artafic-loading-overlay--hidden');
     setTimeout(() => {
       if (overlay && overlay.parentNode) {
         overlay.style.display = 'none';
       }
-    }, 250);
+    }, 300);
+  }
+
+  // Allow clicking the overlay during preview or test to dismiss
+  overlay.addEventListener('click', () => {
+    overlay.classList.add('artafic-loading-overlay--hidden');
+    setTimeout(() => { if (overlay) overlay.style.display = 'none'; }, 300);
+  });
+
+  // Guarantees at least 1800ms of display time so the SelfMadeSystem
+  // stroke animation is visibly watchable before smooth dismissal.
+  const startTime = Date.now();
+  const MIN_DISPLAY_MS = 1800;
+
+  function onReady() {
+    const elapsed = Date.now() - startTime;
+    const remaining = Math.max(0, MIN_DISPLAY_MS - elapsed);
+    setTimeout(dismiss, remaining);
   }
 
   if (document.readyState === 'complete') {
-    dismiss();
+    onReady();
   } else {
-    window.addEventListener('load', dismiss, { once: true });
+    window.addEventListener('load', onReady, { once: true });
     // Failsafe in case a heavy external asset stalls
-    setTimeout(dismiss, 3500);
+    setTimeout(onReady, 4000);
   }
 }
 
@@ -2674,8 +2694,9 @@ window.dismissArtaficLoader = function() {
   const overlay = document.getElementById('artafic-loader') || document.querySelector('.artafic-loading-overlay');
   if (!overlay) return;
   overlay.classList.add('artafic-loading-overlay--hidden');
-  setTimeout(() => { if (overlay) overlay.style.display = 'none'; }, 250);
+  setTimeout(() => { if (overlay) overlay.style.display = 'none'; }, 300);
 };
 
 window.initArtaficLoader = initArtaficLoader;
 initArtaficLoader();
+

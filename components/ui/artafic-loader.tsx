@@ -8,13 +8,13 @@ export interface ArtaficLoaderProps extends React.HTMLAttributes<HTMLDivElement>
   /**
    * Explicit loading flag.
    * - When `true`, loader remains visible and animates continuously.
-   * - When transitioning from `true` to `false`, initiates the 150-300ms fade-out.
-   * - When omitted (`undefined`), auto-dismisses once page has loaded (`window.load` / `document.readyState === 'complete'`).
+   * - When transitioning from `true` to `false`, initiates the smooth fade-out.
+   * - When omitted (`undefined`), auto-dismisses once page has loaded after a minimum display time.
    */
   isLoading?: boolean;
   /**
    * Duration of the fade-out transition in milliseconds.
-   * Default: 250ms (within the required 150-300ms range).
+   * Default: 300ms.
    */
   fadeDuration?: number;
   /**
@@ -66,7 +66,7 @@ const ARTAFIC_VECTOR_PATHS = {
 
 export function ArtaficLoader({
   isLoading,
-  fadeDuration = 250,
+  fadeDuration = 300,
   onFinished,
   className,
   overlayClassName,
@@ -76,7 +76,7 @@ export function ArtaficLoader({
   const [isExiting, setIsExiting] = useState<boolean>(false);
 
   useEffect(() => {
-    // 1. Controlled mode (isLoading explicitly provided)
+    // 1. Controlled mode (isLoading explicitly boolean)
     if (typeof isLoading === "boolean") {
       if (!isLoading) {
         setIsExiting(true);
@@ -92,21 +92,38 @@ export function ArtaficLoader({
       return;
     }
 
-    // 2. Uncontrolled / page-ready mode
+    // 2. Uncontrolled / page-ready mode:
+    // Ensures a minimum display time of 1800ms so the user can experience the animation
+    const startTime = Date.now();
+    const MIN_DISPLAY_MS = 1800;
+
     const dismiss = () => {
-      setIsExiting(true);
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, MIN_DISPLAY_MS - elapsed);
       const timer = setTimeout(() => {
-        setMounted(false);
-        onFinished?.();
-      }, fadeDuration);
+        setIsExiting(true);
+        setTimeout(() => {
+          setMounted(false);
+          onFinished?.();
+        }, fadeDuration);
+      }, remaining);
+      return timer;
     };
 
     if (typeof document !== "undefined") {
       if (document.readyState === "complete") {
-        dismiss();
+        const timer = dismiss();
+        return () => clearTimeout(timer);
       } else {
-        window.addEventListener("load", dismiss, { once: true });
-        return () => window.removeEventListener("load", dismiss);
+        let timer: NodeJS.Timeout;
+        const handleLoad = () => {
+          timer = dismiss();
+        };
+        window.addEventListener("load", handleLoad, { once: true });
+        return () => {
+          window.removeEventListener("load", handleLoad);
+          if (timer) clearTimeout(timer);
+        };
       }
     }
   }, [isLoading, fadeDuration, onFinished]);
@@ -130,58 +147,42 @@ export function ArtaficLoader({
         aria-label="Loading ARTAFIC"
         {...props}
       >
-        {/* ARTAFIC Logo Vector Wordmark with SelfMadeSystem Stroke Engine */}
+        {/* ARTAFIC Logo Vector Wordmark: Solid Fill + SelfMadeSystem Stroke Engine */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="-25 -20 2045 365"
           className="artafic-wordmark-svg"
           aria-hidden="true"
         >
-          <defs>
-            {/* SelfMadeSystem Dynamic Rotating Gradient in ARTAFIC Palette */}
-            <linearGradient
-              id="artafic-react-stroke-grad"
-              x1="0"
-              y1="325"
-              x2="1995"
-              y2="0"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#111827" offset="0%" />
-              <stop stopColor="#14B8A6" offset="50%" />
-              <stop stopColor="#111827" offset="100%" />
-              <animateTransform
-                attributeName="gradientTransform"
-                type="rotate"
-                from="0 997 162"
-                to="360 997 162"
-                dur="6s"
-                repeatCount="indefinite"
-              />
-            </linearGradient>
-          </defs>
-
-          {/* Letter Track Paths (Subtle Skeleton) */}
-          <g className="artafic-loader__tracks" aria-hidden="true">
+          {/* Layer 1: Solid Filled ARTAFIC Wordmark (#111827 dark + #14B8A6 teal accents) */}
+          <g className="artafic-wordmark-fill" aria-hidden="true">
             {Object.entries(ARTAFIC_VECTOR_PATHS).map(([key, letter]) => (
-              <React.Fragment key={`track-${key}`}>
-                <path d={letter.dark} className="artafic-track-dark" />
+              <React.Fragment key={`fill-${key}`}>
+                <path
+                  d={letter.dark}
+                  fill="#111827"
+                  fillRule="evenodd"
+                />
                 {letter.teal && (
-                  <path d={letter.teal} className="artafic-track-teal" />
+                  <path
+                    d={letter.teal}
+                    fill="#14B8A6"
+                    fillRule="evenodd"
+                  />
                 )}
               </React.Fragment>
             ))}
           </g>
 
-          {/* Letter Animated Paths (SelfMadeSystem Staggered Strokes) */}
-          <g className="artafic-loader__strokes" aria-hidden="true">
+          {/* Layer 2: SelfMadeSystem Animated Stroke Layer (rendered on top) */}
+          <g className="artafic-wordmark-stroke" aria-hidden="true">
             {Object.entries(ARTAFIC_VECTOR_PATHS).map(([key, letter]) => (
               <g key={`stroke-group-${key}`} className={`letter-${key}`}>
                 <path
                   d={letter.dark}
                   fill="none"
-                  stroke="url(#artafic-react-stroke-grad)"
-                  strokeWidth="12"
+                  stroke="#14B8A6"
+                  strokeWidth={12}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   className="dash"
@@ -192,8 +193,8 @@ export function ArtaficLoader({
                   <path
                     d={letter.teal}
                     fill="none"
-                    stroke="#14B8A6"
-                    strokeWidth="14"
+                    stroke="#111827"
+                    strokeWidth={14}
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     className="dash"
@@ -205,11 +206,6 @@ export function ArtaficLoader({
             ))}
           </g>
         </svg>
-
-        {/* Loading Progress Bar */}
-        <div className="artafic-loader__track" aria-hidden="true">
-          <div className="artafic-loader__progress" />
-        </div>
       </div>
     </div>
   );
