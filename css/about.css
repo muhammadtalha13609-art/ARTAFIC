@@ -1496,3 +1496,23 @@
     transition: none !important;
   }
 }
+
+/* Footer Official Logo */
+.footer__brand-logo {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  text-decoration: none;
+}
+
+.footer__logo-image {
+  height: 36px;
+  width: auto;
+  display: block;
+  filter: brightness(0) invert(1) !important;
+  transition: opacity 0.25s ease;
+}
+
+.footer__brand-logo:hover .footer__logo-image {
+  opacity: 0.85;
+}
