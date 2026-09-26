@@ -99,10 +99,20 @@
   color: var(--about-slate);
 }
 
-/* Utilities */
+/* Utilities & Stacking Contexts */
 .relative-z {
   position: relative;
   z-index: 10;
+}
+
+.about-hero,
+.who-we-are,
+.why-exists,
+.our-story,
+.what-we-do,
+.our-approach,
+.about-cta {
+  isolation: isolate;
 }
 
 .floating-paths-bg {
@@ -134,74 +144,56 @@
 
 /* ═══════════════════════════════════════════════════════════════════
    LARGE LIGHT BACKGROUND TYPOGRAPHY SYSTEM (Subtle Scroll Parallax)
+   Guaranteed ultra-light, subtle, and strictly layered behind content
    ═══════════════════════════════════════════════════════════════════ */
 .chapter-watermark {
   position: absolute;
+  top: 5%;
+  right: -2%;
   font-family: var(--about-font-display);
-  font-size: clamp(6.5rem, 18vw, 17rem);
+  font-size: clamp(5.5rem, 15vw, 13.5rem);
   font-weight: 800;
   letter-spacing: -0.05em;
-  line-height: 0.8;
-  color: currentColor;
-  opacity: 0.035;
+  line-height: 0.85;
+  color: rgba(15, 23, 42, 0.03);
   pointer-events: none;
   user-select: none;
   z-index: 0;
   white-space: nowrap;
-  will-change: transform, opacity;
-  transition: opacity 0.8s ease-out;
+  will-change: transform;
 }
 
-/* Editorial placement per section */
-.chapter-watermark--hero {
-  bottom: 0%;
-  right: -2%;
-  font-size: clamp(7.5rem, 22vw, 21rem);
-  color: #FFFFFF;
-  opacity: 0.035;
-}
-
+/* Subtle placement and contrast per chapter */
 .chapter-watermark--identity {
-  top: 14%;
-  right: -3%;
-  color: var(--about-charcoal);
-  opacity: 0.038;
+  top: 5%;
+  right: -2%;
+  color: rgba(15, 23, 42, 0.03);
 }
 
 .chapter-watermark--purpose {
-  top: 16%;
-  left: -4%;
-  color: #FFFFFF;
-  opacity: 0.032;
+  top: 5%;
+  left: -2%;
+  right: auto;
+  color: rgba(255, 255, 255, 0.025);
 }
 
 .chapter-watermark--journey {
-  top: 22%;
-  right: -4%;
-  color: var(--about-charcoal);
-  opacity: 0.038;
+  top: 5%;
+  right: -2%;
+  color: rgba(15, 23, 42, 0.03);
 }
 
 .chapter-watermark--craft {
-  top: 18%;
-  left: -3%;
-  color: var(--about-charcoal);
-  opacity: 0.038;
+  top: 5%;
+  left: -2%;
+  right: auto;
+  color: rgba(15, 23, 42, 0.03);
 }
 
 .chapter-watermark--values {
-  top: 12%;
+  top: 5%;
   right: -2%;
-  color: var(--about-charcoal);
-  opacity: 0.038;
-}
-
-.is-revealed .chapter-watermark {
-  opacity: 0.05;
-}
-
-.why-exists.is-revealed .chapter-watermark {
-  opacity: 0.04;
+  color: rgba(15, 23, 42, 0.03);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1465,9 +1457,13 @@
 
 @media (max-width: 768px) {
   .chapter-watermark {
-    font-size: clamp(4.5rem, 14vw, 8rem);
-    opacity: 0.025 !important;
+    font-size: clamp(3.5rem, 12vw, 6rem);
+    color: rgba(15, 23, 42, 0.022);
     transform: none !important;
+  }
+
+  .chapter-watermark--purpose {
+    color: rgba(255, 255, 255, 0.02);
   }
 
   .about-hero {
@@ -1607,9 +1603,13 @@
   .stagger-1,
   .stagger-2,
   .stagger-3,
-  .hero-step,
-  .chapter-watermark {
+  .hero-step {
     opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .chapter-watermark {
     transform: none !important;
     transition: none !important;
   }
