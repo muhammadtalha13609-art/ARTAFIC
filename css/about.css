@@ -180,20 +180,20 @@
    LARGE LIGHT BACKGROUND TYPOGRAPHY SYSTEM
    Compositional background texture:
    - Sits strictly at z-index: 1 (behind foreground content at z-index: 2+)
-   - Controlled font size so it fits composition without dominating
+   - Grand oversized typography scale matching previous design
    - Ultra-faint opacity so foreground headings & paragraphs have 100% readability
-   - Positioned in empty margins/top space with a guaranteed safe content area
+   - Guaranteed safe layering strictly behind all content
    ═══════════════════════════════════════════════════════════════════ */
 .chapter-watermark {
   position: absolute;
-  top: 1.75rem;
-  right: -1.5rem;
+  top: 5%;
+  right: -2%;
   font-family: var(--about-font-display);
-  font-size: clamp(3.25rem, 6.5vw, 6rem);
+  font-size: clamp(5.5rem, 15vw, 13.5rem);
   font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 0.9;
-  color: rgba(15, 23, 42, 0.024);
+  letter-spacing: -0.05em;
+  line-height: 0.85;
+  color: rgba(15, 23, 42, 0.028);
   pointer-events: none;
   user-select: none;
   z-index: 1;
@@ -201,35 +201,37 @@
   will-change: transform;
 }
 
-/* Subtle placement and contrast per chapter — placed in empty margins */
+/* Subtle placement and contrast per chapter */
 .chapter-watermark--identity {
-  top: 1.75rem;
-  right: -1.5rem;
-  color: rgba(15, 23, 42, 0.024);
+  top: 5%;
+  right: -2%;
+  color: rgba(15, 23, 42, 0.028);
 }
 
 .chapter-watermark--purpose {
-  top: 1.75rem;
-  right: -1.5rem;
-  color: rgba(255, 255, 255, 0.02);
+  top: 5%;
+  left: -2%;
+  right: auto;
+  color: rgba(255, 255, 255, 0.022);
 }
 
 .chapter-watermark--journey {
-  top: 1.75rem;
-  right: -1.5rem;
-  color: rgba(15, 23, 42, 0.024);
+  top: 5%;
+  right: -2%;
+  color: rgba(15, 23, 42, 0.028);
 }
 
 .chapter-watermark--craft {
-  top: 1.75rem;
-  right: -1.5rem;
-  color: rgba(15, 23, 42, 0.024);
+  top: 5%;
+  left: -2%;
+  right: auto;
+  color: rgba(15, 23, 42, 0.028);
 }
 
 .chapter-watermark--values {
-  top: 1.75rem;
-  right: -1.5rem;
-  color: rgba(15, 23, 42, 0.024);
+  top: 5%;
+  right: -2%;
+  color: rgba(15, 23, 42, 0.028);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1467,15 +1469,15 @@
 
 @media (max-width: 768px) {
   .chapter-watermark {
-    font-size: clamp(2.25rem, 6.5vw, 3.5rem);
-    top: 0.75rem;
-    right: -0.5rem;
-    color: rgba(15, 23, 42, 0.018);
+    font-size: clamp(3.5rem, 12vw, 6rem);
+    top: 5%;
+    right: -2%;
+    color: rgba(15, 23, 42, 0.022);
     transform: none !important;
   }
 
   .chapter-watermark--purpose {
-    color: rgba(255, 255, 255, 0.016);
+    color: rgba(255, 255, 255, 0.02);
   }
 
   .about-hero {
