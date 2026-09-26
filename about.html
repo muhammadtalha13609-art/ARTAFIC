@@ -35,9 +35,12 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css?v=5.4" />
-  <link rel="stylesheet" href="css/about.css?v=3.1" />
+  <link rel="stylesheet" href="css/about.css?v=3.2" />
 </head>
 <body class="about-page">
+
+<!-- Top Scroll Progress Indicator (Section 10) -->
+<div id="about-scroll-progress" class="about-scroll-progress" role="progressbar" aria-label="Page reading progress"></div>
 
 <!-- ARTAFIC Branded Loader (Solid Wordmark + SelfMadeSystem Stroke Animation) -->
 <div id="artafic-loader" class="artafic-loading-overlay">
@@ -149,31 +152,79 @@
 <main id="main-content" tabindex="-1">
   
   <!-- ═══════════════════════════════════════════════════════════
-       SECTION 01: ABOUT HERO (Bold Heading Only)
+       SECTION 01: ABOUT HERO (Sections 1 & 2 - Staggered Sequence)
   ═══════════════════════════════════════════════════════════ -->
   <section class="about-hero" id="about-hero">
     <div class="about-hero__overlay" aria-hidden="true"></div>
+    <div class="about-hero__ambient-glow hero-step" data-step="5" data-mouse-parallax="7" aria-hidden="true"></div>
+    <div class="about-hero__flowing-paths" aria-hidden="true">
+      <svg class="fp-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
+        <path d="M -100 450 C 250 350, 450 550, 850 250 C 950 180, 1100 200, 1200 120" stroke="rgba(20, 184, 166, 0.15)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M -100 350 C 200 480, 500 220, 800 400 C 920 480, 1050 320, 1200 250" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M -50 250 C 300 200, 600 450, 950 150 C 1050 80, 1150 120, 1250 80" stroke="rgba(20, 184, 166, 0.08)" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
     <div class="grain-overlay" aria-hidden="true"></div>
+    
     <div class="container relative-z">
       <div class="about-hero__layout">
-        <h1 class="about-hero__title fade-up">About Us</h1>
+        <!-- 1. Small label/eyebrow appears first -->
+        <div class="about-hero__eyebrow hero-step" data-step="1">
+          <span class="about-hero__eyebrow-dot" aria-hidden="true"></span>
+          <span class="about-hero__eyebrow-text">ABOUT ARTAFIC</span>
+        </div>
+
+        <!-- 2. Main ARTAFIC headline reveals progressively -->
+        <h1 class="about-hero__title hero-step" data-step="2">About Us</h1>
+
+        <!-- 3. Supporting paragraph fades/slides into position -->
+        <p class="about-hero__lead hero-step" data-step="3">
+          We bring purposeful design and modern engineering together to build digital experiences that feel clear, intentional, and unmistakably distinct.
+        </p>
+
+        <!-- 4. CTA/buttons appear slightly afterward -->
+        <div class="about-hero__actions hero-step" data-step="4">
+          <a href="/#booking" class="btn btn--primary">
+            <span>Get In Touch</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+          <a href="#who-we-are" class="btn btn--ghost hero-scroll-btn">
+            <span>Explore Our Story</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- Section Transition Divider (Section 9) -->
+  <div class="section-divider" aria-hidden="true"><div class="section-divider__inner"></div></div>
+
   <!-- ═══════════════════════════════════════════════════════════
-       SECTION 02: WHO WE ARE (Editorial 2-Column Layout)
+       SECTION 02: WHO WE ARE (Section 3 - Staggered Scroll Reveal)
   ═══════════════════════════════════════════════════════════ -->
   <section class="who-we-are" id="who-we-are">
-    <div class="floating-paths-bg" data-pos="1" data-theme="light" style="opacity: 0.5;"></div>
+    <div class="chapter-watermark" aria-hidden="true">IDENTITY</div>
+    <div class="floating-paths-bg" data-pos="1" data-theme="light" style="opacity: 0.45;"></div>
+    
     <div class="container relative-z">
       <div class="who-we-are__grid">
+        <!-- Left: Heading (0.0s) & Supporting Visual -->
         <div class="who-we-are__left fade-up">
           <p class="about-section-tag">01 / IDENTITY</p>
           <h2 class="who-we-are__heading">Who We Are</h2>
           <div class="who-we-are__accent-line" aria-hidden="true"></div>
           <p class="who-we-are__tagline">Design &times; Engineering &times; Brand</p>
+
+          <div class="who-we-are__badge" data-mouse-parallax="4" aria-hidden="true">
+            <span class="who-we-are__badge-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </span>
+            <span class="who-we-are__badge-text">EST. 2024 &bull; CRAFT STUDIO</span>
+          </div>
         </div>
+
+        <!-- Right: Paragraph (0.12s) & Supporting Quote (0.25s) -->
         <div class="who-we-are__right fade-up">
           <p class="who-we-are__lead">
             ARTAFIC is an independent digital design and development studio. We help businesses create websites and visual identities that genuinely reflect their real-world quality.
@@ -191,11 +242,16 @@
     </div>
   </section>
 
+  <!-- Section Transition Divider (Section 9) -->
+  <div class="section-divider" aria-hidden="true"><div class="section-divider__inner"></div></div>
+
   <!-- ═══════════════════════════════════════════════════════════
-       SECTION 03: WHY ARTAFIC EXISTS (Dark Charcoal #111827)
+       SECTION 03: WHY ARTAFIC EXISTS (Section 5 - Interactive Cards)
   ═══════════════════════════════════════════════════════════ -->
   <section class="why-exists" id="why-exists">
+    <div class="chapter-watermark" aria-hidden="true">PURPOSE</div>
     <div class="floating-paths-bg" data-pos="-1" data-theme="minimal" style="opacity: 0.35;"></div>
+    
     <div class="container relative-z">
       <div class="why-exists__header fade-up">
         <p class="about-section-tag">02 / THE PURPOSE</p>
@@ -249,13 +305,103 @@
     </div>
   </section>
 
+  <!-- Section Transition Divider (Section 9) -->
+  <div class="section-divider" aria-hidden="true"><div class="section-divider__inner"></div></div>
+
   <!-- ═══════════════════════════════════════════════════════════
-       SECTION 04: WHAT WE DO (Web Development & Logo Building)
+       SECTION 04: OUR STORY (Section 7 - Journey Timeline)
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="our-story" id="our-story">
+    <div class="chapter-watermark" aria-hidden="true">JOURNEY</div>
+    
+    <div class="container relative-z">
+      <div class="our-story__header fade-up">
+        <p class="about-section-tag">03 / THE JOURNEY</p>
+        <h2 class="our-story__title">Our Story</h2>
+        <p class="our-story__sub">How a refusal to settle for mediocre websites grew into ARTAFIC.</p>
+      </div>
+
+      <div class="story-timeline">
+        <div class="story-timeline__rail" aria-hidden="true">
+          <div class="story-timeline__rail-progress" id="story-rail-progress"></div>
+        </div>
+
+        <!-- Node 1 -->
+        <div class="story-node fade-up" data-node="1">
+          <div class="story-node__marker" aria-hidden="true">01</div>
+          <div class="story-node__card">
+            <div class="story-node__meta">
+              <span class="story-node__year">ORIGIN</span>
+              <span class="story-node__label">The Discontent</span>
+            </div>
+            <h3 class="story-node__title">Rejecting the cookie-cutter standard</h3>
+            <p class="story-node__desc">
+              We watched countless talented businesses invest in websites that looked identical, moved sluggishly, and sounded like corporate jargon. We set out with one conviction: high-caliber businesses deserve digital presences engineered with genuine craft.
+            </p>
+          </div>
+        </div>
+
+        <!-- Node 2 -->
+        <div class="story-node fade-up" data-node="2">
+          <div class="story-node__marker" aria-hidden="true">02</div>
+          <div class="story-node__card">
+            <div class="story-node__meta">
+              <span class="story-node__year">FOUNDATION</span>
+              <span class="story-node__label">Zero Bloat</span>
+            </div>
+            <h3 class="story-node__title">Code that loads in milliseconds, design that sticks</h3>
+            <p class="story-node__desc">
+              We eliminated bulky page builders and heavy template frameworks. By building with clean, lightweight architecture and purposeful typography, our work delivered instant load speeds and immediate clarity.
+            </p>
+          </div>
+        </div>
+
+        <!-- Node 3 -->
+        <div class="story-node fade-up" data-node="3">
+          <div class="story-node__marker" aria-hidden="true">03</div>
+          <div class="story-node__card">
+            <div class="story-node__meta">
+              <span class="story-node__year">EXPANSION</span>
+              <span class="story-node__label">Dual Disciplines</span>
+            </div>
+            <h3 class="story-node__title">Uniting web engineering with geometric brand identity</h3>
+            <p class="story-node__desc">
+              A great website cannot compensate for an ambiguous logo, and an iconic logo deserves more than a clumsy website. We unified custom web development and brand identity into an integrated studio craft.
+            </p>
+          </div>
+        </div>
+
+        <!-- Node 4 -->
+        <div class="story-node fade-up" data-node="4">
+          <div class="story-node__marker" aria-hidden="true">04</div>
+          <div class="story-node__card">
+            <div class="story-node__meta">
+              <span class="story-node__year">TODAY</span>
+              <span class="story-node__label">Uncompromising Quality</span>
+            </div>
+            <h3 class="story-node__title">An independent studio built for ambitious clients</h3>
+            <p class="story-node__desc">
+              Today, ARTAFIC partners with founders and companies who care deeply about the impression they make. We remain deliberately focused, ensuring every project receives our obsessive attention to detail.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Transition Divider (Section 9) -->
+  <div class="section-divider" aria-hidden="true"><div class="section-divider__inner"></div></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 05: WHAT WE DO (Section 6 - Subtle Mouse Interaction)
   ═══════════════════════════════════════════════════════════ -->
   <section class="what-we-do" id="what-we-do">
+    <div class="chapter-watermark" aria-hidden="true">CRAFT</div>
+    
     <div class="container relative-z">
       <div class="what-we-do__header fade-up">
-        <p class="about-section-tag">03 / SPECIALIZATION</p>
+        <p class="about-section-tag">04 / SPECIALIZATION</p>
         <h2 class="what-we-do__title">What We Do</h2>
         <p class="what-we-do__sub">Two core disciplines. Engineered without compromises.</p>
       </div>
@@ -272,7 +418,7 @@
             Custom-built websites engineered for speed, clean architecture, and unmistakable visual polish. No slow page builders or template bloat&mdash;just pure code crafted to load instantly, feel intuitive, and turn visitors into long-term clients.
           </p>
           <div class="service-card__visual" aria-hidden="true">
-            <div class="service-wireframe">
+            <div class="service-wireframe" data-mouse-parallax="5">
               <div class="wireframe-bar wireframe-bar--teal"></div>
               <div class="wireframe-bar" style="width: 75%;"></div>
               <div class="wireframe-cols">
@@ -295,7 +441,7 @@
           </p>
           <div class="service-card__visual" aria-hidden="true">
             <div class="logo-grid-preview">
-              <svg class="logo-grid-svg" viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg class="logo-grid-svg" data-mouse-parallax="6" viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="120" cy="40" r="32" stroke="#14B8A6" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
                 <circle cx="120" cy="40" r="22" stroke="#14B8A6" stroke-width="1" opacity="0.3"/>
                 <line x1="60" y1="40" x2="180" y2="40" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="2 2"/>
@@ -311,13 +457,18 @@
     </div>
   </section>
 
+  <!-- Section Transition Divider (Section 9) -->
+  <div class="section-divider" aria-hidden="true"><div class="section-divider__inner"></div></div>
+
   <!-- ═══════════════════════════════════════════════════════════
-       SECTION 05: OUR APPROACH & PRESERVED CRAFT ANIMATION
+       SECTION 06: OUR APPROACH & PRESERVED CRAFT ANIMATION (Section 8)
   ═══════════════════════════════════════════════════════════ -->
   <section class="our-approach" id="our-approach">
+    <div class="chapter-watermark" aria-hidden="true">VALUES</div>
+    
     <div class="container relative-z">
       <div class="our-approach__header fade-up">
-        <p class="about-section-tag">04 / PRINCIPLES</p>
+        <p class="about-section-tag">05 / PRINCIPLES</p>
         <h2 class="our-approach__title">Our Approach</h2>
         <p class="our-approach__sub">Three foundational principles that guide every decision we make.</p>
       </div>
@@ -362,8 +513,11 @@
     </div>
   </section>
 
+  <!-- Section Transition Divider (Section 9) -->
+  <div class="section-divider" aria-hidden="true"><div class="section-divider__inner"></div></div>
+
   <!-- ═══════════════════════════════════════════════════════════
-       SECTION 06: FINAL CTA (High Contrast Conclusion)
+       SECTION 07: FINAL CTA (Micro-interactions)
   ═══════════════════════════════════════════════════════════ -->
   <section class="about-cta" id="about-cta">
     <div class="floating-paths-bg" data-pos="-1.2" data-theme="dark" style="opacity: 0.35;"></div>
@@ -375,7 +529,7 @@
           Tell us about your project, and let's craft an identity and web presence that works as hard as you do.
         </p>
         <a href="/#booking" class="btn btn--primary">
-          Get In Touch
+          <span>Get In Touch</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
         </a>
       </div>
@@ -442,6 +596,6 @@
 
 <!-- JS -->
 <script src="js/main.js?v=6.0"></script>
-<script src="js/about.js?v=2.2"></script>
+<script src="js/about.js?v=3.0"></script>
 </body>
 </html>

@@ -1,13 +1,17 @@
 /* ============================================================
-   ARTAFIC — About Page Interactive Scripts
-   Zero continuous WebGL/Canvas loops. Pure lightweight IntersectionObserver
-   and preserved kinetic scroll transition for "YOUR BUSINESS. OUR CRAFT."
+   ARTAFIC — About Page Motion Design & Interactive Engine
+   Performance-first architecture:
+   - GPU-accelerated CSS transforms and opacity
+   - IntersectionObserver triggers with immediate unobserve
+   - requestAnimationFrame throttled passive scroll listener
+   - Restrained desktop-only mouse parallax with damped lerp
+   - Preserved kinematic scroll transition for "YOUR BUSINESS. OUR CRAFT."
    ============================================================ */
 
 (function() {
   function createPathsSVG(position, themeMode) {
     let paths = '';
-    const numPaths = window.innerWidth < 768 ? 16 : 32;
+    const numPaths = window.innerWidth < 768 ? 16 : 28;
     
     for (let i = 0; i < numPaths; i++) {
       const mX = -(380 - i * 5 * position);
@@ -45,47 +49,157 @@
   }
 
   window.initAboutPage = function() {
+    const aboutPage = document.querySelector('.about-page');
     const hero = document.querySelector('.about-hero');
-    if (!hero) return;
+    if (!aboutPage && !hero) return;
 
-    // 1. Inject Static Floating Paths
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 1. Inject Floating Paths Backgrounds
     document.querySelectorAll('.floating-paths-bg').forEach(container => {
-      const pos = parseFloat(container.dataset.pos || '1');
-      const theme = container.dataset.theme || 'normal';
-      container.innerHTML = createPathsSVG(pos, theme);
+      if (container.children.length === 0) {
+        const pos = parseFloat(container.dataset.pos || '1');
+        const theme = container.dataset.theme || 'normal';
+        container.innerHTML = createPathsSVG(pos, theme);
+      }
     });
 
-    // 2. Initial Page Load Reveal
-    setTimeout(() => {
-      document.querySelectorAll('.about-hero .fade-up').forEach(el => {
-        el.classList.add('is-revealed');
-      });
-    }, 120);
+    // 2. Hero Staggered Entrance (Section 1)
+    if (hero) {
+      if (prefersReducedMotion) {
+        hero.classList.add('is-hero-loaded');
+      } else {
+        setTimeout(() => {
+          hero.classList.add('is-hero-loaded');
+        }, 80);
+      }
+    }
 
-    // 3. Lightweight Intersection Observer for Entrance Transitions
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-revealed');
-          observer.unobserve(entry.target);
+    // 3. Scroll Progress Indicator (Section 10)
+    const progressBar = document.getElementById('about-scroll-progress');
+    let scrollTicking = false;
+
+    function handleScrollProgress() {
+      if (!progressBar) return;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight <= 0) return;
+      const progress = Math.min(100, Math.max(0, (window.scrollY / docHeight) * 100));
+      progressBar.style.width = progress.toFixed(2) + '%';
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!scrollTicking) {
+        window.requestAnimationFrame(() => {
+          handleScrollProgress();
+          scrollTicking = false;
+        });
+        scrollTicking = true;
+      }
+    }, { passive: true });
+    handleScrollProgress();
+
+    // 4. Lightweight Intersection Observer for Entrance Reveals & Section Dividers
+    if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { root: null, rootMargin: '0px 0px -40px 0px', threshold: 0.1 });
+
+      document.querySelectorAll('.fade-up:not(.about-hero *), .who-we-are, .section-divider').forEach(el => {
+        revealObserver.observe(el);
+      });
+
+      // 5. Timeline Story Node Observer (Section 7)
+      const storyNodes = document.querySelectorAll('.story-node');
+      const railProgress = document.getElementById('story-rail-progress');
+      const timelineContainer = document.querySelector('.story-timeline');
+
+      if (storyNodes.length > 0 && railProgress && timelineContainer) {
+        const timelineObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-active');
+              
+              // Calculate rail progress percentage based on furthest active node
+              let maxIndex = 0;
+              storyNodes.forEach((node, idx) => {
+                if (node.classList.contains('is-active')) {
+                  maxIndex = idx;
+                }
+              });
+              
+              const progressPct = ((maxIndex + 0.6) / storyNodes.length) * 100;
+              railProgress.style.height = Math.min(100, progressPct) + '%';
+            }
+          });
+        }, { root: null, rootMargin: '0px 0px -15% 0px', threshold: 0.2 });
+
+        storyNodes.forEach(node => {
+          timelineObserver.observe(node);
+        });
+      }
+    } else {
+      document.querySelectorAll('.fade-up, .who-we-are, .section-divider, .story-node').forEach(el => {
+        el.classList.add('is-revealed', 'is-active');
+      });
+      const railProgress = document.getElementById('story-rail-progress');
+      if (railProgress) railProgress.style.height = '100%';
+    }
+
+    // 6. Restrained Desktop-Only Mouse Interaction (Section 6)
+    // Moves decorative SVG / visual elements by only 3-8px with smooth dampening
+    const mouseElements = document.querySelectorAll('[data-mouse-parallax]');
+    if (mouseElements.length > 0 && !prefersReducedMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      let targetX = 0, targetY = 0;
+      let currentX = 0, currentY = 0;
+      let rAFParallax = null;
+
+      function onMouseMove(e) {
+        const halfW = window.innerWidth / 2;
+        const halfH = window.innerHeight / 2;
+        targetX = (e.clientX - halfW) / halfW; // -1 to +1
+        targetY = (e.clientY - halfH) / halfH; // -1 to +1
+
+        if (!rAFParallax) {
+          rAFParallax = requestAnimationFrame(updateMouseParallax);
         }
-      });
-    }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+      }
 
-    document.querySelectorAll('.fade-up:not(.about-hero *)').forEach(el => {
-      revealObserver.observe(el);
-    });
+      function updateMouseParallax() {
+        currentX += (targetX - currentX) * 0.08;
+        currentY += (targetY - currentY) * 0.08;
 
-    // 4. PRESERVED CRAFT ANIMATION ("YOUR BUSINESS. OUR CRAFT.")
+        mouseElements.forEach(el => {
+          const factor = parseFloat(el.dataset.mouseParallax || '4');
+          const tx = (currentX * factor).toFixed(2);
+          const ty = (currentY * factor).toFixed(2);
+          el.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
+        });
+
+        if (Math.abs(targetX - currentX) > 0.002 || Math.abs(targetY - currentY) > 0.002) {
+          rAFParallax = requestAnimationFrame(updateMouseParallax);
+        } else {
+          rAFParallax = null;
+        }
+      }
+
+      window.addEventListener('mousemove', onMouseMove, { passive: true });
+    }
+
+    // 7. PRESERVED CRAFT ANIMATION ("YOUR BUSINESS. OUR CRAFT.")
     // Exact kinematic scroll logic preserved with zero performance penalty
     const lessNoiseSec = document.querySelector('.less-noise');
     const word1 = document.querySelector('.less-noise__word1');
     const word2 = document.querySelector('.less-noise__word2');
-    let ticking = false;
+    let craftTicking = false;
 
     if (lessNoiseSec && word1 && word2) {
       window.addEventListener('scroll', () => {
-        if (!ticking) {
+        if (!craftTicking) {
           window.requestAnimationFrame(() => {
             const winH = window.innerHeight;
             const rect = lessNoiseSec.getBoundingClientRect();
@@ -106,9 +220,9 @@
               }
             }
             
-            ticking = false;
+            craftTicking = false;
           });
-          ticking = true;
+          craftTicking = true;
         }
       }, { passive: true });
     }

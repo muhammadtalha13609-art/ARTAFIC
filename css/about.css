@@ -1,7 +1,9 @@
 /* ==========================================================================
-   ARTAFIC ABOUT PAGE - REDESIGN STYLES
+   ARTAFIC ABOUT PAGE - MASTER ENHANCED STYLES
    Colors: Charcoal #111827 | Teal #14B8A6 | Soft Ivory #F8FAFC | White #FFFFFF
    Fonts: Display: Unbounded | Body: Montserrat / Inter
+   Focus: Motion Design, Visual Storytelling, Responsive Micro-Interactions,
+          High-Performance Composite Transforms & Opacity (GPU accelerated).
    ========================================================================== */
 
 :root {
@@ -30,6 +32,22 @@
   font-family: var(--about-font-body);
   margin: 0;
   padding: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SCROLL PROGRESS INDICATOR (Section 10)
+   ═══════════════════════════════════════════════════════════════════ */
+.about-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2.5px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--about-teal), var(--about-teal-bright));
+  z-index: 9999;
+  pointer-events: none;
+  transition: width 0.08s linear;
+  box-shadow: 0 0 10px rgba(20, 184, 166, 0.6);
 }
 
 /* Typography Extensions */
@@ -114,11 +132,14 @@
   mix-blend-mode: overlay;
 }
 
-/* Scroll Entrance Reveals */
+/* ═══════════════════════════════════════════════════════════════════
+   SCROLL REVEALS & VISUAL STORYTELLING (Sections 3, 4 & 9)
+   ═══════════════════════════════════════════════════════════════════ */
 .fade-up {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 .fade-up.is-revealed {
@@ -126,15 +147,85 @@
   transform: translateY(0);
 }
 
-/* ==========================================================================
-   SECTION 01: ABOUT HERO (Static Fluted Glass Visual - Bold Heading Only)
-   ========================================================================== */
+/* Fine-tuned Staggered Entrance for Composed Sections */
+.stagger-1 {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 0.0s;
+}
+
+.stagger-2 {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 0.12s;
+}
+
+.stagger-3 {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 0.25s;
+}
+
+.is-revealed .stagger-1,
+.is-revealed .stagger-2,
+.is-revealed .stagger-3 {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* Chapter Watermark Typography (Section 4 & 9) */
+.chapter-watermark {
+  position: absolute;
+  top: 6%;
+  right: -2%;
+  font-family: var(--about-font-display);
+  font-size: clamp(6rem, 16vw, 15rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 0.85;
+  color: currentColor;
+  opacity: 0.035;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  white-space: nowrap;
+}
+
+/* Chapter Divider Line (Section 9) */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+}
+
+.section-divider__inner {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.35), transparent);
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section-divider.is-revealed .section-divider__inner {
+  width: 85%;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION 01: ABOUT HERO (Sections 1 & 2)
+   Controlled, Staggered Load Sequence & Subtle Background Depth
+   ═══════════════════════════════════════════════════════════════════ */
 .about-hero {
   position: relative;
-  min-height: 75vh;
+  min-height: 82vh;
   display: flex;
   align-items: center;
-  padding: 160px 1.5rem 80px;
+  padding: 165px 1.5rem 90px;
   background-color: #0B1120;
   background-image: url('../assets/images/about-hero-fluted-glass-v3.jpg');
   background-position: center right;
@@ -146,32 +237,225 @@
 .about-hero__overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 25% 50%, rgba(11, 17, 32, 0.35) 0%, rgba(7, 10, 16, 0.65) 100%);
+  background: radial-gradient(circle at 22% 50%, rgba(11, 17, 32, 0.45) 0%, rgba(7, 10, 16, 0.72) 100%);
   pointer-events: none;
   z-index: 1;
 }
 
+/* Subtle Animated Ambient Glow (Section 2) */
+.about-hero__ambient-glow {
+  position: absolute;
+  top: 25%;
+  left: 15%;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.14) 0%, rgba(20, 184, 166, 0) 65%);
+  filter: blur(65px);
+  pointer-events: none;
+  z-index: 1;
+  animation: heroGlowPulse 18s ease-in-out infinite alternate;
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
+}
+
+@keyframes heroGlowPulse {
+  0% {
+    transform: translate3d(-15px, -10px, 0) scale(0.92);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate3d(20px, 15px, 0) scale(1.08);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(-10px, 15px, 0) scale(0.96);
+    opacity: 0.7;
+  }
+}
+
+/* Subtle Flowing Geometric Paths (Section 2) */
+.about-hero__flowing-paths {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.4;
+  overflow: hidden;
+  animation: heroPathsDrift 30s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes heroPathsDrift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(20px, -12px, 0);
+  }
+}
+
 .about-hero__layout {
-  max-width: 1100px;
+  max-width: 980px;
   position: relative;
   z-index: 2;
   text-align: left;
 }
 
+/* Staggered Entrance Elements for Hero (Section 1) */
+.hero-step {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.is-hero-loaded .hero-step[data-step="1"] {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.10s;
+}
+
+.is-hero-loaded .hero-step[data-step="2"] {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.24s;
+}
+
+.is-hero-loaded .hero-step[data-step="3"] {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.38s;
+}
+
+.is-hero-loaded .hero-step[data-step="4"] {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.52s;
+}
+
+.is-hero-loaded .hero-step[data-step="5"] {
+  opacity: 0.85;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+
+/* Eyebrow Label */
+.about-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--about-font-display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--about-teal);
+  margin-bottom: 1.5rem;
+  padding: 0.45rem 1rem;
+  border-radius: 9999px;
+  background: rgba(20, 184, 166, 0.08);
+  border: 1px solid rgba(20, 184, 166, 0.22);
+  backdrop-filter: blur(8px);
+}
+
+.about-hero__eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--about-teal-bright);
+  box-shadow: 0 0 8px var(--about-teal-bright);
+}
+
+/* Hero Title */
 .about-hero__title {
   font-family: 'Montserrat', sans-serif;
-  font-size: clamp(3.5rem, 8vw, 6.5rem);
+  font-size: clamp(3.2rem, 7.5vw, 5.8rem);
   font-weight: 800;
-  line-height: 1.08;
+  line-height: 1.05;
   letter-spacing: -0.035em;
   color: #FFFFFF;
-  margin: 0;
+  margin: 0 0 1.5rem 0;
   text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
 }
 
-/* ==========================================================================
-   SECTION 02: WHO WE ARE (Editorial 2-Column Layout, Plain English)
-   ========================================================================== */
+/* Hero Lead */
+.about-hero__lead {
+  font-size: clamp(1.12rem, 2vw, 1.35rem);
+  line-height: 1.65;
+  color: #E2E8F0;
+  max-width: 680px;
+  margin: 0 0 2.5rem 0;
+  font-weight: 400;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* Hero Action CTAs */
+.about-hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.about-hero__actions .btn--primary {
+  padding: 0.95rem 2rem;
+  font-size: 0.95rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  box-shadow: 0 0 20px rgba(20, 184, 166, 0.3);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.about-hero__actions .btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 32px rgba(20, 184, 166, 0.5);
+}
+
+.about-hero__actions .btn--primary svg {
+  transition: transform 0.3s ease;
+}
+
+.about-hero__actions .btn--primary:hover svg {
+  transform: translateX(3px);
+}
+
+.btn--ghost.hero-scroll-btn {
+  background: transparent;
+  color: #E2E8F0;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 0.9rem 1.85rem;
+  border-radius: 9999px;
+  font-family: var(--about-font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.btn--ghost.hero-scroll-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(20, 184, 166, 0.6);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.btn--ghost.hero-scroll-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.btn--ghost.hero-scroll-btn:hover svg {
+  transform: translateY(3px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION 02: WHO WE ARE (Section 3 - Scroll Reveal)
+   ═══════════════════════════════════════════════════════════════════ */
 .who-we-are {
   background-color: var(--about-ivory);
   padding: 9rem 0;
@@ -206,6 +490,12 @@
   background: var(--about-teal);
   border-radius: 2px;
   margin-bottom: 2.5rem;
+  transform-origin: left;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.who-we-are.is-revealed .who-we-are__accent-line {
+  transform: scaleX(1);
 }
 
 .who-we-are__tagline {
@@ -215,6 +505,37 @@
   color: var(--about-slate);
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+.who-we-are__badge {
+  margin-top: 3.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1.25rem;
+  background: #FFFFFF;
+  border: 1px solid var(--about-border-light);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.who-we-are__badge-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(20, 184, 166, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--about-teal);
+}
+
+.who-we-are__badge-text {
+  font-family: var(--about-font-display);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--about-charcoal);
+  letter-spacing: 0.08em;
 }
 
 .who-we-are__right {
@@ -240,23 +561,29 @@
 
 .who-we-are__quote {
   border-left: 3px solid var(--about-teal);
-  padding: 1rem 0 1rem 1.75rem;
+  padding: 1.2rem 0 1.2rem 1.85rem;
   margin-top: 1.5rem;
   background: rgba(20, 184, 166, 0.04);
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 12px 12px 0;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.who-we-are__quote:hover {
+  transform: translateX(4px);
+  background: rgba(20, 184, 166, 0.07);
 }
 
 .who-we-are__quote-text {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 1.02rem;
+  line-height: 1.65;
   color: var(--about-charcoal);
   font-weight: 500;
   margin: 0;
 }
 
-/* ==========================================================================
-   SECTION 03: WHY ARTAFIC EXISTS (Dark #111827, Visual Contrast)
-   ========================================================================== */
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION 03: WHY ARTAFIC EXISTS (Section 5 - Interactive Contrast Cards)
+   ═══════════════════════════════════════════════════════════════════ */
 .why-exists {
   background-color: var(--about-charcoal);
   color: var(--about-white);
@@ -300,7 +627,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease, background-color 0.35s ease;
+  will-change: transform;
 }
 
 .contrast-card--problem {
@@ -308,10 +636,24 @@
   border: 1px solid var(--about-border-dark);
 }
 
+.contrast-card--problem:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.035);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
 .contrast-card--solution {
   background: rgba(20, 184, 166, 0.04);
   border: 1px solid rgba(20, 184, 166, 0.25);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.contrast-card--solution:hover {
+  transform: translateY(-4px);
+  border-color: rgba(20, 184, 166, 0.5);
+  background: rgba(20, 184, 166, 0.07);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), 0 0 24px rgba(20, 184, 166, 0.15);
 }
 
 .contrast-card__label {
@@ -362,6 +704,19 @@
   gap: 1rem;
   font-size: 0.98rem;
   line-height: 1.6;
+  padding: 0.45rem 0.65rem;
+  margin: -0.45rem -0.65rem;
+  border-radius: 8px;
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.contrast-card__item:hover {
+  transform: translateX(4px);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.contrast-card--solution .contrast-card__item:hover {
+  background: rgba(20, 184, 166, 0.07);
 }
 
 .contrast-card--problem .contrast-card__item {
@@ -375,11 +730,175 @@
 .contrast-card__icon {
   flex-shrink: 0;
   margin-top: 3px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ==========================================================================
-   SECTION 04: WHAT WE DO (2 Cards: Web Development & Logo Building)
-   ========================================================================== */
+.contrast-card__item:hover .contrast-card__icon {
+  transform: scale(1.15);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION 04: OUR STORY (Section 7 - Journey Timeline)
+   ═══════════════════════════════════════════════════════════════════ */
+.our-story {
+  background-color: var(--about-ivory);
+  padding: 10rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.our-story__header {
+  max-width: 800px;
+  margin-bottom: 5.5rem;
+}
+
+.our-story__title {
+  font-family: var(--about-font-display);
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--about-charcoal);
+  margin: 0 0 1rem;
+}
+
+.our-story__sub {
+  font-size: 1.15rem;
+  color: var(--about-slate);
+  margin: 0;
+}
+
+.story-timeline {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+/* Vertical Drawing Rail */
+.story-timeline__rail {
+  position: absolute;
+  top: 28px;
+  bottom: 28px;
+  left: 27px;
+  width: 2px;
+  background: rgba(0, 0, 0, 0.07);
+  border-radius: 2px;
+}
+
+.story-timeline__rail-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, var(--about-teal), var(--about-teal-bright));
+  border-radius: 2px;
+  transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 8px rgba(20, 184, 166, 0.5);
+}
+
+.story-node {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 2.25rem;
+  margin-bottom: 3.5rem;
+}
+
+.story-node:last-child {
+  margin-bottom: 0;
+}
+
+.story-node__marker {
+  position: relative;
+  z-index: 2;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--about-white);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--about-font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--about-slate);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.story-node.is-active .story-node__marker {
+  border-color: var(--about-teal);
+  color: var(--about-teal);
+  box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.15), 0 8px 24px rgba(20, 184, 166, 0.25);
+  transform: scale(1.06);
+}
+
+.story-node__card {
+  flex: 1;
+  background: var(--about-white);
+  border: 1px solid var(--about-border-light);
+  border-radius: 16px;
+  padding: 2.25rem 2.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.story-node__card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(20, 184, 166, 0.35);
+  box-shadow: 0 12px 32px rgba(17, 24, 39, 0.06);
+}
+
+.story-node__meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.story-node__year {
+  font-family: var(--about-font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--about-teal);
+  background: rgba(20, 184, 166, 0.08);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+.story-node__label {
+  font-family: var(--about-font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--about-slate);
+  text-transform: uppercase;
+}
+
+.story-node__title {
+  font-family: var(--about-font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--about-charcoal);
+  margin: 0 0 0.85rem;
+}
+
+.story-node__desc {
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--about-slate-dark);
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION 05: WHAT WE DO (Section 6 - Subtle Mouse Interaction)
+   ═══════════════════════════════════════════════════════════════════ */
 .what-we-do {
   background-color: var(--about-white);
   padding: 10rem 0;
@@ -484,12 +1003,16 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
 }
 
 .service-wireframe {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
 }
 
 .wireframe-bar {
@@ -527,17 +1050,22 @@
   align-items: center;
   justify-content: center;
   padding: 1rem 0;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
 }
 
 .logo-grid-svg {
   width: 100%;
   max-width: 240px;
   height: auto;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
 }
 
-/* ==========================================================================
-   SECTION 05: OUR APPROACH & PRESERVED ANIMATION ("YOUR BUSINESS. OUR CRAFT.")
-   ========================================================================== */
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION 06: OUR APPROACH & PRINCIPLES (Section 8)
+   Alive & Staggered Viewport Entrance
+   ═══════════════════════════════════════════════════════════════════ */
 .our-approach {
   background-color: var(--about-ivory);
   padding: 9rem 0 3rem 0;
@@ -580,21 +1108,51 @@
   border: 1px solid var(--about-border-light);
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.approach-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--about-teal), var(--about-teal-bright));
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
 }
 
 .approach-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   border-color: rgba(20, 184, 166, 0.4);
+  box-shadow: 0 16px 40px rgba(17, 24, 39, 0.08);
+}
+
+.approach-card:hover::before {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 .approach-card__num {
   font-family: var(--about-font-display);
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--about-teal);
   letter-spacing: 0.1em;
   margin-bottom: 1.5rem;
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+}
+
+.approach-card:hover .approach-card__num {
+  transform: translateY(-2px);
+  color: var(--about-teal-bright);
 }
 
 .approach-card__title {
@@ -613,7 +1171,14 @@
   margin: 0;
 }
 
-/* Preserved Kinetic Animation: Words "YOUR BUSINESS." and "OUR CRAFT." */
+/* Sequential Stagger for Approach Cards */
+.approach-grid .approach-card:nth-child(1) { transition-delay: 0.0s; }
+.approach-grid .approach-card:nth-child(2) { transition-delay: 0.12s; }
+.approach-grid .approach-card:nth-child(3) { transition-delay: 0.24s; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   PRESERVED KINETIC ANIMATION ("YOUR BUSINESS. OUR CRAFT.")
+   ═══════════════════════════════════════════════════════════════════ */
 .less-noise {
   height: 150vh;
   position: relative;
@@ -665,9 +1230,9 @@
   color: #FFFFFF;
 }
 
-/* ==========================================================================
-   SECTION 06: FINAL CTA (Dark High Contrast Closing)
-   ========================================================================== */
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION 07: FINAL CTA (Micro-interactions)
+   ═══════════════════════════════════════════════════════════════════ */
 .about-cta {
   background-color: var(--about-charcoal);
   color: #FFFFFF;
@@ -731,9 +1296,9 @@
   transform: translateX(4px);
 }
 
-/* ==========================================================================
+/* ═══════════════════════════════════════════════════════════════════
    RESPONSIVE DESIGN (Desktop, Laptop, Tablet, Mobile)
-   ========================================================================== */
+   ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 1024px) {
   .who-we-are__grid {
     grid-template-columns: 1fr;
@@ -766,14 +1331,18 @@
 
 @media (max-width: 768px) {
   .about-hero {
-    min-height: 65vh;
-    padding-top: 130px;
+    min-height: 70vh;
+    padding-top: 135px;
     padding-bottom: 60px;
   }
 
   .about-hero__title {
-    font-size: clamp(2.75rem, 10vw, 4.25rem);
-    font-weight: 800;
+    font-size: clamp(2.6rem, 9vw, 3.8rem);
+  }
+
+  .about-hero__lead {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
   }
 
   .who-we-are {
@@ -782,6 +1351,7 @@
 
   .who-we-are__heading,
   .why-exists__title,
+  .our-story__title,
   .what-we-do__title,
   .our-approach__title,
   .about-cta__title {
@@ -791,6 +1361,28 @@
 
   .why-exists {
     padding: 7rem 0;
+  }
+
+  .our-story {
+    padding: 7rem 0;
+  }
+
+  .story-node {
+    gap: 1.25rem;
+  }
+
+  .story-node__marker {
+    width: 46px;
+    height: 46px;
+    font-size: 0.75rem;
+  }
+
+  .story-timeline__rail {
+    left: 22px;
+  }
+
+  .story-node__card {
+    padding: 1.75rem 1.5rem;
   }
 
   .contrast-card__heading {
@@ -836,7 +1428,7 @@
 
 @media (max-width: 480px) {
   .about-hero {
-    min-height: 60vh;
+    min-height: 65vh;
     padding-top: 120px;
     padding-bottom: 50px;
     padding-left: 1.25rem;
@@ -846,7 +1438,6 @@
   .about-hero__title {
     font-size: clamp(2.35rem, 11vw, 3.25rem);
     line-height: 1.1;
-    font-weight: 800;
   }
 
   .who-we-are__grid,
@@ -868,12 +1459,24 @@
   }
 }
 
-/* Accessibility: Prefers-reduced-motion */
+/* ═══════════════════════════════════════════════════════════════════
+   ACCESSIBILITY: PREFERS-REDUCED-MOTION (Section 15)
+   ═══════════════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
-  .fade-up {
+  .fade-up,
+  .stagger-1,
+  .stagger-2,
+  .stagger-3,
+  .hero-step {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+
+  .about-hero__ambient-glow,
+  .about-hero__flowing-paths {
+    animation: none !important;
+    transform: none !important;
   }
 
   .less-noise__word {
@@ -882,8 +1485,14 @@
 
   .service-card,
   .approach-card,
+  .story-node__card,
   .about-cta .btn {
     transition: none !important;
     transform: none !important;
+  }
+
+  .story-timeline__rail-progress,
+  .section-divider__inner {
+    transition: none !important;
   }
 }
