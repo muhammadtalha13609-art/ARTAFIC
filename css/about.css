@@ -263,33 +263,7 @@
 .corner-mark--bl { bottom: 12px; left: 14px; }
 .corner-mark--br { bottom: 12px; right: 14px; }
 
-.section-meta-strip {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: var(--about-font-display);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--about-slate);
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.65rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
 
-.why-exists .section-meta-strip {
-  border-bottom-color: rgba(255, 255, 255, 0.08);
-  color: var(--about-slate-light);
-}
-
-.meta-coord {
-  font-family: monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.05em;
-  color: var(--about-teal);
-  opacity: 0.85;
-}
 
 /* ═══════════════════════════════════════════════════════════════════
    SCROLL REVEALS & SEQUENCED ENTRANCES
