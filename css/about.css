@@ -1,9 +1,9 @@
 /* ==========================================================================
-   ARTAFIC ABOUT PAGE - MASTER ENHANCED STYLES
+   ARTAFIC ABOUT PAGE - MASTER ENHANCED STYLES (v3.3)
    Colors: Charcoal #111827 | Teal #14B8A6 | Soft Ivory #F8FAFC | White #FFFFFF
    Fonts: Display: Unbounded | Body: Montserrat / Inter
-   Focus: Motion Design, Visual Storytelling, Responsive Micro-Interactions,
-          High-Performance Composite Transforms & Opacity (GPU accelerated).
+   Focus: Real Agency Editorial Feel, Large Background Typography System,
+          Subtle Parallax Depth, Purposeful Sequenced Motion, Zero Bloat.
    ========================================================================== */
 
 :root {
@@ -35,7 +35,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SCROLL PROGRESS INDICATOR (Section 10)
+   SCROLL PROGRESS INDICATOR (Minimal Teal Top Bar)
    ═══════════════════════════════════════════════════════════════════ */
 .about-scroll-progress {
   position: fixed;
@@ -73,7 +73,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .about-section-tag::before {
@@ -133,11 +133,178 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SCROLL REVEALS & VISUAL STORYTELLING (Sections 3, 4 & 9)
+   LARGE LIGHT BACKGROUND TYPOGRAPHY SYSTEM (Subtle Scroll Parallax)
+   ═══════════════════════════════════════════════════════════════════ */
+.chapter-watermark {
+  position: absolute;
+  font-family: var(--about-font-display);
+  font-size: clamp(6.5rem, 18vw, 17rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 0.8;
+  color: currentColor;
+  opacity: 0.035;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  white-space: nowrap;
+  will-change: transform, opacity;
+  transition: opacity 0.8s ease-out;
+}
+
+/* Editorial placement per section */
+.chapter-watermark--hero {
+  bottom: 0%;
+  right: -2%;
+  font-size: clamp(7.5rem, 22vw, 21rem);
+  color: #FFFFFF;
+  opacity: 0.035;
+}
+
+.chapter-watermark--identity {
+  top: 14%;
+  right: -3%;
+  color: var(--about-charcoal);
+  opacity: 0.038;
+}
+
+.chapter-watermark--purpose {
+  top: 16%;
+  left: -4%;
+  color: #FFFFFF;
+  opacity: 0.032;
+}
+
+.chapter-watermark--journey {
+  top: 22%;
+  right: -4%;
+  color: var(--about-charcoal);
+  opacity: 0.038;
+}
+
+.chapter-watermark--craft {
+  top: 18%;
+  left: -3%;
+  color: var(--about-charcoal);
+  opacity: 0.038;
+}
+
+.chapter-watermark--values {
+  top: 12%;
+  right: -2%;
+  color: var(--about-charcoal);
+  opacity: 0.038;
+}
+
+.is-revealed .chapter-watermark {
+  opacity: 0.05;
+}
+
+.why-exists.is-revealed .chapter-watermark {
+  opacity: 0.04;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ANIMATED SECTION DIVIDERS (Subtle Drawing Line with Teal Accent)
+   ═══════════════════════════════════════════════════════════════════ */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  position: relative;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  overflow: visible;
+}
+
+.section-divider__line {
+  height: 1px;
+  width: 0%;
+  background: linear-gradient(90deg, transparent 0%, rgba(20, 184, 166, 0.45) 50%, transparent 100%);
+  transition: width 1.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.section-divider__dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--about-teal-bright);
+  box-shadow: 0 0 10px var(--about-teal);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.45s;
+}
+
+.section-divider.is-revealed .section-divider__line {
+  width: 85%;
+}
+
+.section-divider.is-revealed .section-divider__dot {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SMALL ARCHITECTURAL DESIGN DETAILS (Registration Marks & Strips)
+   ═══════════════════════════════════════════════════════════════════ */
+.studio-card {
+  position: relative;
+}
+
+.corner-mark {
+  position: absolute;
+  font-family: monospace;
+  font-size: 11px;
+  line-height: 1;
+  color: currentColor;
+  opacity: 0.22;
+  pointer-events: none;
+  user-select: none;
+}
+
+.corner-mark--tl { top: 12px; left: 14px; }
+.corner-mark--tr { top: 12px; right: 14px; }
+.corner-mark--bl { bottom: 12px; left: 14px; }
+.corner-mark--br { bottom: 12px; right: 14px; }
+
+.section-meta-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--about-font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--about-slate);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.why-exists .section-meta-strip {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  color: var(--about-slate-light);
+}
+
+.meta-coord {
+  font-family: monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--about-teal);
+  opacity: 0.85;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SCROLL REVEALS & SEQUENCED ENTRANCES
    ═══════════════════════════════════════════════════════════════════ */
 .fade-up {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(22px);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
@@ -147,26 +314,26 @@
   transform: translateY(0);
 }
 
-/* Fine-tuned Staggered Entrance for Composed Sections */
+/* Staggered entrance timing */
 .stagger-1 {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(18px);
   transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: 0.0s;
 }
 
 .stagger-2 {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(18px);
   transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: 0.12s;
 }
 
 .stagger-3 {
   opacity: 0;
-  transform: translateX(20px);
+  transform: translateX(18px);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  transition-delay: 0.25s;
+  transition-delay: 0.24s;
 }
 
 .is-revealed .stagger-1,
@@ -176,49 +343,8 @@
   transform: translate(0, 0);
 }
 
-/* Chapter Watermark Typography (Section 4 & 9) */
-.chapter-watermark {
-  position: absolute;
-  top: 6%;
-  right: -2%;
-  font-family: var(--about-font-display);
-  font-size: clamp(6rem, 16vw, 15rem);
-  font-weight: 800;
-  letter-spacing: -0.05em;
-  line-height: 0.85;
-  color: currentColor;
-  opacity: 0.035;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-  white-space: nowrap;
-}
-
-/* Chapter Divider Line (Section 9) */
-.section-divider {
-  width: 100%;
-  height: 1px;
-  position: relative;
-  overflow: hidden;
-  background: transparent;
-  display: flex;
-  justify-content: center;
-}
-
-.section-divider__inner {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.35), transparent);
-  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.section-divider.is-revealed .section-divider__inner {
-  width: 85%;
-}
-
 /* ═══════════════════════════════════════════════════════════════════
-   SECTION 01: ABOUT HERO (Sections 1 & 2)
-   Controlled, Staggered Load Sequence & Subtle Background Depth
+   SECTION 01: ABOUT HERO (Fluted Glass Composition)
    ═══════════════════════════════════════════════════════════════════ */
 .about-hero {
   position: relative;
@@ -242,7 +368,6 @@
   z-index: 1;
 }
 
-/* Subtle Animated Ambient Glow (Section 2) */
 .about-hero__ambient-glow {
   position: absolute;
   top: 25%;
@@ -274,7 +399,6 @@
   }
 }
 
-/* Subtle Flowing Geometric Paths (Section 2) */
 .about-hero__flowing-paths {
   position: absolute;
   inset: 0;
@@ -287,12 +411,8 @@
 }
 
 @keyframes heroPathsDrift {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    transform: translate3d(20px, -12px, 0);
-  }
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(20px, -12px, 0); }
 }
 
 .about-hero__layout {
@@ -302,7 +422,7 @@
   text-align: left;
 }
 
-/* Staggered Entrance Elements for Hero (Section 1) */
+/* Staggered entrance elements */
 .hero-step {
   opacity: 0;
   transform: translateY(22px);
@@ -340,7 +460,6 @@
   transition-delay: 0.15s;
 }
 
-/* Eyebrow Label */
 .about-hero__eyebrow {
   display: inline-flex;
   align-items: center;
@@ -367,7 +486,6 @@
   box-shadow: 0 0 8px var(--about-teal-bright);
 }
 
-/* Hero Title */
 .about-hero__title {
   font-family: 'Montserrat', sans-serif;
   font-size: clamp(3.2rem, 7.5vw, 5.8rem);
@@ -379,7 +497,6 @@
   text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
 }
 
-/* Hero Lead */
 .about-hero__lead {
   font-size: clamp(1.12rem, 2vw, 1.35rem);
   line-height: 1.65;
@@ -390,7 +507,6 @@
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
 }
 
-/* Hero Action CTAs */
 .about-hero__actions {
   display: flex;
   align-items: center;
@@ -454,11 +570,11 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SECTION 02: WHO WE ARE (Section 3 - Scroll Reveal)
+   SECTION 02: WHO WE ARE (Editorial 2-Column Balance)
    ═══════════════════════════════════════════════════════════════════ */
 .who-we-are {
   background-color: var(--about-ivory);
-  padding: 9rem 0;
+  padding: 9.5rem 0;
   position: relative;
   overflow: hidden;
 }
@@ -481,7 +597,7 @@
   line-height: 1.1;
   letter-spacing: -0.03em;
   color: var(--about-charcoal);
-  margin: 0 0 1.75rem;
+  margin: 0 0 1.5rem;
 }
 
 .who-we-are__accent-line {
@@ -489,7 +605,7 @@
   height: 3px;
   background: var(--about-teal);
   border-radius: 2px;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   transform-origin: left;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -582,12 +698,12 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SECTION 03: WHY ARTAFIC EXISTS (Section 5 - Interactive Contrast Cards)
+   SECTION 03: WHY ARTAFIC EXISTS (Structured Contrast Composition)
    ═══════════════════════════════════════════════════════════════════ */
 .why-exists {
   background-color: var(--about-charcoal);
   color: var(--about-white);
-  padding: 10rem 0;
+  padding: 10.5rem 0;
   position: relative;
   overflow: hidden;
 }
@@ -738,11 +854,11 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SECTION 04: OUR STORY (Section 7 - Journey Timeline)
+   SECTION 04: OUR STORY (Journey Timeline Composition)
    ═══════════════════════════════════════════════════════════════════ */
 .our-story {
   background-color: var(--about-ivory);
-  padding: 10rem 0;
+  padding: 10.5rem 0;
   position: relative;
   overflow: hidden;
 }
@@ -775,7 +891,6 @@
   padding: 1rem 0;
 }
 
-/* Vertical Drawing Rail */
 .story-timeline__rail {
   position: absolute;
   top: 28px;
@@ -897,11 +1012,11 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SECTION 05: WHAT WE DO (Section 6 - Subtle Mouse Interaction)
+   SECTION 05: WHAT WE DO (Services Cards & Visuals)
    ═══════════════════════════════════════════════════════════════════ */
 .what-we-do {
   background-color: var(--about-white);
-  padding: 10rem 0;
+  padding: 10.5rem 0;
   position: relative;
   overflow: hidden;
 }
@@ -993,7 +1108,6 @@
   margin: 0 0 2.5rem;
 }
 
-/* Service Card Visual Illustration */
 .service-card__visual {
   margin-top: auto;
   padding: 1.75rem;
@@ -1063,12 +1177,11 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SECTION 06: OUR APPROACH & PRINCIPLES (Section 8)
-   Alive & Staggered Viewport Entrance
+   SECTION 06: HOW WE WORK / PRINCIPLES
    ═══════════════════════════════════════════════════════════════════ */
 .our-approach {
   background-color: var(--about-ivory);
-  padding: 9rem 0 3rem 0;
+  padding: 9.5rem 0 3rem 0;
   position: relative;
   overflow: hidden;
 }
@@ -1171,7 +1284,6 @@
   margin: 0;
 }
 
-/* Sequential Stagger for Approach Cards */
 .approach-grid .approach-card:nth-child(1) { transition-delay: 0.0s; }
 .approach-grid .approach-card:nth-child(2) { transition-delay: 0.12s; }
 .approach-grid .approach-card:nth-child(3) { transition-delay: 0.24s; }
@@ -1231,12 +1343,12 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SECTION 07: FINAL CTA (Micro-interactions)
+   SECTION 07: FINAL CTA
    ═══════════════════════════════════════════════════════════════════ */
 .about-cta {
   background-color: var(--about-charcoal);
   color: #FFFFFF;
-  padding: 10rem 1.5rem 12rem;
+  padding: 10.5rem 1.5rem 12.5rem;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -1266,7 +1378,7 @@
   font-size: clamp(1.05rem, 1.8vw, 1.25rem);
   line-height: 1.6;
   color: var(--about-slate-light);
-  max-width: 600px;
+  max-width: 620px;
   margin: 0 0 3rem;
 }
 
@@ -1294,6 +1406,28 @@
 
 .about-cta .btn:hover svg {
   transform: translateX(4px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FOOTER OFFICIAL LOGO STYLES
+   ═══════════════════════════════════════════════════════════════════ */
+.footer__brand-logo {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  text-decoration: none;
+}
+
+.footer__logo-image {
+  height: 36px;
+  width: auto;
+  display: block;
+  filter: brightness(0) invert(1) !important;
+  transition: opacity 0.25s ease;
+}
+
+.footer__brand-logo:hover .footer__logo-image {
+  opacity: 0.85;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1330,6 +1464,12 @@
 }
 
 @media (max-width: 768px) {
+  .chapter-watermark {
+    font-size: clamp(4.5rem, 14vw, 8rem);
+    opacity: 0.025 !important;
+    transform: none !important;
+  }
+
   .about-hero {
     min-height: 70vh;
     padding-top: 135px;
@@ -1460,14 +1600,15 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   ACCESSIBILITY: PREFERS-REDUCED-MOTION (Section 15)
+   ACCESSIBILITY: PREFERS-REDUCED-MOTION
    ═══════════════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
   .fade-up,
   .stagger-1,
   .stagger-2,
   .stagger-3,
-  .hero-step {
+  .hero-step,
+  .chapter-watermark {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
@@ -1492,27 +1633,8 @@
   }
 
   .story-timeline__rail-progress,
-  .section-divider__inner {
+  .section-divider__line,
+  .section-divider__dot {
     transition: none !important;
   }
-}
-
-/* Footer Official Logo */
-.footer__brand-logo {
-  display: inline-flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  text-decoration: none;
-}
-
-.footer__logo-image {
-  height: 36px;
-  width: auto;
-  display: block;
-  filter: brightness(0) invert(1) !important;
-  transition: opacity 0.25s ease;
-}
-
-.footer__brand-logo:hover .footer__logo-image {
-  opacity: 0.85;
 }

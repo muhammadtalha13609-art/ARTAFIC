@@ -2206,7 +2206,7 @@ window.reinitPageScripts = function(targetUrl) {
         window.initAboutPage();
       } else if (!document.querySelector('script[src*="about.js"]')) {
         const s = document.createElement('script');
-        s.src = 'js/about.js?v=3.0';
+        s.src = 'js/about.js?v=3.3';
         s.onload = () => {
           if (typeof window.initAboutPage === 'function') {
             window.initAboutPage();

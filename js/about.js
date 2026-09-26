@@ -1,17 +1,18 @@
 /* ============================================================
-   ARTAFIC — About Page Motion Design & Interactive Engine
+   ARTAFIC — About Page Motion Design & Interactive Engine (v3.3)
    Performance-first architecture:
    - GPU-accelerated CSS transforms and opacity
+   - Single unified rAF scroll loop for progress bar, watermarks parallax,
+     and preserved kinematic craft animation
    - IntersectionObserver triggers with immediate unobserve
-   - requestAnimationFrame throttled passive scroll listener
    - Restrained desktop-only mouse parallax with damped lerp
-   - Preserved kinematic scroll transition for "YOUR BUSINESS. OUR CRAFT."
+   - Fully accessible: respects prefers-reduced-motion
    ============================================================ */
 
 (function() {
   function createPathsSVG(position, themeMode) {
     let paths = '';
-    const numPaths = window.innerWidth < 768 ? 16 : 28;
+    const numPaths = window.innerWidth < 768 ? 14 : 26;
     
     for (let i = 0; i < numPaths; i++) {
       const mX = -(380 - i * 5 * position);
@@ -64,7 +65,7 @@
       }
     });
 
-    // 2. Hero Staggered Entrance (Section 1)
+    // 2. Hero Staggered Entrance
     if (hero) {
       if (prefersReducedMotion) {
         hero.classList.add('is-hero-loaded');
@@ -75,30 +76,74 @@
       }
     }
 
-    // 3. Scroll Progress Indicator (Section 10)
+    // 3. Elements Cache for Unified Scroll Engine
     const progressBar = document.getElementById('about-scroll-progress');
-    let scrollTicking = false;
+    const parallaxWatermarks = document.querySelectorAll('[data-parallax]');
+    const lessNoiseSec = document.querySelector('.less-noise');
+    const word1 = document.querySelector('.less-noise__word1');
+    const word2 = document.querySelector('.less-noise__word2');
 
-    function handleScrollProgress() {
-      if (!progressBar) return;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (docHeight <= 0) return;
-      const progress = Math.min(100, Math.max(0, (window.scrollY / docHeight) * 100));
-      progressBar.style.width = progress.toFixed(2) + '%';
+    // 4. Unified Passive Scroll Handler (rAF Throttled)
+    let isScrollTicking = false;
+
+    function onScrollTick() {
+      const scrollY = window.scrollY;
+      const winH = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight - winH;
+
+      // A. Scroll Progress Bar
+      if (progressBar && docHeight > 0) {
+        const progress = Math.min(100, Math.max(0, (scrollY / docHeight) * 100));
+        progressBar.style.width = progress.toFixed(2) + '%';
+      }
+
+      // B. Subtle Background Watermark Parallax (Desktop Only)
+      if (!prefersReducedMotion && window.innerWidth >= 768 && parallaxWatermarks.length > 0) {
+        parallaxWatermarks.forEach(el => {
+          const parent = el.parentElement;
+          if (!parent) return;
+          const rect = parent.getBoundingClientRect();
+          if (rect.bottom > -150 && rect.top < winH + 150) {
+            const factor = parseFloat(el.dataset.parallax || '-0.15');
+            const sectionCenter = rect.top + rect.height / 2;
+            const viewCenter = winH / 2;
+            const deltaY = (sectionCenter - viewCenter) * factor;
+            el.style.transform = `translate3d(0, ${deltaY.toFixed(1)}px, 0)`;
+          }
+        });
+      }
+
+      // C. Preserved Kinetic Craft Animation ("YOUR BUSINESS. OUR CRAFT.")
+      if (lessNoiseSec && word1 && word2) {
+        const rect = lessNoiseSec.getBoundingClientRect();
+        if (rect.top < winH && rect.bottom > 0) {
+          const progress = 1 - (rect.bottom / (rect.height + winH));
+          if (progress < 0.4) {
+            word1.style.opacity = Math.max(0, 1 - (progress * 2.5));
+            word1.style.transform = `translate(-50%, -50%) scale(${1 + progress * 0.5})`;
+            word2.style.opacity = 0;
+            word2.style.transform = 'translate(-50%, -50%) scale(0.9)';
+          } else {
+            word1.style.opacity = 0;
+            const p2 = (progress - 0.4) / 0.6;
+            word2.style.opacity = Math.min(1, p2 * 1.5);
+            word2.style.transform = `translate(-50%, -50%) scale(${0.9 + p2 * 0.1})`;
+          }
+        }
+      }
+
+      isScrollTicking = false;
     }
 
     window.addEventListener('scroll', () => {
-      if (!scrollTicking) {
-        window.requestAnimationFrame(() => {
-          handleScrollProgress();
-          scrollTicking = false;
-        });
-        scrollTicking = true;
+      if (!isScrollTicking) {
+        window.requestAnimationFrame(onScrollTick);
+        isScrollTicking = true;
       }
     }, { passive: true });
-    handleScrollProgress();
+    onScrollTick();
 
-    // 4. Lightweight Intersection Observer for Entrance Reveals & Section Dividers
+    // 5. Lightweight Intersection Observer for Entrance Reveals & Section Dividers
     if (!prefersReducedMotion && 'IntersectionObserver' in window) {
       const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -113,7 +158,7 @@
         revealObserver.observe(el);
       });
 
-      // 5. Timeline Story Node Observer (Section 7)
+      // 6. Timeline Story Node Observer
       const storyNodes = document.querySelectorAll('.story-node');
       const railProgress = document.getElementById('story-rail-progress');
       const timelineContainer = document.querySelector('.story-timeline');
@@ -124,7 +169,6 @@
             if (entry.isIntersecting) {
               entry.target.classList.add('is-active');
               
-              // Calculate rail progress percentage based on furthest active node
               let maxIndex = 0;
               storyNodes.forEach((node, idx) => {
                 if (node.classList.contains('is-active')) {
@@ -150,8 +194,7 @@
       if (railProgress) railProgress.style.height = '100%';
     }
 
-    // 6. Restrained Desktop-Only Mouse Interaction (Section 6)
-    // Moves decorative SVG / visual elements by only 3-8px with smooth dampening
+    // 7. Restrained Desktop-Only Mouse Interaction
     const mouseElements = document.querySelectorAll('[data-mouse-parallax]');
     if (mouseElements.length > 0 && !prefersReducedMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       let targetX = 0, targetY = 0;
@@ -161,8 +204,8 @@
       function onMouseMove(e) {
         const halfW = window.innerWidth / 2;
         const halfH = window.innerHeight / 2;
-        targetX = (e.clientX - halfW) / halfW; // -1 to +1
-        targetY = (e.clientY - halfH) / halfH; // -1 to +1
+        targetX = (e.clientX - halfW) / halfW;
+        targetY = (e.clientY - halfH) / halfH;
 
         if (!rAFParallax) {
           rAFParallax = requestAnimationFrame(updateMouseParallax);
@@ -188,43 +231,6 @@
       }
 
       window.addEventListener('mousemove', onMouseMove, { passive: true });
-    }
-
-    // 7. PRESERVED CRAFT ANIMATION ("YOUR BUSINESS. OUR CRAFT.")
-    // Exact kinematic scroll logic preserved with zero performance penalty
-    const lessNoiseSec = document.querySelector('.less-noise');
-    const word1 = document.querySelector('.less-noise__word1');
-    const word2 = document.querySelector('.less-noise__word2');
-    let craftTicking = false;
-
-    if (lessNoiseSec && word1 && word2) {
-      window.addEventListener('scroll', () => {
-        if (!craftTicking) {
-          window.requestAnimationFrame(() => {
-            const winH = window.innerHeight;
-            const rect = lessNoiseSec.getBoundingClientRect();
-            
-            if (rect.top < winH && rect.bottom > 0) {
-              const progress = 1 - (rect.bottom / (rect.height + winH));
-              
-              if (progress < 0.4) {
-                word1.style.opacity = 1 - (progress * 2.5);
-                word1.style.transform = `translate(-50%, -50%) scale(${1 + progress * 0.5})`;
-                word2.style.opacity = 0;
-                word2.style.transform = 'translate(-50%, -50%) scale(0.9)';
-              } else {
-                word1.style.opacity = 0;
-                const p2 = (progress - 0.4) / 0.6;
-                word2.style.opacity = Math.min(1, p2 * 1.5);
-                word2.style.transform = `translate(-50%, -50%) scale(${0.9 + p2 * 0.1})`;
-              }
-            }
-            
-            craftTicking = false;
-          });
-          craftTicking = true;
-        }
-      }, { passive: true });
     }
   };
 
