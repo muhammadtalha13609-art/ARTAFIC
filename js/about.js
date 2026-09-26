@@ -104,11 +104,13 @@
           if (!parent) return;
           const rect = parent.getBoundingClientRect();
           if (rect.bottom > -150 && rect.top < winH + 150) {
-            const factor = parseFloat(el.dataset.parallax || '-0.15');
+            const factor = parseFloat(el.dataset.parallax || '-0.05');
             const sectionCenter = rect.top + rect.height / 2;
             const viewCenter = winH / 2;
-            const deltaY = (sectionCenter - viewCenter) * factor;
-            el.style.transform = `translate3d(0, ${deltaY.toFixed(1)}px, 0)`;
+            const rawDeltaY = (sectionCenter - viewCenter) * factor;
+            // Constrain movement strictly within safe ±14px boundary to preserve safe content area
+            const deltaY = Math.max(-14, Math.min(14, rawDeltaY));
+            el.style.transform = `translateY(${deltaY.toFixed(1)}px)`;
           }
         });
       }

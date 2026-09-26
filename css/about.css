@@ -99,10 +99,16 @@
   color: var(--about-slate);
 }
 
-/* Utilities & Stacking Contexts */
+/* Utilities & Clean Stacking Architecture (Strict 6-Layer System)
+   Layer 0: Decorative lines / background graphics (.floating-paths-bg)
+   Layer 1: Large background typography (.chapter-watermark)
+   Layer 2: Main section content & layout containers (.relative-z, headers, grids)
+   Layer 3: Interactive elements & cards (.btn, .studio-card, etc.)
+*/
 .relative-z {
   position: relative;
-  z-index: 10;
+  z-index: 2;
+  transform: translateZ(0);
 }
 
 .about-hero,
@@ -113,6 +119,8 @@
 .our-approach,
 .about-cta {
   isolation: isolate;
+  position: relative;
+  overflow: hidden;
 }
 
 .floating-paths-bg {
@@ -138,62 +146,90 @@
   inset: 0;
   background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.04"/%3E%3C/svg%3E');
   pointer-events: none;
-  z-index: 5;
+  z-index: 1;
   mix-blend-mode: overlay;
 }
 
+/* Foreground content containers — guaranteed above background typography */
+.who-we-are__grid,
+.why-exists__header,
+.why-exists__contrast-grid,
+.our-story__header,
+.story-timeline,
+.what-we-do__header,
+.what-we-do__grid,
+.our-approach__header,
+.approach-grid,
+.about-cta__content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Interactive elements */
+.btn,
+.service-card,
+.contrast-card,
+.approach-card,
+.story-node__card,
+.who-we-are__badge {
+  position: relative;
+  z-index: 3;
+}
+
 /* ═══════════════════════════════════════════════════════════════════
-   LARGE LIGHT BACKGROUND TYPOGRAPHY SYSTEM (Subtle Scroll Parallax)
-   Guaranteed ultra-light, subtle, and strictly layered behind content
+   LARGE LIGHT BACKGROUND TYPOGRAPHY SYSTEM
+   Compositional background texture:
+   - Sits strictly at z-index: 1 (behind foreground content at z-index: 2+)
+   - Controlled font size so it fits composition without dominating
+   - Ultra-faint opacity so foreground headings & paragraphs have 100% readability
+   - Positioned in empty margins/top space with a guaranteed safe content area
    ═══════════════════════════════════════════════════════════════════ */
 .chapter-watermark {
   position: absolute;
-  top: 5%;
-  right: -2%;
+  top: 1.75rem;
+  right: -1.5rem;
   font-family: var(--about-font-display);
-  font-size: clamp(5.5rem, 15vw, 13.5rem);
+  font-size: clamp(3.25rem, 6.5vw, 6rem);
   font-weight: 800;
-  letter-spacing: -0.05em;
-  line-height: 0.85;
-  color: rgba(15, 23, 42, 0.03);
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  color: rgba(15, 23, 42, 0.024);
   pointer-events: none;
   user-select: none;
-  z-index: 0;
+  z-index: 1;
   white-space: nowrap;
   will-change: transform;
 }
 
-/* Subtle placement and contrast per chapter */
+/* Subtle placement and contrast per chapter — placed in empty margins */
 .chapter-watermark--identity {
-  top: 5%;
-  right: -2%;
-  color: rgba(15, 23, 42, 0.03);
+  top: 1.75rem;
+  right: -1.5rem;
+  color: rgba(15, 23, 42, 0.024);
 }
 
 .chapter-watermark--purpose {
-  top: 5%;
-  left: -2%;
-  right: auto;
-  color: rgba(255, 255, 255, 0.025);
+  top: 1.75rem;
+  right: -1.5rem;
+  color: rgba(255, 255, 255, 0.02);
 }
 
 .chapter-watermark--journey {
-  top: 5%;
-  right: -2%;
-  color: rgba(15, 23, 42, 0.03);
+  top: 1.75rem;
+  right: -1.5rem;
+  color: rgba(15, 23, 42, 0.024);
 }
 
 .chapter-watermark--craft {
-  top: 5%;
-  left: -2%;
-  right: auto;
-  color: rgba(15, 23, 42, 0.03);
+  top: 1.75rem;
+  right: -1.5rem;
+  color: rgba(15, 23, 42, 0.024);
 }
 
 .chapter-watermark--values {
-  top: 5%;
-  right: -2%;
-  color: rgba(15, 23, 42, 0.03);
+  top: 1.75rem;
+  right: -1.5rem;
+  color: rgba(15, 23, 42, 0.024);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1431,13 +1467,15 @@
 
 @media (max-width: 768px) {
   .chapter-watermark {
-    font-size: clamp(3.5rem, 12vw, 6rem);
-    color: rgba(15, 23, 42, 0.022);
+    font-size: clamp(2.25rem, 6.5vw, 3.5rem);
+    top: 0.75rem;
+    right: -0.5rem;
+    color: rgba(15, 23, 42, 0.018);
     transform: none !important;
   }
 
   .chapter-watermark--purpose {
-    color: rgba(255, 255, 255, 0.02);
+    color: rgba(255, 255, 255, 0.016);
   }
 
   .about-hero {
