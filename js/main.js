@@ -2443,7 +2443,8 @@ window.reinitPageScripts = function(targetUrl) {
   function normalizeUrl(urlString) {
     try {
       const url = new URL(urlString, window.location.href);
-      if (url.origin === window.location.origin) {
+      // Clean URLs are only applied on HTTP/HTTPS hosting (e.g. Vercel)
+      if (window.location.protocol !== 'file:' && url.origin === window.location.origin) {
         let cleanPath = url.pathname.replace(/\/index\.html$/i, '/').replace(/\.html$/i, '');
         if (!cleanPath.startsWith('/')) cleanPath = '/' + cleanPath;
         if (cleanPath.length > 1 && cleanPath.endsWith('/')) cleanPath = cleanPath.slice(0, -1);
@@ -2459,6 +2460,51 @@ window.reinitPageScripts = function(targetUrl) {
     }
   }
 
+  function safePushState(pushUrl) {
+    if (window.location.protocol === 'file:') return;
+    try {
+      window.history.pushState(null, '', pushUrl);
+    } catch (e) {}
+  }
+
+  function scrollToElement(selector) {
+    if (!selector) return false;
+    let targetEl = null;
+    try {
+      targetEl = document.querySelector(selector);
+    } catch (e) {}
+
+    // Fallbacks for common aliases
+    if (!targetEl && (selector === '#how-we-work' || selector === '#process')) {
+      targetEl = document.getElementById('how-we-work') || document.getElementById('process') || document.getElementById('our-approach');
+    }
+    if (!targetEl && (selector === '#booking' || selector === '#contact')) {
+      targetEl = document.getElementById('booking') || document.getElementById('contact');
+    }
+
+    if (targetEl) {
+      const navH = document.getElementById('nav')?.offsetHeight || 72;
+      const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - navH;
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+      return true;
+    }
+    return false;
+  }
+
+  function getPageKey(urlString) {
+    try {
+      const url = new URL(urlString, window.location.href);
+      const p = (url.pathname || '').toLowerCase();
+      if (p.endsWith('/about') || p.endsWith('/about.html')) return 'about';
+      if (p.endsWith('/services') || p.endsWith('/services.html')) return 'services';
+      if (p.endsWith('/faq') || p.endsWith('/faq.html')) return 'faq';
+      if (p.endsWith('/privacy') || p.endsWith('/privacy.html')) return 'privacy';
+      if (p.endsWith('/terms') || p.endsWith('/terms.html')) return 'terms';
+      if (p === '/' || p.endsWith('/index.html') || p.endsWith('/') || !p) return 'home';
+    } catch (e) {}
+    return '';
+  }
+
   function getDestinationLabel(linkElement, href) {
     const text = (linkElement ? linkElement.textContent.trim() : '').toUpperCase();
     const lowerHref = (href || '').toLowerCase();
@@ -2470,6 +2516,7 @@ window.reinitPageScripts = function(targetUrl) {
     if (lowerHref.includes('terms') || text.includes('TERMS')) return 'TERMS OF SERVICE';
     if (lowerHref.includes('why-artafic') || text.includes('WHY')) return 'WHY ARTAFIC';
     if (lowerHref.includes('before-after') || text.includes('BEFORE')) return 'BEFORE & AFTER';
+    if (lowerHref.includes('how-we-work') || lowerHref.includes('process') || text.includes('HOW WE WORK')) return 'HOW WE WORK';
     if (lowerHref.includes('portfolio') || text.includes('WORK') || text.includes('PORTFOLIO')) return 'SELECTED WORK';
     if (lowerHref.includes('booking') || text.includes('TOUCH') || text.includes('BOOK')) return 'GET IN TOUCH';
     if (lowerHref.includes('home') || lowerHref === '/' || lowerHref.endsWith('/index.html') || text === 'HOME') return 'HOME';
@@ -2480,31 +2527,21 @@ window.reinitPageScripts = function(targetUrl) {
 
   function updateActiveNavLinks(targetUrlString) {
     try {
-      const url = normalizeUrl(targetUrlString || window.location.href);
-      const cleanPath = url.pathname;
+      const currentPageKey = getPageKey(targetUrlString || window.location.href);
 
       document.querySelectorAll('.nav__link, .nav__mobile-link').forEach(link => {
         const href = link.getAttribute('href') || '';
-        const linkUrl = normalizeUrl(href);
-        const linkPath = linkUrl.pathname;
+        const linkPageKey = getPageKey(href);
 
         link.classList.remove('nav__link--active');
         link.style.color = '';
         link.style.fontWeight = '';
 
-        if (cleanPath === '/services' && linkPath === '/services') {
+        if (currentPageKey && currentPageKey !== 'home' && linkPageKey === currentPageKey) {
           link.classList.add('nav__link--active');
           link.style.color = 'var(--color-teal)';
           link.style.fontWeight = '600';
-        } else if (cleanPath === '/about' && linkPath === '/about') {
-          link.classList.add('nav__link--active');
-          link.style.color = 'var(--color-teal)';
-          link.style.fontWeight = '600';
-        } else if (cleanPath === '/faq' && linkPath === '/faq') {
-          link.classList.add('nav__link--active');
-          link.style.color = 'var(--color-teal)';
-          link.style.fontWeight = '600';
-        } else if (cleanPath === '/' && (linkPath === '/' || href === '/' || href === '#home')) {
+        } else if (currentPageKey === 'home' && (linkPageKey === 'home' || href === 'index.html' || href === '/' || href === '#home')) {
           link.classList.add('nav__link--active');
         }
       });
@@ -2515,6 +2552,13 @@ window.reinitPageScripts = function(targetUrl) {
 
   function runPageTransition(targetUrlString, labelText, targetHash) {
     if (isTransitionRunning) return;
+
+    // Never run PJAX fetch transition on local file: protocol
+    if (window.location.protocol === 'file:') {
+      window.location.href = targetUrlString;
+      return;
+    }
+
     isTransitionRunning = true;
 
     const overlay = ensureOverlay();
@@ -2544,13 +2588,7 @@ window.reinitPageScripts = function(targetUrl) {
     const targetUrl = normalizeUrl(targetUrlString);
     const isSamePage = currentUrl.origin === targetUrl.origin && currentUrl.pathname === targetUrl.pathname;
 
-    let fetchUrl = targetUrl.href;
-    if (window.location.protocol === 'file:') {
-      const fileName = targetUrl.pathname === '/' ? 'index.html' : targetUrl.pathname.replace(/^\//, '') + '.html';
-      fetchUrl = fileName;
-    } else {
-      fetchUrl = targetUrl.pathname;
-    }
+    let fetchUrl = targetUrl.pathname;
 
     const fetchPromise = !isSamePage 
       ? fetch(fetchUrl).then(r => {
@@ -2605,24 +2643,14 @@ window.reinitPageScripts = function(targetUrl) {
 
           // Update URL - ALWAYS CLEAN ROUTE
           const pushUrl = targetUrl.pathname + targetUrl.search + (targetHash || '');
-          window.history.pushState(null, '', pushUrl);
+          safePushState(pushUrl);
 
           // Update active links
           updateActiveNavLinks(targetUrl.href);
 
           // Scroll to position
           if (targetHash) {
-            try {
-              const targetEl = document.querySelector(targetHash);
-              if (targetEl) {
-                const navH = document.getElementById('nav')?.offsetHeight || 72;
-                window.scrollTo({ top: targetEl.offsetTop - navH, behavior: 'instant' });
-              } else {
-                window.scrollTo({ top: 0, behavior: 'instant' });
-              }
-            } catch (err) {
-              window.scrollTo({ top: 0, behavior: 'instant' });
-            }
+            scrollToElement(targetHash);
           } else {
             window.scrollTo({ top: 0, behavior: 'instant' });
           }
@@ -2632,15 +2660,9 @@ window.reinitPageScripts = function(targetUrl) {
             window.reinitPageScripts(targetUrl.href);
           }
         } else if (targetHash) {
-          try {
-            const targetEl = document.querySelector(targetHash);
-            if (targetEl) {
-              const navH = document.getElementById('nav')?.offsetHeight || 72;
-              window.scrollTo({ top: targetEl.offsetTop - navH, behavior: 'instant' });
-            }
-          } catch (err) {}
+          scrollToElement(targetHash);
           const pushUrl = targetUrl.pathname + targetUrl.search + (targetHash || '');
-          window.history.pushState(null, '', pushUrl);
+          safePushState(pushUrl);
         }
 
         // 4. HOLD state for ~400ms so user sees the title & wave composition
@@ -2683,27 +2705,71 @@ window.reinitPageScripts = function(targetUrl) {
       return;
     }
 
-    // Pure local hash like href="#booking"
+    function closeMobileMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      const hamburger = document.getElementById('hamburger');
+      if (mobileMenu && mobileMenu.classList.contains('is-open')) {
+        mobileMenu.classList.remove('is-open');
+        if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    // Pure local hash like href="#booking", href="#process", href="#how-we-work"
     if (href.startsWith('#')) {
-      if (href === '#home') {
+      if (href === '#home' || href === '#') {
         e.preventDefault();
+        closeMobileMenu();
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
-          window.history.pushState(null, '', '/');
-        }
+        safePushState(window.location.pathname);
         return;
       }
-      const targetElement = document.querySelector(href);
-      if (targetElement) {
+      if (scrollToElement(href)) {
         e.preventDefault();
-        const navH = document.getElementById('nav')?.offsetHeight || 72;
-        window.scrollTo({ top: targetElement.offsetTop - navH, behavior: 'smooth' });
-        window.history.pushState(null, '', window.location.pathname + href);
+        closeMobileMenu();
+        safePushState(window.location.pathname + href);
         return;
       }
       return;
     }
 
+    // If running under local file: protocol
+    if (window.location.protocol === 'file:') {
+      let currentUrl, targetUrl;
+      try {
+        currentUrl = new URL(window.location.href);
+        targetUrl = new URL(href, window.location.href);
+      } catch (err) {
+        return;
+      }
+
+      const currentPath = currentUrl.pathname.toLowerCase();
+      const targetPath = targetUrl.pathname.toLowerCase();
+      const isCurrentFile = (currentPath === targetPath) || 
+        ((currentPath.endsWith('/index.html') || currentPath.endsWith('/')) && (targetPath.endsWith('/index.html') || targetPath.endsWith('/')));
+
+      if (isCurrentFile) {
+        if (targetUrl.hash && targetUrl.hash !== '#' && targetUrl.hash !== '#home') {
+          if (scrollToElement(targetUrl.hash)) {
+            e.preventDefault();
+            closeMobileMenu();
+            return;
+          }
+        }
+        if (!targetUrl.hash || targetUrl.hash === '#home' || targetUrl.hash === '#') {
+          e.preventDefault();
+          closeMobileMenu();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+      }
+
+      // Cross-page navigation on local file: protocol:
+      // Allow browser native navigation to load HTML file directly from disk
+      closeMobileMenu();
+      return;
+    }
+
+    // --- HTTP / HTTPS (Vercel & Live Servers) ---
     let currentUrl, targetUrl;
     try {
       currentUrl = normalizeUrl(window.location.href);
@@ -2712,49 +2778,48 @@ window.reinitPageScripts = function(targetUrl) {
       return;
     }
 
-    // Strictly permit only same-origin http: and https: protocols (and file: for local test)
+    // Strictly permit only same-origin http: and https: protocols
     if (targetUrl.origin !== currentUrl.origin) return;
 
     const isSamePath = targetUrl.pathname === currentUrl.pathname;
 
-    // Check if it is an anchor on the current page (e.g. href="/#why-artafic" while on "/")
+    // Check if it is an anchor on the current page (e.g. href="index.html#booking" while on "/")
     if (isSamePath && targetUrl.hash) {
-      if (targetUrl.hash === '#home') {
+      if (targetUrl.hash === '#home' || targetUrl.hash === '#') {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
+        closeMobileMenu();
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        window.history.pushState(null, '', targetUrl.pathname);
+        safePushState(targetUrl.pathname);
         return;
       }
-      try {
-        const targetElement = document.querySelector(targetUrl.hash);
-        if (targetElement) {
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
-          const navH = document.getElementById('nav')?.offsetHeight || 72;
-          window.scrollTo({ top: targetElement.offsetTop - navH, behavior: 'smooth' });
-          window.history.pushState(null, '', targetUrl.pathname + targetUrl.hash);
-          return;
-        }
-      } catch (err) {}
+      if (scrollToElement(targetUrl.hash)) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        closeMobileMenu();
+        safePushState(targetUrl.pathname + targetUrl.hash);
+        return;
+      }
     }
 
     // If clicking Home or Logo when already on Home:
-    if (isSamePath && !targetUrl.hash && targetUrl.pathname === '/') {
+    if (isSamePath && !targetUrl.hash && (targetUrl.pathname === '/' || targetUrl.pathname.endsWith('/index.html'))) {
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
+      closeMobileMenu();
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      window.history.pushState(null, '', '/');
+      safePushState('/');
       return;
     }
 
-    // Cross-page or page-level navigation
+    // Cross-page navigation
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
+    closeMobileMenu();
 
     const label = getDestinationLabel(target, href);
     runPageTransition(targetUrl.href, label, targetUrl.hash);
@@ -2762,9 +2827,19 @@ window.reinitPageScripts = function(targetUrl) {
 
   // Handle Browser Back / Forward buttons
   window.addEventListener('popstate', () => {
+    if (window.location.protocol === 'file:') return;
     const url = normalizeUrl(window.location.href);
     const label = getDestinationLabel(null, url.href);
     runPageTransition(url.href, label, window.location.hash);
+  });
+
+  // Handle initial anchor on page load
+  window.addEventListener('DOMContentLoaded', () => {
+    if (window.location.hash) {
+      setTimeout(() => {
+        scrollToElement(window.location.hash);
+      }, 120);
+    }
   });
 
   // Expose Global Console Test Function
