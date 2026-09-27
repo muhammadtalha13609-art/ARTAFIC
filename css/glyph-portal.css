@@ -1,0 +1,285 @@
+/* ============================================================
+   ARTAFIC — Glyph Portal CSS (v1.0)
+   High-performance, GPU-accelerated scroll typography camera
+   ============================================================ */
+
+.glyph-portal,
+.glyph-portal.about-hero {
+  --gp-paper: #070A10;
+  --gp-ink: #FFFFFF;
+  --gp-field: radial-gradient(circle at 50% 40%, rgba(20, 184, 166, 0.45) 0%, rgba(11, 17, 32, 0.85) 60%, #070A10 100%);
+  --gp-foreground: #F8FAFC;
+  position: relative;
+  isolation: isolate;
+  background: var(--gp-paper);
+  background-image: none !important;
+  color: var(--gp-ink);
+  font-family: 'Montserrat', sans-serif;
+  height: calc(var(--gp-length, 2.2) * 100vh);
+  min-height: unset !important;
+  padding: 0 !important;
+  width: 100%;
+  overflow: visible;
+}
+
+.glyph-portal [data-gp-viewport] {
+  position: absolute;
+  inset: 0 auto auto 0;
+  height: 100vh;
+  height: 100svh;
+  width: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.glyph-portal [data-gp-pin] {
+  position: sticky;
+  top: 0;
+  height: var(--gp-height, 100svh);
+  overflow: clip;
+  isolation: isolate;
+  background: var(--gp-paper);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Background visual field clipped to letter ink until camera enters */
+.glyph-portal [data-gp-field] {
+  position: absolute;
+  inset: 0;
+  background: var(--gp-field);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  will-change: clip-path, transform;
+}
+
+.glyph-portal[data-gp-ready] [data-gp-field] {
+  opacity: 1;
+}
+
+.glyph-portal .gp-field-art {
+  position: absolute;
+  inset: 0;
+  background-color: #070A10;
+  background-image: 
+    radial-gradient(circle at 50% 45%, rgba(20, 184, 166, 0.35) 0%, rgba(11, 17, 32, 0.75) 55%, #05080F 95%),
+    linear-gradient(135deg, #0B1120 0%, #070A10 100%);
+  overflow: hidden;
+  transform: scale(var(--gp-field-scale, 1));
+  transform-origin: center center;
+  transition: transform 0.05s linear;
+}
+
+.glyph-portal .gp-field-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(7, 10, 16, 0.75) 100%);
+  pointer-events: none;
+}
+
+.glyph-portal [data-gp-art] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.glyph-portal [data-gp-marks] {
+  fill: none;
+  stroke: rgba(45, 212, 191, 0.7);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.glyph-portal [data-gp-choices] {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.glyph-portal[data-gp-choosing="true"] [data-gp-choices] {
+  visibility: visible;
+}
+
+.glyph-portal [data-gp-letter] {
+  box-sizing: border-box;
+  position: absolute;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  touch-action: pan-y;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+
+.glyph-portal [data-gp-letter]:hover {
+  background: rgba(20, 184, 166, 0.08);
+}
+
+.glyph-portal [data-gp-letter]:disabled {
+  pointer-events: none;
+}
+
+.glyph-portal [data-gp-letter]:focus-visible {
+  outline: 2px solid var(--color-teal, #14B8A6);
+  outline-offset: 4px;
+}
+
+/* Touch picker dropdown for mobile devices */
+.glyph-portal [data-gp-touch-picker] {
+  display: none;
+  position: absolute;
+  top: calc(var(--gp-word-bottom, 50%) + 42px);
+  left: 50%;
+  transform: translateX(-50%);
+  font: 12px/1.4 'Inter', sans-serif;
+  align-items: center;
+  gap: 10px;
+  visibility: hidden;
+  z-index: 5;
+}
+
+.glyph-portal[data-gp-choosing="true"] [data-gp-touch-picker] {
+  visibility: visible;
+}
+
+.glyph-portal [data-gp-select] {
+  min-height: 40px;
+  min-width: 110px;
+  border: 1px solid rgba(20, 184, 166, 0.3);
+  border-radius: 6px;
+  background: rgba(11, 17, 32, 0.85);
+  backdrop-filter: blur(10px);
+  color: #FFFFFF;
+  padding: 0 12px;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+@media (any-pointer: coarse) {
+  .glyph-portal [data-gp-touch-picker] {
+    display: flex;
+  }
+}
+
+/* Fallback visible text before JS loads */
+.glyph-portal [data-gp-fallback] {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(3.2rem, 8vw, 6.5rem);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  color: #FFFFFF;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+}
+
+.glyph-portal[data-gp-ready] [data-gp-fallback] {
+  visibility: hidden;
+}
+
+/* Bottom Hint & Step Inside CTA */
+.glyph-portal [data-gp-caption] {
+  position: absolute;
+  inset: auto 6% clamp(24px, 5vh, 48px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.55);
+  opacity: var(--gp-caption, 1);
+  pointer-events: var(--gp-caption-hit, auto);
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.glyph-portal [data-gp-hint] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.glyph-portal [data-gp-hint]::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-teal, #14B8A6);
+  box-shadow: 0 0 8px var(--color-teal, #14B8A6);
+  animation: gp-pulse 2s infinite ease-in-out;
+}
+
+@keyframes gp-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.glyph-portal [data-gp-enter] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 9999px;
+  background: rgba(20, 184, 166, 0.12);
+  border: 1px solid rgba(20, 184, 166, 0.35);
+  color: #2DD4BF;
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.glyph-portal [data-gp-enter]:hover {
+  background: rgba(20, 184, 166, 0.25);
+  border-color: #2DD4BF;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(20, 184, 166, 0.25);
+}
+
+.glyph-portal [data-gp-enter]:focus-visible {
+  outline: 2px solid #2DD4BF;
+  outline-offset: 4px;
+}
+
+@media (max-width: 640px) {
+  .glyph-portal [data-gp-caption] {
+    justify-content: center;
+  }
+  .glyph-portal [data-gp-hint] {
+    display: none;
+  }
+}
+
+/* Reduced Motion Mode */
+@media (prefers-reduced-motion: reduce) {
+  .glyph-portal {
+    height: auto !important;
+  }
+  .glyph-portal [data-gp-pin] {
+    position: relative !important;
+    height: 75vh !important;
+  }
+  .glyph-portal [data-gp-hint] {
+    display: none !important;
+  }
+}

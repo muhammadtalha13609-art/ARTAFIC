@@ -36,6 +36,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css?v=5.4" />
   <link rel="stylesheet" href="css/about.css?v=3.1" />
+  <link rel="stylesheet" href="css/glyph-portal.css?v=1.0" />
 
   
 </head>
@@ -151,14 +152,43 @@
 <main id="main-content" tabindex="-1">
 
   <!-- ═══════════════════════════════════════════════════════════
-       FAQ PAGE HERO
+       FAQ PAGE HERO (Glyph Portal Scroll Architecture)
   ═══════════════════════════════════════════════════════════ -->
-    <section class="about-hero" id="faq-hero">
-    <div class="about-hero__overlay" aria-hidden="true"></div>
-    <div class="grain-overlay" aria-hidden="true"></div>
-    <div class="container relative-z">
-      <div class="about-hero__layout">
-        <h1 class="about-hero__title fade-up">Frequently Asked Questions</h1>
+  <section class="glyph-portal about-hero faq-hero-gp" id="faq-hero" data-glyph-portal data-gp-word="FAQ" data-gp-length="2.2" data-gp-next="#faq" aria-label="FAQ">
+    <div data-gp-viewport aria-hidden="true"></div>
+    <div data-gp-pin>
+      <!-- Background field revealed through the letter glyphs -->
+      <div data-gp-field aria-hidden="true">
+        <div class="gp-field-art">
+          <div class="about-hero__ambient-glow" style="top:35%; left:65%;" aria-hidden="true"></div>
+          <div class="floating-paths-bg" data-pos="-1" data-theme="heavy" style="opacity: 0.65;"></div>
+          <div class="grain-overlay" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <svg data-gp-art aria-hidden="true" focusable="false">
+        <defs>
+          <clipPath id="gp-clip-faq" clipPathUnits="userSpaceOnUse">
+            <text data-gp-glyph x="0" y="0">FAQ</text>
+          </clipPath>
+        </defs>
+        <g data-gp-marks><path /></g>
+      </svg>
+
+      <div data-gp-choices role="radiogroup" aria-label="Choose the letter to enter through"></div>
+
+      <label data-gp-touch-picker>
+        <span class="sr-only">Entry letter</span>
+        <select data-gp-select defaultValue="">
+          <option value="" disabled selected>Choose a letter</option>
+        </select>
+      </label>
+
+      <span data-gp-fallback aria-hidden="true"><strong>FAQ</strong></span>
+
+      <div data-gp-caption>
+        <span data-gp-hint aria-hidden="true">Scroll to enter &bull; Explore common answers</span>
+        <a data-gp-enter href="#faq">View questions <span aria-hidden="true">&searr;</span></a>
       </div>
     </div>
   </section>
@@ -371,5 +401,6 @@
 
 <!-- JS -->
 <script src="js/main.js?v=6.0"></script>
+<script src="js/glyph-portal.js?v=1.0"></script>
 </body>
 </html>

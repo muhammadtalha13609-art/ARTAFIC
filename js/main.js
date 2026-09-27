@@ -2216,6 +2216,22 @@ window.reinitPageScripts = function(targetUrl) {
       }
     }
 
+    // 7. Glyph Portal Hero Animations (About & FAQ)
+    if (document.querySelector('[data-glyph-portal]')) {
+      if (typeof window.initGlyphPortals === 'function') {
+        window.initGlyphPortals();
+      } else if (!document.querySelector('script[src*="glyph-portal.js"]')) {
+        const s = document.createElement('script');
+        s.src = 'js/glyph-portal.js?v=1.0';
+        s.onload = () => {
+          if (typeof window.initGlyphPortals === 'function') {
+            window.initGlyphPortals();
+          }
+        };
+        document.body.appendChild(s);
+      }
+    }
+
   } catch (err) {
     console.error('Error re-initializing page scripts:', err);
   }

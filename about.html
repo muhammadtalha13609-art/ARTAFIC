@@ -36,6 +36,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css?v=5.4" />
   <link rel="stylesheet" href="css/about.css?v=3.3" />
+  <link rel="stylesheet" href="css/glyph-portal.css?v=1.0" />
 </head>
 <body class="about-page">
 
@@ -152,23 +153,48 @@
 <main id="main-content" tabindex="-1">
   
   <!-- ═══════════════════════════════════════════════════════════
-       SECTION 01: ABOUT HERO (Fluted Glass Composition & Parallax)
+       SECTION 01: ABOUT HERO (Glyph Portal Scroll Architecture)
   ═══════════════════════════════════════════════════════════ -->
-  <section class="about-hero" id="about-hero">
-    <div class="about-hero__overlay" aria-hidden="true"></div>
-    <div class="about-hero__ambient-glow hero-step" data-step="5" data-mouse-parallax="7" aria-hidden="true"></div>
-    <div class="about-hero__flowing-paths" aria-hidden="true">
-      <svg class="fp-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
-        <path d="M -100 450 C 250 350, 450 550, 850 250 C 950 180, 1100 200, 1200 120" stroke="rgba(20, 184, 166, 0.15)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-        <path d="M -100 350 C 200 480, 500 220, 800 400 C 920 480, 1050 320, 1200 250" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-        <path d="M -50 250 C 300 200, 600 450, 950 150 C 1050 80, 1150 120, 1250 80" stroke="rgba(20, 184, 166, 0.08)" stroke-width="1" fill="none" stroke-linecap="round"/>
+  <section class="glyph-portal about-hero about-hero-gp" id="about-hero" data-glyph-portal data-gp-word="ABOUT US" data-gp-length="2.4" data-gp-next="#who-we-are" aria-label="ABOUT US">
+    <div data-gp-viewport aria-hidden="true"></div>
+    <div data-gp-pin>
+      <!-- Background field revealed through the letter glyphs and expanded upon zoom -->
+      <div data-gp-field aria-hidden="true">
+        <div class="gp-field-art">
+          <div class="about-hero__ambient-glow" aria-hidden="true"></div>
+          <div class="floating-paths-bg" data-pos="1" data-theme="heavy" style="opacity: 0.65;"></div>
+          <div class="grain-overlay" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <!-- SVG clipPath that clips the field to the live text -->
+      <svg data-gp-art aria-hidden="true" focusable="false">
+        <defs>
+          <clipPath id="gp-clip-about" clipPathUnits="userSpaceOnUse">
+            <text data-gp-glyph x="0" y="0">ABOUT US</text>
+          </clipPath>
+        </defs>
+        <g data-gp-marks><path /></g>
       </svg>
-    </div>
-    <div class="grain-overlay" aria-hidden="true"></div>
-    
-    <div class="container relative-z">
-      <div class="about-hero__layout">
-        <h1 class="about-hero__title hero-step" data-step="1" style="margin: 0;"><strong>ABOUT US</strong></h1>
+
+      <!-- Interactive letter selection buttons -->
+      <div data-gp-choices role="radiogroup" aria-label="Choose the letter to enter through"></div>
+
+      <!-- Touch device letter picker -->
+      <label data-gp-touch-picker>
+        <span class="sr-only">Entry letter</span>
+        <select data-gp-select defaultValue="">
+          <option value="" disabled selected>Choose a letter</option>
+        </select>
+      </label>
+
+      <!-- Fallback / initial visible text -->
+      <span data-gp-fallback aria-hidden="true"><strong>ABOUT US</strong></span>
+
+      <!-- Bottom caption & scroll hint -->
+      <div data-gp-caption>
+        <span data-gp-hint aria-hidden="true">Scroll to enter &bull; Live typography portal</span>
+        <a data-gp-enter href="#who-we-are">Step inside <span aria-hidden="true">&searr;</span></a>
       </div>
     </div>
   </section>
@@ -623,5 +649,6 @@
 <!-- JS -->
 <script src="js/main.js?v=6.0"></script>
 <script src="js/about.js?v=3.3"></script>
+<script src="js/glyph-portal.js?v=1.0"></script>
 </body>
 </html>
