@@ -196,6 +196,13 @@
   color: rgba(15, 23, 42, 0.03);
 }
 
+.chapter-watermark--faq {
+  top: 8%;
+  left: -2%;
+  right: auto;
+  color: rgba(15, 23, 42, 0.03);
+}
+
 /* ═══════════════════════════════════════════════════════════════════
    ANIMATED SECTION DIVIDERS (Subtle Drawing Line with Teal Accent)
    ═══════════════════════════════════════════════════════════════════ */
