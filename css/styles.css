@@ -2442,7 +2442,13 @@ input, textarea, select {
   position: relative;
   overflow: hidden;
   padding: var(--space-24) 0;
-  background: var(--color-bg-alt);
+  background-color: var(--color-bg-alt);
+  isolation: isolate;
+}
+
+.booking .container {
+  position: relative;
+  z-index: 2;
 }
 
 .booking__grid {
@@ -2454,6 +2460,8 @@ input, textarea, select {
 
 .booking__form-area {
   width: 100%;
+  position: relative;
+  z-index: 2;
 }
 
 .booking__form-card {
@@ -2461,23 +2469,21 @@ input, textarea, select {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   padding: var(--space-10);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.04);
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Right Side: Open Visual Field with GridPulse & Heading */
+/* Right Side: Open Visual Field with Heading */
 .booking__visual-col {
   position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 520px;
+  min-height: 480px;
   width: 100%;
-  height: 100%;
-  border-radius: var(--radius-2xl, 24px);
-  overflow: hidden;
-  padding: 3rem 1.5rem;
+  padding: 2rem 1rem;
   box-sizing: border-box;
 }
 
@@ -2501,14 +2507,13 @@ input, textarea, select {
   text-align: center;
   /* Halo protect around letters so lit cells never compromise readability */
   text-shadow: 
-    0 0 10px var(--color-bg-alt, #F0FDFA),
-    0 0 20px var(--color-bg-alt, #F0FDFA),
-    0 0 35px var(--color-bg-alt, #F0FDFA),
-    0 0 55px var(--color-bg-alt, #F0FDFA);
+    0 0 12px var(--color-bg-alt, #F0FDFA),
+    0 0 24px var(--color-bg-alt, #F0FDFA),
+    0 0 45px var(--color-bg-alt, #F0FDFA);
   user-select: none;
 }
 
-/* GridPulse background */
+/* GridPulse Full Section Background */
 .grid-pulse {
   position: absolute;
   inset: 0;
@@ -2516,15 +2521,15 @@ input, textarea, select {
   height: 100%;
   overflow: hidden;
   pointer-events: none;
-  z-index: 1;
-  --grid-pulse-cell: 24px;
-  --grid-pulse-line: rgba(13, 148, 136, 0.08);
+  z-index: 0;
+  --grid-pulse-cell: 26px;
+  --grid-pulse-line: rgba(15, 23, 42, 0.085);
   background-image: 
     linear-gradient(to right, var(--grid-pulse-line) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-pulse-line) 1px, transparent 1px);
   background-size: var(--grid-pulse-cell) var(--grid-pulse-cell);
-  mask-image: radial-gradient(ellipse 88% 85% at 50% 50%, #000 45%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 88% 85% at 50% 50%, #000 45%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 6%, #000 94%, transparent 100%);
 }
 
 .grid-pulse__canvas {
@@ -3493,9 +3498,9 @@ html, body {
   }
 
   .grid-pulse {
-    --grid-pulse-cell: 20px;
-    mask-image: radial-gradient(ellipse 95% 90% at 50% 50%, #000 50%, transparent 100%);
-    -webkit-mask-image: radial-gradient(ellipse 95% 90% at 50% 50%, #000 50%, transparent 100%);
+    --grid-pulse-cell: 22px;
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 4%, #000 96%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 4%, #000 96%, transparent 100%);
   }
 }
 
@@ -3791,9 +3796,9 @@ html, body {
   }
 
   .grid-pulse {
-    --grid-pulse-cell: 20px;
-    mask-image: radial-gradient(ellipse 95% 90% at 50% 50%, #000 50%, transparent 100%);
-    -webkit-mask-image: radial-gradient(ellipse 95% 90% at 50% 50%, #000 50%, transparent 100%);
+    --grid-pulse-cell: 22px;
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 4%, #000 96%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 4%, #000 96%, transparent 100%);
   }
 
   .booking__form-card {

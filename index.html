@@ -854,7 +854,12 @@
      BOOKING / GET IN TOUCH FORM
 ═══════════════════════════════════════════════════════════ -->
 <section class="booking section section--alt" id="booking" aria-labelledby="booking-title">
-  <div class="container">
+  <!-- GridPulse Background Behind Entire Section -->
+  <div class="grid-pulse" data-slot="grid-pulse" aria-hidden="true">
+    <canvas class="grid-pulse__canvas"></canvas>
+  </div>
+
+  <div class="container relative-z">
     <div class="booking__grid">
 
       <!-- LEFT SIDE: Contact Form (Spacious, Fully Functional) -->
@@ -917,11 +922,8 @@
         </div>
       </div>
 
-      <!-- RIGHT SIDE: Prominent GET IN TOUCH Heading + GridPulse Background -->
+      <!-- RIGHT SIDE: Prominent GET IN TOUCH Heading -->
       <div class="booking__visual-col" data-reveal data-reveal-delay="2">
-        <div class="grid-pulse" data-slot="grid-pulse" aria-hidden="true">
-          <canvas class="grid-pulse__canvas"></canvas>
-        </div>
         <div class="booking__visual-content">
           <h2 class="booking__visual-title" id="booking-title" data-grid-avoid>
             GET IN TOUCH
