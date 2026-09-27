@@ -2216,15 +2216,19 @@ window.reinitPageScripts = function(targetUrl) {
       }
     }
 
-    // 7. Glyph Portal Hero Animations (About & FAQ)
-    if (document.querySelector('[data-glyph-portal]')) {
-      if (typeof window.initGlyphPortals === 'function') {
+    // 7. Glyph Portal & Hero Zoom Animations (About & FAQ)
+    if (document.querySelector('.hero-zoom-container, [data-glyph-portal]')) {
+      if (typeof window.initHeroZoom === 'function') {
+        window.initHeroZoom();
+      } else if (typeof window.initGlyphPortals === 'function') {
         window.initGlyphPortals();
       } else if (!document.querySelector('script[src*="glyph-portal.js"]')) {
         const s = document.createElement('script');
         s.src = 'js/glyph-portal.js?v=1.0';
         s.onload = () => {
-          if (typeof window.initGlyphPortals === 'function') {
+          if (typeof window.initHeroZoom === 'function') {
+            window.initHeroZoom();
+          } else if (typeof window.initGlyphPortals === 'function') {
             window.initGlyphPortals();
           }
         };
