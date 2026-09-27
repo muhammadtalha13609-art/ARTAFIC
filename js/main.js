@@ -27,109 +27,10 @@ function formatTime() {
   const nav = $('#nav');
   if (!nav) return;
 
-  function parseRgb(colorStr) {
-    if (!colorStr) return null;
-    const match = colorStr.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
-    if (!match) return null;
-    return {
-      r: parseInt(match[1], 10),
-      g: parseInt(match[2], 10),
-      b: parseInt(match[3], 10),
-      a: match[4] !== undefined ? parseFloat(match[4]) : 1
-    };
-  }
-
-  function getLuminance(colorStr) {
-    const rgb = parseRgb(colorStr);
-    if (!rgb || rgb.a < 0.1) return null;
-    return (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 255000;
-  }
-
-  function getEffectiveBgColor(element) {
-    let el = element;
-    while (el && el !== document.documentElement && el !== document.body) {
-      const style = window.getComputedStyle(el);
-      const bg = style.backgroundColor;
-      const rgb = parseRgb(bg);
-      if (rgb && rgb.a > 0.05) {
-        return bg;
-      }
-      el = el.parentElement;
-    }
-    const bodyStyle = window.getComputedStyle(document.body);
-    const bodyRgb = parseRgb(bodyStyle.backgroundColor);
-    if (bodyRgb && bodyRgb.a > 0.05) {
-      return bodyStyle.backgroundColor;
-    }
-    return 'rgb(255, 255, 255)';
-  }
-
-  function checkIsDarkUnderNav(sampleX, sampleY) {
-    // 1. Elements directly beneath the nav center
-    if (typeof document.elementsFromPoint === 'function') {
-      const hits = document.elementsFromPoint(sampleX, sampleY);
-      for (const el of hits) {
-        if (!el || el === nav || nav.contains(el) ||
-            el.id === 'cursor-dot' || el.id === 'cursor-outline' ||
-            el.classList.contains('artafic-loader') ||
-            el.classList.contains('cursor-dot') ||
-            el.classList.contains('cursor-outline') ||
-            el.classList.contains('artafic-transition-overlay')) {
-          continue;
-        }
-
-        // Explicit data-nav-theme attribute
-        const themed = el.closest('[data-nav-theme]');
-        if (themed) {
-          return themed.getAttribute('data-nav-theme') === 'dark';
-        }
-
-        // Known dark containers
-        if (el.closest('.hero, .aether-hero, .about-hero, .marquee-section, .value-strip, .before-after, .about-me-section, .about-cta, .footer, .dark-theme, .theme-dark')) {
-          return true;
-        }
-
-        // Known light containers
-        if (el.closest('.problem, .services-pin-track, .portfolio, .process, .why, .booking, .who-we-are, .why-exists, .our-story, .what-we-do, .our-approach, .faq, .light-theme, .theme-light')) {
-          return false;
-        }
-
-        // Computed background luminance
-        const bg = getEffectiveBgColor(el);
-        const lum = getLuminance(bg);
-        if (lum !== null) {
-          return lum < 0.45;
-        }
-      }
-    }
-
-    // 2. Fallback: check bounding boxes of all sections & footer
-    const sections = document.querySelectorAll('section, footer');
-    for (const sec of sections) {
-      const rect = sec.getBoundingClientRect();
-      if (sampleY >= rect.top && sampleY <= rect.bottom) {
-        if (sec.hasAttribute('data-nav-theme')) {
-          return sec.getAttribute('data-nav-theme') === 'dark';
-        }
-        if (sec.matches('.hero, .aether-hero, .about-hero, .marquee-section, .value-strip, .before-after, .about-me-section, .about-cta, .footer')) {
-          return true;
-        }
-        if (sec.matches('.problem, .services-pin-track, .portfolio, .process, .why, .booking, .who-we-are, .why-exists, .our-story, .what-we-do, .our-approach, .faq')) {
-          return false;
-        }
-        const bg = getEffectiveBgColor(sec);
-        const lum = getLuminance(bg);
-        if (lum !== null) {
-          return lum < 0.45;
-        }
-      }
-    }
-
-    return false;
-  }
+  const darkSections = $$('#home, #marquee, #about');
 
   function updateNavState() {
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollY = window.scrollY;
     
     if (scrollY > 20) {
       nav.classList.add('is-scrolled');
@@ -137,36 +38,31 @@ function formatTime() {
       nav.classList.remove('is-scrolled');
     }
 
+    // Check if navbar overlaps any dark section
     const navBounds = nav.getBoundingClientRect();
-    const sampleY = Math.max(10, Math.min(window.innerHeight - 10, navBounds.top + navBounds.height / 2));
-    const sampleX = window.innerWidth / 2;
-
-    const isOverDark = checkIsDarkUnderNav(sampleX, sampleY);
+    const navCenterY = navBounds.top + navBounds.height / 2;
+    
+    let isOverDark = false;
+    for (const sec of darkSections) {
+      const rect = sec.getBoundingClientRect();
+      if (navCenterY >= rect.top && navCenterY <= rect.bottom) {
+        isOverDark = true;
+        break;
+      }
+    }
 
     if (isOverDark) {
       nav.classList.add('nav--on-dark');
-      nav.classList.remove('nav--on-light');
     } else {
-      nav.classList.add('nav--on-light');
       nav.classList.remove('nav--on-dark');
     }
   }
 
-  window.updateNavState = updateNavState;
-
-  let ticking = false;
   window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        updateNavState();
-        ticking = false;
-      });
-      ticking = true;
-    }
+    requestAnimationFrame(updateNavState);
   }, { passive: true });
 
   window.addEventListener('resize', updateNavState, { passive: true });
-  document.addEventListener('DOMContentLoaded', updateNavState);
   updateNavState();
 })();
 
@@ -2012,9 +1908,6 @@ if (document.readyState === 'loading') {
 // Global Script Re-initializer for Page Transitions
 window.reinitPageScripts = function(targetUrl) {
   try {
-    if (typeof window.updateNavState === 'function') {
-      window.updateNavState();
-    }
     if (typeof window.initFloatingPaths === 'function') {
       window.initFloatingPaths();
     }
