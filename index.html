@@ -98,7 +98,7 @@
      NAVIGATION
 ═══════════════════════════════════════════════════════════ -->
 <header role="banner">
-  <nav class="nav" id="nav" aria-label="Main navigation">
+  <nav class="nav nav--on-dark" id="nav" aria-label="Main navigation">
     <div class="nav__inner">
 
       <a href="index.html" class="nav__logo" aria-label="ARTAFIC — Home">
@@ -157,7 +157,7 @@
 <!-- ═══════════════════════════════════════════════════════════
      HERO — Aether Flow Interactive Particle Engine
 ═══════════════════════════════════════════════════════════ -->
-<section class="hero aether-hero" id="home" aria-labelledby="hero-title">
+<section class="hero aether-hero" id="home" data-nav-theme="dark" aria-labelledby="hero-title">
   <!-- Interactive Aether Canvas Background -->
   <canvas id="aether-canvas" class="aether-hero__canvas"></canvas>
 
@@ -203,7 +203,7 @@
 <!-- ────────────────────────────────────────────────────────────
      MARQUEE SECTION (PORTFOLIO)
 ──────────────────────────────────────────────────────────── -->
-<section class="marquee-section" id="marquee">
+<section class="marquee-section" id="marquee" data-nav-theme="dark">
   <!-- Row 1 -->
   <div class="marquee-track-container">
     <div class="marquee-track" id="marquee-track-1">
@@ -282,7 +282,7 @@
 <!-- ═══════════════════════════════════════════════════════════
      VALUE STRIP
 ═══════════════════════════════════════════════════════════ -->
-<section class="value-strip" id="value-strip" aria-label="Core values">
+<section class="value-strip" id="value-strip" data-nav-theme="dark" aria-label="Core values">
   <div class="floating-paths-bg" data-pos="-1" data-theme="dark" style="opacity: 0.35;"></div>
   <div class="container">
     <div class="value-strip__grid">
@@ -339,7 +339,7 @@
 <!-- ═══════════════════════════════════════════════════════════
      PROBLEM SECTION
 ═══════════════════════════════════════════════════════════ -->
-<section class="problem section" id="problem" aria-labelledby="problem-title">
+<section class="problem section" id="problem" data-nav-theme="light" aria-labelledby="problem-title">
   <div class="floating-paths-bg" data-pos="1.5" data-theme="light" style="opacity: 0.55;"></div>
   <div class="container">
     <div class="problem__grid">
@@ -399,7 +399,7 @@
 <!-- ═══════════════════════════════════════════════════════════
      SERVICES (NATURAL CANVAS SCROLL & ENDPOINT BOX REVEAL)
 ═══════════════════════════════════════════════════════════ -->
-<section class="services-pin-track" id="services" aria-label="Our Services">
+<section class="services-pin-track" id="services" data-nav-theme="light" aria-label="Our Services">
   <div class="services-sticky-viewport">
     
     <!-- Camera Panning Stage -->
@@ -477,7 +477,7 @@
 <!-- ═══════════════════════════════════════════════════════════
      BEFORE / AFTER SLIDER
 ═══════════════════════════════════════════════════════════ -->
-<section class="before-after section" id="before-after" aria-labelledby="ba-title">
+<section class="before-after section" id="before-after" data-nav-theme="dark" aria-labelledby="ba-title">
   <div class="container">
 
     <div class="section-header--centered" data-reveal>
@@ -535,7 +535,7 @@
 <!-- ═══════════════════════════════════════════════════════════
      SELECTED WORK / PORTFOLIO
 ═══════════════════════════════════════════════════════════ -->
-<section class="portfolio section" id="portfolio" aria-labelledby="portfolio-title">
+<section class="portfolio section" id="portfolio" data-nav-theme="light" aria-labelledby="portfolio-title">
   <div class="floating-paths-bg" data-pos="-1.5" data-theme="light" style="opacity: 0.55;"></div>
   <div class="container">
     <div class="section-header text-center" style="text-align: center; margin-bottom: var(--space-12);">
@@ -597,7 +597,7 @@
 <!-- ═══════════════════════════════════════════════════════════
      HOW WE WORK — Full-Screen Scroll Storytelling
 ═══════════════════════════════════════════════════════════ -->
-<section class="process" id="process" data-section="how-we-work" aria-labelledby="process-title">
+<section class="process" id="process" data-nav-theme="light" data-section="how-we-work" aria-labelledby="process-title">
   <div id="how-we-work" style="position: absolute; top: 0; left: 0; pointer-events: none;" aria-hidden="true"></div>
   <div class="process-sticky" id="process-sticky">
     <div class="floating-paths-bg" data-pos="1.2" data-theme="light" style="opacity: 0.45;"></div>
@@ -696,7 +696,7 @@
 <!-- ═══════════════════════════════════════════════════════════
      WHY ARTAFIC
 ═══════════════════════════════════════════════════════════ -->
-<section class="why section section--alt" id="why-artafic" aria-labelledby="why-title">
+<section class="why section section--alt" id="why-artafic" data-nav-theme="light" aria-labelledby="why-title">
   <div class="floating-paths-bg" data-pos="-1" data-theme="light" style="opacity: 0.45;"></div>
   <div class="container">
 
@@ -757,7 +757,7 @@
 <!-- ═══════════════════════════════════════════════════════════
      ABOUT ME SECTION
 ═══════════════════════════════════════════════════════════ -->
-<section class="about-me-section" id="about" aria-labelledby="about-title" style="position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 5rem 1.25rem; background-color: #0C0C0C; overflow: hidden; font-family: 'Kanit', sans-serif;">
+<section class="about-me-section" id="about" data-nav-theme="dark" aria-labelledby="about-title" style="position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 5rem 1.25rem; background-color: #0C0C0C; overflow: hidden; font-family: 'Kanit', sans-serif;">
   <div class="floating-paths-bg" data-pos="1.5" data-theme="dark" style="opacity: 0.35;"></div>
   
   <!-- 4 Decorative Corner Floating Images with Framer-Motion Entrance Animations -->
@@ -835,7 +835,7 @@
 <!-- ═══════════════════════════════════════════════════════════
      BOOKING / GET IN TOUCH FORM
 ═══════════════════════════════════════════════════════════ -->
-<section class="booking section section--alt" id="booking" aria-labelledby="booking-title">
+<section class="booking section section--alt" id="booking" data-nav-theme="light" aria-labelledby="booking-title">
   <!-- GridPulse Background Behind Entire Section -->
   <div class="grid-pulse" data-slot="grid-pulse" aria-hidden="true">
     <canvas class="grid-pulse__canvas"></canvas>
@@ -922,7 +922,7 @@
 <!-- ═══════════════════════════════════════════════════════════
      FOOTER
 ═══════════════════════════════════════════════════════════ -->
-<footer class="footer" role="contentinfo" aria-label="Site footer">
+<footer class="footer" data-nav-theme="dark" role="contentinfo" aria-label="Site footer">
   <div class="container">
     <div class="footer__grid">
 

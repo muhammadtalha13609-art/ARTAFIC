@@ -1070,28 +1070,104 @@ input, textarea, select {
   }
 }
 
-/* ── Navigation Overrides (Pure White Logo on Dark Backgrounds) ── */
-.nav:not(.is-scrolled) .nav__logo-image,
+/* ────────────────────────────────────────────────────────────
+   DYNAMIC NAVIGATION THEME (Light Section = Black / Dark Section = White)
+   ──────────────────────────────────────────────────────────── */
+
+/* Transition for seamless theme switches */
+.nav__logo-image {
+  transition: filter 0.25s var(--ease-out);
+}
+
+.nav__link {
+  transition: color 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
+}
+
+.nav__hamburger-line {
+  transition: background-color 0.25s var(--ease-out), transform var(--duration-base) var(--ease-out), opacity var(--duration-base), width var(--duration-base);
+}
+
+/* ── ON DARK BACKGROUND (Black, Blue, Dark Gray, etc.) ── */
 .nav.nav--on-dark .nav__logo-image,
 .nav__mobile-header .nav__logo-image,
 .footer__logo-image {
   filter: brightness(0) invert(1) !important;
-  transition: filter var(--duration-base) var(--ease-out);
 }
 
-.nav:not(.is-scrolled) .nav__link,
 .nav.nav--on-dark .nav__link {
-  color: rgba(255,255,255,0.75);
+  color: #ffffff !important;
 }
 
-.nav:not(.is-scrolled) .nav__link::before,
 .nav.nav--on-dark .nav__link::before {
-  background-color: rgba(255,255,255,0.15);
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
-.nav:not(.is-scrolled) .nav__link:hover,
-.nav.nav--on-dark .nav__link:hover {
-  color: #ffffff;
+.nav.nav--on-dark .nav__link:hover,
+.nav.nav--on-dark .nav__link.is-active {
+  color: #ffffff !important;
+}
+
+.nav.nav--on-dark .nav__hamburger-line {
+  background-color: #ffffff !important;
+}
+
+.nav.nav--on-dark .nav__hamburger:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Scrolled Crystal Pill on Dark */
+.nav.is-scrolled.nav--on-dark {
+  background: rgba(11, 17, 32, 0.55);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-top-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 
+    0 16px 40px rgba(0, 0, 0, 0.4),
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 2px 16px rgba(255, 255, 255, 0.12);
+}
+
+/* ── ON LIGHT BACKGROUND (White, Light Gray, Surface, etc.) ── */
+.nav.nav--on-light .nav__logo-image {
+  filter: brightness(0) !important;
+}
+
+.nav.nav--on-light .nav__link {
+  color: #000000 !important;
+  font-weight: 500;
+}
+
+.nav.nav--on-light .nav__link::before {
+  background-color: rgba(0, 0, 0, 0.07);
+}
+
+.nav.nav--on-light .nav__link:hover,
+.nav.nav--on-light .nav__link.is-active {
+  color: #000000 !important;
+}
+
+.nav.nav--on-light .nav__hamburger-line {
+  background-color: #000000 !important;
+}
+
+.nav.nav--on-light .nav__hamburger:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* Scrolled Crystal Pill on Light */
+.nav.is-scrolled.nav--on-light {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-top-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 
+    0 16px 40px rgba(15, 23, 42, 0.08),
+    0 2px 6px rgba(15, 23, 42, 0.04),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+    inset 0 2px 14px rgba(255, 255, 255, 0.8);
 }
 
 /* ────────────────────────────────────────────────────────────
