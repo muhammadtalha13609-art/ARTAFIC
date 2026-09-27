@@ -154,44 +154,13 @@
         });
       }, { root: null, rootMargin: '0px 0px -40px 0px', threshold: 0.1 });
 
-      document.querySelectorAll('.fade-up:not(.about-hero *), .who-we-are, .section-divider').forEach(el => {
+      document.querySelectorAll('.fade-up:not(.about-hero *), .who-we-are, .who-needs-us, .section-divider').forEach(el => {
         revealObserver.observe(el);
       });
-
-      // 6. Timeline Story Node Observer
-      const storyNodes = document.querySelectorAll('.story-node');
-      const railProgress = document.getElementById('story-rail-progress');
-      const timelineContainer = document.querySelector('.story-timeline');
-
-      if (storyNodes.length > 0 && railProgress && timelineContainer) {
-        const timelineObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-active');
-              
-              let maxIndex = 0;
-              storyNodes.forEach((node, idx) => {
-                if (node.classList.contains('is-active')) {
-                  maxIndex = idx;
-                }
-              });
-              
-              const progressPct = ((maxIndex + 0.6) / storyNodes.length) * 100;
-              railProgress.style.height = Math.min(100, progressPct) + '%';
-            }
-          });
-        }, { root: null, rootMargin: '0px 0px -15% 0px', threshold: 0.2 });
-
-        storyNodes.forEach(node => {
-          timelineObserver.observe(node);
-        });
-      }
     } else {
-      document.querySelectorAll('.fade-up, .who-we-are, .section-divider, .story-node').forEach(el => {
-        el.classList.add('is-revealed', 'is-active');
+      document.querySelectorAll('.fade-up, .who-we-are, .who-needs-us, .section-divider').forEach(el => {
+        el.classList.add('is-revealed');
       });
-      const railProgress = document.getElementById('story-rail-progress');
-      if (railProgress) railProgress.style.height = '100%';
     }
 
     // 7. Restrained Desktop-Only Mouse Interaction

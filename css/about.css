@@ -108,7 +108,7 @@
 .about-hero,
 .who-we-are,
 .why-exists,
-.our-story,
+.who-needs-us,
 .what-we-do,
 .our-approach,
 .about-cta {
@@ -177,7 +177,7 @@
   color: rgba(255, 255, 255, 0.025);
 }
 
-.chapter-watermark--journey {
+.chapter-watermark--clients {
   top: 5%;
   right: -2%;
   color: rgba(15, 23, 42, 0.03);
@@ -767,7 +767,7 @@
   font-size: 1.45rem;
   font-weight: 600;
   letter-spacing: -0.02em;
-  margin: 0 0 2rem 0;
+  margin: 0 0 1.25rem 0;
 }
 
 .contrast-card--problem .contrast-card__heading {
@@ -775,7 +775,18 @@
 }
 
 .contrast-card--solution .contrast-card__heading {
-  color: #FFFFFF;
+  color: var(--about-teal);
+}
+
+.contrast-card__desc {
+  font-size: 1.08rem;
+  line-height: 1.75;
+  color: #CBD5E1;
+  margin: 0;
+}
+
+.contrast-card--solution .contrast-card__desc {
+  color: #F1F5F9;
 }
 
 .contrast-card__list {
@@ -827,160 +838,100 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SECTION 04: OUR STORY (Journey Timeline Composition)
+   SECTION 04: WHO NEEDS US (Editorial 2-Column Balance)
    ═══════════════════════════════════════════════════════════════════ */
-.our-story {
+.who-needs-us {
   background-color: var(--about-ivory);
-  padding: 10.5rem 0;
+  padding: 9.5rem 0;
   position: relative;
   overflow: hidden;
 }
 
-.our-story__header {
-  max-width: 800px;
-  margin-bottom: 5.5rem;
+.who-needs-us__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 5rem;
+  align-items: start;
 }
 
-.our-story__title {
+.who-needs-us__left {
+  position: relative;
+}
+
+.who-needs-us__heading {
   font-family: var(--about-font-display);
-  font-size: clamp(2.25rem, 5vw, 4rem);
+  font-size: clamp(2.25rem, 5vw, 4.25rem);
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.03em;
   color: var(--about-charcoal);
-  margin: 0 0 1rem;
+  margin: 0 0 1.5rem;
 }
 
-.our-story__sub {
-  font-size: 1.15rem;
-  color: var(--about-slate);
-  margin: 0;
-}
-
-.story-timeline {
-  position: relative;
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 1rem 0;
-}
-
-.story-timeline__rail {
-  position: absolute;
-  top: 28px;
-  bottom: 28px;
-  left: 27px;
-  width: 2px;
-  background: rgba(0, 0, 0, 0.07);
+.who-needs-us__accent-line {
+  width: 64px;
+  height: 3px;
+  background: var(--about-teal);
   border-radius: 2px;
+  margin-bottom: 2rem;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.story-timeline__rail-progress {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 0%;
-  background: linear-gradient(180deg, var(--about-teal), var(--about-teal-bright));
-  border-radius: 2px;
-  transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 0 8px rgba(20, 184, 166, 0.5);
+.who-needs-us.is-revealed .who-needs-us__accent-line {
+  transform: scaleX(1);
 }
 
-.story-node {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  gap: 2.25rem;
-  margin-bottom: 3.5rem;
-}
-
-.story-node:last-child {
-  margin-bottom: 0;
-}
-
-.story-node__marker {
-  position: relative;
-  z-index: 2;
-  width: 56px;
-  height: 56px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: var(--about-white);
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.who-needs-us__tagline {
   font-family: var(--about-font-display);
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--about-slate);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.story-node.is-active .story-node__marker {
-  border-color: var(--about-teal);
-  color: var(--about-teal);
-  box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.15), 0 8px 24px rgba(20, 184, 166, 0.25);
-  transform: scale(1.06);
-}
-
-.story-node__card {
-  flex: 1;
-  background: var(--about-white);
-  border: 1px solid var(--about-border-light);
-  border-radius: 16px;
-  padding: 2.25rem 2.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
-}
-
-.story-node__card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(20, 184, 166, 0.35);
-  box-shadow: 0 12px 32px rgba(17, 24, 39, 0.06);
-}
-
-.story-node__meta {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.75rem;
-}
-
-.story-node__year {
-  font-family: var(--about-font-display);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: var(--about-teal);
-  background: rgba(20, 184, 166, 0.08);
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-}
-
-.story-node__label {
-  font-family: var(--about-font-display);
-  font-size: 0.75rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
   color: var(--about-slate);
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
-.story-node__title {
-  font-family: var(--about-font-display);
-  font-size: 1.35rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--about-charcoal);
-  margin: 0 0 0.85rem;
+.who-needs-us__right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
 }
 
-.story-node__desc {
-  font-size: 1.02rem;
-  line-height: 1.7;
+.who-needs-us__lead {
+  font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--about-charcoal);
+  margin: 0;
+}
+
+.who-needs-us__body {
+  font-size: 1.05rem;
+  line-height: 1.75;
   color: var(--about-slate-dark);
+  margin: 0;
+}
+
+.who-needs-us__note {
+  border-left: 3px solid var(--about-teal);
+  padding: 1.2rem 0 1.2rem 1.85rem;
+  margin-top: 0.5rem;
+  background: rgba(20, 184, 166, 0.04);
+  border-radius: 0 12px 12px 0;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.who-needs-us__note:hover {
+  transform: translateX(4px);
+  background: rgba(20, 184, 166, 0.07);
+}
+
+.who-needs-us__note-text {
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--about-charcoal);
+  font-weight: 500;
   margin: 0;
 }
 
@@ -1407,7 +1358,8 @@
    RESPONSIVE DESIGN (Desktop, Laptop, Tablet, Mobile)
    ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 1024px) {
-  .who-we-are__grid {
+  .who-we-are__grid,
+  .who-needs-us__grid {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
@@ -1462,13 +1414,14 @@
     margin-bottom: 2rem;
   }
 
-  .who-we-are {
+  .who-we-are,
+  .who-needs-us {
     padding: 6rem 0;
   }
 
   .who-we-are__heading,
   .why-exists__title,
-  .our-story__title,
+  .who-needs-us__heading,
   .what-we-do__title,
   .our-approach__title,
   .about-cta__title {
@@ -1478,28 +1431,6 @@
 
   .why-exists {
     padding: 7rem 0;
-  }
-
-  .our-story {
-    padding: 7rem 0;
-  }
-
-  .story-node {
-    gap: 1.25rem;
-  }
-
-  .story-node__marker {
-    width: 46px;
-    height: 46px;
-    font-size: 0.75rem;
-  }
-
-  .story-timeline__rail {
-    left: 22px;
-  }
-
-  .story-node__card {
-    padding: 1.75rem 1.5rem;
   }
 
   .contrast-card__heading {
@@ -1558,6 +1489,7 @@
   }
 
   .who-we-are__grid,
+  .who-needs-us__grid,
   .why-exists__contrast-grid,
   .what-we-do__grid,
   .approach-grid {
@@ -1607,13 +1539,11 @@
 
   .service-card,
   .approach-card,
-  .story-node__card,
   .about-cta .btn {
     transition: none !important;
     transform: none !important;
   }
 
-  .story-timeline__rail-progress,
   .section-divider__line,
   .section-divider__dot {
     transition: none !important;
