@@ -1,6 +1,6 @@
 /* ============================================================
    ARTAFIC — Scroll-Driven Hero Typography Zoom Engine
-   Lightweight, performant, GPU-accelerated typography zoom
+   Zooming the foreground text directly into the next section
    ============================================================ */
 
 /* Ensure position: sticky works without being disabled by ancestor overflow */
@@ -99,33 +99,10 @@ html, body, .about-page, .faq-page {
   mix-blend-mode: overlay;
 }
 
-/* 5. Layer 3: Large Background Typography (THE ZOOM TARGET) */
-.hero-zoom-watermark {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate3d(-50%, -50%, 0) scale(1);
-  font-family: var(--about-font-display, 'Unbounded', 'Montserrat', sans-serif);
-  font-size: clamp(8rem, 24vw, 24rem);
-  font-weight: 900;
-  letter-spacing: -0.05em;
-  line-height: 0.82;
-  color: #FFFFFF;
-  opacity: 0.10; /* Crisp, elegant, visible light watermark */
-  pointer-events: none;
-  user-select: none;
-  z-index: 2; /* Strictly behind hero content */
-  white-space: nowrap;
-  transform-origin: center center;
-  will-change: transform, opacity;
-  transition: none; /* Controlled strictly by scroll rAF */
-  text-shadow: 0 0 50px rgba(20, 184, 166, 0.15);
-}
-
-/* 6. Layer 4: Foreground Content (Always in Front and Crisp) */
+/* 5. Layer 3: Foreground Content (THE ZOOM TARGET) */
 .hero-zoom-content-wrap {
   position: relative;
-  z-index: 10; /* Strictly above background typography */
+  z-index: 10;
   pointer-events: auto;
   width: 100%;
   max-width: var(--container-max, 1200px);
@@ -143,11 +120,11 @@ html, body, .about-page, .faq-page {
   z-index: 10;
   text-align: center !important;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto !important;
   transform-origin: center center;
   will-change: transform, opacity;
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0) scale(1);
   opacity: 1;
   display: flex;
   justify-content: center;
@@ -156,21 +133,32 @@ html, body, .about-page, .faq-page {
 
 .hero-zoom-foreground .about-hero__title {
   font-family: 'Montserrat', sans-serif;
-  font-size: clamp(3rem, 7.5vw, 5.8rem);
+  font-size: clamp(3.2rem, 7.8vw, 6.2rem);
   font-weight: 900;
-  line-height: 1.08;
+  line-height: 1.05;
   letter-spacing: -0.035em;
   color: #FFFFFF;
   margin: 0 auto !important;
   text-align: center !important;
-  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9), 0 0 30px rgba(20, 184, 166, 0.2);
+  text-shadow: 0 4px 35px rgba(0, 0, 0, 0.95), 0 0 40px rgba(20, 184, 166, 0.25);
   text-transform: uppercase;
   opacity: 1 !important;
   transform: none !important;
   width: 100%;
 }
 
-/* 7. Layer 5: Interactive Elements (Scroll Hint) */
+.about-page .hero-zoom-foreground .about-hero__title {
+  white-space: nowrap;
+}
+
+.faq-page .hero-zoom-foreground .about-hero__title {
+  font-size: clamp(2.2rem, 5.2vw, 4.4rem);
+  line-height: 1.12;
+  max-width: 960px;
+  white-space: normal;
+}
+
+/* 6. Layer 4: Interactive Elements (Scroll Hint) */
 .hero-zoom-hint {
   position: absolute;
   bottom: clamp(24px, 4.5vh, 44px);
@@ -229,15 +217,13 @@ html, body, .about-page, .faq-page {
   50% { transform: translateY(6px); }
 }
 
-/* 8. Mobile Responsiveness */
+/* 7. Mobile Responsiveness */
 @media (max-width: 768px) {
   .hero-zoom-container {
     height: 165vh;
   }
-  .hero-zoom-watermark {
-    font-size: clamp(5rem, 24vw, 11rem);
-  }
   .hero-zoom-foreground .about-hero__title {
-    font-size: clamp(2.3rem, 9.5vw, 3.4rem);
+    font-size: clamp(2.4rem, 10vw, 3.8rem);
+    white-space: normal;
   }
 }

@@ -1,6 +1,6 @@
 /* ============================================================
    ARTAFIC — Scroll-Driven Hero Typography Zoom Engine
-   Lightweight, high-performance, GPU-accelerated implementation
+   Zooming the foreground text directly into the next section
    - Single passive scroll handler throttled with requestAnimationFrame
    - Pure transform: translate3d(...) scale(...) and opacity
    - Zero layout thrashing, zero external dependencies
@@ -19,13 +19,13 @@
       }
 
       const stage = container.querySelector('.hero-zoom-stage');
-      const watermark = container.querySelector('.hero-zoom-watermark');
       const foreground = container.querySelector('.hero-zoom-foreground');
       const bg = container.querySelector('.about-hero__bg');
+      const glow = container.querySelector('.about-hero__ambient-glow');
       const hint = container.querySelector('.hero-zoom-hint');
       const nextSelector = container.dataset.nextSection;
 
-      if (!stage || !watermark || !foreground) return;
+      if (!stage || !foreground) return;
 
       // Click on hint to smoothly scroll into the next section
       if (hint && nextSelector) {
@@ -67,41 +67,31 @@
         const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
         const isMobile = window.innerWidth < 768;
-        const maxScale = isMobile ? 4.0 : 5.8;
-        const watermarkScale = 1 + (maxScale - 1) * eased;
+        // Direct foreground text zoom: scaling up from 1x to 12x (desktop) / 8x (mobile)
+        const maxScale = isMobile ? 8.0 : 12.5;
+        const titleScale = 1 + (maxScale - 1) * eased;
 
-        // Subtle controlled translation (moves slightly horizontally and vertically)
-        const driftX = (progress * (isMobile ? 18 : 36)).toFixed(1);
-        const driftY = (-progress * (isMobile ? 14 : 26)).toFixed(1);
+        // Subtle camera tracking offset as you move through the text
+        const driftX = (progress * (isMobile ? 10 : 20)).toFixed(1);
+        const driftY = (-progress * (isMobile ? 8 : 15)).toFixed(1);
 
-        // Watermark opacity: starts at 0.10, peaks slightly at 0.14, and fades out as it crops beyond viewport
-        let watermarkOpacity = 0.10;
-        if (progress < 0.60) {
-          watermarkOpacity = 0.10 + progress * 0.06; // 0.10 -> 0.136
-        } else {
-          watermarkOpacity = Math.max(0, 0.136 * (1 - (progress - 0.60) / 0.35)); // 0.136 -> 0
-        }
+        // Foreground opacity stays 1.0 until 65% scroll, then cleanly dissolves as letters fly past camera
+        const titleOpacity = progress < 0.65 ? 1 : Math.max(0, 1 - (progress - 0.65) / 0.27);
 
-        // Apply transform to the large background typography
-        watermark.style.transform = `translate3d(calc(-50% + ${driftX}px), calc(-50% + ${driftY}px), 0) scale(${watermarkScale.toFixed(3)})`;
-        watermark.style.opacity = watermarkOpacity.toFixed(4);
+        // Apply GPU-accelerated transform & opacity to the foreground text
+        foreground.style.transform = `translate3d(${driftX}px, ${driftY}px, 0) scale(${titleScale.toFixed(3)})`;
+        foreground.style.opacity = titleOpacity.toFixed(3);
 
-        // Foreground content stays completely crisp and readable from 0% to 70%
-        // From 70% to 100%, it gently fades out with a subtle upward translate as the next section comes in
-        let fgOpacity = 1;
-        let fgY = 0;
-        if (progress > 0.70) {
-          const fadeProgress = (progress - 0.70) / 0.30;
-          fgOpacity = Math.max(0, 1 - fadeProgress);
-          fgY = -fadeProgress * 28;
-        }
-        foreground.style.opacity = fgOpacity.toFixed(3);
-        foreground.style.transform = `translate3d(0, ${fgY.toFixed(1)}px, 0)`;
-
-        // Background image subtle depth zoom
+        // Background fluted glass subtle depth zoom
         if (bg) {
-          const bgScale = 1 + eased * 0.10;
+          const bgScale = 1 + eased * 0.12;
           bg.style.transform = `translate3d(0, 0, 0) scale(${bgScale.toFixed(3)})`;
+        }
+
+        // Ambient glow gentle swell
+        if (glow) {
+          const glowScale = 1 + eased * 0.45;
+          glow.style.transform = `translate3d(0, 0, 0) scale(${glowScale.toFixed(3)})`;
         }
 
         // Scroll hint fades out promptly on initial scroll
