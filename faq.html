@@ -36,7 +36,6 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css?v=5.4" />
   <link rel="stylesheet" href="css/about.css?v=3.1" />
-  <link rel="stylesheet" href="css/hero-zoom.css?v=2.0" />
 
   
 </head>
@@ -152,38 +151,17 @@
 <main id="main-content" tabindex="-1">
 
   <!-- ═══════════════════════════════════════════════════════════
-       FAQ PAGE HERO (Scroll Typography Zoom Architecture)
+       FAQ PAGE HERO
   ═══════════════════════════════════════════════════════════ -->
-  <div class="hero-zoom-container" id="faq-hero-container" data-next-section="#faq" data-zoom-char="10">
-    <section class="about-hero hero-zoom-stage" id="faq-hero" aria-label="Frequently Asked Questions">
-      <!-- 1. Background Layers -->
-      <div class="about-hero__bg" aria-hidden="true"></div>
-      <div class="about-hero__overlay" aria-hidden="true"></div>
-
-      <!-- 2. Decorative Graphics -->
-      <div class="about-hero__ambient-glow" style="top:30%; left:65%;" aria-hidden="true"></div>
-      <div class="about-hero__flowing-paths" aria-hidden="true">
-        <svg class="fp-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
-          <path d="M -100 450 C 250 350, 450 550, 850 250 C 950 180, 1100 200, 1200 120" stroke="rgba(20, 184, 166, 0.15)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <path d="M -100 350 C 200 480, 500 220, 800 400 C 920 480, 1050 320, 1200 250" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-        </svg>
+    <section class="about-hero" id="faq-hero">
+    <div class="about-hero__overlay" aria-hidden="true"></div>
+    <div class="grain-overlay" aria-hidden="true"></div>
+    <div class="container relative-z">
+      <div class="about-hero__layout">
+        <h1 class="about-hero__title fade-up">Frequently Asked Questions</h1>
       </div>
-      <div class="grain-overlay" aria-hidden="true"></div>
-
-      <!-- 3. Foreground Content (THE ZOOM TARGET) -->
-      <div class="container hero-zoom-content-wrap">
-        <div class="hero-zoom-foreground">
-          <h1 class="about-hero__title" style="margin: 0;"><strong>FREQUENTLY ASKED QUESTIONS</strong></h1>
-        </div>
-      </div>
-
-      <!-- 5. Interactive Scroll Prompt -->
-      <div class="hero-zoom-hint" aria-hidden="true">
-        <span>Scroll for answers</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
-      </div>
-    </section>
-  </div>
+    </div>
+  </section>
 
   <!-- ═══════════════════════════════════════════════════════════
        FAQ ACCORDION SECTION
@@ -393,6 +371,5 @@
 
 <!-- JS -->
 <script src="js/main.js?v=6.0"></script>
-<script src="js/hero-zoom.js?v=2.0"></script>
 </body>
 </html>

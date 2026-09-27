@@ -2216,22 +2216,6 @@ window.reinitPageScripts = function(targetUrl) {
       }
     }
 
-    // 7. Hero Typography Zoom Engine (About & FAQ)
-    if (document.querySelector('.hero-zoom-container')) {
-      if (typeof window.initHeroZoom === 'function') {
-        window.initHeroZoom();
-      } else if (!document.querySelector('script[src*="hero-zoom.js"]')) {
-        const s = document.createElement('script');
-        s.src = 'js/hero-zoom.js?v=2.0';
-        s.onload = () => {
-          if (typeof window.initHeroZoom === 'function') {
-            window.initHeroZoom();
-          }
-        };
-        document.body.appendChild(s);
-      }
-    }
-
   } catch (err) {
     console.error('Error re-initializing page scripts:', err);
   }
