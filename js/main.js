@@ -2476,7 +2476,6 @@ window.reinitPageScripts = function(targetUrl) {
       const url = new URL(urlString, window.location.href);
       const p = (url.pathname || '').toLowerCase();
       if (p.endsWith('/about') || p.endsWith('/about.html')) return 'about';
-      if (p.endsWith('/services') || p.endsWith('/services.html')) return 'services';
       if (p.endsWith('/faq') || p.endsWith('/faq.html')) return 'faq';
       if (p.endsWith('/privacy') || p.endsWith('/privacy.html')) return 'privacy';
       if (p.endsWith('/terms') || p.endsWith('/terms.html')) return 'terms';
