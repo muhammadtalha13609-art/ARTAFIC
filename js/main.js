@@ -2216,6 +2216,22 @@ window.reinitPageScripts = function(targetUrl) {
       }
     }
 
+    // 7. GridPulse Background Animation
+    if (document.querySelector('.grid-pulse')) {
+      if (typeof window.initGridPulse === 'function') {
+        window.initGridPulse();
+      } else if (!document.querySelector('script[src*="grid-pulse.js"]')) {
+        const s = document.createElement('script');
+        s.src = 'js/grid-pulse.js?v=1.0';
+        s.onload = () => {
+          if (typeof window.initGridPulse === 'function') {
+            window.initGridPulse();
+          }
+        };
+        document.body.appendChild(s);
+      }
+    }
+
   } catch (err) {
     console.error('Error re-initializing page scripts:', err);
   }
