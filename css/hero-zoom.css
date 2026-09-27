@@ -1,65 +1,74 @@
 /* ============================================================
-   ARTAFIC — Hero Scroll Zoom Animation System (v2.1)
-   Cinematic scroll-driven camera zoom through live typography
+   ARTAFIC — Scroll-Driven Hero Typography Zoom Engine
+   Lightweight, performant, GPU-accelerated typography zoom
    ============================================================ */
 
+/* Ensure position: sticky works without being disabled by ancestor overflow */
+html, body, .about-page, .faq-page {
+  overflow-x: clip !important;
+}
+
+/* 1. Dedicated Hero Scroll Range Container */
 .hero-zoom-container {
   position: relative;
   width: 100%;
-  height: 220vh;
+  height: 180vh; /* Dedicated 1.8 viewport scroll range */
   margin: 0;
   padding: 0;
+  background-color: transparent;
+  box-sizing: border-box;
 }
 
+/* 2. Pinned Stage (100vh Sticky Viewport) */
 .hero-zoom-stage {
   position: sticky !important;
-  top: 0;
+  top: 0 !important;
   height: 100vh !important;
   height: 100svh !important;
-  min-height: unset !important;
-  width: 100%;
+  min-height: 100vh !important;
+  width: 100% !important;
   overflow: hidden !important;
   display: flex !important;
+  flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
   padding: 0 1.5rem !important;
   background-color: #0B1120 !important;
   isolation: isolate;
   z-index: 2;
-  will-change: transform;
+  box-sizing: border-box;
 }
 
-/* Background image layer with subtle dolly zoom scale */
-.hero-zoom-bg {
+/* 3. Layer 1: Background Fluted Glass Image & Gradient Overlay */
+.about-hero__bg {
   position: absolute;
-  inset: -5%;
+  inset: -2%;
   background-color: #0B1120;
   background-image: url('../assets/images/about-hero-fluted-glass-v3.jpg');
   background-position: center right;
   background-size: cover;
   background-repeat: no-repeat;
-  will-change: transform;
   z-index: 0;
   pointer-events: none;
-  transform-origin: center center;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
-/* Dark radial gradient overlay over fluted glass */
-.hero-zoom-stage .about-hero__overlay {
+.about-hero__overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 25% 50%, rgba(11, 17, 32, 0.45) 0%, rgba(7, 10, 16, 0.75) 100%);
+  background: radial-gradient(circle at 25% 50%, rgba(11, 17, 32, 0.45) 0%, rgba(7, 10, 16, 0.78) 100%);
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
 }
 
-/* Ambient Teal Glow */
+/* 4. Layer 2: Decorative Graphics (Ambient Glow, Flowing Paths, Grain) */
 .hero-zoom-stage .about-hero__ambient-glow {
   position: absolute;
   top: 25%;
   left: 15%;
-  width: 500px;
-  height: 500px;
+  width: 520px;
+  height: 520px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(20, 184, 166, 0.16) 0%, rgba(20, 184, 166, 0) 65%);
   filter: blur(65px);
@@ -70,93 +79,116 @@
   will-change: transform, opacity;
 }
 
-/* Flowing paths curves */
 .hero-zoom-stage .about-hero__flowing-paths {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.45;
+  opacity: 0.4;
   overflow: hidden;
   animation: heroPathsDrift 30s ease-in-out infinite alternate;
   will-change: transform;
 }
 
-/* Grain texture overlay */
 .hero-zoom-stage .grain-overlay {
   position: absolute;
   inset: 0;
   background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.04"/%3E%3C/svg%3E');
   pointer-events: none;
-  z-index: 2;
+  z-index: 1;
   mix-blend-mode: overlay;
 }
 
-/* Large Light Background Typography / Watermark */
-.hero-watermark {
+/* 5. Layer 3: Large Background Typography (THE ZOOM TARGET) */
+.hero-zoom-watermark {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate3d(-50%, -50%, 0) scale(1);
   font-family: var(--about-font-display, 'Unbounded', 'Montserrat', sans-serif);
   font-size: clamp(8rem, 24vw, 24rem);
   font-weight: 900;
-  letter-spacing: -0.06em;
-  line-height: 0.8;
-  color: rgba(255, 255, 255, 0.04);
+  letter-spacing: -0.05em;
+  line-height: 0.82;
+  color: #FFFFFF;
+  opacity: 0.10; /* Crisp, elegant, visible light watermark */
   pointer-events: none;
   user-select: none;
-  z-index: 2;
+  z-index: 2; /* Strictly behind hero content */
   white-space: nowrap;
-  will-change: transform, opacity;
   transform-origin: center center;
+  will-change: transform, opacity;
+  transition: none; /* Controlled strictly by scroll rAF */
+  text-shadow: 0 0 50px rgba(20, 184, 166, 0.15);
 }
 
-/* Zoom Target Container (Contains the Foreground Heading) */
-.hero-zoom-target {
+/* 6. Layer 4: Foreground Content (Always in Front and Crisp) */
+.hero-zoom-content-wrap {
   position: relative;
-  z-index: 4;
-  transform-origin: center center;
-  will-change: transform, opacity;
-  text-align: center;
+  z-index: 10; /* Strictly above background typography */
+  pointer-events: auto;
   width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  opacity: 1;
+  max-width: var(--container-max, 1200px);
+  margin: 0 auto !important;
+  padding: 0 1.5rem !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  box-sizing: border-box;
 }
 
-.hero-zoom-target .about-hero__title {
+.hero-zoom-foreground {
+  position: relative;
+  z-index: 10;
+  text-align: center !important;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto !important;
+  transform-origin: center center;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-zoom-foreground .about-hero__title {
   font-family: 'Montserrat', sans-serif;
-  font-size: clamp(3rem, 7.8vw, 6rem);
+  font-size: clamp(3rem, 7.5vw, 5.8rem);
   font-weight: 900;
-  line-height: 1.05;
+  line-height: 1.08;
   letter-spacing: -0.035em;
   color: #FFFFFF;
-  margin: 0;
-  text-shadow: 0 4px 35px rgba(0, 0, 0, 0.8), 0 0 40px rgba(20, 184, 166, 0.25);
+  margin: 0 auto !important;
+  text-align: center !important;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9), 0 0 30px rgba(20, 184, 166, 0.2);
   text-transform: uppercase;
   opacity: 1 !important;
   transform: none !important;
+  width: 100%;
 }
 
-/* Subtle Scroll Down Prompt */
+/* 7. Layer 5: Interactive Elements (Scroll Hint) */
 .hero-zoom-hint {
   position: absolute;
-  bottom: clamp(24px, 5vh, 48px);
+  bottom: clamp(24px, 4.5vh, 44px);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
   font-family: 'Inter', sans-serif;
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.65);
   pointer-events: auto;
   cursor: pointer;
-  z-index: 5;
+  z-index: 20;
   transition: color 0.2s ease, opacity 0.2s ease;
   user-select: none;
 }
@@ -168,7 +200,7 @@
 .hero-zoom-hint span {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .hero-zoom-hint span::before {
@@ -189,7 +221,7 @@
 
 @keyframes hero-hint-pulse {
   0%, 100% { opacity: 0.4; transform: scale(0.9); }
-  50% { opacity: 1; transform: scale(1.2); }
+  50% { opacity: 1; transform: scale(1.25); }
 }
 
 @keyframes hero-hint-bounce {
@@ -197,35 +229,15 @@
   50% { transform: translateY(6px); }
 }
 
-/* Responsive Overrides */
+/* 8. Mobile Responsiveness */
 @media (max-width: 768px) {
   .hero-zoom-container {
-    height: 190vh;
+    height: 165vh;
   }
-  .hero-watermark {
-    font-size: clamp(5rem, 28vw, 12rem);
+  .hero-zoom-watermark {
+    font-size: clamp(5rem, 24vw, 11rem);
   }
-  .hero-zoom-target .about-hero__title {
-    font-size: clamp(2.4rem, 10vw, 3.6rem);
-  }
-}
-
-/* Accessibility / Reduced Motion */
-@media (prefers-reduced-motion: reduce) {
-  .hero-zoom-container {
-    height: auto !important;
-  }
-  .hero-zoom-stage {
-    position: relative !important;
-    height: 80vh !important;
-  }
-  .hero-zoom-target,
-  .hero-watermark,
-  .hero-zoom-bg {
-    transform: none !important;
-    opacity: 1 !important;
-  }
-  .hero-zoom-hint {
-    display: none !important;
+  .hero-zoom-foreground .about-hero__title {
+    font-size: clamp(2.3rem, 9.5vw, 3.4rem);
   }
 }
