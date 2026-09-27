@@ -123,7 +123,7 @@ html, body, .about-page, .faq-page {
   max-width: 1100px;
   margin: 0 auto !important;
   transform-origin: center center;
-  will-change: transform, opacity;
+  will-change: transform, opacity, transform-origin;
   transform: translate3d(0, 0, 0) scale(1);
   opacity: 1;
   display: flex;
@@ -156,6 +156,11 @@ html, body, .about-page, .faq-page {
   line-height: 1.12;
   max-width: 960px;
   white-space: normal;
+}
+
+/* Character spans for zoom targeting (invisible wrappers, inserted by JS) */
+.hz-char {
+  display: inline;
 }
 
 /* 6. Layer 4: Interactive Elements (Scroll Hint) */

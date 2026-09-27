@@ -1,102 +1,179 @@
 /* ============================================================
-   ARTAFIC — Scroll-Driven Hero Typography Zoom Engine
-   Zooming the foreground text directly into the next section
-   - Single passive scroll handler throttled with requestAnimationFrame
-   - Pure transform: translate3d(...) scale(...) and opacity
-   - Zero layout thrashing, zero external dependencies
+   ARTAFIC — Scroll-Driven Character-Focused Zoom Engine
+   Camera dives into one specific character of the hero heading
+   - Wraps characters in lightweight spans at runtime
+   - Shifts transform-origin toward focus character as scale grows
+   - Single passive scroll handler, rAF-throttled
+   - Pure CSS transforms: translate3d, scale, transform-origin
+   - Zero canvas, zero SVG clip, zero external dependencies
    ============================================================ */
 
-(function() {
+(function () {
   'use strict';
 
   function initHeroZoom() {
-    const containers = document.querySelectorAll('.hero-zoom-container');
+    var containers = document.querySelectorAll('.hero-zoom-container');
     if (!containers.length) return;
 
-    containers.forEach(container => {
+    containers.forEach(function (container) {
+      // Cleanup any previous instance (SPA re-navigation)
       if (container._cleanupHeroZoom) {
         container._cleanupHeroZoom();
       }
 
-      const stage = container.querySelector('.hero-zoom-stage');
-      const foreground = container.querySelector('.hero-zoom-foreground');
-      const bg = container.querySelector('.about-hero__bg');
-      const glow = container.querySelector('.about-hero__ambient-glow');
-      const hint = container.querySelector('.hero-zoom-hint');
-      const nextSelector = container.dataset.nextSection;
+      var stage = container.querySelector('.hero-zoom-stage');
+      var foreground = container.querySelector('.hero-zoom-foreground');
+      var titleEl = container.querySelector('.about-hero__title');
+      var bg = container.querySelector('.about-hero__bg');
+      var glow = container.querySelector('.about-hero__ambient-glow');
+      var hint = container.querySelector('.hero-zoom-hint');
+      var nextSelector = container.dataset.nextSection;
+      var zoomCharIdx = parseInt(container.dataset.zoomChar || '0', 10);
 
-      if (!stage || !foreground) return;
+      if (!stage || !foreground || !titleEl) return;
 
-      // Click on hint to smoothly scroll into the next section
-      if (hint && nextSelector) {
-        hint.addEventListener('click', (e) => {
-          e.preventDefault();
-          const nextEl = document.querySelector(nextSelector);
-          if (nextEl) {
-            const navH = document.getElementById('nav')?.offsetHeight || 72;
-            const top = nextEl.getBoundingClientRect().top + window.scrollY - navH;
-            window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-          }
-        });
+      // ── Wrap each character in a lightweight <span> ──────────
+      var textEl = titleEl.querySelector('strong') || titleEl;
+      var originalHTML = textEl.innerHTML;
+      var text = textEl.textContent;
+
+      textEl.innerHTML = '';
+      var charSpans = [];
+
+      for (var i = 0; i < text.length; i++) {
+        var ch = text[i];
+        if (ch === ' ' || ch === '\u00A0') {
+          // Preserve spaces as plain text nodes
+          textEl.appendChild(document.createTextNode(ch));
+        } else {
+          var span = document.createElement('span');
+          span.className = 'hz-char';
+          span.textContent = ch;
+          charSpans.push(span);
+          textEl.appendChild(span);
+        }
       }
 
-      let isTicking = false;
+      // Identify focus character (clamped to valid range)
+      var focusIdx = Math.max(0, Math.min(zoomCharIdx, charSpans.length - 1));
+      var focusSpan = charSpans[focusIdx] || null;
+
+      // ── Measure focus character center relative to foreground ─
+      var charOriginX = 50;
+      var charOriginY = 50;
+
+      function measureCharPosition() {
+        if (!focusSpan) return;
+        var fgRect = foreground.getBoundingClientRect();
+        var charRect = focusSpan.getBoundingClientRect();
+        if (fgRect.width > 0 && fgRect.height > 0) {
+          charOriginX = ((charRect.left + charRect.width / 2 - fgRect.left) / fgRect.width) * 100;
+          charOriginY = ((charRect.top + charRect.height / 2 - fgRect.top) / fgRect.height) * 100;
+        }
+      }
+
+      // Measure after layout & fonts are ready
+      requestAnimationFrame(function () {
+        requestAnimationFrame(measureCharPosition);
+      });
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(measureCharPosition);
+      }
+
+      // ── Scroll hint click ───────────────────────────────────
+      function onHintClick(e) {
+        e.preventDefault();
+        var nextEl = document.querySelector(nextSelector);
+        if (nextEl) {
+          var navH = document.getElementById('nav');
+          navH = navH ? navH.offsetHeight : 72;
+          var top = nextEl.getBoundingClientRect().top + window.scrollY - navH;
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        }
+      }
+      if (hint && nextSelector) {
+        hint.addEventListener('click', onHintClick);
+      }
+
+      // ── Scroll-driven zoom animation ────────────────────────
+      var isTicking = false;
+      var lastWidth = window.innerWidth;
 
       function updateZoom() {
-        const rect = container.getBoundingClientRect();
-        const winH = window.innerHeight;
+        // Re-measure on viewport width change (responsive reflow)
+        if (window.innerWidth !== lastWidth) {
+          lastWidth = window.innerWidth;
+          measureCharPosition();
+        }
 
-        // If hero container is scrolled completely out of view, skip math
+        var rect = container.getBoundingClientRect();
+        var winH = window.innerHeight;
+
+        // Skip if completely off-screen
         if (rect.bottom < -50 || rect.top > winH + 50) {
           isTicking = false;
           return;
         }
 
-        const scrollDistance = rect.height - winH;
+        var scrollDistance = rect.height - winH;
         if (scrollDistance <= 0) {
           isTicking = false;
           return;
         }
 
-        // Progress from 0 (top of page) to 1 (when hero finishes and next section arrives)
-        const rawProgress = -rect.top / scrollDistance;
-        const progress = Math.max(0, Math.min(1, rawProgress));
+        // 0 → top-aligned, 1 → container fully scrolled past
+        var rawProgress = -rect.top / scrollDistance;
+        var progress = Math.max(0, Math.min(1, rawProgress));
 
-        // Smooth cubic easing curve: letters grow steadily, then accelerate through viewport
-        const t = progress;
-        const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        // Cubic ease-in-out for accelerating zoom
+        var t = progress;
+        var eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-        const isMobile = window.innerWidth < 768;
-        // Direct foreground text zoom: scaling up from 1x to 12x (desktop) / 8x (mobile)
-        const maxScale = isMobile ? 8.0 : 12.5;
-        const titleScale = 1 + (maxScale - 1) * eased;
+        var isMobile = window.innerWidth < 768;
+        var maxScale = isMobile ? 10.0 : 15.0;
+        var titleScale = 1 + (maxScale - 1) * eased;
 
-        // Subtle camera tracking offset as you move through the text
-        const driftX = (progress * (isMobile ? 10 : 20)).toFixed(1);
-        const driftY = (-progress * (isMobile ? 8 : 15)).toFixed(1);
+        // ── Transform-origin: shift from center → focus character ──
+        // Completes by ~30% scroll while scale is still modest (~2.4×)
+        // so the positional shift is subtle and feels like camera panning
+        var originT = Math.min(1, progress / 0.30);
+        // Ease-out quadratic: fast initial shift, smooth settle
+        var originEased = 1 - (1 - originT) * (1 - originT);
 
-        // Foreground opacity stays 1.0 until 65% scroll, then cleanly dissolves as letters fly past camera
-        const titleOpacity = progress < 0.65 ? 1 : Math.max(0, 1 - (progress - 0.65) / 0.27);
+        var curOriginX = 50 + (charOriginX - 50) * originEased;
+        var curOriginY = 50 + (charOriginY - 50) * originEased;
 
-        // Apply GPU-accelerated transform & opacity to the foreground text
-        foreground.style.transform = `translate3d(${driftX}px, ${driftY}px, 0) scale(${titleScale.toFixed(3)})`;
+        foreground.style.transformOrigin =
+          curOriginX.toFixed(2) + '% ' + curOriginY.toFixed(2) + '%';
+
+        // ── Scale ──────────────────────────────────────────────
+        foreground.style.transform =
+          'translate3d(0,0,0) scale(' + titleScale.toFixed(3) + ')';
+
+        // ── Opacity: hold at 1.0, then dissolve as letter fills viewport ──
+        var titleOpacity =
+          progress < 0.62
+            ? 1
+            : Math.max(0, 1 - (progress - 0.62) / 0.28);
         foreground.style.opacity = titleOpacity.toFixed(3);
 
-        // Background fluted glass subtle depth zoom
+        // ── Background parallax zoom ───────────────────────────
         if (bg) {
-          const bgScale = 1 + eased * 0.12;
-          bg.style.transform = `translate3d(0, 0, 0) scale(${bgScale.toFixed(3)})`;
+          var bgScale = 1 + eased * 0.12;
+          bg.style.transform =
+            'translate3d(0,0,0) scale(' + bgScale.toFixed(3) + ')';
         }
 
-        // Ambient glow gentle swell
+        // ── Ambient glow gentle swell ──────────────────────────
         if (glow) {
-          const glowScale = 1 + eased * 0.45;
-          glow.style.transform = `translate3d(0, 0, 0) scale(${glowScale.toFixed(3)})`;
+          var glowScale = 1 + eased * 0.45;
+          glow.style.transform =
+            'translate3d(0,0,0) scale(' + glowScale.toFixed(3) + ')';
         }
 
-        // Scroll hint fades out promptly on initial scroll
+        // ── Scroll hint fade ───────────────────────────────────
         if (hint) {
-          hint.style.opacity = Math.max(0, 1 - progress * 5.0).toFixed(2);
+          hint.style.opacity = Math.max(0, 1 - progress * 5).toFixed(2);
           hint.style.pointerEvents = progress > 0.05 ? 'none' : 'auto';
         }
 
@@ -106,18 +183,25 @@
       function onScroll() {
         if (isTicking) return;
         isTicking = true;
-        window.requestAnimationFrame(updateZoom);
+        requestAnimationFrame(updateZoom);
       }
 
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', onScroll, { passive: true });
 
-      // Apply initial state immediately
+      // Apply initial state
       updateZoom();
 
-      container._cleanupHeroZoom = () => {
+      // ── Cleanup for SPA re-navigation ────────────────────────
+      container._cleanupHeroZoom = function () {
         window.removeEventListener('scroll', onScroll);
         window.removeEventListener('resize', onScroll);
+        if (hint) hint.removeEventListener('click', onHintClick);
+        // Restore original heading HTML
+        textEl.innerHTML = originalHTML;
+        foreground.style.transformOrigin = '';
+        foreground.style.transform = '';
+        foreground.style.opacity = '';
       };
     });
   }
