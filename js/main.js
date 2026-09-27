@@ -27,10 +27,23 @@ function formatTime() {
   const nav = $('#nav');
   if (!nav) return;
 
-  const darkSections = $$('#home, #marquee, #about');
+  const darkSelector = [
+    '#home',
+    '#marquee',
+    '#value-strip',
+    '#before-after',
+    '#about',
+    '#about-hero',
+    '#faq-hero',
+    '#about-cta',
+    'footer',
+    '.footer',
+    '.about-me-section',
+    '[data-nav-theme="dark"]'
+  ].join(', ');
 
   function updateNavState() {
-    const scrollY = window.scrollY;
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
     
     if (scrollY > 20) {
       nav.classList.add('is-scrolled');
@@ -38,14 +51,15 @@ function formatTime() {
       nav.classList.remove('is-scrolled');
     }
 
-    // Check if navbar overlaps any dark section
+    // Check if navbar center overlaps any dark section
     const navBounds = nav.getBoundingClientRect();
     const navCenterY = navBounds.top + navBounds.height / 2;
     
+    const darkSections = document.querySelectorAll(darkSelector);
     let isOverDark = false;
     for (const sec of darkSections) {
       const rect = sec.getBoundingClientRect();
-      if (navCenterY >= rect.top && navCenterY <= rect.bottom) {
+      if (rect.height > 0 && navCenterY >= rect.top && navCenterY <= rect.bottom) {
         isOverDark = true;
         break;
       }
@@ -58,11 +72,21 @@ function formatTime() {
     }
   }
 
+  window.updateNavState = updateNavState;
+
+  let ticking = false;
   window.addEventListener('scroll', () => {
-    requestAnimationFrame(updateNavState);
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        updateNavState();
+        ticking = false;
+      });
+      ticking = true;
+    }
   }, { passive: true });
 
   window.addEventListener('resize', updateNavState, { passive: true });
+  document.addEventListener('DOMContentLoaded', updateNavState);
   updateNavState();
 })();
 
@@ -1908,6 +1932,9 @@ if (document.readyState === 'loading') {
 // Global Script Re-initializer for Page Transitions
 window.reinitPageScripts = function(targetUrl) {
   try {
+    if (typeof window.updateNavState === 'function') {
+      window.updateNavState();
+    }
     if (typeof window.initFloatingPaths === 'function') {
       window.initFloatingPaths();
     }

@@ -1070,28 +1070,75 @@ input, textarea, select {
   }
 }
 
-/* ── Navigation Overrides (Pure White Logo on Dark Backgrounds) ── */
-.nav:not(.is-scrolled) .nav__logo-image,
+/* ── Navigation Overrides (Dynamic Text & Logo Color: White on Dark, Black on Light) ── */
+.nav__logo-image {
+  transition: filter 0.25s var(--ease-out);
+}
+
+.nav__link {
+  transition: color 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
+}
+
+.nav__hamburger-line {
+  transition: background-color 0.25s var(--ease-out), transform var(--duration-base) var(--ease-out), opacity var(--duration-base), width var(--duration-base);
+}
+
+/* 1. When Going Through Dark / Black Sections (White Text & Logo) */
 .nav.nav--on-dark .nav__logo-image,
 .nav__mobile-header .nav__logo-image,
 .footer__logo-image {
   filter: brightness(0) invert(1) !important;
-  transition: filter var(--duration-base) var(--ease-out);
 }
 
-.nav:not(.is-scrolled) .nav__link,
-.nav.nav--on-dark .nav__link {
-  color: rgba(255,255,255,0.75);
+.nav.nav--on-dark .nav__link:not(.nav__link--active) {
+  color: rgba(255, 255, 255, 0.85) !important;
 }
 
-.nav:not(.is-scrolled) .nav__link::before,
+.nav.nav--on-dark .nav__link:not(.nav__link--active):hover {
+  color: #ffffff !important;
+}
+
 .nav.nav--on-dark .nav__link::before {
-  background-color: rgba(255,255,255,0.15);
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
-.nav:not(.is-scrolled) .nav__link:hover,
-.nav.nav--on-dark .nav__link:hover {
-  color: #ffffff;
+.nav.nav--on-dark .nav__hamburger-line {
+  background-color: #ffffff !important;
+}
+
+.nav.nav--on-dark .nav__hamburger:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* 2. When Going Through Light / White Sections (Black Text & Logo) */
+.nav:not(.nav--on-dark) .nav__logo-image {
+  filter: brightness(0) !important;
+}
+
+.nav:not(.nav--on-dark) .nav__link:not(.nav__link--active) {
+  color: #0B1120 !important;
+  font-weight: 500;
+}
+
+.nav:not(.nav--on-dark) .nav__link:not(.nav__link--active):hover {
+  color: #000000 !important;
+}
+
+.nav:not(.nav--on-dark) .nav__link::before {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.nav:not(.nav--on-dark) .nav__hamburger-line {
+  background-color: #0B1120 !important;
+}
+
+.nav:not(.nav--on-dark) .nav__hamburger:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* Active link styling guarantee */
+.nav .nav__link.nav__link--active {
+  color: var(--color-teal) !important;
 }
 
 
