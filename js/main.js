@@ -32,6 +32,8 @@ function formatTime() {
     '#marquee',
     '#value-strip',
     '#before-after',
+    '#less-noise',
+    '.less-noise',
     '#about',
     '#about-hero',
     '#faq-hero',
@@ -1922,10 +1924,89 @@ function initFloatingPaths() {
 
 // Export to window and run on DOM ready / script load
 window.initFloatingPaths = initFloatingPaths;
+/* ============================================================
+   KINETIC CRAFT ANIMATION ("YOUR BUSINESS. OUR CRAFT.")
+   ============================================================ */
+function initKineticCraftAnimation() {
+  const lessNoiseSec = document.querySelector('.less-noise');
+  if (!lessNoiseSec) return;
+
+  const word1 = lessNoiseSec.querySelector('.less-noise__word1');
+  const word2 = lessNoiseSec.querySelector('.less-noise__word2');
+  if (!word1 || !word2) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) {
+    word1.style.display = 'none';
+    word2.style.opacity = '1';
+    word2.style.transform = 'translate(-50%, -50%) scale(1)';
+    return;
+  }
+
+  let ticking = false;
+
+  function updateCraftKinetic() {
+    const rect = lessNoiseSec.getBoundingClientRect();
+    const winH = window.innerHeight;
+    const scrollDistance = rect.height - winH;
+
+    if (scrollDistance <= 0) return;
+
+    // Calculate pinned progress: 0 when top hits 0, 1 when bottom hits winH
+    let progress = 0;
+    if (rect.top <= 0 && rect.bottom >= winH) {
+      progress = -rect.top / scrollDistance;
+    } else if (rect.top > 0) {
+      progress = 0;
+    } else {
+      progress = 1;
+    }
+
+    progress = Math.max(0, Math.min(1, progress));
+
+    if (progress < 0.42) {
+      // Phase 1: YOUR BUSINESS. (1 -> 0 opacity, 1.0 -> 1.25 scale)
+      const p1 = progress / 0.42;
+      const op1 = Math.max(0, 1 - (p1 * 1.5));
+      const sc1 = 1 + (p1 * 0.25);
+      word1.style.opacity = op1.toFixed(3);
+      word1.style.transform = `translate(-50%, -50%) scale(${sc1.toFixed(3)})`;
+      word2.style.opacity = '0';
+      word2.style.transform = 'translate(-50%, -50%) scale(0.85)';
+    } else {
+      // Phase 2: OUR CRAFT. (0 -> 1 opacity, 0.85 -> 1.0 scale)
+      word1.style.opacity = '0';
+      const p2 = (progress - 0.42) / 0.43;
+      const clampedP2 = Math.max(0, Math.min(1, p2));
+      const op2 = Math.min(1, clampedP2 * 1.6);
+      const sc2 = 0.85 + (clampedP2 * 0.15);
+      word2.style.opacity = op2.toFixed(3);
+      word2.style.transform = `translate(-50%, -50%) scale(${sc2.toFixed(3)})`;
+    }
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(updateCraftKinetic);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  updateCraftKinetic();
+}
+window.initKineticCraftAnimation = initKineticCraftAnimation;
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initFloatingPaths);
+  document.addEventListener('DOMContentLoaded', () => {
+    initFloatingPaths();
+    initKineticCraftAnimation();
+  });
 } else {
   initFloatingPaths();
+  initKineticCraftAnimation();
 }
 
 /* ============================================================
@@ -1940,6 +2021,9 @@ window.reinitPageScripts = function(targetUrl) {
     }
     if (typeof window.initFloatingPaths === 'function') {
       window.initFloatingPaths();
+    }
+    if (typeof window.initKineticCraftAnimation === 'function') {
+      window.initKineticCraftAnimation();
     }
     // 1. Scroll Reveal Observer (handles all [data-reveal], .fade-up, .reveal-text-inner)
     if (typeof window.initScrollReveal === 'function') {

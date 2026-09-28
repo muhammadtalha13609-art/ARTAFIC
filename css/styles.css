@@ -2490,6 +2490,90 @@ input, textarea, select {
 }
 
 /* ────────────────────────────────────────────────────────────
+   17. KINETIC CRAFT STATEMENT ("YOUR BUSINESS. OUR CRAFT.")
+   ──────────────────────────────────────────────────────────── */
+.less-noise {
+  height: 170vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #080808;
+  z-index: 10;
+}
+
+.less-noise__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #080808;
+}
+
+.less-noise__glow {
+  position: absolute;
+  width: min(65vw, 650px);
+  height: min(65vw, 650px);
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.16) 0%, rgba(20, 184, 166, 0) 65%);
+  border-radius: 50%;
+  z-index: 2;
+  pointer-events: none;
+  filter: blur(20px);
+}
+
+.less-noise__word {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  z-index: 3;
+  transition: transform 0.1s linear, opacity 0.1s linear;
+  text-align: center;
+  user-select: none;
+  pointer-events: none;
+}
+
+.craft-heading-giant,
+.about-heading-giant {
+  font-family: 'Unbounded', 'Montserrat', sans-serif;
+  font-size: clamp(2.5rem, 8vw, 8.5rem);
+  line-height: 0.9;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.04"/%3E%3C/svg%3E');
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: overlay;
+}
+
+@media (max-width: 640px) {
+  .craft-heading-giant,
+  .about-heading-giant {
+    font-size: clamp(1.85rem, 7.5vw, 2.75rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .less-noise__word {
+    transition: none !important;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────
    18. MEETING BOOKING FORM
    ──────────────────────────────────────────────────────────── */
 .booking {

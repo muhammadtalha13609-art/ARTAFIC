@@ -79,9 +79,6 @@
     // 3. Elements Cache for Unified Scroll Engine
     const progressBar = document.getElementById('about-scroll-progress');
     const parallaxWatermarks = document.querySelectorAll('[data-parallax]');
-    const lessNoiseSec = document.querySelector('.less-noise');
-    const word1 = document.querySelector('.less-noise__word1');
-    const word2 = document.querySelector('.less-noise__word2');
 
     // 4. Unified Passive Scroll Handler (rAF Throttled)
     let isScrollTicking = false;
@@ -111,25 +108,6 @@
             el.style.transform = `translate3d(0, ${deltaY.toFixed(1)}px, 0)`;
           }
         });
-      }
-
-      // C. Preserved Kinetic Craft Animation ("YOUR BUSINESS. OUR CRAFT.")
-      if (lessNoiseSec && word1 && word2) {
-        const rect = lessNoiseSec.getBoundingClientRect();
-        if (rect.top < winH && rect.bottom > 0) {
-          const progress = 1 - (rect.bottom / (rect.height + winH));
-          if (progress < 0.4) {
-            word1.style.opacity = Math.max(0, 1 - (progress * 2.5));
-            word1.style.transform = `translate(-50%, -50%) scale(${1 + progress * 0.5})`;
-            word2.style.opacity = 0;
-            word2.style.transform = 'translate(-50%, -50%) scale(0.9)';
-          } else {
-            word1.style.opacity = 0;
-            const p2 = (progress - 0.4) / 0.6;
-            word2.style.opacity = Math.min(1, p2 * 1.5);
-            word2.style.transform = `translate(-50%, -50%) scale(${0.9 + p2 * 0.1})`;
-          }
-        }
       }
 
       isScrollTicking = false;
