@@ -147,46 +147,32 @@ function formatTime() {
 })();
 
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   03. SMOOTH ANCHOR SCROLLING
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-(function initSmoothScroll() {
-  const navHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 72;
-
-  document.addEventListener('click', (e) => {
-    const link = e.target.closest('a[href^="#"]');
-    if (!link) return;
-
-    const targetId = link.getAttribute('href').slice(1);
-    if (!targetId) return;
-
-    const target = document.getElementById(targetId);
-    if (!target) return;
-
-    e.preventDefault();
-
-    const offset = target.getBoundingClientRect().top + window.scrollY - navHeight - 16;
-
-    window.scrollTo({ top: offset, behavior: 'smooth' });
-  });
-})();
+/* ────────────────────────────────────────────────────────────
+   03. SMOOTH ANCHOR SCROLLING (Delegated to Unified Nav Engine)
+   ──────────────────────────────────────────────────────────── */
+// Handled globally and reliably by the unified navigation system in Section 20
 
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ────────────────────────────────────────────────────────────
    04. SCROLL REVEAL (IntersectionObserver)
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-(function initScrollReveal() {
+   ──────────────────────────────────────────────────────────── */
+window.initScrollReveal = function() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  const revealTargets = document.querySelectorAll('[data-reveal], .fade-up, .reveal-text-inner');
+  if (revealTargets.length === 0) return;
+
   if (prefersReducedMotion) {
-    $$('[data-reveal]').forEach(el => el.classList.add('is-visible'));
+    revealTargets.forEach(el => {
+      el.classList.add('is-visible', 'is-revealed');
+    });
     return;
   }
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
+        entry.target.classList.add('is-visible', 'is-revealed');
         observer.unobserve(entry.target);
       }
     });
@@ -195,20 +181,23 @@ function formatTime() {
     rootMargin: '0px 0px -40px 0px'
   });
 
-  $$('[data-reveal]').forEach(el => observer.observe(el));
-})();
+  revealTargets.forEach(el => observer.observe(el));
+};
+window.initScrollReveal();
 
 
 /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   05. BEFORE / AFTER SLIDER â€” HIGH PERFORMANCE TOUCH TRACKING
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-(function initSlider() {
+/* ────────────────────────────────────────────────────────────
+   05. BEFORE / AFTER SLIDER — HIGH PERFORMANCE TOUCH TRACKING
+   ──────────────────────────────────────────────────────────── */
+window.initSlider = function() {
   const container = $('#slider-container');
   if (!container) return;
 
   const before = $('#slider-before');
   const divider = $('#slider-divider');
   const handle = $('#slider-handle');
+  if (!before || !divider || !handle) return;
 
   let isDragging = false;
   let currentPercent = 50;
@@ -281,13 +270,14 @@ function formatTime() {
 
   // Init at 50%
   renderPosition(50);
-})();
+};
+window.initSlider();
 
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   06. FAQ ACCORDION â€” CONTENT-AWARE ACCORDION EXPANSION
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-(function initAccordion() {
+/* ────────────────────────────────────────────────────────────
+   06. FAQ ACCORDION — CONTENT-AWARE ACCORDION EXPANSION
+   ──────────────────────────────────────────────────────────── */
+window.initAccordion = function() {
   const accordion = $('#faq-accordion');
   if (!accordion) return;
 
@@ -296,8 +286,13 @@ function formatTime() {
   items.forEach(item => {
     const trigger = item.querySelector('.faq-item__trigger');
     const body = item.querySelector('.faq-item__body');
+    if (!trigger || !body) return;
 
-    trigger.addEventListener('click', () => {
+    // Clone to clear old listeners if re-initialized
+    const newTrigger = trigger.cloneNode(true);
+    trigger.parentNode.replaceChild(newTrigger, trigger);
+
+    newTrigger.addEventListener('click', () => {
       const isOpen = item.classList.contains('is-open');
 
       // Close all others
@@ -313,24 +308,25 @@ function formatTime() {
 
       // Toggle current
       item.classList.toggle('is-open', !isOpen);
-      trigger.setAttribute('aria-expanded', String(!isOpen));
+      newTrigger.setAttribute('aria-expanded', String(!isOpen));
 
-      if (!isOpen && body) {
+      if (!isOpen) {
         body.style.maxHeight = body.scrollHeight + 'px';
-      } else if (body) {
+      } else {
         body.style.maxHeight = '0px';
       }
     });
 
     // Keyboard support
-    trigger.addEventListener('keydown', (e) => {
+    newTrigger.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        trigger.click();
+        newTrigger.click();
       }
     });
   });
-})();
+};
+window.initAccordion();
 
 
 /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -845,33 +841,40 @@ function formatTime() {
 })();
 
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ────────────────────────────────────────────────────────────
    09. ACTIVE NAV LINK (scroll-spy)
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+   ──────────────────────────────────────────────────────────── */
 window.initScrollSpy = function() {
-  const navLinks = $$('[data-nav-link]');
-  const sectionIds = ['home', 'services', 'about', 'why-artafic', 'before-after', 'faq'];
-  const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+  const isHome = (function() {
+    const p = (window.location.pathname || '').toLowerCase();
+    return p === '/' || p.endsWith('/index.html') || p.endsWith('/') || !p;
+  })();
 
-  const navHeight = 80;
+  if (!isHome) return;
+
+  const navLinks = document.querySelectorAll('.nav__link[data-nav-link], .nav__link[data-section]');
+  const sectionIds = ['home', 'services', 'before-after', 'why-artafic'];
+  const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+  const navHeight = 85;
 
   function updateActive() {
-    let current = '';
+    let current = 'home';
 
     sections.forEach(section => {
       const top = section.getBoundingClientRect().top;
-      if (top <= navHeight + 40) {
+      if (top <= navHeight + 80) {
         current = section.id;
       }
     });
 
     navLinks.forEach(link => {
-      const rawHref = link.getAttribute('href') || '';
-      const href = rawHref.includes('#') ? rawHref.split('#')[1] : '';
-      link.classList.toggle('is-active', href === current);
+      const sec = link.getAttribute('data-section') || (link.getAttribute('href') || '').replace(/^.*#/, '');
+      const isMatch = (sec === current) || (current === 'home' && (sec === 'home' || link.getAttribute('href') === 'index.html' || link.getAttribute('href') === '/'));
+      link.classList.toggle('is-active', isMatch);
     });
   }
 
+  window.removeEventListener('scroll', updateActive);
   window.addEventListener('scroll', updateActive, { passive: true });
   updateActive();
 };
@@ -1932,96 +1935,25 @@ if (document.readyState === 'loading') {
 // Global Script Re-initializer for Page Transitions
 window.reinitPageScripts = function(targetUrl) {
   try {
-    if (typeof window.updateNavState === 'function') {
-      window.updateNavState();
+    if (typeof window.updateActiveNavLinks === 'function') {
+      window.updateActiveNavLinks(targetUrl || window.location.href);
     }
     if (typeof window.initFloatingPaths === 'function') {
       window.initFloatingPaths();
     }
-    // 1. Scroll Reveal Observer
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!prefersReducedMotion && 'IntersectionObserver' in window) {
-      const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-revealed');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-      document.querySelectorAll('.fade-up, .reveal-text-inner').forEach((el) => {
-        el.classList.remove('is-revealed');
-        revealObserver.observe(el);
-      });
-    } else {
-      document.querySelectorAll('.fade-up, .reveal-text-inner').forEach((el) => {
-        el.classList.add('is-revealed');
-      });
+    // 1. Scroll Reveal Observer (handles all [data-reveal], .fade-up, .reveal-text-inner)
+    if (typeof window.initScrollReveal === 'function') {
+      window.initScrollReveal();
     }
 
     // 2. Accordion (FAQ & Services)
-    const accordion = document.getElementById('faq-accordion');
-    if (accordion) {
-      const items = accordion.querySelectorAll('.accordion__item, .faq-item');
-      items.forEach((item) => {
-        const trigger = item.querySelector('.accordion__trigger, .faq-item__trigger');
-        const body = item.querySelector('.accordion__body, .faq-item__body');
-        if (!trigger || !body) return;
-
-        // Clone to clear old listeners
-        const newTrigger = trigger.cloneNode(true);
-        trigger.parentNode.replaceChild(newTrigger, trigger);
-
-        newTrigger.addEventListener('click', () => {
-          const isOpen = item.classList.contains('is-open');
-          items.forEach((other) => {
-            if (other !== item && other.classList.contains('is-open')) {
-              other.classList.remove('is-open');
-              const otherTrigger = other.querySelector('.accordion__trigger, .faq-item__trigger');
-              const otherBody = other.querySelector('.accordion__body, .faq-item__body');
-              if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
-              if (otherBody) otherBody.style.maxHeight = null;
-            }
-          });
-
-          if (isOpen) {
-            item.classList.remove('is-open');
-            newTrigger.setAttribute('aria-expanded', 'false');
-            body.style.maxHeight = null;
-          } else {
-            item.classList.add('is-open');
-            newTrigger.setAttribute('aria-expanded', 'true');
-            body.style.maxHeight = body.scrollHeight + 'px';
-          }
-        });
-      });
+    if (typeof window.initAccordion === 'function') {
+      window.initAccordion();
     }
 
     // 3. Before / After Slider
-    const sliderContainer = document.getElementById('slider-container');
-    if (sliderContainer) {
-      const sliderHandle = document.getElementById('slider-handle');
-      const sliderAfter = document.getElementById('slider-after');
-      if (sliderHandle && sliderAfter) {
-        let isDown = false;
-        function updateSlider(clientX) {
-          const rect = sliderContainer.getBoundingClientRect();
-          let x = clientX - rect.left;
-          x = Math.max(0, Math.min(x, rect.width));
-          const percentage = (x / rect.width) * 100;
-          sliderHandle.style.left = percentage + '%';
-          sliderAfter.style.clipPath = `polygon(${percentage}% 0, 100% 0, 100% 100%, ${percentage}% 100%)`;
-        }
-
-        sliderContainer.onmousedown = (e) => { isDown = true; updateSlider(e.clientX); };
-        window.onmouseup = () => { isDown = false; };
-        window.onmousemove = (e) => { if (isDown) updateSlider(e.clientX); };
-
-        sliderContainer.ontouchstart = (e) => { isDown = true; updateSlider(e.touches[0].clientX); };
-        window.ontouchend = () => { isDown = false; };
-        window.ontouchmove = (e) => { if (isDown) updateSlider(e.touches[0].clientX); };
-      }
+    if (typeof window.initSlider === 'function') {
+      window.initSlider();
     }
 
     // 4. Booking Form (Hardened PJAX Reinitialization)
@@ -2340,55 +2272,23 @@ window.reinitPageScripts = function(targetUrl) {
     return overlay;
   }
 
-  function normalizeUrl(urlString) {
-    try {
-      const url = new URL(urlString, window.location.href);
-      // Clean URLs are only applied on HTTP/HTTPS hosting (e.g. Vercel)
-      if (window.location.protocol !== 'file:' && url.origin === window.location.origin) {
-        let cleanPath = url.pathname.replace(/\/index\.html$/i, '/').replace(/\.html$/i, '');
-        if (!cleanPath.startsWith('/')) cleanPath = '/' + cleanPath;
-        if (cleanPath.length > 1 && cleanPath.endsWith('/')) cleanPath = cleanPath.slice(0, -1);
-        url.pathname = cleanPath;
+  const HOMEPAGE_SECTIONS = new Set([
+    'home',
+    'services',
+    'why-artafic',
+    'before-after',
+    'portfolio',
+    'how-we-work',
+    'process',
+    'booking',
+    'problem',
+    'marquee',
+    'value-strip'
+  ]);
 
-        if (cleanPath === '/' && (url.hash === '#home' || url.hash === '#')) {
-          url.hash = '';
-        }
-      }
-      return url;
-    } catch (e) {
-      return new URL(urlString, window.location.href);
-    }
-  }
-
-  function safePushState(pushUrl) {
-    if (window.location.protocol === 'file:') return;
-    try {
-      window.history.pushState(null, '', pushUrl);
-    } catch (e) {}
-  }
-
-  function scrollToElement(selector) {
-    if (!selector) return false;
-    let targetEl = null;
-    try {
-      targetEl = document.querySelector(selector);
-    } catch (e) {}
-
-    // Fallbacks for common aliases
-    if (!targetEl && (selector === '#how-we-work' || selector === '#process')) {
-      targetEl = document.getElementById('how-we-work') || document.getElementById('process') || document.getElementById('our-approach');
-    }
-    if (!targetEl && (selector === '#booking' || selector === '#contact')) {
-      targetEl = document.getElementById('booking') || document.getElementById('contact');
-    }
-
-    if (targetEl) {
-      const navH = document.getElementById('nav')?.offsetHeight || 72;
-      const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - navH;
-      window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
-      return true;
-    }
-    return false;
+  function isCurrentPageHome() {
+    const p = (window.location.pathname || '').toLowerCase();
+    return p === '/' || p.endsWith('/index.html') || p.endsWith('/') || !p;
   }
 
   function getPageKey(urlString) {
@@ -2402,6 +2302,43 @@ window.reinitPageScripts = function(targetUrl) {
       if (p === '/' || p.endsWith('/index.html') || p.endsWith('/') || !p) return 'home';
     } catch (e) {}
     return '';
+  }
+
+  function parseHomepageSection(href, linkEl) {
+    if (linkEl && linkEl.dataset && linkEl.dataset.section) {
+      let sec = linkEl.dataset.section.trim().toLowerCase();
+      if (sec === 'contact') sec = 'booking';
+      if (sec === 'process') sec = 'how-we-work';
+      if (HOMEPAGE_SECTIONS.has(sec)) return sec;
+    }
+
+    if (!href) return null;
+    const lowerHref = href.trim().toLowerCase();
+
+    // Home link checks
+    if (lowerHref === '/' || lowerHref === 'index.html' || lowerHref === '/index.html' || lowerHref === '#home' || lowerHref === '#') {
+      if (linkEl && (linkEl.classList.contains('nav__logo') || linkEl.classList.contains('footer__brand-logo') || linkEl.querySelector('img.nav__logo-image'))) {
+        return 'home';
+      }
+      const text = linkEl ? linkEl.textContent.trim().toLowerCase() : '';
+      if (text === 'home') return 'home';
+    }
+
+    // Extract hash if any
+    let hash = '';
+    if (lowerHref.includes('#')) {
+      hash = lowerHref.split('#')[1].split('?')[0];
+    } else if (lowerHref.startsWith('#')) {
+      hash = lowerHref.slice(1).split('?')[0];
+    }
+
+    if (hash) {
+      if (hash === 'contact' || hash === 'booking') hash = 'booking';
+      if (hash === 'process' || hash === 'how-we-work') hash = 'how-we-work';
+      if (HOMEPAGE_SECTIONS.has(hash)) return hash;
+    }
+
+    return null;
   }
 
   function getDestinationLabel(linkElement, href) {
@@ -2424,36 +2361,148 @@ window.reinitPageScripts = function(targetUrl) {
     return 'ARTAFIC';
   }
 
-  function updateActiveNavLinks(targetUrlString) {
+  function closeMobileMenu() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamburger = document.getElementById('hamburger');
+    if (mobileMenu && mobileMenu.classList.contains('is-open')) {
+      mobileMenu.classList.remove('is-open');
+      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  function safePushState(pushUrl) {
+    if (window.location.protocol === 'file:') return;
+    try {
+      window.history.pushState(null, '', pushUrl);
+    } catch (e) {}
+  }
+
+  function triggerSectionAnimations(targetEl, sectionId) {
+    if (!targetEl) return;
+
+    // 1. Services SVG stroke and camera pan follow scroll
+    if (sectionId === 'services' || targetEl.id === 'services') {
+      if (typeof window.initServicesStrokeFollowScroll === 'function') {
+        window.initServicesStrokeFollowScroll();
+      }
+    }
+
+    // 2. Animate reveal elements inside target section
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealElements = targetEl.querySelectorAll('[data-reveal], .fade-up, .reveal-text-inner');
+
+    if (revealElements.length > 0) {
+      if (prefersReducedMotion) {
+        revealElements.forEach(el => el.classList.add('is-visible', 'is-revealed'));
+      } else {
+        // Reset classes to trigger entrance transition
+        revealElements.forEach(el => el.classList.remove('is-visible', 'is-revealed'));
+        setTimeout(() => {
+          revealElements.forEach((el, idx) => {
+            const delayAttr = el.getAttribute('data-reveal-delay');
+            const delayMs = delayAttr ? parseInt(delayAttr, 10) * 60 : Math.min(idx * 70, 400);
+            setTimeout(() => {
+              el.classList.add('is-visible', 'is-revealed');
+            }, delayMs);
+          });
+        }, 80);
+      }
+    }
+
+    // 3. Dispatch scroll events so dynamic scroll effects sync
+    window.dispatchEvent(new Event('scroll'));
+    [150, 350, 650, 950].forEach(delay => {
+      setTimeout(() => {
+        window.dispatchEvent(new Event('scroll'));
+      }, delay);
+    });
+  }
+
+  function scrollToSection(sectionId, behavior = 'smooth') {
+    if (!sectionId || sectionId === 'home') {
+      window.scrollTo({ top: 0, behavior });
+      safePushState(window.location.protocol === 'file:' ? window.location.pathname : '/');
+      if (typeof window.updateActiveNavLinks === 'function') window.updateActiveNavLinks('/');
+      return true;
+    }
+
+    let targetEl = document.getElementById(sectionId);
+    if (!targetEl && (sectionId === 'how-we-work' || sectionId === 'process')) {
+      targetEl = document.getElementById('how-we-work') || document.getElementById('process') || document.getElementById('our-approach');
+    }
+    if (!targetEl && (sectionId === 'booking' || sectionId === 'contact')) {
+      targetEl = document.getElementById('booking') || document.getElementById('contact');
+    }
+
+    if (targetEl) {
+      const navH = document.getElementById('nav')?.offsetHeight || 72;
+      const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - navH - 16;
+      window.scrollTo({ top: Math.max(0, targetTop), behavior });
+      triggerSectionAnimations(targetEl, sectionId);
+      // Guarantee URL stays clean without hash
+      safePushState(window.location.protocol === 'file:' ? window.location.pathname : '/');
+      return true;
+    }
+    return false;
+  }
+
+  window.updateActiveNavLinks = function(targetUrlString) {
     try {
       const currentPageKey = getPageKey(targetUrlString || window.location.href);
 
       document.querySelectorAll('.nav__link, .nav__mobile-link').forEach(link => {
         const href = link.getAttribute('href') || '';
         const linkPageKey = getPageKey(href);
+        const sectionAttr = link.getAttribute('data-section');
 
-        link.classList.remove('nav__link--active');
+        link.classList.remove('nav__link--active', 'is-active');
         link.style.color = '';
         link.style.fontWeight = '';
 
-        if (currentPageKey && currentPageKey !== 'home' && linkPageKey === currentPageKey) {
+        if (currentPageKey === 'about' && (linkPageKey === 'about' || href.includes('about'))) {
           link.classList.add('nav__link--active');
           link.style.color = 'var(--color-teal)';
           link.style.fontWeight = '600';
-        } else if (currentPageKey === 'home' && (linkPageKey === 'home' || href === 'index.html' || href === '/' || href === '#home')) {
+        } else if (currentPageKey === 'faq' && (linkPageKey === 'faq' || href.includes('faq'))) {
           link.classList.add('nav__link--active');
+          link.style.color = 'var(--color-teal)';
+          link.style.fontWeight = '600';
+        } else if (currentPageKey === 'home') {
+          if (sectionAttr === 'home' || href === 'index.html' || href === '/' || href === '#home') {
+            link.classList.add('nav__link--active', 'is-active');
+          }
         }
       });
     } catch (e) {}
+  };
+
+  function normalizeUrl(urlString) {
+    try {
+      const url = new URL(urlString, window.location.href);
+      if (window.location.protocol !== 'file:' && url.origin === window.location.origin) {
+        let cleanPath = url.pathname.replace(/\/index\.html$/i, '/').replace(/\.html$/i, '');
+        if (!cleanPath.startsWith('/')) cleanPath = '/' + cleanPath;
+        if (cleanPath.length > 1 && cleanPath.endsWith('/')) cleanPath = cleanPath.slice(0, -1);
+        url.pathname = cleanPath;
+        if (cleanPath === '/' && (url.hash === '#home' || url.hash === '#')) {
+          url.hash = '';
+        }
+      }
+      return url;
+    } catch (e) {
+      return new URL(urlString, window.location.href);
+    }
   }
 
   let isTransitionRunning = false;
 
-  function runPageTransition(targetUrlString, labelText, targetHash) {
+  function runPageTransition(targetUrlString, labelText, targetSectionId) {
     if (isTransitionRunning) return;
 
-    // Never run PJAX fetch transition on local file: protocol
     if (window.location.protocol === 'file:') {
+      if (targetSectionId) {
+        try { sessionStorage.setItem('artafic_scroll_target', targetSectionId); } catch(e) {}
+      }
       window.location.href = targetUrlString;
       return;
     }
@@ -2467,15 +2516,8 @@ window.reinitPageScripts = function(targetUrl) {
     if (titleEl) titleEl.textContent = labelText || 'ARTAFIC';
     if (titleWrap) titleWrap.className = 'artafic-transition-title-wrap';
 
-    // Close mobile menu if open
-    const mobileMenu = document.getElementById('mobile-menu');
-    const hamburger = document.getElementById('hamburger');
-    if (mobileMenu && mobileMenu.classList.contains('is-open')) {
-      mobileMenu.classList.remove('is-open');
-      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
-    }
+    closeMobileMenu();
 
-    // 1. ENTER: Start wave entrance
     overlay.className = 'artafic-transition-overlay is-visible is-active';
     void overlay.offsetWidth;
 
@@ -2488,33 +2530,30 @@ window.reinitPageScripts = function(targetUrl) {
     const isSamePage = currentUrl.origin === targetUrl.origin && currentUrl.pathname === targetUrl.pathname;
 
     let fetchUrl = targetUrl.pathname;
+    if (fetchUrl === '/') fetchUrl = '/index.html';
 
-    const fetchPromise = !isSamePage 
-      ? fetch(fetchUrl).then(r => {
-          if (!r.ok) throw new Error('Fetch failed with status ' + r.status);
-          return r.text();
-        }) 
+    const fetchPromise = !isSamePage
+      ? fetch(fetchUrl)
+          .catch(() => fetch(targetUrl.pathname))
+          .then(r => {
+            if (!r.ok) throw new Error('Fetch failed with status ' + r.status);
+            return r.text();
+          })
       : Promise.resolve(null);
 
-    const MIN_ENTER_HOLD = 1050; // Total enter time
+    const MIN_ENTER_HOLD = 1000;
 
     setTimeout(() => {
-      // 2. FULL COVER: Display destination text label
       if (titleWrap) titleWrap.classList.add('is-visible');
 
       fetchPromise.then(html => {
-        // 3. SILENT BACKGROUND DOM SWAP
         if (html) {
           const parser = new DOMParser();
           const doc = parser.parseFromString(html, 'text/html');
 
-          // Swap <title>
           document.title = doc.title;
-
-          // Swap <body> class
           document.body.className = doc.body.className;
 
-          // Synchronize page stylesheets from target page
           doc.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
             const href = link.getAttribute('href');
             if (!href) return;
@@ -2532,7 +2571,6 @@ window.reinitPageScripts = function(targetUrl) {
             }
           });
 
-          // Swap <main id="main-content">
           const currentMain = document.getElementById('main-content');
           const newMain = doc.getElementById('main-content');
           if (currentMain && newMain) {
@@ -2540,53 +2578,54 @@ window.reinitPageScripts = function(targetUrl) {
             currentMain.className = newMain.className;
           }
 
-          // Update URL - ALWAYS CLEAN ROUTE
-          const pushUrl = targetUrl.pathname + targetUrl.search + (targetHash || '');
-          safePushState(pushUrl);
+          // CLEAN ROUTE PUSH - NEVER PUSH HASH!
+          const cleanPushUrl = targetUrl.pathname === '/' || targetUrl.pathname.endsWith('/index.html') ? '/' : targetUrl.pathname;
+          safePushState(cleanPushUrl);
 
-          // Update active links
-          updateActiveNavLinks(targetUrl.href);
+          // Update active navigation indicators
+          window.updateActiveNavLinks(cleanPushUrl);
 
-          // Scroll to position
-          if (targetHash) {
-            scrollToElement(targetHash);
+          // Re-initialize scripts for swapped content
+          if (typeof window.reinitPageScripts === 'function') {
+            window.reinitPageScripts(cleanPushUrl);
+          }
+
+          // Position at destination while overlay is still covering
+          if (targetSectionId && targetSectionId !== 'home') {
+            scrollToSection(targetSectionId, 'instant');
           } else {
             window.scrollTo({ top: 0, behavior: 'instant' });
           }
-
-          // Re-initialize scripts for the new page
-          if (typeof window.reinitPageScripts === 'function') {
-            window.reinitPageScripts(targetUrl.href);
-          }
-        } else if (targetHash) {
-          scrollToElement(targetHash);
-          const pushUrl = targetUrl.pathname + targetUrl.search + (targetHash || '');
-          safePushState(pushUrl);
+        } else if (targetSectionId && targetSectionId !== 'home') {
+          scrollToSection(targetSectionId, 'instant');
+          safePushState('/');
         }
 
-        // 4. HOLD state for ~400ms so user sees the title & wave composition
+        // Hold label visible for 350ms, then exit overlay
         setTimeout(() => {
-          // Fade out title
           if (titleWrap) {
             titleWrap.classList.remove('is-visible');
             titleWrap.classList.add('is-fading');
           }
 
-          // 5. EXIT: Waves sweep down off screen
           setTimeout(() => {
             overlay.className = 'artafic-transition-overlay is-visible is-exiting is-active';
 
-            // Complete lifecycle after exit transition finishes (~1150ms)
+            // Trigger animations as the veil lifts
+            if (targetSectionId && targetSectionId !== 'home') {
+              const targetEl = document.getElementById(targetSectionId);
+              triggerSectionAnimations(targetEl, targetSectionId);
+            }
+
             setTimeout(() => {
               overlay.className = 'artafic-transition-overlay';
               if (titleWrap) titleWrap.className = 'artafic-transition-title-wrap';
               isTransitionRunning = false;
-            }, 1250);
-          }, 200);
-        }, 400);
+            }, 1050);
+          }, 180);
+        }, 350);
 
       }).catch(err => {
-        // Safe fallback
         console.error('Fetch transition error, fallback to native:', err);
         window.location.href = targetUrl.href;
       });
@@ -2594,81 +2633,43 @@ window.reinitPageScripts = function(targetUrl) {
     }, MIN_ENTER_HOLD);
   }
 
-  // Intercept Navigation Clicks Globally
+  // Intercept all navigation clicks globally
   document.addEventListener('click', function(e) {
-    let target = e.target.closest('a');
+    const target = e.target.closest('a');
     if (!target) return;
 
-    let href = target.getAttribute('href');
-    if (!href || href.startsWith('javascript') || href.startsWith('mailto:') || href.startsWith('tel:')) {
+    const href = target.getAttribute('href');
+    if (!href || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) {
       return;
     }
 
-    function closeMobileMenu() {
-      const mobileMenu = document.getElementById('mobile-menu');
-      const hamburger = document.getElementById('hamburger');
-      if (mobileMenu && mobileMenu.classList.contains('is-open')) {
-        mobileMenu.classList.remove('is-open');
-        if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+    // 1. CHECK IF TARGETS A HOMEPAGE SECTION
+    const targetSectionId = parseHomepageSection(href, target);
+
+    if (targetSectionId) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      closeMobileMenu();
+
+      if (isCurrentPageHome()) {
+        // ALREADY ON HOMEPAGE: Smooth scroll & animate, URL stays clean '/'
+        scrollToSection(targetSectionId, 'smooth');
+        return;
+      } else {
+        // ON SUBPAGE (/about or /faq): SPA page transition back to homepage
+        const label = getDestinationLabel(target, href);
+        runPageTransition('/', label, targetSectionId);
+        return;
       }
     }
 
-    // Pure local hash like href="#booking", href="#process", href="#how-we-work"
-    if (href.startsWith('#')) {
-      if (href === '#home' || href === '#') {
-        e.preventDefault();
-        closeMobileMenu();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        safePushState(window.location.pathname);
-        return;
-      }
-      if (scrollToElement(href)) {
-        e.preventDefault();
-        closeMobileMenu();
-        safePushState(window.location.pathname + href);
-        return;
-      }
-      return;
-    }
-
-    // If running under local file: protocol
+    // 2. CHECK DEDICATED SUBPAGES (/about, /faq, etc.)
     if (window.location.protocol === 'file:') {
-      let currentUrl, targetUrl;
-      try {
-        currentUrl = new URL(window.location.href);
-        targetUrl = new URL(href, window.location.href);
-      } catch (err) {
-        return;
-      }
-
-      const currentPath = currentUrl.pathname.toLowerCase();
-      const targetPath = targetUrl.pathname.toLowerCase();
-      const isCurrentFile = (currentPath === targetPath) || 
-        ((currentPath.endsWith('/index.html') || currentPath.endsWith('/')) && (targetPath.endsWith('/index.html') || targetPath.endsWith('/')));
-
-      if (isCurrentFile) {
-        if (targetUrl.hash && targetUrl.hash !== '#' && targetUrl.hash !== '#home') {
-          if (scrollToElement(targetUrl.hash)) {
-            e.preventDefault();
-            closeMobileMenu();
-            return;
-          }
-        }
-        if (!targetUrl.hash || targetUrl.hash === '#home' || targetUrl.hash === '#') {
-          e.preventDefault();
-          closeMobileMenu();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          return;
-        }
-      }
-
-      // Cross-page navigation on local file: protocol:
-      // Allow browser native navigation to load HTML file directly from disk
       closeMobileMenu();
       return;
     }
 
-    // --- HTTP / HTTPS (Vercel & Live Servers) ---
     let currentUrl, targetUrl;
     try {
       currentUrl = normalizeUrl(window.location.href);
@@ -2677,51 +2678,28 @@ window.reinitPageScripts = function(targetUrl) {
       return;
     }
 
-    // Strictly permit only same-origin http: and https: protocols
     if (targetUrl.origin !== currentUrl.origin) return;
 
     const isSamePath = targetUrl.pathname === currentUrl.pathname;
 
-    // Check if it is an anchor on the current page (e.g. href="index.html#booking" while on "/")
-    if (isSamePath && targetUrl.hash) {
-      if (targetUrl.hash === '#home' || targetUrl.hash === '#') {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        closeMobileMenu();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        safePushState(targetUrl.pathname);
-        return;
-      }
-      if (scrollToElement(targetUrl.hash)) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        closeMobileMenu();
-        safePushState(targetUrl.pathname + targetUrl.hash);
-        return;
-      }
-    }
-
-    // If clicking Home or Logo when already on Home:
-    if (isSamePath && !targetUrl.hash && (targetUrl.pathname === '/' || targetUrl.pathname.endsWith('/index.html'))) {
+    if (isSamePath) {
+      // Clicking same page (e.g. clicking About while on /about)
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
       closeMobileMenu();
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      safePushState('/');
       return;
     }
 
-    // Cross-page navigation
+    // Cross-page route transition (e.g. /about -> /faq or / -> /about)
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
     closeMobileMenu();
 
     const label = getDestinationLabel(target, href);
-    runPageTransition(targetUrl.href, label, targetUrl.hash);
+    runPageTransition(targetUrl.href, label, null);
   }, true);
 
   // Handle Browser Back / Forward buttons
@@ -2729,19 +2707,31 @@ window.reinitPageScripts = function(targetUrl) {
     if (window.location.protocol === 'file:') return;
     const url = normalizeUrl(window.location.href);
     const label = getDestinationLabel(null, url.href);
-    runPageTransition(url.href, label, window.location.hash);
+    runPageTransition(url.href, label, null);
   });
 
-  // Handle initial anchor on page load
+  // Handle Initial Load with Hash or Session Scroll Target
   window.addEventListener('DOMContentLoaded', () => {
-    if (window.location.hash) {
+    let initialTarget = null;
+    try {
+      initialTarget = sessionStorage.getItem('artafic_scroll_target');
+      if (initialTarget) sessionStorage.removeItem('artafic_scroll_target');
+    } catch(e) {}
+
+    if (!initialTarget && window.location.hash) {
+      initialTarget = window.location.hash.slice(1);
+    }
+
+    if (initialTarget) {
+      // Immediately clean URL of any hash
+      safePushState(window.location.protocol === 'file:' ? window.location.pathname : '/');
       setTimeout(() => {
-        scrollToElement(window.location.hash);
-      }, 120);
+        scrollToSection(initialTarget, 'smooth');
+      }, 150);
     }
   });
 
-  // Expose Global Console Test Function
+  // Global test function
   window.testArtaficTransition = function(customLabel) {
     runPageTransition(window.location.href, customLabel || 'ARTAFIC', null);
   };

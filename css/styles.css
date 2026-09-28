@@ -120,8 +120,14 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-height, 72px) + 16px);
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+}
+
+section[id],
+div[id].process-sticky {
+  scroll-margin-top: calc(var(--nav-height, 72px) + 16px);
 }
 
 body {
