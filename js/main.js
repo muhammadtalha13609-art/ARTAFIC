@@ -853,7 +853,7 @@ window.initScrollSpy = function() {
   if (!isHome) return;
 
   const navLinks = document.querySelectorAll('.nav__link[data-nav-link], .nav__link[data-section]');
-  const sectionIds = ['home', 'services', 'before-after', 'why-artafic'];
+  const sectionIds = ['home', 'services', 'before-after'];
   const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
   const navHeight = 85;
 
@@ -2275,7 +2275,6 @@ window.reinitPageScripts = function(targetUrl) {
   const HOMEPAGE_SECTIONS = new Set([
     'home',
     'services',
-    'why-artafic',
     'before-after',
     'portfolio',
     'how-we-work',
