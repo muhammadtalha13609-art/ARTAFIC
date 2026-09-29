@@ -12,23 +12,35 @@
 
   <!-- SEO -->
   <meta name="google-site-verification" content="a_2RpcLyJkDHQhTWIVu5BeVPZF6huv7hIAScZ9HsRRM" />
-  <title>Terms of Service — ARTAFIC</title>
-  <meta name="description" content="Read ARTAFIC's Terms of Service governing website use, intellectual property, and client project inquiry procedures." />
+  <title>Terms of Service &mdash; ARTAFIC | Websites &amp; Logos for Serious Businesses</title>
+  <meta name="description" content="Read ARTAFIC's Terms of Service governing website access, intellectual property, client project inquiries, and service agreements." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://artafic.vercel.app/terms" />
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png" />
 
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://artafic.vercel.app/terms" />
+  <meta property="og:title" content="Terms of Service &mdash; ARTAFIC" />
+  <meta property="og:description" content="Read ARTAFIC's Terms of Service governing website access, intellectual property, client project inquiries, and service agreements." />
+  <meta property="og:image" content="https://artafic.vercel.app/assets/images/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Kanit:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css?v=5.4" />
+  <link rel="stylesheet" href="css/about.css?v=3.3" />
 </head>
-<body class="legal-page">
+<body class="about-page legal-page">
+
+<!-- Top Scroll Progress Indicator -->
+<div id="about-scroll-progress" class="about-scroll-progress" role="progressbar" aria-label="Page reading progress"></div>
 
 <!-- ARTAFIC Branded Loader (Solid Wordmark + SelfMadeSystem Stroke Animation) -->
 <div id="artafic-loader" class="artafic-loading-overlay">
@@ -80,10 +92,10 @@
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════
-     NAVIGATION
+     NAVIGATION (Shared High-End Architecture)
 ═══════════════════════════════════════════════════════════ -->
 <header role="banner">
-  <nav class="nav" id="nav" aria-label="Main navigation">
+  <nav class="nav nav--on-dark" id="nav" aria-label="Main navigation">
     <div class="nav__inner">
 
       <a href="index.html" class="nav__logo" aria-label="ARTAFIC — Home">
@@ -91,15 +103,15 @@
       </a>
 
       <ul class="nav__links" role="list">
-        <li><a href="index.html"         class="nav__link">Home</a></li>
-        <li><a href="index.html#services"     class="nav__link">Services</a></li>
-        <li><a href="about.html"              class="nav__link">About</a></li>
-        <li><a href="index.html#before-after" class="nav__link">Before &amp; After</a></li>
-        <li><a href="faq.html"                class="nav__link">FAQ</a></li>
+        <li><a href="index.html"              class="nav__link" data-nav-link data-section="home">Home</a></li>
+        <li><a href="index.html#services"     class="nav__link" data-nav-link data-section="services">Services</a></li>
+        <li><a href="about.html"              class="nav__link" data-nav-link>About</a></li>
+        <li><a href="index.html#before-after" class="nav__link" data-nav-link data-section="before-after">Before &amp; After</a></li>
+        <li><a href="faq.html"                class="nav__link" data-nav-link>FAQ</a></li>
       </ul>
 
       <div class="nav__actions">
-        <a href="index.html#booking" class="btn btn--primary btn--sm">Get In Touch</a>
+        <a href="index.html#booking" class="btn btn--primary btn--sm" data-section="booking">Get In Touch</a>
         <button class="nav__hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
           <span class="nav__hamburger-line" aria-hidden="true"></span>
           <span class="nav__hamburger-line" aria-hidden="true"></span>
@@ -113,7 +125,7 @@
   <!-- Mobile Full-Screen Menu -->
   <div class="nav__mobile" id="mobile-menu" role="dialog" aria-label="Mobile navigation" aria-modal="true">
     <div class="nav__mobile-header">
-      <a href="index.html" class="nav__logo" aria-label="ARTAFIC — Home" data-mobile-nav-link>
+      <a href="index.html" class="nav__logo" aria-label="ARTAFIC — Home" data-mobile-nav-link data-section="home">
         <img src="assets/images/logo.png" alt="ARTAFIC" class="nav__logo-image">
       </a>
       <button class="nav__mobile-close" id="mobile-menu-close" aria-label="Close navigation menu">
@@ -122,72 +134,336 @@
     </div>
     <div class="nav__mobile-body">
       <ul class="nav__mobile-links" role="list">
-        <li><a href="index.html"         class="nav__mobile-link" data-mobile-nav-link>Home</a></li>
-        <li><a href="index.html#services"     class="nav__mobile-link" data-mobile-nav-link>Services</a></li>
+        <li><a href="index.html"              class="nav__mobile-link" data-mobile-nav-link data-section="home">Home</a></li>
+        <li><a href="index.html#services"     class="nav__mobile-link" data-mobile-nav-link data-section="services">Services</a></li>
         <li><a href="about.html"              class="nav__mobile-link" data-mobile-nav-link>About</a></li>
-        <li><a href="index.html#before-after" class="nav__mobile-link" data-mobile-nav-link>Before &amp; After</a></li>
+        <li><a href="index.html#before-after" class="nav__mobile-link" data-mobile-nav-link data-section="before-after">Before &amp; After</a></li>
         <li><a href="faq.html"                class="nav__mobile-link" data-mobile-nav-link>FAQ</a></li>
       </ul>
       <div class="nav__mobile-actions">
-        <a href="index.html#booking" class="btn btn--primary btn--lg" style="width:100%; justify-content:center;" data-mobile-nav-link>Get In Touch</a>
+        <a href="index.html#booking" class="btn btn--primary btn--lg" style="width:100%; justify-content:center;" data-mobile-nav-link data-section="booking">Get In Touch</a>
       </div>
     </div>
   </div>
 </header>
 
-<!-- ═══════════════════════════════════════════════════════════
-     MAIN TERMS CONTENT
-═══════════════════════════════════════════════════════════ -->
 <main id="main-content" tabindex="-1">
-  <section class="section" style="padding-top: 8rem; padding-bottom: 5rem; background: var(--color-bg);">
-    <div class="floating-paths-bg" data-pos="-1" data-theme="auto" style="opacity: 0.5;"></div>
-    <div class="container" style="max-width: 800px;">
-      <p class="section-label" style="color: var(--color-teal); font-weight: 700; letter-spacing: 0.2em; margin-bottom: 1.25rem;">LEGAL</p>
-      <h1 class="section-title" style="font-size: clamp(2.2rem, 4.5vw, 3.25rem); font-family: var(--font-heading); color: var(--color-charcoal); margin-bottom: 1rem;">Terms of Service</h1>
-      <p style="color: var(--color-text-muted); font-size: 0.875rem; margin-bottom: 3rem;">Last Updated: September 2026</p>
-
-      <div style="display: flex; flex-direction: column; gap: 2.5rem; color: var(--color-text-body); line-height: 1.75; font-size: 1rem;">
-
-        <section>
-          <h2 style="font-size: 1.25rem; font-family: var(--font-heading); color: var(--color-charcoal); margin-bottom: 0.75rem;">1. General Website Terms</h2>
-          <p>
-            Welcome to the ARTAFIC website. By accessing or using this website, you agree to comply with and be bound by these terms. This website is intended for business inquiries regarding our digital agency services: Web Development and Logo Building.
-          </p>
-        </section>
-
-        <section>
-          <h2 style="font-size: 1.25rem; font-family: var(--font-heading); color: var(--color-charcoal); margin-bottom: 0.75rem;">2. Project Inquiries &amp; Service Engagements</h2>
-          <p>
-            Submitting an inquiry through our contact form or chat assistant does not constitute a binding contract or service agreement. Client engagements, project deliverables, payment milestones, and timelines are established through separate written project agreements mutually reviewed and approved by both parties.
-          </p>
-        </section>
-
-        <section>
-          <h2 style="font-size: 1.25rem; font-family: var(--font-heading); color: var(--color-charcoal); margin-bottom: 0.75rem;">3. Intellectual Property</h2>
-          <p>
-            All original branding, designs, layout code, and editorial materials presented on this website are the intellectual property of ARTAFIC, unless otherwise credited. You may not reproduce, redistribute, or duplicate any portion of this website without prior written authorization.
-          </p>
-        </section>
-
-        <section>
-          <h2 style="font-size: 1.25rem; font-family: var(--font-heading); color: var(--color-charcoal); margin-bottom: 0.75rem;">4. Accuracy of Information</h2>
-          <p>
-            While we strive to keep all information on this website accurate and up-to-date, website content is provided on an "as-is" basis for informational and marketing purposes.
-          </p>
-        </section>
-
-        <section>
-          <h2 style="font-size: 1.25rem; font-family: var(--font-heading); color: var(--color-charcoal); margin-bottom: 0.75rem;">5. Inquiries &amp; Contact</h2>
-          <p>
-            If you have any questions regarding these terms, you can contact us at:
-            <br />
-            <a href="mailto:hello@artafic.com" style="color: var(--color-teal); font-weight: 600;">hello@artafic.com</a>
-          </p>
-        </section>
-
+  
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 01: TERMS HERO (Fluted Glass & Ambient Parallax)
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="about-hero" id="terms-hero" data-nav-theme="dark">
+    <div class="about-hero__overlay" aria-hidden="true"></div>
+    <div class="about-hero__ambient-glow hero-step" data-step="5" data-mouse-parallax="7" aria-hidden="true"></div>
+    <div class="about-hero__flowing-paths" aria-hidden="true">
+      <svg class="fp-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
+        <path d="M -100 450 C 250 350, 450 550, 850 250 C 950 180, 1100 200, 1200 120" stroke="rgba(20, 184, 166, 0.15)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M -100 350 C 200 480, 500 220, 800 400 C 920 480, 1050 320, 1200 250" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M -50 250 C 300 200, 600 450, 950 150 C 1050 80, 1150 120, 1250 80" stroke="rgba(20, 184, 166, 0.08)" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="grain-overlay" aria-hidden="true"></div>
+    
+    <div class="container relative-z">
+      <div class="about-hero__layout">
+        <div class="about-hero__eyebrow hero-step" data-step="1">
+          <span class="about-hero__eyebrow-dot"></span>
+          LEGAL &bull; SERVICE AGREEMENT
+        </div>
+        <h1 class="about-hero__title hero-step" data-step="2"><strong>TERMS OF SERVICE</strong></h1>
+        <p class="about-hero__lead hero-step" data-step="3">
+          Clear, transparent standards governing website access, intellectual property, project inquiries, and client agreements.
+        </p>
+        <div class="about-hero__actions hero-step" data-step="4">
+          <span class="btn--ghost hero-scroll-btn" style="cursor: default; pointer-events: none;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Last Updated: September 2026
+          </span>
+          <a href="#terms-general" class="btn--ghost hero-scroll-btn">
+            <span>Read Terms</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+          </a>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- Animated Section Divider with Glowing Center Dot -->
+  <div class="section-divider" aria-hidden="true">
+    <div class="section-divider__line">
+      <div class="section-divider__dot"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 02: GENERAL WEBSITE TERMS (Editorial 2-Column Balance)
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="who-we-are" id="terms-general">
+    <!-- Large Light Background Text with subtle Parallax -->
+    <div class="chapter-watermark chapter-watermark--terms" aria-hidden="true" data-parallax="-0.12">TERMS</div>
+    <div class="floating-paths-bg" data-pos="1" data-theme="light" style="opacity: 0.45;"></div>
+    
+    <div class="container relative-z">
+      <div class="who-we-are__grid">
+        <!-- Left: Heading & Supporting Details -->
+        <div class="who-we-are__left fade-up">
+          <p class="about-section-tag">01 / GENERAL TERMS</p>
+          <h2 class="who-we-are__heading">General Website Terms</h2>
+          <div class="who-we-are__accent-line" aria-hidden="true"></div>
+          <p class="who-we-are__tagline">Clear Standards &bull; Mutual Respect</p>
+
+          <div class="who-we-are__badge" data-mouse-parallax="4" aria-hidden="true">
+            <span class="who-we-are__badge-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </span>
+            <span class="who-we-are__badge-text">DIGITAL CRAFT &bull; BINDING STANDARDS</span>
+          </div>
+        </div>
+
+        <!-- Right: Grounded, Honest, Human Copy -->
+        <div class="who-we-are__right fade-up">
+          <p class="who-we-are__lead">
+            Welcome to the ARTAFIC website. By accessing or using this website, you agree to comply with and be bound by these terms.
+          </p>
+          <p class="who-we-are__body">
+            This website is intended for business inquiries regarding our digital agency services: Web Development and Logo Building. We maintain this site with precision to provide an honest, fast, and clear showcase of our craft and collaborative standards.
+          </p>
+
+          <div class="legal-cards-grid">
+            <div class="legal-card studio-card fade-up">
+              <span class="corner-mark corner-mark--tl" aria-hidden="true">+</span>
+              <span class="corner-mark corner-mark--br" aria-hidden="true">+</span>
+              <span class="legal-card__num">01 / PURPOSE</span>
+              <h3 class="legal-card__title">Agency Showcase</h3>
+              <p class="legal-card__desc">Designed to exhibit authentic client projects, explain our development standards, and receive qualified project briefs.</p>
+            </div>
+
+            <div class="legal-card studio-card fade-up">
+              <span class="corner-mark corner-mark--tl" aria-hidden="true">+</span>
+              <span class="corner-mark corner-mark--br" aria-hidden="true">+</span>
+              <span class="legal-card__num">02 / CONDUCT</span>
+              <h3 class="legal-card__title">Lawful Browsing</h3>
+              <p class="legal-card__desc">Visitors agree to browse responsibly without interfering with infrastructure performance or attempting unauthorized access.</p>
+            </div>
+
+            <div class="legal-card studio-card fade-up">
+              <span class="corner-mark corner-mark--tl" aria-hidden="true">+</span>
+              <span class="corner-mark corner-mark--br" aria-hidden="true">+</span>
+              <span class="legal-card__num">03 / INTEGRITY</span>
+              <h3 class="legal-card__title">Mutual Integrity</h3>
+              <p class="legal-card__desc">We approach all professional engagements transparently, maintaining direct communication with zero hidden clauses.</p>
+            </div>
+
+            <div class="legal-card studio-card fade-up">
+              <span class="corner-mark corner-mark--tl" aria-hidden="true">+</span>
+              <span class="corner-mark corner-mark--br" aria-hidden="true">+</span>
+              <span class="legal-card__num">04 / REVISIONS</span>
+              <h3 class="legal-card__title">Periodic Updates</h3>
+              <p class="legal-card__desc">These terms may be revised periodically to reflect enhancements in our agency service lines or statutory compliance standards.</p>
+            </div>
+          </div>
+
+          <div class="who-we-are__quote">
+            <p class="who-we-are__quote-text">
+              We believe that good working relationships start with mutual respect, clear expectations, and transparent terms from day one.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Animated Section Divider with Glowing Center Dot -->
+  <div class="section-divider" aria-hidden="true">
+    <div class="section-divider__line">
+      <div class="section-divider__dot"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 03: INQUIRIES & IP (Structured Contrast Composition)
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="why-exists" id="terms-engagements" data-nav-theme="dark">
+    <!-- Large Light Background Text with subtle Parallax -->
+    <div class="chapter-watermark chapter-watermark--agreement" aria-hidden="true" data-parallax="-0.12">AGREEMENT</div>
+    <div class="floating-paths-bg" data-pos="-1" data-theme="minimal" style="opacity: 0.35;"></div>
+    
+    <div class="container relative-z">
+      <div class="why-exists__header fade-up">
+        <p class="about-section-tag">02 / ENGAGEMENTS &amp; IP</p>
+        <h2 class="why-exists__title">Project Inquiries &amp; Intellectual Property</h2>
+        <p class="why-exists__subtitle">
+          How business inquiries transition into client contracts, and how our original designs, code, and creative assets are governed.
+        </p>
+      </div>
+
+      <div class="why-exists__contrast-grid">
+        <!-- Inquiries Card with Corner Cross Marks -->
+        <div class="contrast-card contrast-card--problem studio-card fade-up">
+          <span class="corner-mark corner-mark--tl" aria-hidden="true">+</span>
+          <span class="corner-mark corner-mark--br" aria-hidden="true">+</span>
+          <span class="contrast-card__label">ENGAGEMENT PROCEDURES</span>
+          <h3 class="contrast-card__heading">Inquiries &amp; Service Engagements</h3>
+          <p class="contrast-card__desc" style="margin-bottom: 1.75rem;">
+            Submitting an inquiry through our contact form or chat assistant does not constitute a binding contract or service agreement.
+          </p>
+          <ul class="contrast-card__list">
+            <li class="contrast-card__item">
+              <span class="contrast-card__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span>Inquiries enable our team to evaluate project scope and technical feasibility.</span>
+            </li>
+            <li class="contrast-card__item">
+              <span class="contrast-card__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span>Client engagements, project deliverables, payment milestones, and timelines are established through separate written project agreements mutually reviewed and approved by both parties.</span>
+            </li>
+            <li class="contrast-card__item">
+              <span class="contrast-card__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span>Every engagement requires mutual review, approval, and deposit before production commences.</span>
+            </li>
+            <li class="contrast-card__item">
+              <span class="contrast-card__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span>Neither party is bound to work together until a formal contract is executed.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- IP Card with Corner Cross Marks -->
+        <div class="contrast-card contrast-card--solution studio-card fade-up">
+          <span class="corner-mark corner-mark--tl" aria-hidden="true">+</span>
+          <span class="corner-mark corner-mark--br" aria-hidden="true">+</span>
+          <span class="contrast-card__label">INTELLECTUAL PROPERTY</span>
+          <h3 class="contrast-card__heading">Asset Ownership &amp; Protection</h3>
+          <p class="contrast-card__desc" style="margin-bottom: 1.75rem;">
+            All original branding, designs, layout code, and editorial materials presented on this website are the intellectual property of ARTAFIC, unless otherwise credited.
+          </p>
+          <ul class="contrast-card__list">
+            <li class="contrast-card__item">
+              <span class="contrast-card__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--about-teal-bright)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span>You may not reproduce, redistribute, or duplicate any portion of this website without prior written authorization.</span>
+            </li>
+            <li class="contrast-card__item">
+              <span class="contrast-card__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--about-teal-bright)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span>Client intellectual property ownership for custom deliverables transfers upon project completion as defined in individual agreements.</span>
+            </li>
+            <li class="contrast-card__item">
+              <span class="contrast-card__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--about-teal-bright)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span>All proprietary typography, design systems, and custom shaders remain protected under copyright law.</span>
+            </li>
+            <li class="contrast-card__item">
+              <span class="contrast-card__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--about-teal-bright)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span>Trademarks and portfolio works displayed remain the property of their respective owners.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Animated Section Divider with Glowing Center Dot -->
+  <div class="section-divider" aria-hidden="true">
+    <div class="section-divider__line">
+      <div class="section-divider__dot"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 04: ACCURACY & CONTACT (Editorial 2-Column Balance)
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="who-needs-us" id="terms-rights">
+    <!-- Large Light Background Text with subtle Parallax -->
+    <div class="chapter-watermark chapter-watermark--rights" aria-hidden="true" data-parallax="-0.12">RIGHTS</div>
+    <div class="floating-paths-bg" data-pos="1" data-theme="light" style="opacity: 0.45;"></div>
+    
+    <div class="container relative-z">
+      <div class="who-needs-us__grid">
+        <!-- Left: Heading & Supporting Details -->
+        <div class="who-needs-us__left fade-up">
+          <p class="about-section-tag">03 / ACCURACY &amp; SUPPORT</p>
+          <h2 class="who-needs-us__heading">Accuracy &amp; Inquiries</h2>
+          <div class="who-needs-us__accent-line" aria-hidden="true"></div>
+          <p class="who-needs-us__tagline">Transparent Representation &bull; Direct Contact</p>
+        </div>
+
+        <!-- Right: Approach Cards -->
+        <div class="who-needs-us__right fade-up">
+          <div class="approach-card studio-card fade-up">
+            <span class="corner-mark corner-mark--tl" aria-hidden="true">+</span>
+            <span class="corner-mark corner-mark--br" aria-hidden="true">+</span>
+            <span class="approach-card__num">01 / ACCURACY</span>
+            <h3 class="approach-card__title">Accuracy of Information</h3>
+            <p class="approach-card__desc">
+              While we strive to keep all information on this website accurate and up-to-date, website content is provided on an "as-is" basis for informational and marketing purposes. Specific technical scopes and architectural timelines are formalized in direct client contracts.
+            </p>
+          </div>
+
+          <div class="approach-card studio-card fade-up">
+            <span class="corner-mark corner-mark--tl" aria-hidden="true">+</span>
+            <span class="corner-mark corner-mark--br" aria-hidden="true">+</span>
+            <span class="approach-card__num">02 / CONTACT</span>
+            <h3 class="approach-card__title">Inquiries &amp; Questions</h3>
+            <p class="approach-card__desc">
+              If you have any questions regarding these terms, project agreements, or service arrangements, you can contact us directly via email at:
+            </p>
+            <div style="margin-top: 1rem;">
+              <a href="mailto:hello@artafic.com" style="color: var(--about-teal); font-family: var(--about-font-display); font-size: 1.05rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
+                hello@artafic.com
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Animated Section Divider with Glowing Center Dot -->
+  <div class="section-divider" aria-hidden="true">
+    <div class="section-divider__line">
+      <div class="section-divider__dot"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 05: FINAL CTA
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="about-cta" id="terms-cta" data-nav-theme="dark">
+    <div class="floating-paths-bg" data-pos="-1.2" data-theme="dark" style="opacity: 0.35;"></div>
+    <div class="container relative-z fade-up">
+      <div class="about-cta__content">
+        <p class="about-section-tag" style="justify-content: center;">START A PROJECT</p>
+        <h2 class="about-cta__title">Ready to Discuss Your Project?</h2>
+        <p class="about-cta__sub">
+          Tell us what you're looking for, and we'll provide an honest consultation, clear project roadmap, and transparent agreement.
+        </p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+          <a href="index.html#booking" class="btn btn--primary">
+            <span>Get In Touch</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+          <a href="mailto:hello@artafic.com" class="btn--ghost hero-scroll-btn" style="border-color: rgba(255, 255, 255, 0.25);">
+            <span>Email hello@artafic.com</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <!-- ═══════════════════════════════════════════════════════════
@@ -211,10 +487,10 @@
       <div class="footer__col">
         <p class="footer__col-title">Navigation</p>
         <ul class="footer__links" role="list">
-          <li><a href="index.html" class="footer__link">Home</a></li>
-          <li><a href="index.html#services" class="footer__link">Services</a></li>
+          <li><a href="index.html" class="footer__link" data-section="home">Home</a></li>
+          <li><a href="index.html#services" class="footer__link" data-section="services">Services</a></li>
           <li><a href="about.html" class="footer__link">About</a></li>
-          <li><a href="index.html#before-after" class="footer__link">Before &amp; After</a></li>
+          <li><a href="index.html#before-after" class="footer__link" data-section="before-after">Before &amp; After</a></li>
           <li><a href="faq.html" class="footer__link">FAQ</a></li>
         </ul>
       </div>
@@ -222,15 +498,15 @@
       <div class="footer__col">
         <p class="footer__col-title">Services</p>
         <ul class="footer__links" role="list">
-          <li><a href="index.html#services" class="footer__link">Web Development</a></li>
-          <li><a href="index.html#services" class="footer__link">Logo Building</a></li>
+          <li><a href="index.html#services" class="footer__link" data-section="services">Web Development</a></li>
+          <li><a href="index.html#services" class="footer__link" data-section="services">Logo Building</a></li>
         </ul>
       </div>
 
       <div class="footer__col">
         <p class="footer__col-title">Contact</p>
         <ul class="footer__links" role="list">
-          <li><a href="index.html#booking" class="footer__link">Get In Touch</a></li>
+          <li><a href="index.html#booking" class="footer__link" data-section="booking">Get In Touch</a></li>
           <li><a href="mailto:hello@artafic.com" class="footer__link">hello@artafic.com</a></li>
         </ul>
       </div>
@@ -241,7 +517,7 @@
       <p class="footer__copyright">&copy; 2026 ARTAFIC. All rights reserved.</p>
       <div class="footer__legal">
         <a href="privacy.html" class="footer__legal-link">Privacy Policy</a>
-        <a href="terms.html" class="footer__legal-link" style="color: var(--color-teal);">Terms of Service</a>
+        <a href="terms.html" class="footer__legal-link" style="color: var(--color-teal); font-weight: 600;">Terms of Service</a>
       </div>
     </div>
   </div>
@@ -249,5 +525,6 @@
 
 <!-- JS -->
 <script src="js/main.js?v=6.0"></script>
+<script src="js/about.js?v=3.3"></script>
 </body>
 </html>

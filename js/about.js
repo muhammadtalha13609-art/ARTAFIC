@@ -132,11 +132,11 @@
         });
       }, { root: null, rootMargin: '0px 0px -40px 0px', threshold: 0.1 });
 
-      document.querySelectorAll('.fade-up:not(.about-hero *), .who-we-are, .who-needs-us, .section-divider').forEach(el => {
+      document.querySelectorAll('.fade-up:not(.about-hero *), .who-we-are, .who-needs-us, .why-exists, .section-divider, .legal-card, .contrast-card, .approach-card').forEach(el => {
         revealObserver.observe(el);
       });
     } else {
-      document.querySelectorAll('.fade-up, .who-we-are, .who-needs-us, .section-divider').forEach(el => {
+      document.querySelectorAll('.fade-up, .who-we-are, .who-needs-us, .why-exists, .section-divider, .legal-card, .contrast-card, .approach-card').forEach(el => {
         el.classList.add('is-revealed');
       });
     }

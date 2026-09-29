@@ -203,6 +203,106 @@
   color: rgba(15, 23, 42, 0.03);
 }
 
+.chapter-watermark--data {
+  top: 5%;
+  right: -2%;
+  color: rgba(15, 23, 42, 0.03);
+}
+
+.chapter-watermark--security {
+  top: 5%;
+  left: -2%;
+  right: auto;
+  color: rgba(255, 255, 255, 0.025);
+}
+
+.chapter-watermark--trust {
+  top: 5%;
+  right: -2%;
+  color: rgba(15, 23, 42, 0.03);
+}
+
+.chapter-watermark--terms {
+  top: 5%;
+  right: -2%;
+  color: rgba(15, 23, 42, 0.03);
+}
+
+.chapter-watermark--agreement {
+  top: 5%;
+  left: -2%;
+  right: auto;
+  color: rgba(255, 255, 255, 0.025);
+}
+
+.chapter-watermark--rights {
+  top: 5%;
+  right: -2%;
+  color: rgba(15, 23, 42, 0.03);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   LEGAL PAGE ENHANCEMENTS (About Style Adaptations)
+   ═══════════════════════════════════════════════════════════════════ */
+.legal-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.legal-card {
+  background: var(--about-white);
+  border: 1px solid var(--about-border-light);
+  border-radius: 14px;
+  padding: 1.6rem 1.75rem;
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.legal-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(20, 184, 166, 0.4);
+  box-shadow: 0 12px 28px rgba(17, 24, 39, 0.06);
+}
+
+.legal-card__num {
+  font-family: var(--about-font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--about-teal);
+  letter-spacing: 0.12em;
+  margin-bottom: 0.65rem;
+  display: block;
+}
+
+.legal-card__title {
+  font-family: var(--about-font-display);
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--about-charcoal);
+  margin: 0 0 0.45rem;
+}
+
+.legal-card__desc {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--about-slate-dark);
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .legal-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .legal-card {
+    padding: 1.35rem 1.25rem;
+  }
+}
+
+
 /* ═══════════════════════════════════════════════════════════════════
    ANIMATED SECTION DIVIDERS (Subtle Drawing Line with Teal Accent)
    ═══════════════════════════════════════════════════════════════════ */
@@ -1395,7 +1495,9 @@
     transform: none !important;
   }
 
-  .chapter-watermark--purpose {
+  .chapter-watermark--purpose,
+  .chapter-watermark--security,
+  .chapter-watermark--agreement {
     color: rgba(255, 255, 255, 0.02);
   }
 
