@@ -36,6 +36,8 @@ function formatTime() {
     '.less-noise',
     '#about',
     '#about-hero',
+    '#why-exists',
+    '.why-exists',
     '#faq-hero',
     '#about-cta',
     'footer',
@@ -854,8 +856,8 @@ window.initScrollSpy = function() {
 
   if (!isHome) return;
 
-  const navLinks = document.querySelectorAll('.nav__link[data-nav-link], .nav__link[data-section]');
-  const sectionIds = ['home', 'services', 'before-after'];
+  const navLinks = document.querySelectorAll('.nav__link[data-nav-link], .nav__link[data-section], .nav__mobile-link[data-mobile-nav-link], .nav__mobile-link[data-section]');
+  const sectionIds = ['home', 'services', 'before-after', 'portfolio', 'process', 'less-noise', 'booking'];
   const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
   const navHeight = 85;
 
@@ -873,6 +875,14 @@ window.initScrollSpy = function() {
       const sec = link.getAttribute('data-section') || (link.getAttribute('href') || '').replace(/^.*#/, '');
       const isMatch = (sec === current) || (current === 'home' && (sec === 'home' || link.getAttribute('href') === 'index.html' || link.getAttribute('href') === '/'));
       link.classList.toggle('is-active', isMatch);
+      link.classList.toggle('nav__link--active', isMatch);
+      if (isMatch) {
+        link.style.color = 'var(--color-teal)';
+        link.style.fontWeight = '600';
+      } else {
+        link.style.color = '';
+        link.style.fontWeight = '';
+      }
     });
   }
 

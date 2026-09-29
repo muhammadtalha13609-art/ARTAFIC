@@ -515,7 +515,7 @@ input, textarea, select {
   position: absolute;
   inset: 0;
   border-radius: var(--radius-md);
-  background-color: rgba(20, 184, 166, 0.08); /* Subtle teal */
+  background-color: rgba(0, 0, 0, 0.06);
   transform: scale(0.85);
   opacity: 0;
   transition: all var(--duration-fast) var(--ease-out);
@@ -531,8 +531,10 @@ input, textarea, select {
   opacity: 1;
 }
 
-.nav__link.is-active {
-  color: var(--color-charcoal);
+.nav__link.is-active,
+.nav__link.nav__link--active {
+  color: var(--color-teal) !important;
+  font-weight: 600;
 }
 
 .nav__actions {
@@ -1096,16 +1098,17 @@ input, textarea, select {
   filter: brightness(0) invert(1) !important;
 }
 
-.nav.nav--on-dark .nav__link:not(.nav__link--active) {
+.nav.nav--on-dark .nav__link:not(.nav__link--active):not(.is-active) {
   color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 500;
 }
 
-.nav.nav--on-dark .nav__link:not(.nav__link--active):hover {
+.nav.nav--on-dark .nav__link:not(.nav__link--active):not(.is-active):hover {
   color: #ffffff !important;
 }
 
 .nav.nav--on-dark .nav__link::before {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.12);
 }
 
 .nav.nav--on-dark .nav__hamburger-line {
@@ -1116,22 +1119,22 @@ input, textarea, select {
   background: rgba(255, 255, 255, 0.15);
 }
 
-/* 2. When Going Through Light / White Sections (Black Text & Logo) */
+/* 2. When Going Through Light / White Sections (Original Color Logo & Black Text) */
 .nav:not(.nav--on-dark) .nav__logo-image {
-  filter: brightness(0) !important;
+  filter: none !important;
 }
 
-.nav:not(.nav--on-dark) .nav__link:not(.nav__link--active) {
+.nav:not(.nav--on-dark) .nav__link:not(.nav__link--active):not(.is-active) {
   color: #0B1120 !important;
   font-weight: 500;
 }
 
-.nav:not(.nav--on-dark) .nav__link:not(.nav__link--active):hover {
+.nav:not(.nav--on-dark) .nav__link:not(.nav__link--active):not(.is-active):hover {
   color: #000000 !important;
 }
 
 .nav:not(.nav--on-dark) .nav__link::before {
-  background-color: rgba(0, 0, 0, 0.08);
+  background-color: rgba(0, 0, 0, 0.06);
 }
 
 .nav:not(.nav--on-dark) .nav__hamburger-line {
@@ -1142,9 +1145,13 @@ input, textarea, select {
   background: rgba(0, 0, 0, 0.08);
 }
 
-/* Active link styling guarantee */
-.nav .nav__link.nav__link--active {
+/* Active link: ONLY the button or currently used text gets electric teal */
+.nav .nav__link.nav__link--active,
+.nav .nav__link.is-active,
+.nav__mobile-link.nav__link--active,
+.nav__mobile-link.is-active {
   color: var(--color-teal) !important;
+  font-weight: 600 !important;
 }
 
 
