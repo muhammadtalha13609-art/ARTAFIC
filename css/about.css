@@ -1438,7 +1438,7 @@
    PRESERVED KINETIC ANIMATION ("YOUR BUSINESS. OUR CRAFT.")
    ═══════════════════════════════════════════════════════════════════ */
 .less-noise {
-  height: 150vh;
+  height: 280vh;
   position: relative;
   display: flex;
   align-items: center;
@@ -1460,12 +1460,17 @@
 
 .less-noise__glow {
   position: absolute;
-  width: 60vw;
-  height: 60vw;
-  background: radial-gradient(circle, rgba(20, 184, 166, 0.12) 0%, rgba(20, 184, 166, 0) 60%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(65vw, 650px);
+  height: min(65vw, 650px);
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.18) 0%, rgba(20, 184, 166, 0) 65%);
   border-radius: 50%;
   z-index: 1;
   pointer-events: none;
+  filter: blur(25px);
+  will-change: transform, opacity;
 }
 
 .less-noise__word {
@@ -1475,7 +1480,20 @@
   transform: translate(-50%, -50%);
   white-space: nowrap;
   z-index: 2;
-  transition: transform 0.1s linear, opacity 0.1s linear;
+  text-align: center;
+  user-select: none;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.less-noise__word1 {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.less-noise__word2 {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
 }
 
 .about-heading-giant {
