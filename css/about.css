@@ -241,9 +241,131 @@
   color: rgba(15, 23, 42, 0.03);
 }
 
+.chapter-watermark--privacy,
+.chapter-watermark--terms-doc {
+  top: 6rem;
+  right: -2%;
+  color: rgba(15, 23, 42, 0.03);
+}
+
 /* ═══════════════════════════════════════════════════════════════════
-   LEGAL PAGE ENHANCEMENTS (About Style Adaptations)
+   LEGAL DOCUMENT PAGES (Clean Layout + About Typography)
    ═══════════════════════════════════════════════════════════════════ */
+.legal-page {
+  background-color: var(--about-ivory);
+  color: var(--about-charcoal);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.legal-section {
+  padding-top: 8.5rem;
+  padding-bottom: 6.5rem;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--about-ivory);
+}
+
+.legal-container {
+  max-width: 820px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  padding: 0 1.5rem;
+}
+
+.legal-label {
+  font-family: var(--about-font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--about-teal);
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legal-label::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--about-teal);
+  box-shadow: 0 0 8px var(--about-teal);
+}
+
+.legal-title {
+  font-family: var(--about-font-display);
+  font-size: clamp(2.4rem, 5vw, 3.75rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  color: var(--about-charcoal);
+  margin: 0 0 1rem;
+}
+
+.legal-meta {
+  font-family: 'Inter', sans-serif;
+  color: var(--about-slate);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 3.5rem;
+}
+
+.legal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2.75rem;
+  color: var(--about-slate-dark);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.legal-block h2 {
+  font-family: var(--about-font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--about-charcoal);
+  margin: 0 0 0.85rem;
+}
+
+.legal-block p {
+  margin: 0 0 1rem;
+  color: var(--about-slate-dark);
+}
+
+.legal-block p:last-child {
+  margin-bottom: 0;
+}
+
+.legal-block ul {
+  padding-left: 1.5rem;
+  margin: 0.75rem 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.legal-block ul li strong {
+  color: var(--about-charcoal);
+}
+
+.legal-block a {
+  color: var(--about-teal);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.legal-block a:hover {
+  color: var(--about-teal-bright);
+  text-decoration: underline;
+}
+
 .legal-cards-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
