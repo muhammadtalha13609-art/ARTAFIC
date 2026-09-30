@@ -1951,14 +1951,6 @@ function initKineticCraftAnimation() {
   const word2 = lessNoiseSec.querySelector('.less-noise__word2');
   if (!word1 || !word2) return;
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion) {
-    word1.style.display = 'none';
-    word2.style.opacity = '1';
-    word2.style.transform = 'translate(-50%, -50%) scale(1)';
-    return;
-  }
-
   const glow = lessNoiseSec.querySelector('.less-noise__glow');
   let ticking = false;
 
@@ -1985,36 +1977,38 @@ function initKineticCraftAnimation() {
 
     progress = Math.max(0, Math.min(1, progress));
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // Word 1: "YOUR BUSINESS."
-    // 0.00 -> 0.32: Solid hold at 100% opacity, scale 1.0 (gives user generous time to read)
-    // 0.32 -> 0.48: Smooth cinematic fade out (1 -> 0) and gentle scale expansion (1.0 -> 1.12)
-    // > 0.48: Completely hidden
-    if (progress <= 0.32) {
+    // 0.00 -> 0.28: Solid hold at 100% opacity, scale 1.0 (clear, unmistakable visibility)
+    // 0.28 -> 0.50: Smooth cinematic fade out (1 -> 0) and subtle scale expansion (1.0 -> 1.08)
+    // > 0.50: Completely hidden
+    if (progress <= 0.28) {
       word1.style.opacity = '1';
       word1.style.transform = 'translate(-50%, -50%) scale(1)';
-    } else if (progress <= 0.48) {
-      const p1 = (progress - 0.32) / 0.16;
+    } else if (progress <= 0.50) {
+      const p1 = (progress - 0.28) / 0.22;
       const op1 = Math.max(0, 1 - p1);
-      const sc1 = 1 + (p1 * 0.12);
+      const sc1 = prefersReducedMotion ? 1 : 1 + (p1 * 0.08);
       word1.style.opacity = op1.toFixed(3);
       word1.style.transform = `translate(-50%, -50%) scale(${sc1.toFixed(3)})`;
     } else {
       word1.style.opacity = '0';
-      word1.style.transform = 'translate(-50%, -50%) scale(1.12)';
+      word1.style.transform = prefersReducedMotion ? 'translate(-50%, -50%)' : 'translate(-50%, -50%) scale(1.08)';
     }
 
     // Word 2: "OUR CRAFT."
-    // < 0.44: Completely hidden
-    // 0.44 -> 0.58: Smooth fade in (0 -> 1) and scale settling (0.90 -> 1.0)
-    // 0.58 -> 0.88: Solid hold at 100% opacity, scale 1.0 (generous reading time)
-    // 0.88 -> 1.00: Stays visible as section unpins into Booking form
-    if (progress < 0.44) {
+    // < 0.35: Completely hidden
+    // 0.35 -> 0.55: Smooth fade in (0 -> 1) and gentle scale settling (0.92 -> 1.0)
+    // 0.55 -> 0.90: Solid hold at 100% opacity, scale 1.0 (generous reading time)
+    // 0.90 -> 1.00: Stays visible as section unpins into Booking form
+    if (progress < 0.35) {
       word2.style.opacity = '0';
-      word2.style.transform = 'translate(-50%, -50%) scale(0.90)';
-    } else if (progress <= 0.58) {
-      const p2 = (progress - 0.44) / 0.14;
+      word2.style.transform = prefersReducedMotion ? 'translate(-50%, -50%)' : 'translate(-50%, -50%) scale(0.92)';
+    } else if (progress <= 0.55) {
+      const p2 = (progress - 0.35) / 0.20;
       const op2 = Math.min(1, p2);
-      const sc2 = 0.90 + (p2 * 0.10);
+      const sc2 = prefersReducedMotion ? 1 : 0.92 + (p2 * 0.08);
       word2.style.opacity = op2.toFixed(3);
       word2.style.transform = `translate(-50%, -50%) scale(${sc2.toFixed(3)})`;
     } else {
@@ -2025,7 +2019,7 @@ function initKineticCraftAnimation() {
     // Ambient glow breathing pulse during transition
     if (glow) {
       const pulse = Math.sin(progress * Math.PI);
-      const glowScale = 1 + (pulse * 0.20);
+      const glowScale = prefersReducedMotion ? 1 : 1 + (pulse * 0.20);
       const glowOp = 0.16 + (pulse * 0.10);
       glow.style.transform = `translate(-50%, -50%) scale(${glowScale.toFixed(2)})`;
       glow.style.opacity = glowOp.toFixed(2);
@@ -2041,8 +2035,12 @@ function initKineticCraftAnimation() {
     }
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
+  if (!lessNoiseSec._kineticListenerAttached) {
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    lessNoiseSec._kineticListenerAttached = true;
+  }
+
   updateCraftKinetic();
 }
 window.initKineticCraftAnimation = initKineticCraftAnimation;

@@ -1438,17 +1438,17 @@
    PRESERVED KINETIC ANIMATION ("YOUR BUSINESS. OUR CRAFT.")
    ═══════════════════════════════════════════════════════════════════ */
 .less-noise {
-  height: 280vh;
+  height: 180vh;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
+  width: 100%;
   background-color: #080808;
 }
 
 .less-noise__sticky {
   position: sticky;
   top: 0;
+  left: 0;
   height: 100vh;
   width: 100%;
   display: flex;

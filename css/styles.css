@@ -2500,11 +2500,10 @@ input, textarea, select {
    17. KINETIC CRAFT STATEMENT ("YOUR BUSINESS. OUR CRAFT.")
    ──────────────────────────────────────────────────────────── */
 .less-noise {
-  height: 280vh;
+  height: 180vh;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
+  width: 100%;
   background-color: #080808;
   z-index: 10;
 }
@@ -2512,6 +2511,7 @@ input, textarea, select {
 .less-noise__sticky {
   position: sticky;
   top: 0;
+  left: 0;
   height: 100vh;
   width: 100%;
   display: flex;
@@ -2557,7 +2557,7 @@ input, textarea, select {
 
 .less-noise__word2 {
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0.9);
+  transform: translate(-50%, -50%) scale(0.92);
 }
 
 .craft-heading-giant,
@@ -2583,7 +2583,7 @@ input, textarea, select {
 
 @media (max-width: 640px) {
   .less-noise {
-    height: 240vh;
+    height: 170vh;
   }
   .craft-heading-giant,
   .about-heading-giant {
