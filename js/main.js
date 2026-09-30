@@ -139,7 +139,7 @@ function formatTime() {
   });
 
   // Close on link click
-  $$('[data-mobile-nav-link]').forEach(link => {
+  mobileMenu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', closeMenu);
   });
 
@@ -154,6 +154,7 @@ function formatTime() {
       closeMenu();
     }
   });
+  window.closeMobileMenu = closeMenu;
 })();
 
 
@@ -259,6 +260,13 @@ window.initSlider = function() {
     }
   }
 
+  // Touch dragging support for mobile
+  function onTouchMove(e) {
+    if (e.touches && e.touches[0]) {
+      updatePositionFromClientX(e.touches[0].clientX);
+    }
+  }
+  container.addEventListener('touchmove', onTouchMove, { passive: true });
   container.addEventListener('pointerdown', onPointerDown);
   container.addEventListener('pointermove', onPointerMove, { passive: true });
   container.addEventListener('pointerup', onPointerUp);
@@ -780,7 +788,7 @@ window.initAccordion();
       renderMessage("I'm ARTAFIC Assistant, the digital assistant for ARTAFIC. I can help you learn about ARTAFIC, our services, and how to get in touch.", 'bot', false);
     }
 
-    setTimeout(() => input.focus(), 300);
+    if (window.innerWidth > 767) { setTimeout(() => input.focus(), 300); }
   }
 
   function closePanel() {
@@ -1418,7 +1426,7 @@ window.initTimeline = function() {
       if (p < range.start) {
         // UNREVEALED STATE (Before scroll reaches step)
         group.style.opacity = '0';
-        const startX = (isLeft && !isMobile) ? -100 : 100;
+        const startX = (isLeft && !isMobile) ? -100 : (isMobile ? 20 : 100);
         if (numWrap) {
           numWrap.style.opacity = '0';
           numWrap.style.transform = 'translate3d(' + startX + 'px, 0, 0) scale(0.95)';
@@ -1475,7 +1483,7 @@ window.initTimeline = function() {
         // Sub-phase 1 (Number: 0.00 -> 0.20)
         const numOpacity = remap(localP, 0.00, 0.20, 0, 1);
         const numScale   = remap(localP, 0.00, 0.20, 0.95, 1.0);
-        const numStartX  = (isLeft && !isMobile) ? -100 : 100;
+        const numStartX  = (isLeft && !isMobile) ? -100 : (isMobile ? 20 : 100);
         const numX       = remap(localP, 0.00, 0.20, numStartX, 0);
 
         if (numWrap) {
@@ -1810,7 +1818,8 @@ window.initServicesStrokeFollowScroll = function() {
         // Calculate maxPanDistance so that when panProgress = 1.0, 
         // the entire Services box is completely visible with breathing room below it (no bottom cropping)
         const cardHeight = endpointBox.offsetHeight;
-        const desiredTopInViewport = Math.max(75, windowHeight - cardHeight - 25);
+        const minTop = window.innerWidth <= 767 ? 68 : 75;
+        const desiredTopInViewport = Math.max(minTop, windowHeight - cardHeight - 25);
         maxPanDistance = stageY - desiredTopInViewport;
       }
     }
@@ -1843,6 +1852,30 @@ window.initServicesStrokeFollowScroll = function() {
 
   window.addEventListener('scroll', updateTimeline, { passive: true });
   window.addEventListener('resize', updateTimeline, { passive: true });
+
+  // Mobile services card swipe dots sync
+  const servicesGrid = document.querySelector('.services-endpoint-grid');
+  const serviceDots = document.querySelectorAll('.services-dot');
+  if (servicesGrid && serviceDots.length) {
+    servicesGrid.addEventListener('scroll', () => {
+      const scrollLeft = servicesGrid.scrollLeft;
+      const cardWidth = servicesGrid.firstElementChild ? servicesGrid.firstElementChild.offsetWidth : 300;
+      const activeIdx = Math.round(scrollLeft / cardWidth);
+      serviceDots.forEach((dot, idx) => {
+        dot.classList.toggle('is-active', idx === activeIdx);
+      });
+    }, { passive: true });
+
+    serviceDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const idx = parseInt(dot.getAttribute('data-service-idx') || '0', 10);
+        const card = servicesGrid.children[idx];
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      });
+    });
+  }
   
   // Initial call
   setTimeout(updateTimeline, 100);
@@ -2491,12 +2524,21 @@ window.reinitPageScripts = function(targetUrl) {
   }
 
   function closeMobileMenu() {
+    if (typeof window.closeMobileMenu === 'function') {
+      window.closeMobileMenu();
+      return;
+    }
     const mobileMenu = document.getElementById('mobile-menu');
     const hamburger = document.getElementById('hamburger');
     if (mobileMenu && mobileMenu.classList.contains('is-open')) {
       mobileMenu.classList.remove('is-open');
-      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      if (hamburger) {
+        hamburger.classList.remove('is-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
     }
+    document.body.style.overflow = '';
   }
 
   function safePushState(pushUrl) {

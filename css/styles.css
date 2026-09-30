@@ -3667,7 +3667,7 @@ html, body {
 }
 
 @media (max-width: 767px) {
-  /* Containers & Padding */
+  /* ── 1. Containers & Layout Safety ── */
   .container,
   .container--wide {
     width: 100% !important;
@@ -3678,37 +3678,10 @@ html, body {
   }
 
   .section {
-    padding: 2.5rem 0 !important;
+    padding: 2.75rem 0 !important;
   }
 
-  .marquee-section {
-    padding: 0 0 1.25rem 0 !important;
-  }
-
-  .value-strip {
-  position: relative;
-  overflow: hidden;
-    padding: 1.25rem 0 !important;
-  }
-
-  .process {
-    height: 420vh !important;
-  }
-
-  /* Dark Feature Section (#about) - Eliminate Oversized Empty Space */
-  .about-me-section {
-    min-height: auto !important;
-    padding: 2.5rem 1.25rem !important;
-  }
-
-  .corner-img-top-left,
-  .corner-img-bottom-left,
-  .corner-img-top-right,
-  .corner-img-bottom-right {
-    display: none !important;
-  }
-
-  /* Navigation Header */
+  /* ── 2. Navigation Header & Compact Mobile Menu ── */
   .nav {
     height: 64px !important;
   }
@@ -3718,6 +3691,7 @@ html, body {
   }
   .nav__logo-image {
     height: 28px !important;
+    width: auto !important;
   }
   .nav__links {
     display: none !important;
@@ -3728,17 +3702,25 @@ html, body {
   .nav__actions .btn--primary {
     padding: 0.45rem 0.85rem !important;
     font-size: 0.8rem !important;
+    min-height: 40px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
   .nav__hamburger {
     display: flex !important;
+    width: 44px !important;
+    height: 44px !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
 
-  /* Full-Screen Mobile Drawer */
+  /* Full-Screen Mobile Drawer — Overflow-safe, smooth dismiss */
   .nav__mobile {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
-    width: 100vw !important;
+    width: 100% !important;
     height: 100dvh !important;
     background: #0C0C0C !important;
     z-index: 999 !important;
@@ -3772,6 +3754,11 @@ html, body {
     color: #FFFFFF !important;
     padding: 0.5rem !important;
     cursor: pointer !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   .nav__mobile-body {
@@ -3779,33 +3766,37 @@ html, body {
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    padding: 2rem 1.5rem 3rem !important;
+    padding: 1.5rem 1.25rem 2.5rem !important;
     overflow-y: auto !important;
   }
 
   .nav__mobile-links {
     display: flex !important;
     flex-direction: column !important;
-    gap: 1.5rem !important;
+    gap: 1rem !important;
     align-items: center !important;
     text-align: center !important;
   }
 
   .nav__mobile-link {
-    font-size: 1.4rem !important;
+    font-size: 1.3rem !important;
     font-weight: 700 !important;
     color: #FFFFFF !important;
+    display: block !important;
+    padding: 0.5rem 1rem !important;
+    min-height: 44px !important;
+    line-height: 1.4 !important;
   }
 
   .nav__mobile-actions {
     width: 100% !important;
-    margin-top: 2rem !important;
+    margin-top: 1.5rem !important;
   }
 
-  /* Compact Mobile Hero - High Conversion & Immediate Offer Clarity */
+  /* ── 3. Compact Mobile Hero — Clear Immediate Value & Direct CTA ── */
   .aether-hero {
     min-height: auto !important;
-    padding: 5rem 1rem 1.25rem !important;
+    padding: 4.75rem 1.25rem 2rem !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -3825,13 +3816,19 @@ html, body {
 
   .aether-hero__badge {
     margin-bottom: 0.75rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    padding: 0.35rem 0.75rem !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.12em !important;
   }
 
   .aether-hero__title {
     font-family: var(--font-hero-title, 'Cormorant Garamond', Georgia, serif) !important;
-    font-size: clamp(2.2rem, 8.5vw, 3.2rem) !important;
+    font-size: clamp(1.85rem, 8vw, 2.75rem) !important;
     font-weight: 500 !important;
-    line-height: 1.12 !important;
+    line-height: 1.15 !important;
     letter-spacing: -0.01em !important;
     max-width: 100% !important;
     margin-bottom: 0.75rem !important;
@@ -3859,64 +3856,353 @@ html, body {
     font-size: 0.95rem !important;
   }
 
-
-
-  /* Services Grid */
-  .services__grid,
-  .services-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1.25rem !important;
+  /* ── 4. Marquee Section ── */
+  .marquee-section {
+    padding: 0 0 1.5rem 0 !important;
+    overflow: hidden !important;
     width: 100% !important;
   }
 
-  .service-card {
+  .marquee-track-container {
     width: 100% !important;
-    padding: 1.5rem !important;
+    overflow: hidden !important;
   }
 
-  /* About Grid */
-  .about__grid {
-    grid-template-columns: 1fr !important;
-    gap: 2rem !important;
+  .marquee-item {
+    width: 250px !important;
+    height: 160px !important;
+    border-radius: 12px !important;
   }
 
-  .about__pillars {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 1rem !important;
+  /* ── 5. Value Strip ── */
+  .value-strip {
+    position: relative !important;
+    overflow: hidden !important;
+    padding: 1.5rem 0 !important;
   }
 
-  /* Why ARTAFIC */
-  .why__grid {
-    grid-template-columns: 1fr !important;
-    gap: 1.25rem !important;
+  .value-strip__grid {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.85rem !important;
   }
 
-  /* Before / After Slider Touch Performance */
+  .value-strip__item {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .value-strip__divider {
+    display: none !important;
+  }
+
+  /* ── 6. Problem Section ── */
+  .problem__grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.75rem !important;
+    width: 100% !important;
+  }
+
+  .problem__content {
+    order: 1 !important;
+    width: 100% !important;
+  }
+
+  .problem__visual {
+    order: 2 !important;
+    width: 100% !important;
+    margin-top: 0 !important;
+  }
+
+  .problem__visual-card {
+    padding: 1.5rem 1.25rem !important;
+    border-radius: var(--radius-xl, 16px) !important;
+  }
+
+  .problem__list {
+    gap: 0.85rem !important;
+  }
+
+  .problem__list-item {
+    padding: 1rem !important;
+    border-radius: 12px !important;
+    gap: 0.85rem !important;
+  }
+
+  .problem__list-title {
+    font-size: 1rem !important;
+  }
+
+  .problem__list-desc {
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* ── 7. Services Pin Track — Mobile Horizontal Snap & Proper Sizing ── */
+  .services-pin-track {
+    height: 220vh !important;
+  }
+
+  .services-endpoint-layer {
+    padding: 1rem !important;
+  }
+
+  .services-endpoint-card {
+    padding: 1.5rem 1rem !important;
+    border-radius: 1.5rem !important;
+    max-width: 100% !important;
+  }
+
+  .services-endpoint-header {
+    margin-bottom: 1rem !important;
+  }
+
+  .services-endpoint-badge {
+    font-size: 0.7rem !important;
+    padding: 0.25rem 0.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .services-endpoint-title {
+    font-size: clamp(1.6rem, 6.5vw, 2.2rem) !important;
+    line-height: 1.15 !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .services-endpoint-subtitle {
+    font-size: 0.85rem !important;
+    margin-bottom: 1rem !important;
+    line-height: 1.45 !important;
+  }
+
+  .services-endpoint-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 0.85rem !important;
+    padding: 0.25rem 0.15rem 0.5rem !important;
+    scrollbar-width: none !important;
+  }
+
+  .services-endpoint-grid::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .service-endpoint-box {
+    flex: 0 0 90% !important;
+    min-width: 0 !important;
+    scroll-snap-align: center !important;
+    padding: 1.25rem 1rem !important;
+    border-radius: 1.25rem !important;
+  }
+
+  .service-box__header {
+    gap: 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .service-box__title {
+    font-size: 1.25rem !important;
+  }
+
+  .service-box__desc {
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .service-box__features {
+    gap: 0.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .service-box__features li {
+    font-size: 0.825rem !important;
+  }
+
+  .services-endpoint-dots {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    margin-top: 0.75rem !important;
+  }
+
+  .services-dot {
+    width: 24px !important;
+    height: 6px !important;
+    border-radius: 3px !important;
+    background: rgba(255, 255, 255, 0.35) !important;
+    transition: background 0.25s ease, width 0.25s ease !important;
+    cursor: pointer !important;
+  }
+
+  .services-dot.is-active {
+    width: 36px !important;
+    background: #CCFBF1 !important;
+  }
+
+  /* ── 8. Before & After Slider Touch Hardening ── */
   .before-after__container,
   .slider-container {
     width: 100% !important;
     max-width: 100% !important;
     border-radius: 12px !important;
     touch-action: pan-y !important;
+    aspect-ratio: 4 / 3 !important;
   }
 
+  .slider-container__handle::after,
   .slider-handle::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 44px;
-    height: 44px;
-    background: transparent;
+    content: '' !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 48px !important;
+    height: 48px !important;
+    background: transparent !important;
   }
 
-  /* FAQ Section - Stable Header */
+  .slider-label {
+    padding: 0.3rem 0.65rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  /* ── 9. Selected Work / Portfolio Cards ── */
+  .portfolio__grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  .portfolio-card {
+    border-radius: var(--radius-lg, 12px) !important;
+  }
+
+  .portfolio-card__body {
+    padding: 1.25rem 1rem !important;
+  }
+
+  .portfolio-card__type {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  .portfolio-card__title {
+    font-size: 1.25rem !important;
+    margin-bottom: 0.35rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .portfolio-card__desc {
+    font-size: 0.875rem !important;
+    line-height: 1.55 !important;
+  }
+
+  /* View concept affordance visible on touch devices */
+  .portfolio-card__view {
+    opacity: 0.92 !important;
+    transform: translateY(0) !important;
+    font-size: 0.75rem !important;
+    padding: 0.35rem 0.85rem !important;
+  }
+
+  .portfolio-card__overlay {
+    background: linear-gradient(to top, rgba(17, 24, 39, 0.5) 0%, transparent 60%) !important;
+    align-items: flex-end !important;
+    padding-bottom: 0.85rem !important;
+  }
+
+  /* ── 10. How We Work / Process Timeline ── */
+  .process {
+    height: 300vh !important;
+  }
+
+  .process-container {
+    padding: 1.5rem 1rem !important;
+  }
+
+  .timeline-header .section-title {
+    font-size: 1.65rem !important;
+  }
+
+  .timeline__spine {
+    left: 20px !important;
+    transform: none !important;
+  }
+
+  .timeline__step-group {
+    margin-bottom: 48px !important;
+  }
+
+  .timeline__step-group--left,
+  .timeline__step-group--right {
+    padding-left: 14px !important;
+    padding-right: 12px !important;
+    justify-content: flex-start !important;
+  }
+
+  .timeline__step-group--left {
+    flex-direction: row-reverse !important;
+  }
+  .timeline__step-group--right {
+    flex-direction: row !important;
+  }
+
+  .timeline__step-group--left .timeline__scene-content,
+  .timeline__step-group--right .timeline__scene-content {
+    text-align: left !important;
+    max-width: 100% !important;
+    align-items: flex-start !important;
+  }
+
+  .timeline__step-group--left .timeline__connector,
+  .timeline__step-group--right .timeline__connector {
+    width: 20px !important;
+    margin-left: 0 !important;
+    margin-right: 0.75rem !important;
+  }
+
+  .timeline__dot {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .timeline__number {
+    font-size: 1.85rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .timeline__title {
+    font-size: 1.25rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .timeline__desc {
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* ── 11. Kinetic Craft Statement ── */
+  .less-noise {
+    height: 170vh !important;
+  }
+
+  .craft-heading-giant,
+  .about-heading-giant {
+    font-size: clamp(1.5rem, 6.8vw, 2.5rem) !important;
+  }
+
+  /* ── 12. FAQ Section ── */
   .faq__grid,
   .faq-container {
     display: flex !important;
     flex-direction: column !important;
-    gap: 2rem !important;
+    gap: 1.75rem !important;
     width: 100% !important;
   }
 
@@ -3929,9 +4215,25 @@ html, body {
 
   .faq-item {
     width: 100% !important;
+    border-radius: 12px !important;
   }
 
-  /* Meeting Booking Form - Clean 1-Column Stacking */
+  .faq-item__trigger {
+    padding: 1rem 1.15rem !important;
+    min-height: 48px !important;
+  }
+
+  .faq-item__question {
+    font-size: 0.95rem !important;
+  }
+
+  .faq-item__answer {
+    padding: 1rem 1.15rem 1.25rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+  }
+
+  /* ── 13. Meeting Booking Form ── */
   .booking__grid {
     display: flex !important;
     flex-direction: column !important;
@@ -3941,14 +4243,14 @@ html, body {
 
   .booking__visual-col {
     order: 1 !important;
-    min-height: 160px !important;
-    padding: 1.75rem 1rem !important;
+    min-height: 140px !important;
+    padding: 1.5rem 1rem !important;
     border-radius: var(--radius-xl, 16px) !important;
   }
 
   .booking__visual-title {
-    font-size: clamp(2.2rem, 9.5vw, 3.4rem) !important;
-    line-height: 1.02 !important;
+    font-size: clamp(2rem, 8.5vw, 3rem) !important;
+    line-height: 1.05 !important;
   }
 
   .booking__form-area {
@@ -3967,6 +4269,7 @@ html, body {
     width: 100% !important;
     box-sizing: border-box !important;
     padding: 1.25rem 1rem !important;
+    border-radius: 16px !important;
   }
 
   .booking__form-container,
@@ -3994,28 +4297,156 @@ html, body {
     box-sizing: border-box !important;
   }
 
-  /* Chatbot Floating Widget */
-  .faq-chat-toggle,
-  .chatbot-toggle {
-    right: 16px !important;
-    bottom: 16px !important;
+  .form-submit {
+    width: 100% !important;
+    min-height: 52px !important;
+    font-size: 1rem !important;
+    padding: 16px !important;
   }
 
-  .faq-chat-modal,
-  .chatbot-modal {
+  /* ── 14. Chatbot Widget — Mobile Optimized ── */
+  .chatbot-launcher {
+    bottom: 16px !important;
+    right: 16px !important;
+    z-index: 890 !important;
+  }
+
+  .chatbot-launcher__btn {
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  .chatbot-panel {
+    position: fixed !important;
     left: 12px !important;
     right: 12px !important;
     bottom: 76px !important;
-    width: calc(100vw - 24px) !important;
-    max-width: 390px !important;
-    max-height: 70vh !important;
+    width: calc(100% - 24px) !important;
+    max-width: 400px !important;
+    height: min(500px, calc(100dvh - 96px)) !important;
+    max-height: calc(100dvh - 96px) !important;
+    margin: 0 auto !important;
+    z-index: 990 !important;
+    border-radius: var(--radius-xl, 16px) !important;
   }
 
-  /* Footer */
+  .chatbot-panel__header {
+    padding: 0.75rem 1rem !important;
+  }
+
+  .chatbot-panel__close {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .chatbot-panel__messages {
+    padding: 1rem 0.85rem !important;
+    gap: 0.75rem !important;
+  }
+
+  .chatbot-panel__suggestions {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 0.5rem !important;
+    padding: 0.65rem 0.85rem !important;
+    scrollbar-width: none !important;
+  }
+
+  .chatbot-panel__suggestions::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .chatbot-panel__suggestion {
+    flex-shrink: 0 !important;
+    padding: 0.45rem 0.75rem !important;
+    font-size: 0.75rem !important;
+    white-space: nowrap !important;
+    min-height: 36px !important;
+  }
+
+  .chatbot-panel__input-area {
+    padding: 0.65rem 0.85rem !important;
+  }
+
+  .chatbot-panel__input {
+    font-size: 1rem !important;
+    min-height: 44px !important;
+    padding: 8px 14px !important;
+  }
+
+  .chatbot-panel__send {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+
+  /* ── 15. Footer ── */
   .footer__grid {
     grid-template-columns: 1fr !important;
     gap: 2rem !important;
     text-align: left !important;
+  }
+
+  .footer__bottom {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1rem !important;
+  }
+
+  .footer__link {
+    display: inline-block !important;
+    padding: 0.35rem 0 !important;
+    min-height: 36px !important;
+    line-height: 1.5 !important;
+  }
+}
+
+/* ── 16. Extra-Small Screens (≤ 360px: 320px & 360px phones) ── */
+@media (max-width: 360px) {
+  .aether-hero__badge {
+    font-size: 0.65rem !important;
+    letter-spacing: 0.08em !important;
+    padding: 0.3rem 0.6rem !important;
+  }
+
+  .aether-hero__title {
+    font-size: 1.75rem !important;
+  }
+
+  .aether-hero__subtitle {
+    font-size: 0.875rem !important;
+  }
+
+  .section-title {
+    font-size: 1.5rem !important;
+  }
+
+  .craft-heading-giant,
+  .about-heading-giant {
+    font-size: 1.45rem !important;
+  }
+
+  .booking__visual-title {
+    font-size: 1.85rem !important;
+  }
+
+  .nav__mobile-link {
+    font-size: 1.2rem !important;
+  }
+
+  .marquee-item {
+    width: 220px !important;
+    height: 140px !important;
+  }
+
+  .service-endpoint-box {
+    flex: 0 0 94% !important;
   }
 }
 
@@ -4205,6 +4636,10 @@ select:focus-visible {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.25rem;
+}
+
+.services-endpoint-dots {
+  display: none;
 }
 
 @media (min-width: 768px) {
