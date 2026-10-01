@@ -1778,19 +1778,38 @@ window.initServicesStrokeFollowScroll = function() {
     let strokeProgress = 0;
     let panProgress = 0;
 
-    if (progress <= 0.20) {
-      // Phase 1: Draw upper mashup loops (0% to 38% of stroke) while camera stays stationary at top
-      strokeProgress = (progress / 0.20) * 0.38;
-      panProgress = 0;
-    } else if (progress <= 0.85) {
-      // Phase 2: Downward travel (38% to 100% of stroke) and camera pan (0% to 100%)
-      const localP = (progress - 0.20) / 0.65;
-      strokeProgress = 0.38 + (localP * 0.62);
-      panProgress = Math.pow(localP, 1.15);
+    const isMobile = window.innerWidth <= 767;
+
+    if (isMobile) {
+      if (progress <= 0.18) {
+        // Phase 1: Draw upper mashup loops (0% to 38% of stroke) while camera stays stationary at top
+        strokeProgress = (progress / 0.18) * 0.38;
+        panProgress = 0;
+      } else if (progress <= 0.72) {
+        // Phase 2: Downward travel (38% to 100% of stroke) and camera pan (0% to 100%)
+        const localP = (progress - 0.18) / 0.54;
+        strokeProgress = 0.38 + (localP * 0.62);
+        panProgress = Math.pow(localP, 1.12);
+      } else {
+        // Phase 3: Generous hold on connected Services Box before unpinning
+        strokeProgress = 1;
+        panProgress = 1;
+      }
     } else {
-      // Phase 3: Hold connected state
-      strokeProgress = 1;
-      panProgress = 1;
+      if (progress <= 0.20) {
+        // Phase 1: Draw upper mashup loops (0% to 38% of stroke) while camera stays stationary at top
+        strokeProgress = (progress / 0.20) * 0.38;
+        panProgress = 0;
+      } else if (progress <= 0.85) {
+        // Phase 2: Downward travel (38% to 100% of stroke) and camera pan (0% to 100%)
+        const localP = (progress - 0.20) / 0.65;
+        strokeProgress = 0.38 + (localP * 0.62);
+        panProgress = Math.pow(localP, 1.15);
+      } else {
+        // Phase 3: Hold connected state
+        strokeProgress = 1;
+        panProgress = 1;
+      }
     }
 
     // Apply Stroke Drawing
@@ -1802,7 +1821,6 @@ window.initServicesStrokeFollowScroll = function() {
     if (endpointBox) {
       const svg = document.querySelector('.services-panning-svg');
       if (svg) {
-        const isMobile = window.innerWidth <= 767;
         if (isMobile) {
           svg.setAttribute('preserveAspectRatio', 'xMidYMin meet');
         } else {
@@ -1826,15 +1844,14 @@ window.initServicesStrokeFollowScroll = function() {
         // Calculate maxPanDistance so that when panProgress = 1.0, 
         // the entire Services box is completely visible with breathing room below it (no bottom cropping)
         const cardHeight = endpointBox.offsetHeight;
-        const minTop = isMobile ? 68 : 75;
-        const desiredTopInViewport = Math.max(minTop, windowHeight - cardHeight - 25);
+        // On mobile, position card top cleanly below navbar (75px) so entire card fits comfortably inside frame
+        const desiredTopInViewport = isMobile ? 75 : Math.max(75, windowHeight - cardHeight - 25);
         maxPanDistance = stageY - desiredTopInViewport;
       }
     }
     
     // Ensure stage is tall enough to contain the endpoint box
-    const isMobile = window.innerWidth <= 767;
-    const requiredStageHeight = endpointBox ? Math.max(isMobile ? 1200 : 2600, parseFloat(endpointBox.style.top || 0) + endpointBox.offsetHeight + 100) : 2600;
+    const requiredStageHeight = endpointBox ? Math.max(isMobile ? 2200 : 2600, parseFloat(endpointBox.style.top || 0) + endpointBox.offsetHeight + 100) : 2600;
     if (stage.offsetHeight < requiredStageHeight) {
       stage.style.height = `${requiredStageHeight}px`;
     }
@@ -1847,14 +1864,23 @@ window.initServicesStrokeFollowScroll = function() {
     stage.style.transform = `translate3d(0, -${currentPan}px, 0)`;
 
     // Services Box Visibility Fade In
-    // Fades in gradually during Phase 2 (between 0.38 and 0.70 progress) so it is completely visible well before line arrives
     if (endpointBox) {
-      if (progress < 0.38) {
-        endpointBox.style.opacity = '0';
-      } else if (progress < 0.70) {
-        endpointBox.style.opacity = String(((progress - 0.38) / 0.32).toFixed(2));
+      if (isMobile) {
+        if (progress < 0.28) {
+          endpointBox.style.opacity = '0';
+        } else if (progress < 0.60) {
+          endpointBox.style.opacity = String(((progress - 0.28) / 0.32).toFixed(2));
+        } else {
+          endpointBox.style.opacity = '1';
+        }
       } else {
-        endpointBox.style.opacity = '1';
+        if (progress < 0.38) {
+          endpointBox.style.opacity = '0';
+        } else if (progress < 0.70) {
+          endpointBox.style.opacity = String(((progress - 0.38) / 0.32).toFixed(2));
+        } else {
+          endpointBox.style.opacity = '1';
+        }
       }
     }
   }

@@ -4168,7 +4168,7 @@ html, body {
 
   /* ── 7. Services Pin Track — Mobile Horizontal Snap & Proper Sizing ── */
   .services-pin-track {
-    height: 240vh !important;
+    height: 280vh !important;
   }
 
   .services-sticky-viewport {
@@ -4176,8 +4176,7 @@ html, body {
   }
 
   .services-panning-stage {
-    height: auto !important;
-    min-height: 100vh !important;
+    height: 2200px !important;
   }
 
   .services-panning-svg-wrap {
