@@ -461,11 +461,13 @@
        SECTION 07: FINAL CTA
   ═══════════════════════════════════════════════════════════ -->
   <section class="about-cta" id="about-cta">
-    <div class="floating-paths-bg" data-pos="-1.2" data-theme="dark" style="opacity: 0.35;"></div>
+    <div class="grid-pulse" data-slot="grid-pulse" aria-hidden="true">
+      <canvas class="grid-pulse__canvas"></canvas>
+    </div>
     <div class="container relative-z fade-up">
       <div class="about-cta__content">
         <p class="about-section-tag" style="justify-content: center;">START A PROJECT</p>
-        <h2 class="about-cta__title">Ready to upgrade your website?</h2>
+        <h2 class="about-cta__title" data-grid-avoid>Ready to upgrade your website?</h2>
         <p class="about-cta__sub">
           Tell us what you're looking for, and we'll give you an honest opinion and a clear plan.
         </p>
@@ -536,5 +538,6 @@
 <!-- JS -->
 <script src="js/main.js?v=6.0"></script>
 <script src="js/about.js?v=3.3"></script>
+<script src="js/grid-pulse.js?v=1.0"></script>
 </body>
 </html>

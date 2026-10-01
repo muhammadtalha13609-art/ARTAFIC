@@ -298,10 +298,12 @@
   <!-- ═══════════════════════════════════════════════════════════
        CTA SECTION
   ═══════════════════════════════════════════════════════════ -->
-  <section class="section section--alt" style="text-align: center; padding: 5rem 1.5rem;">
-  <div class="floating-paths-bg" data-pos="1.2" data-theme="light" style="opacity: 0.5;"></div>
-    <div class="container" style="max-width: 700px;">
-      <h2 class="section-title" style="margin-bottom: 1rem;">Ready to Start Your Project?</h2>
+  <section class="section section--alt faq-cta" id="faq-cta" style="text-align: center; padding: 5rem 1.5rem; position: relative; overflow: hidden; isolation: isolate;">
+    <div class="grid-pulse" data-slot="grid-pulse" aria-hidden="true">
+      <canvas class="grid-pulse__canvas"></canvas>
+    </div>
+    <div class="container relative-z" style="max-width: 700px;">
+      <h2 class="section-title" data-grid-avoid style="margin-bottom: 1rem;">Ready to Start Your Project?</h2>
       <p style="font-size: 1.125rem; color: var(--color-text-body); margin-bottom: 2rem; line-height: 1.6;">
         Reach out to discuss your goals, scope, and how ARTAFIC can help build a stronger web presence for your business.
       </p>
@@ -370,5 +372,6 @@
 
 <!-- JS -->
 <script src="js/main.js?v=6.0"></script>
+<script src="js/grid-pulse.js?v=1.0"></script>
 </body>
 </html>
