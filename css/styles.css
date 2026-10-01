@@ -4168,7 +4168,39 @@ html, body {
 
   /* ── 7. Services Pin Track — Mobile Horizontal Snap & Proper Sizing ── */
   .services-pin-track {
-    height: 220vh !important;
+    height: 240vh !important;
+  }
+
+  .services-sticky-viewport {
+    height: 100vh !important;
+  }
+
+  .services-panning-stage {
+    height: auto !important;
+    min-height: 100vh !important;
+  }
+
+  .services-panning-svg-wrap {
+    height: auto !important;
+    min-height: 820px !important;
+    padding-top: 80px !important;
+  }
+
+  .services-mashup-text {
+    top: 105px !important;
+  }
+
+  .services-hero-title {
+    font-size: clamp(2.3rem, 8.5vw, 3rem) !important;
+  }
+
+  .services-flow-endpoint {
+    padding: 0 1rem !important;
+  }
+
+  .stroke-terminal-dot {
+    margin: -32px 0 0.5rem 23.7% !important;
+    transform: translateX(-50%) !important;
   }
 
   .services-endpoint-layer {
@@ -4176,13 +4208,13 @@ html, body {
   }
 
   .services-endpoint-card {
-    padding: 1.5rem 1rem !important;
-    border-radius: 1.5rem !important;
+    padding: 1.25rem 1rem !important;
+    border-radius: 1.25rem !important;
     max-width: 100% !important;
   }
 
   .services-endpoint-header {
-    margin-bottom: 1rem !important;
+    margin-bottom: 0.75rem !important;
   }
 
   .services-endpoint-badge {
@@ -4192,14 +4224,14 @@ html, body {
   }
 
   .services-endpoint-title {
-    font-size: clamp(1.6rem, 6.5vw, 2.2rem) !important;
+    font-size: 1.45rem !important;
     line-height: 1.15 !important;
-    margin-bottom: 0.25rem !important;
+    margin-bottom: 0.2rem !important;
   }
 
   .services-endpoint-subtitle {
-    font-size: 0.85rem !important;
-    margin-bottom: 1rem !important;
+    font-size: 0.8rem !important;
+    margin-bottom: 0.65rem !important;
     line-height: 1.45 !important;
   }
 
@@ -4222,32 +4254,38 @@ html, body {
     flex: 0 0 90% !important;
     min-width: 0 !important;
     scroll-snap-align: center !important;
-    padding: 1.25rem 1rem !important;
-    border-radius: 1.25rem !important;
+    padding: 1rem 0.85rem !important;
+    border-radius: 1.1rem !important;
   }
 
   .service-box__header {
     gap: 0.75rem !important;
-    margin-bottom: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
   }
 
   .service-box__title {
-    font-size: 1.25rem !important;
+    font-size: 1.15rem !important;
   }
 
   .service-box__desc {
-    font-size: 0.875rem !important;
-    line-height: 1.5 !important;
-    margin-bottom: 1rem !important;
+    font-size: 0.8rem !important;
+    line-height: 1.48 !important;
+    margin-bottom: 0.65rem !important;
   }
 
   .service-box__features {
-    gap: 0.5rem !important;
-    margin-bottom: 0.75rem !important;
+    gap: 0.35rem !important;
+    margin-bottom: 0.5rem !important;
   }
 
   .service-box__features li {
-    font-size: 0.825rem !important;
+    font-size: 0.78rem !important;
+  }
+
+  .service-endpoint-box .btn {
+    margin-top: 0.75rem !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.8rem !important;
   }
 
   .services-endpoint-dots {
@@ -4255,7 +4293,7 @@ html, body {
     align-items: center !important;
     justify-content: center !important;
     gap: 0.5rem !important;
-    margin-top: 0.75rem !important;
+    margin-top: 0.65rem !important;
   }
 
   .services-dot {

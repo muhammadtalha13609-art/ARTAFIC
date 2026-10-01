@@ -1802,6 +1802,13 @@ window.initServicesStrokeFollowScroll = function() {
     if (endpointBox) {
       const svg = document.querySelector('.services-panning-svg');
       if (svg) {
+        const isMobile = window.innerWidth <= 767;
+        if (isMobile) {
+          svg.setAttribute('preserveAspectRatio', 'xMidYMin meet');
+        } else {
+          svg.setAttribute('preserveAspectRatio', 'xMidYTop meet');
+        }
+
         const baseWidth = svg.clientWidth;
         const viewBoxWidth = 1278;
         const cssTransformScale = 1.0; // Original proportional size (no extra scaling)
@@ -1810,7 +1817,8 @@ window.initServicesStrokeFollowScroll = function() {
         
         // The stroke ends at roughly Y = 2669 in the viewBox coordinates
         const svgEndY = 2669;
-        const stageY = svgEndY * finalScale;
+        const wrapPaddingTop = isMobile ? 80 : 0;
+        const stageY = (svgEndY * finalScale) + wrapPaddingTop;
         
         // Position the endpoint box exactly at the line's tip (adjusting 11px for the 22px dot)
         endpointBox.style.top = `${stageY - 11}px`;
@@ -1818,14 +1826,15 @@ window.initServicesStrokeFollowScroll = function() {
         // Calculate maxPanDistance so that when panProgress = 1.0, 
         // the entire Services box is completely visible with breathing room below it (no bottom cropping)
         const cardHeight = endpointBox.offsetHeight;
-        const minTop = window.innerWidth <= 767 ? 68 : 75;
+        const minTop = isMobile ? 68 : 75;
         const desiredTopInViewport = Math.max(minTop, windowHeight - cardHeight - 25);
         maxPanDistance = stageY - desiredTopInViewport;
       }
     }
     
     // Ensure stage is tall enough to contain the endpoint box
-    const requiredStageHeight = endpointBox ? parseFloat(endpointBox.style.top || 0) + endpointBox.offsetHeight + 100 : 2600;
+    const isMobile = window.innerWidth <= 767;
+    const requiredStageHeight = endpointBox ? Math.max(isMobile ? 1200 : 2600, parseFloat(endpointBox.style.top || 0) + endpointBox.offsetHeight + 100) : 2600;
     if (stage.offsetHeight < requiredStageHeight) {
       stage.style.height = `${requiredStageHeight}px`;
     }
