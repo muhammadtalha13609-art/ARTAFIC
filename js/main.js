@@ -2078,18 +2078,121 @@ function initKineticCraftAnimation() {
 }
 window.initKineticCraftAnimation = initKineticCraftAnimation;
 
+/* ────────────────────────────────────────────────────────────
+   09. PROBLEM SECTION TELEMETRY & HOTSPOT INTERACTION
+   ──────────────────────────────────────────────────────────── */
+function initProblemTelemetry() {
+  const problemSec = document.getElementById('problem');
+  if (!problemSec) return;
+
+  const cards = problemSec.querySelectorAll('.problem__card');
+  const hotspots = problemSec.querySelectorAll('.problem__hotspot');
+  const hudFrame = problemSec.querySelector('#problem-telemetry-hud');
+
+  // 1. Hotspot Card Synchronized Hover
+  cards.forEach(card => {
+    const spotId = card.getAttribute('data-hotspot');
+    if (!spotId) return;
+
+    card.addEventListener('mouseenter', () => {
+      hotspots.forEach(h => {
+        if (h.getAttribute('data-hotspot-id') === spotId) {
+          h.classList.add('is-highlighted');
+        } else {
+          h.classList.remove('is-highlighted');
+        }
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      hotspots.forEach(h => h.classList.remove('is-highlighted'));
+    });
+  });
+
+  hotspots.forEach(hotspot => {
+    const spotId = hotspot.getAttribute('data-hotspot-id');
+    if (!spotId) return;
+
+    hotspot.addEventListener('mouseenter', () => {
+      cards.forEach(c => {
+        if (c.getAttribute('data-hotspot') === spotId) {
+          c.classList.add('is-active');
+        } else {
+          c.classList.remove('is-active');
+        }
+      });
+    });
+
+    hotspot.addEventListener('mouseleave', () => {
+      cards.forEach(c => c.classList.remove('is-active'));
+    });
+  });
+
+  // 2. Subtle 3D Mouse Parallax on Desktop
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReduced && hudFrame && window.innerWidth > 992) {
+    let hudTicking = false;
+    let targetRotateX = 0;
+    let targetRotateY = 0;
+    let currentRotateX = 0;
+    let currentRotateY = 0;
+
+    hudFrame.addEventListener('mousemove', (e) => {
+      const rect = hudFrame.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      targetRotateY = ((x - centerX) / centerX) * 4; // max 4 deg
+      targetRotateX = -((y - centerY) / centerY) * 4; // max 4 deg
+
+      if (!hudTicking) {
+        hudTicking = true;
+        requestAnimationFrame(updateHudTilt);
+      }
+    });
+
+    hudFrame.addEventListener('mouseleave', () => {
+      targetRotateX = 0;
+      targetRotateY = 0;
+      if (!hudTicking) {
+        hudTicking = true;
+        requestAnimationFrame(updateHudTilt);
+      }
+    });
+
+    function updateHudTilt() {
+      currentRotateX += (targetRotateX - currentRotateX) * 0.12;
+      currentRotateY += (targetRotateY - currentRotateY) * 0.12;
+
+      hudFrame.style.transform = `perspective(1000px) rotateX(${currentRotateX.toFixed(2)}deg) rotateY(${currentRotateY.toFixed(2)}deg)`;
+
+      if (Math.abs(targetRotateX - currentRotateX) > 0.02 || Math.abs(targetRotateY - currentRotateY) > 0.02) {
+        requestAnimationFrame(updateHudTilt);
+      } else {
+        hudFrame.style.transform = targetRotateX === 0 ? '' : `perspective(1000px) rotateX(${targetRotateX}deg) rotateY(${targetRotateY}deg)`;
+        hudTicking = false;
+      }
+    }
+  }
+}
+window.initProblemTelemetry = initProblemTelemetry;
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     initFloatingPaths();
     initKineticCraftAnimation();
+    initProblemTelemetry();
   });
 } else {
   initFloatingPaths();
   initKineticCraftAnimation();
+  initProblemTelemetry();
 }
 
 /* ============================================================
-   ARTAFIC SITE-WIDE PAGE TRANSITION � ULTRA SMOOTH PJAX ENGINE
+   ARTAFIC SITE-WIDE PAGE TRANSITION — ULTRA SMOOTH PJAX ENGINE
    ============================================================ */
 
 // Global Script Re-initializer for Page Transitions
@@ -2103,6 +2206,9 @@ window.reinitPageScripts = function(targetUrl) {
     }
     if (typeof window.initKineticCraftAnimation === 'function') {
       window.initKineticCraftAnimation();
+    }
+    if (typeof window.initProblemTelemetry === 'function') {
+      window.initProblemTelemetry();
     }
     // 1. Scroll Reveal Observer (handles all [data-reveal], .fade-up, .reveal-text-inner)
     if (typeof window.initScrollReveal === 'function') {
