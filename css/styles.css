@@ -4675,6 +4675,511 @@ html, body {
   }
 }
 
+/* ============================================================
+   MOBILE DENSITY & PROPORTION OPTIMIZATION PASS
+   Target: Compact, balanced, 2-col where content allows
+   Rule: Desktop is NEVER touched — all inside max-width: 767px
+   ============================================================ */
+@media (max-width: 767px) {
+
+  /* ── A. VALUE STRIP — 2×2 grid instead of stacked column ── */
+  .value-strip__grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.65rem 0.5rem !important;
+    align-items: start !important;
+  }
+
+  .value-strip__item {
+    width: auto !important;
+    min-width: 0 !important;
+    gap: 0.5rem !important;
+  }
+
+  .value-strip__icon {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .value-strip__icon svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .value-strip__text {
+    font-size: 0.78rem !important;
+    line-height: 1.3 !important;
+  }
+
+  /* ── B. PROBLEM CARDS — 2-column compact grid ── */
+  .problem-cards__grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.5rem !important;
+    flex-direction: unset !important;
+  }
+
+  /* Make the 3rd card span full width for balance if 3 cards */
+  .problem-cards__grid .studio-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1 !important;
+  }
+
+  .studio-card {
+    padding: 0.75rem 0.8rem 0.65rem !important;
+    border-radius: 10px !important;
+  }
+
+  .studio-card__label {
+    font-size: 0.55rem !important;
+    letter-spacing: 0.1em !important;
+    margin-bottom: 0.1rem !important;
+  }
+
+  .studio-card__title {
+    font-size: 0.82rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.15rem !important;
+  }
+
+  .studio-card__desc {
+    font-size: 0.72rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .studio-card__footer {
+    margin-top: 0.3rem !important;
+    padding-top: 0.3rem !important;
+  }
+
+  .studio-card__meta {
+    font-size: 0.58rem !important;
+  }
+
+  /* ── C. WHY ARTAFIC CARDS — 2-column grid ── */
+  .why__grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.65rem !important;
+  }
+
+  .why-card--1,
+  .why-card--2,
+  .why-card--3,
+  .why-card--4 {
+    grid-column: auto !important;
+  }
+
+  /* 5th card spans full width */
+  .why-card--5 {
+    grid-column: 1 / -1 !important;
+  }
+
+  .why-card {
+    padding: 1.15rem !important;
+    border-radius: 12px !important;
+  }
+
+  .why-card__icon {
+    width: 36px !important;
+    height: 36px !important;
+    margin-bottom: 0.65rem !important;
+  }
+
+  .why-card__icon svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .why-card__title {
+    font-size: 0.88rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+
+  .why-card__desc {
+    font-size: 0.78rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* ── D. ABOUT SECTION — Keep 2-col pillars on mobile ── */
+  .about__pillars {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.5rem !important;
+  }
+
+  .about__pillar {
+    padding: 0.85rem !important;
+    border-radius: 10px !important;
+  }
+
+  .about__pillar-icon {
+    width: 32px !important;
+    height: 32px !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  .about__pillar-icon svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .about__pillar-title {
+    font-size: 0.78rem !important;
+    margin-bottom: 0.15rem !important;
+  }
+
+  .about__pillar-text {
+    font-size: 0.7rem !important;
+    line-height: 1.45 !important;
+  }
+
+  .about {
+    padding: 2.5rem 0 !important;
+  }
+
+  .about__grid {
+    gap: 1.75rem !important;
+  }
+
+  .about__statement {
+    padding: 1.5rem !important;
+  }
+
+  .about__statement-quote {
+    font-size: 1.75rem !important;
+    margin-bottom: 0.65rem !important;
+  }
+
+  .about__statement-text {
+    font-size: 1rem !important;
+    line-height: 1.45 !important;
+  }
+
+  /* ── E. PORTFOLIO — 2-column grid ── */
+  .portfolio__grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  .portfolio {
+    padding: 2.5rem 0 !important;
+  }
+
+  .portfolio-card {
+    border-radius: 10px !important;
+  }
+
+  .portfolio-card__image {
+    aspect-ratio: 4 / 3 !important;
+  }
+
+  .portfolio-card__body {
+    padding: 0.75rem 0.65rem !important;
+  }
+
+  .portfolio-card__type {
+    font-size: 0.6rem !important;
+    margin-bottom: 0.2rem !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  .portfolio-card__title {
+    font-size: 0.85rem !important;
+    margin-bottom: 0.2rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .portfolio-card__desc {
+    font-size: 0.72rem !important;
+    line-height: 1.45 !important;
+    /* Clamp to 2 lines to keep compact */
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  .portfolio-card__view {
+    font-size: 0.65rem !important;
+    padding: 0.25rem 0.65rem !important;
+  }
+
+  /* ── F. BEFORE / AFTER SECTION — Tighter ── */
+  .before-after {
+    padding: 2.5rem 0 !important;
+  }
+
+  .slider-container {
+    max-height: 280px !important;
+  }
+
+  /* ── G. CTA SECTION — Compact ── */
+  .cta-section {
+    padding: 2.25rem 0 !important;
+  }
+
+  .cta-section__title {
+    font-size: clamp(1.35rem, 5vw, 1.85rem) !important;
+    margin-bottom: 0.65rem !important;
+  }
+
+  .cta-section__subtitle {
+    font-size: 0.88rem !important;
+    margin-bottom: 1.5rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* ── H. FAQ SECTION — Tighter ── */
+  .faq {
+    padding: 2.5rem 0 !important;
+  }
+
+  .faq__grid,
+  .faq-container {
+    gap: 1.25rem !important;
+  }
+
+  .faq-item__trigger {
+    padding: 0.85rem 1rem !important;
+  }
+
+  .faq-item__question {
+    font-size: 0.88rem !important;
+  }
+
+  .faq-item__answer {
+    padding: 0.85rem 1rem 1rem !important;
+    font-size: 0.82rem !important;
+  }
+
+  /* ── I. BOOKING / GET IN TOUCH — Compact ── */
+  .booking {
+    padding: 2.5rem 0 !important;
+  }
+
+  .booking__visual-col {
+    min-height: 120px !important;
+    padding: 1.25rem 0.85rem !important;
+  }
+
+  .booking__visual-title {
+    font-size: clamp(1.75rem, 7.5vw, 2.5rem) !important;
+  }
+
+  .booking__form-card {
+    padding: 1rem 0.85rem !important;
+  }
+
+  .form-group {
+    margin-bottom: 0.85rem !important;
+  }
+
+  .form-label {
+    font-size: 0.82rem !important;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    min-height: 44px !important;
+    font-size: 0.92rem !important;
+    padding: 10px 0.85rem !important;
+  }
+
+  .form-submit {
+    min-height: 48px !important;
+    font-size: 0.92rem !important;
+    padding: 12px !important;
+  }
+
+  /* ── J. FOOTER — 2-column link sections ── */
+  .footer {
+    padding: 2.5rem 0 1.25rem !important;
+  }
+
+  .footer__grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.5rem 1rem !important;
+  }
+
+  /* Brand column spans full width */
+  .footer__brand {
+    grid-column: 1 / -1 !important;
+  }
+
+  .footer__brand-desc {
+    font-size: 0.82rem !important;
+    margin-bottom: 1rem !important;
+    max-width: 100% !important;
+  }
+
+  .footer__col-title {
+    font-size: 0.65rem !important;
+    margin-bottom: 0.65rem !important;
+  }
+
+  .footer__links {
+    gap: 0.45rem !important;
+  }
+
+  .footer__link {
+    font-size: 0.82rem !important;
+    padding: 0.2rem 0 !important;
+    min-height: 32px !important;
+  }
+
+  .footer__bottom {
+    padding-top: 1rem !important;
+    gap: 0.65rem !important;
+  }
+
+  .footer__copyright {
+    font-size: 0.7rem !important;
+  }
+
+  .footer__legal-link {
+    font-size: 0.7rem !important;
+  }
+
+  /* ── K. SECTION HEADERS — Proportional mobile sizing ── */
+  .section-header {
+    margin-bottom: 2rem !important;
+  }
+
+  .section-header--centered {
+    margin-bottom: 2rem !important;
+  }
+
+  .section-title {
+    font-size: clamp(1.35rem, 5.5vw, 1.85rem) !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .section-subtitle {
+    font-size: 0.88rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .section-label {
+    font-size: 0.65rem !important;
+    margin-bottom: 0.65rem !important;
+  }
+
+  /* ── L. KINETIC STATEMENT — Compact ── */
+  .less-noise {
+    height: 150vh !important;
+  }
+
+  /* ── M. SERVICES ENDPOINT — Tighter card grid ── */
+  .services-endpoint-card {
+    padding: 1rem 0.85rem !important;
+  }
+
+  .services-endpoint-title {
+    font-size: clamp(1.35rem, 5vw, 1.85rem) !important;
+  }
+
+  .services-endpoint-subtitle {
+    font-size: 0.78rem !important;
+    margin-bottom: 0.85rem !important;
+  }
+
+  .service-endpoint-box {
+    padding: 0.85rem 0.75rem !important;
+  }
+
+  .service-box__title {
+    font-size: 1rem !important;
+  }
+
+  .service-box__desc {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* ── N. PROCESS / HOW WE WORK — Compact spacing ── */
+  .process {
+    height: 280vh !important;
+  }
+
+  .timeline__step-group {
+    margin-bottom: 40px !important;
+  }
+
+  .timeline__number {
+    font-size: 1.65rem !important;
+  }
+
+  .timeline__title {
+    font-size: 1.1rem !important;
+  }
+
+  .timeline__desc {
+    font-size: 0.82rem !important;
+  }
+
+  /* ── O. MARQUEE — Compact items ── */
+  .marquee-item {
+    width: 220px !important;
+    height: 140px !important;
+    border-radius: 10px !important;
+  }
+
+  /* ── P. PROBLEM EDITORIAL — Compact header spacing ── */
+  .problem {
+    padding: 2.25rem 0 1.5rem !important;
+  }
+
+  .problem-editorial__grid {
+    margin-bottom: 0.85rem !important;
+  }
+
+  .problem-editorial__heading {
+    font-size: clamp(1.35rem, 5.5vw, 1.75rem) !important;
+    margin: 0 0 0.4rem 0 !important;
+  }
+
+  .problem-editorial__lead {
+    font-size: 0.85rem !important;
+  }
+
+  /* ── Q. HERO — Slightly tighter ── */
+  .aether-hero {
+    padding: 4.25rem 1rem 1.5rem !important;
+  }
+
+  .aether-hero__title {
+    font-size: clamp(1.75rem, 7.5vw, 2.5rem) !important;
+    margin-bottom: 0.65rem !important;
+  }
+
+  .aether-hero__subtitle {
+    font-size: 0.88rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .aether-hero__btn {
+    font-size: 0.88rem !important;
+    padding: 0.75rem 1.75rem !important;
+    min-height: 44px !important;
+  }
+
+  /* Keep CTA buttons side by side when possible */
+  .aether-hero__actions,
+  .aether-hero__cta-group {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 0.65rem !important;
+  }
+
+  .aether-hero__btn {
+    width: auto !important;
+    flex: 0 1 auto !important;
+  }
+}
+
 /* ── 16. Extra-Small Screens (≤ 360px: 320px & 360px phones) ── */
 @media (max-width: 360px) {
   .aether-hero__badge {

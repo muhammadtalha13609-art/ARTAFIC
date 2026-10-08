@@ -1,4 +1,6 @@
-﻿.agents/
+.agents/
 *.zip
 ecc-skill/
 react-bits/
+node_modules/
+brag-output/

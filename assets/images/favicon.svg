@@ -1,12 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <defs>
-    <linearGradient id="artaficFaviconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2DD4BF" />
-      <stop offset="100%" stop-color="#0D9488" />
-    </linearGradient>
-  </defs>
-  <rect width="512" height="512" rx="120" fill="url(#artaficFaviconGrad)" />
-  <g transform="translate(56, 44) scale(0.468)">
-    <path fill="#0F172A" stroke="#0F172A" stroke-width="14" stroke-linejoin="round" fill-rule="evenodd" d="M 3 1 L 30 14 L 215 126 L 218 115 L 219 22 L 220 13 L 223 12 L 801 376 L 851 409 L 857 416 L 824 443 L 337 796 L 225 880 L 220 881 L 219 872 L 218 776 L 215 765 L 14 898 L 33 859 L 111 719 L 129 680 L 74 676 L 1 676 L 1 673 L 135 422 L 166 360 L 169 349 L 37 77 Z M 279 119 L 277 141 L 280 167 L 697 419 L 686 431 L 649 456 L 536 387 L 499 368 L 502 378 L 580 520 L 593 537 L 645 502 L 755 419 L 753 415 L 734 402 L 432 211 L 304 131 Z M 143 153 L 142 156 L 157 190 L 235 352 L 99 615 L 100 619 L 110 620 L 166 619 L 352 279 L 343 271 L 219 196 Z M 401 314 L 337 425 L 296 504 L 317 497 L 462 429 L 445 392 Z M 490 481 L 247 593 L 203 671 L 183 712 L 244 674 L 442 541 L 442 608 L 276 722 L 275 755 L 278 768 L 540 578 L 540 568 L 529 546 L 497 488 Z" />
+  <!-- White rounded-rect background -->
+  <rect width="512" height="512" rx="108" fill="#FFFFFF"/>
+  <!-- Official ARTAFIC geometric emblem mark, scaled and centered with padding -->
+  <g transform="translate(30, 24) scale(0.53)">
+    <path fill="#14B8A6" stroke="#14B8A6" stroke-width="12" stroke-linejoin="round" fill-rule="evenodd" d="M 3 1 L 30 14 L 215 126 L 218 115 L 219 22 L 220 13 L 223 12 L 801 376 L 851 409 L 857 416 L 824 443 L 337 796 L 225 880 L 220 881 L 219 872 L 218 776 L 215 765 L 14 898 L 33 859 L 111 719 L 129 680 L 74 676 L 1 676 L 1 673 L 135 422 L 166 360 L 169 349 L 37 77 Z M 279 119 L 277 141 L 280 167 L 697 419 L 686 431 L 649 456 L 536 387 L 499 368 L 502 378 L 580 520 L 593 537 L 645 502 L 755 419 L 753 415 L 734 402 L 432 211 L 304 131 Z M 143 153 L 142 156 L 157 190 L 235 352 L 99 615 L 100 619 L 110 620 L 166 619 L 352 279 L 343 271 L 219 196 Z M 401 314 L 337 425 L 296 504 L 317 497 L 462 429 L 445 392 Z M 490 481 L 247 593 L 203 671 L 183 712 L 244 674 L 442 541 L 442 608 L 276 722 L 275 755 L 278 768 L 540 578 L 540 568 L 529 546 L 497 488 Z" />
   </g>
 </svg>
