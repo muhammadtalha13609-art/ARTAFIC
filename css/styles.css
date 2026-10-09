@@ -5178,6 +5178,11 @@ html, body {
     width: auto !important;
     flex: 0 1 auto !important;
   }
+
+  /* ── R. FAQ CTA (faq.html) — Compact ── */
+  .faq-cta {
+    padding: 2.75rem 1.25rem !important;
+  }
 }
 
 /* ── 16. Extra-Small Screens (≤ 360px: 320px & 360px phones) ── */

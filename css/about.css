@@ -1654,10 +1654,14 @@
 }
 
 @media (max-width: 768px) {
+  /* ── 1. Watermark & Structural Safety ── */
   .chapter-watermark {
-    font-size: clamp(3.5rem, 12vw, 6rem);
-    color: rgba(15, 23, 42, 0.022);
+    font-size: clamp(2.5rem, 9vw, 4.5rem);
+    color: rgba(15, 23, 42, 0.02);
     transform: none !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
   }
 
   .chapter-watermark--purpose,
@@ -1666,32 +1670,386 @@
     color: rgba(255, 255, 255, 0.02);
   }
 
-  .chapter-watermark {
-    max-width: 100% !important;
-    overflow: hidden !important;
-    pointer-events: none !important;
-  }
-
+  /* ── 2. Compact Punchy Hero (Zero Bloat Height) ── */
   .about-hero {
     min-height: auto !important;
-    padding-top: 100px !important;
-    padding-bottom: 40px !important;
+    padding-top: 5.5rem !important;
+    padding-bottom: 2rem !important;
   }
 
   .about-hero__title {
-    font-size: clamp(2rem, 8vw, 3.2rem) !important;
+    font-size: clamp(1.85rem, 7.5vw, 2.75rem) !important;
     line-height: 1.15 !important;
   }
 
   .about-hero__lead {
-    font-size: 1rem !important;
-    margin-bottom: 1.75rem !important;
-    line-height: 1.6 !important;
+    font-size: 0.92rem !important;
+    margin-bottom: 1.25rem !important;
+    line-height: 1.55 !important;
   }
 
+  /* ── 3. Proportional Section Padding ── */
   .who-we-are,
-  .who-needs-us {
-    padding: 3.5rem 0 !important;
+  .who-needs-us,
+  .why-exists,
+  .what-we-do {
+    padding: 2.25rem 0 !important;
+  }
+
+  .our-approach {
+    padding: 2.25rem 0 1.25rem 0 !important;
+  }
+
+  .about-cta {
+    padding: 2.5rem 1.25rem !important;
+  }
+
+  /* ── 4. Typography Scale ── */
+  .who-we-are__heading,
+  .why-exists__title,
+  .who-needs-us__heading,
+  .what-we-do__title,
+  .our-approach__title,
+  .about-cta__title {
+    font-size: clamp(1.35rem, 5.5vw, 1.85rem) !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.4rem !important;
+  }
+
+  .about-section-tag {
+    font-size: 0.65rem !important;
+    margin-bottom: 0.4rem !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .who-we-are__accent-line,
+  .who-needs-us__accent-line {
+    width: 32px !important;
+    height: 2px !important;
+    margin-bottom: 0.6rem !important;
+  }
+
+  .who-we-are__tagline,
+  .who-needs-us__tagline {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .who-we-are__badge {
+    margin-top: 1rem !important;
+    padding: 0.4rem 0.85rem !important;
+  }
+
+  .who-we-are__grid,
+  .who-needs-us__grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+
+  .who-we-are__lead,
+  .who-needs-us__lead {
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .who-we-are__body,
+  .who-needs-us__body {
+    font-size: 0.84rem !important;
+    line-height: 1.6 !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .who-we-are__quote,
+  .who-needs-us__note {
+    padding: 0.75rem 1rem !important;
+    margin-top: 0.65rem !important;
+    border-radius: 0 10px 10px 0 !important;
+  }
+
+  .who-we-are__quote-text,
+  .who-needs-us__note-text {
+    font-size: 0.82rem !important;
+    line-height: 1.55 !important;
+  }
+
+  /* ── 5. WHY ARTAFIC: 2-Column Contrast Grid ── */
+  .why-exists__contrast-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.65rem !important;
+  }
+
+  .contrast-card {
+    padding: 1rem 0.85rem !important;
+    border-radius: 12px !important;
+  }
+
+  .contrast-card--problem {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .contrast-card--solution {
+    background: rgba(20, 184, 166, 0.06) !important;
+    border: 1px solid rgba(20, 184, 166, 0.3) !important;
+  }
+
+  .contrast-card--problem .contrast-card__label {
+    color: #94A3B8 !important;
+    font-size: 0.6rem !important;
+    letter-spacing: 0.12em !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  .contrast-card--solution .contrast-card__label {
+    color: #14B8A6 !important;
+    font-size: 0.6rem !important;
+    letter-spacing: 0.12em !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  .contrast-card__heading {
+    font-size: 0.92rem !important;
+    line-height: 1.25 !important;
+    margin-bottom: 0.35rem !important;
+    word-break: break-word !important;
+    color: #2DD4BF !important;
+  }
+
+  .contrast-card--problem .contrast-card__desc {
+    color: #CBD5E1 !important;
+    font-size: 0.76rem !important;
+    line-height: 1.45 !important;
+  }
+
+  .contrast-card--solution .contrast-card__desc {
+    color: #F1F5F9 !important;
+    font-size: 0.76rem !important;
+    line-height: 1.45 !important;
+  }
+
+  /* ── 6. WHAT WE DO: 2-Column Compact Services Cards ── */
+  .what-we-do__header {
+    margin-bottom: 1.25rem !important;
+  }
+
+  .what-we-do__sub {
+    font-size: 0.85rem !important;
+  }
+
+  .what-we-do__grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.65rem !important;
+  }
+
+  .service-card {
+    padding: 0.9rem 0.8rem 0.75rem !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+
+  .service-card__top {
+    margin-bottom: 0.35rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0.35rem !important;
+  }
+
+  .service-card__number {
+    font-size: 1.15rem !important;
+    line-height: 1 !important;
+  }
+
+  .service-card__badge {
+    font-size: 0.52rem !important;
+    letter-spacing: 0.08em !important;
+    padding: 0.2rem 0.45rem !important;
+  }
+
+  .service-card__title {
+    font-size: 0.92rem !important;
+    line-height: 1.25 !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .service-card__desc {
+    font-size: 0.72rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0.5rem !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  .service-card__visual {
+    margin-top: auto !important;
+    padding-top: 0.35rem !important;
+  }
+
+  .service-wireframe {
+    padding: 0.5rem !important;
+  }
+
+  .wireframe-box {
+    font-size: 0.52rem !important;
+    padding: 0.25rem 0.35rem !important;
+  }
+
+  .logo-grid-svg {
+    max-height: 55px !important;
+    width: 100% !important;
+  }
+
+  /* ── 7. HOW WE WORK: 2-Column Approach Grid (Matching Problem Cards) ── */
+  .our-approach__header {
+    margin-bottom: 1.25rem !important;
+  }
+
+  .our-approach__sub {
+    font-size: 0.85rem !important;
+  }
+
+  .approach-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.65rem !important;
+  }
+
+  /* 3rd card spans full width for balance */
+  .approach-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1 !important;
+  }
+
+  .approach-card {
+    padding: 0.85rem 0.8rem 0.75rem !important;
+    border-radius: 12px !important;
+  }
+
+  .approach-card__num {
+    font-size: 1.15rem !important;
+    margin-bottom: 0.25rem !important;
+    display: block !important;
+  }
+
+  .approach-card__title {
+    font-size: 0.82rem !important;
+    margin-bottom: 0.2rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .approach-card__desc {
+    font-size: 0.72rem !important;
+    line-height: 1.45 !important;
+    margin: 0 !important;
+  }
+
+  /* ── 8. CTA SECTION ── */
+  .about-cta__title {
+    font-size: clamp(1.35rem, 5.5vw, 1.85rem) !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .about-cta__sub {
+    font-size: 0.85rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 1.25rem !important;
+    max-width: 100% !important;
+  }
+
+  .about-cta .btn {
+    padding: 0.75rem 1.5rem !important;
+    min-height: 44px !important;
+    font-size: 0.88rem !important;
+  }
+
+  /* ── 9. LEGAL PAGES (privacy.html, terms.html) ── */
+  .legal-section {
+    padding-top: 5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  .legal-container {
+    padding: 0 1rem !important;
+  }
+
+  .legal-title {
+    font-size: clamp(1.65rem, 7vw, 2.25rem) !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .legal-meta {
+    font-size: 0.75rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .legal-block {
+    margin-bottom: 1.75rem !important;
+  }
+
+  .legal-block h2 {
+    font-size: 1.15rem !important;
+    margin-bottom: 0.65rem !important;
+  }
+
+  .legal-block p {
+    font-size: 0.85rem !important;
+    line-height: 1.6 !important;
+    margin-bottom: 0.65rem !important;
+  }
+
+  .legal-block ul li {
+    font-size: 0.85rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .legal-cards-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.65rem !important;
+    margin-top: 1.25rem !important;
+  }
+
+  .legal-card {
+    padding: 0.85rem 0.75rem !important;
+    border-radius: 10px !important;
+  }
+
+  .legal-card__num {
+    font-size: 0.6rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .legal-card__title {
+    font-size: 0.82rem !important;
+    margin-bottom: 0.2rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .legal-card__desc {
+    font-size: 0.72rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .corner-mark {
+    display: none !important;
+  }
+
+  .fp-path:nth-child(n+18) {
+    display: none;
+  }
+}
+
+/* ── 10. Extra-Small Screens (≤ 360px) ── */
+@media (max-width: 360px) {
+  .about-hero__title {
+    font-size: 1.65rem !important;
   }
 
   .who-we-are__heading,
@@ -1700,100 +2058,28 @@
   .what-we-do__title,
   .our-approach__title,
   .about-cta__title {
-    font-size: clamp(1.75rem, 6.8vw, 2.5rem) !important;
-    letter-spacing: -0.02em !important;
-    line-height: 1.2 !important;
-  }
-
-  .why-exists {
-    padding: 3.5rem 0 !important;
-  }
-
-  .contrast-card__heading {
-    font-size: 1.2rem !important;
-    word-break: break-word !important;
-  }
-
-  .what-we-do {
-    padding: 3.5rem 0 !important;
-  }
-
-  .our-approach {
-    padding: 3.5rem 0 1.5rem 0 !important;
-  }
-
-  .about-cta {
-    padding: 4.5rem 1.25rem 5.5rem !important;
-  }
-
-  .legal-section {
-    padding-top: 5.5rem !important;
-    padding-bottom: 3.5rem !important;
-  }
-
-  .legal-container {
-    padding: 0 1.25rem !important;
-  }
-
-  .legal-title {
-    font-size: clamp(1.85rem, 7.5vw, 2.75rem) !important;
-  }
-
-  .contrast-card {
-    padding: 2rem 1.5rem;
-  }
-
-  .service-card {
-    padding: 2rem 1.5rem;
-  }
-
-  .approach-card {
-    padding: 2rem 1.5rem;
-  }
-
-  .about-heading-giant {
-    font-size: clamp(2.2rem, 11vw, 4.5rem);
-    white-space: normal;
-    text-align: center;
-    width: 90%;
-  }
-
-  .fp-path:nth-child(n+18) {
-    display: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .about-hero {
-    min-height: 65vh;
-    padding-top: 120px;
-    padding-bottom: 50px;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-  }
-
-  .about-hero__title {
-    font-size: clamp(2.35rem, 11vw, 3.25rem);
-    line-height: 1.1;
-  }
-
-  .who-we-are__grid,
-  .who-needs-us__grid,
-  .why-exists__contrast-grid,
-  .what-we-do__grid,
-  .approach-grid {
-    gap: 1.5rem;
+    font-size: 1.35rem !important;
   }
 
   .contrast-card,
   .service-card,
-  .approach-card {
-    padding: 1.5rem 1.15rem;
+  .approach-card,
+  .legal-card {
+    padding: 0.75rem 0.65rem !important;
   }
 
-  .about-heading-giant {
-    font-size: clamp(1.85rem, 8.5vw, 3rem);
-    line-height: 1;
+  .contrast-card__heading,
+  .service-card__title,
+  .approach-card__title,
+  .legal-card__title {
+    font-size: 0.78rem !important;
+  }
+
+  .contrast-card__desc,
+  .service-card__desc,
+  .approach-card__desc,
+  .legal-card__desc {
+    font-size: 0.68rem !important;
   }
 }
 
