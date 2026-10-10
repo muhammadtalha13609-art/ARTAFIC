@@ -43,8 +43,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=5.5" />
-  <link rel="stylesheet" href="css/about.css?v=3.4" />
+  <link rel="stylesheet" href="css/styles.css?v=5.4" />
+  <link rel="stylesheet" href="css/about.css?v=3.3" />
 </head>
 <body class="about-page">
 
@@ -175,11 +175,17 @@
     
     <div class="container relative-z">
       <div class="about-hero__layout">
-        <p class="about-section-tag" style="margin-bottom: 0.75rem;">ABOUT ARTAFIC</p>
-        <h1 class="about-hero__title hero-step" data-step="1" style="margin: 0;">Crafting Digital Presence for Ambitious Businesses.</h1>
+        <h1 class="about-hero__title hero-step" data-step="1" style="margin: 0;"><strong>ABOUT US</strong></h1>
       </div>
     </div>
   </section>
+
+  <!-- Animated Section Divider with Glowing Center Dot -->
+  <div class="section-divider" aria-hidden="true">
+    <div class="section-divider__line">
+      <div class="section-divider__dot"></div>
+    </div>
+  </div>
 
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 02: WHO WE ARE (Editorial 2-Column Balance)
@@ -187,15 +193,23 @@
   <section class="who-we-are" id="who-we-are">
     <!-- Large Light Background Text with subtle Parallax -->
     <div class="chapter-watermark chapter-watermark--identity" aria-hidden="true" data-parallax="-0.12">IDENTITY</div>
-    <div class="floating-paths-bg" data-pos="1" data-theme="light" style="opacity: 0.35;"></div>
+    <div class="floating-paths-bg" data-pos="1" data-theme="light" style="opacity: 0.45;"></div>
     
     <div class="container relative-z">
       <div class="who-we-are__grid">
-        <!-- Left: Heading & Supporting Details -->
+        <!-- Left: Heading (0.0s) & Supporting Details -->
         <div class="who-we-are__left fade-up">
-          <p class="about-section-tag">WHO WE ARE</p>
+          <p class="about-section-tag">01 / IDENTITY</p>
           <h2 class="who-we-are__heading">Who We Are</h2>
           <div class="who-we-are__accent-line" aria-hidden="true"></div>
+          <p class="who-we-are__tagline">Websites &bull; Logos &bull; Clean Code</p>
+
+          <div class="who-we-are__badge" data-mouse-parallax="4" aria-hidden="true">
+            <span class="who-we-are__badge-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </span>
+            <span class="who-we-are__badge-text">EST. 2024 &bull; CRAFT STUDIO</span>
+          </div>
         </div>
 
         <!-- Right: Grounded, Honest, Human Copy -->
@@ -216,6 +230,13 @@
     </div>
   </section>
 
+  <!-- Animated Section Divider with Glowing Center Dot -->
+  <div class="section-divider" aria-hidden="true">
+    <div class="section-divider__line">
+      <div class="section-divider__dot"></div>
+    </div>
+  </div>
+
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 03: WHY ARTAFIC EXISTS (Structured Contrast Composition)
   ═══════════════════════════════════════════════════════════ -->
@@ -226,7 +247,7 @@
     
     <div class="container relative-z">
       <div class="why-exists__header fade-up">
-        <p class="about-section-tag">OUR PURPOSE</p>
+        <p class="about-section-tag">02 / WHY ARTAFIC</p>
         <h2 class="why-exists__title">Why ARTAFIC Exists</h2>
         <p class="why-exists__subtitle">
           A good business can have great work behind it and still struggle to make a strong first impression online.
@@ -234,16 +255,20 @@
       </div>
 
       <div class="why-exists__contrast-grid">
-        <!-- Problem Card -->
+        <!-- Problem Card with Corner Cross Marks -->
         <div class="contrast-card contrast-card--problem studio-card fade-up">
+          <span class="corner-mark corner-mark--tl" aria-hidden="true">+</span>
+          <span class="corner-mark corner-mark--br" aria-hidden="true">+</span>
           <span class="contrast-card__label">THE REALITY</span>
           <p class="contrast-card__desc">
             An outdated website, unclear branding, or a digital presence that does not reflect the quality of the business can make it harder for people to trust what they see.
           </p>
         </div>
 
-        <!-- Solution Card -->
+        <!-- Solution Card with Corner Cross Marks -->
         <div class="contrast-card contrast-card--solution studio-card fade-up">
+          <span class="corner-mark corner-mark--tl" aria-hidden="true">+</span>
+          <span class="corner-mark corner-mark--br" aria-hidden="true">+</span>
           <span class="contrast-card__label">OUR PURPOSE</span>
           <h3 class="contrast-card__heading">ARTAFIC exists to change that.</h3>
           <p class="contrast-card__desc">
@@ -254,21 +279,29 @@
     </div>
   </section>
 
+  <!-- Animated Section Divider with Glowing Center Dot -->
+  <div class="section-divider" aria-hidden="true">
+    <div class="section-divider__line">
+      <div class="section-divider__dot"></div>
+    </div>
+  </div>
+
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 04: WHO NEEDS US (Editorial 2-Column Balance)
   ═══════════════════════════════════════════════════════════ -->
   <section class="who-needs-us" id="who-needs-us">
     <!-- Large Light Background Text with subtle Parallax -->
     <div class="chapter-watermark chapter-watermark--clients" aria-hidden="true" data-parallax="-0.12">CLIENTS</div>
-    <div class="floating-paths-bg" data-pos="1" data-theme="light" style="opacity: 0.35;"></div>
+    <div class="floating-paths-bg" data-pos="1" data-theme="light" style="opacity: 0.45;"></div>
     
     <div class="container relative-z">
       <div class="who-needs-us__grid">
         <!-- Left: Heading & Supporting Details -->
         <div class="who-needs-us__left fade-up">
-          <p class="about-section-tag">WHO WE SERVE</p>
+          <p class="about-section-tag">03 / WHO NEEDS US</p>
           <h2 class="who-needs-us__heading">Who Needs Us</h2>
           <div class="who-needs-us__accent-line" aria-hidden="true"></div>
+          <p class="who-needs-us__tagline">The Right Fit &bull; Built Around You</p>
         </div>
 
         <!-- Right: Grounded, Honest, Human Copy -->
@@ -292,6 +325,13 @@
     </div>
   </section>
 
+  <!-- Animated Section Divider with Glowing Center Dot -->
+  <div class="section-divider" aria-hidden="true">
+    <div class="section-divider__line">
+      <div class="section-divider__dot"></div>
+    </div>
+  </div>
+
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 05: WHAT WE DO (Services Cards & Visuals)
   ═══════════════════════════════════════════════════════════ -->
@@ -302,7 +342,7 @@
     
     <div class="container relative-z">
       <div class="what-we-do__header fade-up">
-        <p class="about-section-tag">OUR DISCIPLINES</p>
+        <p class="about-section-tag">04 / WHAT WE DO</p>
         <h2 class="what-we-do__title">What We Do</h2>
         <p class="what-we-do__sub">Two disciplines. Done properly.</p>
       </div>
@@ -310,6 +350,8 @@
       <div class="what-we-do__grid">
         <!-- Card 1: Web Development -->
         <div class="service-card studio-card fade-up">
+          <span class="corner-mark corner-mark--tl" aria-hidden="true">+</span>
+          <span class="corner-mark corner-mark--br" aria-hidden="true">+</span>
           <div class="service-card__top">
             <span class="service-card__number">01</span>
             <span class="service-card__badge">CODE &bull; PERFORMANCE</span>
@@ -319,19 +361,12 @@
             Custom websites built with clean code. Fast load speeds, responsive on every screen size, and structured to turn visitors into inquiries. No WordPress bloat or broken page builders.
           </p>
           <div class="service-card__visual" aria-hidden="true">
-            <div class="service-code-preview">
-              <div class="service-code-preview__header">
-                <span class="service-code-preview__dot" style="background:#EF4444;"></span>
-                <span class="service-code-preview__dot" style="background:#F59E0B;"></span>
-                <span class="service-code-preview__dot" style="background:#10B981;"></span>
-                <span class="service-code-preview__title">artafic.dev &bull; production</span>
-              </div>
-              <div class="service-code-preview__body">
-                <div><span class="code-tag">&lt;main</span> <span class="code-attr">class=</span><span class="code-string">"artafic-experience"</span><span class="code-tag">&gt;</span></div>
-                <div style="padding-left:14px;"><span class="code-tag">&lt;section</span> <span class="code-attr">data-performance=</span><span class="code-string">"sub-second"</span><span class="code-tag">&gt;</span></div>
-                <div style="padding-left:28px;"><span class="code-comment">&lt;!-- Clean DOM &bull; Zero Bloat --&gt;</span></div>
-                <div style="padding-left:14px;"><span class="code-tag">&lt;/section&gt;</span></div>
-                <div><span class="code-tag">&lt;/main&gt;</span></div>
+            <div class="service-wireframe" data-mouse-parallax="5">
+              <div class="wireframe-bar wireframe-bar--teal"></div>
+              <div class="wireframe-bar" style="width: 75%;"></div>
+              <div class="wireframe-cols">
+                <div class="wireframe-box">CLEAN DOM &bull; FAST LOAD</div>
+                <div class="wireframe-box">100% RESPONSIVE</div>
               </div>
             </div>
           </div>
@@ -339,6 +374,8 @@
 
         <!-- Card 2: Logo Building -->
         <div class="service-card studio-card fade-up">
+          <span class="corner-mark corner-mark--tl" aria-hidden="true">+</span>
+          <span class="corner-mark corner-mark--br" aria-hidden="true">+</span>
           <div class="service-card__top">
             <span class="service-card__number">02</span>
             <span class="service-card__badge">BRAND IDENTITY</span>
@@ -349,7 +386,7 @@
           </p>
           <div class="service-card__visual" aria-hidden="true">
             <div class="logo-grid-preview">
-              <svg class="logo-grid-svg" viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg class="logo-grid-svg" data-mouse-parallax="6" viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="120" cy="40" r="32" stroke="#14B8A6" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
                 <circle cx="120" cy="40" r="22" stroke="#14B8A6" stroke-width="1" opacity="0.3"/>
                 <line x1="60" y1="40" x2="180" y2="40" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="2 2"/>
@@ -364,6 +401,13 @@
     </div>
   </section>
 
+  <!-- Animated Section Divider with Glowing Center Dot -->
+  <div class="section-divider" aria-hidden="true">
+    <div class="section-divider__line">
+      <div class="section-divider__dot"></div>
+    </div>
+  </div>
+
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 06: HOW WE WORK / PRINCIPLES
   ═══════════════════════════════════════════════════════════ -->
@@ -371,17 +415,19 @@
   <div id="how-we-work" style="position: absolute; top: 0; left: 0; pointer-events: none;" aria-hidden="true"></div>
     <!-- Large Light Background Text with subtle Parallax -->
     <div class="chapter-watermark chapter-watermark--values" aria-hidden="true" data-parallax="-0.12">VALUES</div>
-    <div class="floating-paths-bg" data-pos="1" data-theme="light" style="opacity: 0.35;"></div>
+    <div class="floating-paths-bg" data-pos="1" data-theme="light" style="opacity: 0.4;"></div>
     
     <div class="container relative-z">
       <div class="our-approach__header fade-up">
-        <p class="about-section-tag">OUR PRINCIPLES</p>
+        <p class="about-section-tag">05 / HOW WE WORK</p>
         <h2 class="our-approach__title">How We Work</h2>
         <p class="our-approach__sub">Three simple rules we follow on every project.</p>
       </div>
 
       <div class="approach-grid">
         <div class="approach-card studio-card fade-up">
+          <span class="corner-mark corner-mark--tl" aria-hidden="true">+</span>
+          <span class="corner-mark corner-mark--br" aria-hidden="true">+</span>
           <span class="approach-card__num">01</span>
           <h3 class="approach-card__title">CLARITY FIRST</h3>
           <p class="approach-card__desc">
@@ -390,6 +436,8 @@
         </div>
 
         <div class="approach-card studio-card fade-up">
+          <span class="corner-mark corner-mark--tl" aria-hidden="true">+</span>
+          <span class="corner-mark corner-mark--br" aria-hidden="true">+</span>
           <span class="approach-card__num">02</span>
           <h3 class="approach-card__title">SPEED &amp; RELIABILITY</h3>
           <p class="approach-card__desc">
@@ -398,6 +446,8 @@
         </div>
 
         <div class="approach-card studio-card fade-up">
+          <span class="corner-mark corner-mark--tl" aria-hidden="true">+</span>
+          <span class="corner-mark corner-mark--br" aria-hidden="true">+</span>
           <span class="approach-card__num">03</span>
           <h3 class="approach-card__title">DIRECT CONTACT</h3>
           <p class="approach-card__desc">
@@ -409,6 +459,13 @@
 
   </section>
 
+  <!-- Animated Section Divider with Glowing Center Dot -->
+  <div class="section-divider" aria-hidden="true">
+    <div class="section-divider__line">
+      <div class="section-divider__dot"></div>
+    </div>
+  </div>
+
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 07: FINAL CTA
   ═══════════════════════════════════════════════════════════ -->
@@ -419,7 +476,7 @@
     <div class="container relative-z fade-up">
       <div class="about-cta__content">
         <p class="about-section-tag" style="justify-content: center;">START A PROJECT</p>
-        <h2 class="about-cta__title" data-grid-avoid>Ready to build something distinctive?</h2>
+        <h2 class="about-cta__title" data-grid-avoid>Ready to upgrade your website?</h2>
         <p class="about-cta__sub">
           Tell us what you're looking for, and we'll give you an honest opinion and a clear plan.
         </p>
@@ -488,8 +545,8 @@
 </footer>
 
 <!-- JS -->
-<script src="js/main.js?v=6.1"></script>
-<script src="js/about.js?v=3.4"></script>
+<script src="js/main.js?v=6.0"></script>
+<script src="js/about.js?v=3.3"></script>
 <script src="js/grid-pulse.js?v=1.0"></script>
 </body>
 </html>
