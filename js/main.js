@@ -1647,14 +1647,20 @@ window.initAetherCanvas = function() {
 
   function init() {
     particles = [];
-    let numberOfParticles = (canvas.height * canvas.width) / 9000;
+    let numberOfParticles = (canvas.height * canvas.width) / 9500;
+    const tealShades = [
+      'rgba(20, 184, 166, 0.75)',
+      'rgba(45, 212, 191, 0.65)',
+      'rgba(15, 118, 110, 0.7)',
+      'rgba(148, 163, 184, 0.35)'
+    ];
     for (let i = 0; i < numberOfParticles; i++) {
       let size = (Math.random() * 2) + 1;
       let x = (Math.random() * ((window.innerWidth - size * 2) - (size * 2)) + size * 2);
       let y = (Math.random() * ((window.innerHeight - size * 2) - (size * 2)) + size * 2);
       let directionX = (Math.random() * 0.4) - 0.2;
       let directionY = (Math.random() * 0.4) - 0.2;
-      let color = 'rgba(191, 128, 255, 0.8)'; // Brighter purple
+      let color = tealShades[Math.floor(Math.random() * tealShades.length)];
       particles.push(new Particle(x, y, directionX, directionY, size, color));
     }
   }
@@ -1675,16 +1681,16 @@ window.initAetherCanvas = function() {
             + ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
         
         if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-          opacityValue = 1 - (distance / 20000);
+          opacityValue = (1 - (distance / 20000)) * 0.45;
           
           let dx_mouse_a = mouse.x ? particles[a].x - mouse.x : 0;
           let dy_mouse_a = mouse.y ? particles[a].y - mouse.y : 0;
           let distance_mouse_a = Math.sqrt(dx_mouse_a*dx_mouse_a + dy_mouse_a*dy_mouse_a);
 
           if (mouse.x && distance_mouse_a < mouse.radius) {
-               ctx.strokeStyle = `rgba(255, 255, 255, ${opacityValue})`;
+               ctx.strokeStyle = `rgba(45, 212, 191, ${opacityValue * 1.5})`;
           } else {
-               ctx.strokeStyle = `rgba(200, 150, 255, ${opacityValue})`;
+               ctx.strokeStyle = `rgba(20, 184, 166, ${opacityValue})`;
           }
           
           ctx.lineWidth = 1;
